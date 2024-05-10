@@ -1,0 +1,123 @@
+steps:
+  CUSTOMER_CHANGES-1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c:
+    operation:
+      database: ""
+      dataset: ""
+      deployEnabled: true
+      description: ""
+      locationName: SOURCE_DATA
+      metadata:
+        columns:
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 30163e83-f94b-416b-b89f-25834d40fa5d
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: NUMBER(38,0)
+            defaultValue: ""
+            description: ""
+            name: CUSTOMER_ID
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 57bfedc9-442f-4f92-a628-d84f0723489b
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: VARCHAR(50)
+            defaultValue: ""
+            description: ""
+            name: FIRST_NAME
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 4754ce87-1534-403d-883e-a403f691cdd2
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: VARCHAR(50)
+            defaultValue: ""
+            description: ""
+            name: LAST_NAME
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 013a67f6-4a2e-4af2-9a37-25e6f0a96c43
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: VARCHAR(100)
+            defaultValue: ""
+            description: ""
+            name: EMAIL
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: eb7348b5-894b-4cb8-b9b8-5bf4bc07fc19
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: VARCHAR(15)
+            defaultValue: ""
+            description: ""
+            name: PHONE_NUMBER
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 5b0d568b-b021-4611-9ad5-98d9275f3066
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: VARCHAR(365)
+            defaultValue: ""
+            description: ""
+            name: FULL_ADDRESS
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: b16c21fe-410d-4a1e-af53-a976e62e9604
+              stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
+            config: {}
+            dataType: TIMESTAMP_NTZ(9)
+            defaultValue: ""
+            description: ""
+            name: UPDATE_TIME
+            nullable: true
+            primaryKey: false
+            uniqueKey: false
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMER_CHANGES') }}
+      name: CUSTOMER_CHANGES
+      schema: ""
+      sqlType: Source
+      table: CUSTOMER_CHANGES
+      type: sourceInput
+    stepCounter: 1bfcb34a-651c-4dfa-9bfa-6dd2f77f982c
