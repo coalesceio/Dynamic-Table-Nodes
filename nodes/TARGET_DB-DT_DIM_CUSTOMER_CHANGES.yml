@@ -2,10 +2,12 @@ steps:
   DT_DIM_CUSTOMER_CHANGES-e8b24a44-643d-4ab4-abc0-386d5d7b137e:
     operation:
       config:
-        clusterKey: false
+        clusterKey: true
         clusterKeyConfig:
           items:
-            - {}
+            - columnName:
+                columnCounter: ebb935f0-67de-4dc1-a13c-ba99569fc133
+                stepCounter: e8b24a44-643d-4ab4-abc0-386d5d7b137e
         clusterKeyConfigExpressions:
           items:
             - {}
@@ -37,7 +39,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: transient dynamic table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:

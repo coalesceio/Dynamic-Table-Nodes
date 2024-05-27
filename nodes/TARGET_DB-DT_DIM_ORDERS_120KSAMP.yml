@@ -15,7 +15,7 @@ steps:
         lagSpecification:
           items:
             - lagPeriod: Days
-              lagValue: 60
+              lagValue: "600"
         orderBy:
           items:
             - colName:
@@ -37,7 +37,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: dynamic table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:

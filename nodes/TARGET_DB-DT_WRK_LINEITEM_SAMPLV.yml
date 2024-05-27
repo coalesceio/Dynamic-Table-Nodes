@@ -9,12 +9,11 @@ steps:
                 columnCounter: 6cd9e28a-d812-44db-984b-f437f0ac3048
                 stepCounter: 0fd4947c-97bd-4f69-8ece-ace79bff2100
         clusterKeyExpressions: false
-        downstreamOption: false
+        downstreamOption: true
         initialize: ON_CREATE
         lagSpecification:
           items:
-            - lagPeriod: Days
-              lagValue: 60
+            - {}
         orderBy:
           items:
             - colName:
@@ -36,7 +35,7 @@ steps:
       description: Lineitem data as defined by TPC-H
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: dynamic table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:
