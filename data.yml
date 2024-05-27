@@ -870,10 +870,10 @@ stepTypes:
 
                     {%elif currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table'%}
                         
-                            {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "drop") }}
+                            {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "alter") }}
                             DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                            {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+                            {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "alter") }}
                            CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                             WAREHOUSE = {{dynamicTableWarehouse}}
@@ -1764,10 +1764,10 @@ stepTypes:
 
                     {%elif currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table'%}
                         
-                            {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "drop") }}
+                            {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "alter") }}
                             DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                            {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+                            {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "alter") }}
                            CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                             WAREHOUSE = {{dynamicTableWarehouse}}
@@ -2651,10 +2651,10 @@ stepTypes:
 
                       {%elif currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table'%}
                         
-                            {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "drop") }}
+                            {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "alter") }}
                             DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                            {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+                            {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "alter") }}
                            CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                             WAREHOUSE = {{dynamicTableWarehouse}}
