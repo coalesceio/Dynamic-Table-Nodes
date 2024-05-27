@@ -277,7 +277,7 @@ stepTypes:
             {# == Node Type Name           : Dynamic Table Work  == #}
             {# == Node Type Description    : This node creates and runs dynamic table work.Materialization type and cluster key added with this version == #}
             {#Release date:20231215  Version:1.0#}
-            {#Release date:20240527  Version:1.1#}
+            {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 
             {% if desiredState == currentState %}
 
@@ -1187,6 +1187,8 @@ stepTypes:
             {# == Node Type Version        : 1.1  == #}
             {# == Node Type Name           : Dynamic Table Dimension  == #}
             {# == Node Type Description    : This node creates and runs dynamic table dimension.Materialization type and cluster key added with this version == #}
+            {#Release date:20231215  Version:1.0#}
+            {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 
 
             {% if desiredState == currentState %}
@@ -2055,7 +2057,8 @@ stepTypes:
             {# == Node Type Version        : 1.1  == #}
             {# == Node Type Name           : Dynamic Table Latest Record Version  == #}
             {# == Node Type Description    : This node creates and runs dynamic table work with latest record version.Materialization type and cluster key added with this version == #}
-
+            {#Release date:20231215  Version:1.0#}
+            {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 
             {% if desiredState == currentState %}
 

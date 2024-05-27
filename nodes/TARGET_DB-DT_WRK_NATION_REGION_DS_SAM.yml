@@ -3,12 +3,14 @@ steps:
     operation:
       config:
         clusterKey: false
-        downstreamOption: true
+        downstreamOption: false
         groupByAll: false
         initialize: ON_CREATE
         insertStrategy: UNION
         lagSpecification:
-          items: null
+          items:
+            - lagPeriod: Days
+              lagValue: 60
         refresh_mode: INCREMENTAL
         selectDistinct: true
         warehouseName: dev_wh_xs
@@ -17,7 +19,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: dynamic table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:
