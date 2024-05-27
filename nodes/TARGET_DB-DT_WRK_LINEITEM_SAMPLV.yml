@@ -36,7 +36,7 @@ steps:
       description: Lineitem data as defined by TPC-H
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: transient dynamic table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:

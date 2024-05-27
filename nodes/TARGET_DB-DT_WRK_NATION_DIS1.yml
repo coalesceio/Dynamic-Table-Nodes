@@ -25,7 +25,7 @@ steps:
       description: Nation data as defined by TPC-H
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: dynamic table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:
