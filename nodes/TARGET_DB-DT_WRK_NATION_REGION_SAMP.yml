@@ -1,7 +1,8 @@
 steps:
-  DT_WRK_NATION_REGION-ce9c6194-00b8-409e-94e4-4e0d6e1aa81e:
+  DT_WRK_NATION_REGION_SAMP-ce9c6194-00b8-409e-94e4-4e0d6e1aa81e:
     operation:
       config:
+        clusterKey: false
         downstreamOption: false
         groupByAll: false
         initialize: ON_CREATE
@@ -18,7 +19,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -160,9 +161,9 @@ steps:
                 FROM {{ ref('SOURCE_DATA', 'NATION') }} "NATION"
                 INNER JOIN {{ ref('SOURCE_DATA', 'REGION') }} "REGION"
                 ON "NATION".n_regionkey = "REGION".r_regionkey
-            name: DT_WRK_NATION_REGION
+            name: DT_WRK_NATION_REGION_SAMP
             noLinkRefs: []
-      name: DT_WRK_NATION_REGION
+      name: DT_WRK_NATION_REGION_SAMP
       overrideSQL: false
       schema: ""
       sqlType: "156"

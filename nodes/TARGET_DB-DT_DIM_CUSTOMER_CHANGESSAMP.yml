@@ -1,7 +1,8 @@
 steps:
-  DT_DIM_CUSTOMER_CHANGES-832b6f75-9ef6-4d05-bcdc-880f01b847fb:
+  DT_DIM_CUSTOMER_CHANGESSAMP-832b6f75-9ef6-4d05-bcdc-880f01b847fb:
     operation:
       config:
+        clusterKey: false
         downstreamOption: false
         initialize: ON_CREATE
         lagSpecification:
@@ -29,7 +30,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -213,9 +214,9 @@ steps:
                 nodeName: CUSTOMER_CHANGES
             join:
               joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMER_CHANGES') }} "CUSTOMER_CHANGES"
-            name: DT_DIM_CUSTOMER_CHANGES
+            name: DT_DIM_CUSTOMER_CHANGESSAMP
             noLinkRefs: []
-      name: DT_DIM_CUSTOMER_CHANGES
+      name: DT_DIM_CUSTOMER_CHANGESSAMP
       overrideSQL: false
       schema: ""
       sqlType: "249"

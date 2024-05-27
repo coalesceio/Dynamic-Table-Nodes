@@ -1,7 +1,14 @@
 steps:
-  DT_WRK_LINEITEM_LV-0fd4947c-97bd-4f69-8ece-ace79bff2100:
+  DT_WRK_LINEITEM_SAMPLV-0fd4947c-97bd-4f69-8ece-ace79bff2100:
     operation:
       config:
+        clusterKey: true
+        clusterKeyConfig:
+          items:
+            - columnName:
+                columnCounter: 6cd9e28a-d812-44db-984b-f437f0ac3048
+                stepCounter: 0fd4947c-97bd-4f69-8ece-ace79bff2100
+        clusterKeyExpressions: false
         downstreamOption: false
         initialize: ON_CREATE
         lagSpecification:
@@ -29,7 +36,7 @@ steps:
       description: Lineitem data as defined by TPC-H
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -261,17 +268,18 @@ steps:
         cteString: ""
         enabledColumnTestIDs: []
         sourceMapping:
-          - aliases: {}
+          - aliases:
+              DT_WRK_LINEITEM_SAMP: 262467c0-51ce-4a2c-a31b-32e8d1db0cc5
             customSQL:
               customSQL: ""
             dependencies:
               - locationName: TARGET_DB
-                nodeName: DT_WRK_LINEITEM
+                nodeName: DT_WRK_LINEITEM_SAMP
             join:
-              joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_LINEITEM') }} "DT_WRK_LINEITEM"
-            name: DT_WRK_LINEITEM_LV
+              joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_LINEITEM_SAMP') }} "DT_WRK_LINEITEM_SAMP"
+            name: DT_WRK_LINEITEM_SAMPLV
             noLinkRefs: []
-      name: DT_WRK_LINEITEM_LV
+      name: DT_WRK_LINEITEM_SAMPLV
       overrideSQL: false
       schema: ""
       sqlType: "260"

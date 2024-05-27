@@ -1,7 +1,8 @@
 steps:
-  DT_WRK_ORDERS_120K-30e144d2-e8bf-4d7d-84c8-8f7e3de9a484:
+  DT_WRK_ORDERS_120KSAMP-30e144d2-e8bf-4d7d-84c8-8f7e3de9a484:
     operation:
       config:
+        clusterKey: false
         downstreamOption: false
         groupByAll: false
         initialize: ON_CREATE
@@ -18,7 +19,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -164,9 +165,9 @@ steps:
                 nodeName: ORDERS_SAMPLE
             join:
               joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS_SAMPLE') }} "ORDERS_SAMPLE"
-            name: DT_WRK_ORDERS_120K
+            name: DT_WRK_ORDERS_120KSAMP
             noLinkRefs: []
-      name: DT_WRK_ORDERS_120K
+      name: DT_WRK_ORDERS_120KSAMP
       overrideSQL: false
       schema: ""
       sqlType: "156"

@@ -1,21 +1,33 @@
 steps:
-  DT_DIM_ORDERS_120K-297a751e-1795-42c2-a41c-7c8bb5842909:
+  DT_DIM_ORDERS_120KSAMP-297a751e-1795-42c2-a41c-7c8bb5842909:
     operation:
       config:
+        clusterKey: true
+        clusterKeyConfig:
+          items:
+            - columnName:
+                columnCounter: fb7f334a-3ca1-43b0-8276-60b7648f1569
+                stepCounter: 297a751e-1795-42c2-a41c-7c8bb5842909
+        clusterKeyExpressions: false
         downstreamOption: false
         initialize: ON_CREATE
         lagSpecification:
           items:
-            - {}
+            - lagPeriod: Days
+              lagValue: 60
         orderBy:
           items:
-            - {}
+            - colName:
+                columnCounter: 218e10ee-bc9e-4bbf-89ad-4dc24183f6af
+                stepCounter: 297a751e-1795-42c2-a41c-7c8bb5842909
         orderByDateTime:
           items:
             - {}
         partitionBy:
           items:
-            - {}
+            - partColName:
+                columnCounter: 86496df7-b303-4642-ba88-83f16a0a6955
+                stepCounter: 297a751e-1795-42c2-a41c-7c8bb5842909
         recordVersioning: Datetime Column
         refresh_mode: AUTO
         warehouseName: dev_wh_xs
@@ -24,7 +36,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: transient dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -246,17 +258,18 @@ steps:
         cteString: ""
         enabledColumnTestIDs: []
         sourceMapping:
-          - aliases: {}
+          - aliases:
+              DT_WRK_ORDERS_120KSAMP: 30e144d2-e8bf-4d7d-84c8-8f7e3de9a484
             customSQL:
               customSQL: ""
             dependencies:
               - locationName: TARGET_DB
-                nodeName: DT_WRK_ORDERS_120K
+                nodeName: DT_WRK_ORDERS_120KSAMP
             join:
-              joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_ORDERS_120K') }} "DT_WRK_ORDERS_120K"
-            name: DT_DIM_ORDERS_120K
+              joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_ORDERS_120KSAMP') }} "DT_WRK_ORDERS_120KSAMP"
+            name: DT_DIM_ORDERS_120KSAMP
             noLinkRefs: []
-      name: DT_DIM_ORDERS_120K
+      name: DT_DIM_ORDERS_120KSAMP
       overrideSQL: false
       schema: ""
       sqlType: "249"

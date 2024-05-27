@@ -1,7 +1,8 @@
 steps:
-  DT_WRK_NATION_REGION_DS-545baa32-56a4-4beb-966a-fa7672ecd5af:
+  DT_WRK_NATION_REGION_DS_SAM-545baa32-56a4-4beb-966a-fa7672ecd5af:
     operation:
       config:
+        clusterKey: false
         downstreamOption: true
         groupByAll: false
         initialize: ON_CREATE
@@ -16,7 +17,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -115,17 +116,17 @@ steps:
         enabledColumnTestIDs: []
         sourceMapping:
           - aliases:
-              DT_WRK_NATION_REGION: dbb1bb8d-d8f3-4057-a906-0612506c41ad
+              DT_WRK_NATION_REGION_SAMP: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
             customSQL:
               customSQL: ""
             dependencies:
               - locationName: TARGET_DB
-                nodeName: DT_WRK_NATION_REGION
+                nodeName: DT_WRK_NATION_REGION_SAMP
             join:
-              joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_NATION_REGION') }} "DT_WRK_NATION_REGION"
-            name: DT_WRK_NATION_REGION_DS
+              joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_NATION_REGION_SAMP') }} "DT_WRK_NATION_REGION_SAMP"
+            name: DT_WRK_NATION_REGION_DS_SAM
             noLinkRefs: []
-      name: DT_WRK_NATION_REGION_DS
+      name: DT_WRK_NATION_REGION_DS_SAM
       overrideSQL: false
       schema: ""
       sqlType: "156"

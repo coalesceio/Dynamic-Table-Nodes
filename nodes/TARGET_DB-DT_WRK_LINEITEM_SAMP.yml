@@ -1,14 +1,16 @@
 steps:
-  DT_WRK_LINEITEM-262467c0-51ce-4a2c-a31b-32e8d1db0cc5:
+  DT_WRK_LINEITEM_SAMP-262467c0-51ce-4a2c-a31b-32e8d1db0cc5:
     operation:
       config:
+        clusterKey: false
         downstreamOption: false
         groupByAll: false
         initialize: ON_CREATE
         insertStrategy: UNION ALL
         lagSpecification:
           items:
-            - {}
+            - lagPeriod: Days
+              lagValue: 60
         refresh_mode: AUTO
         selectDistinct: false
         warehouseName: dev_wh_xs
@@ -17,7 +19,7 @@ steps:
       description: ""
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -236,9 +238,9 @@ steps:
                 nodeName: LINEITEM
             join:
               joinCondition: FROM {{ ref('SOURCE_DATA', 'LINEITEM') }} "LINEITEM"
-            name: DT_WRK_LINEITEM
+            name: DT_WRK_LINEITEM_SAMP
             noLinkRefs: []
-      name: DT_WRK_LINEITEM
+      name: DT_WRK_LINEITEM_SAMP
       overrideSQL: false
       schema: ""
       sqlType: "156"

@@ -1,7 +1,14 @@
 steps:
-  DT_WRK_NATION_DIS-00c0ce61-ccb8-4c3a-b135-c7331aa184c5:
+  DT_WRK_NATION_DIS1-00c0ce61-ccb8-4c3a-b135-c7331aa184c5:
     operation:
       config:
+        clusterKey: true
+        clusterKeyConfig:
+          items:
+            - columnName:
+                columnCounter: 199fda61-a231-4976-b7b5-b0524fbe06cf
+                stepCounter: 00c0ce61-ccb8-4c3a-b135-c7331aa184c5
+        clusterKeyExpressions: false
         downstreamOption: false
         groupByAll: true
         initialize: ON_SCHEDULE
@@ -18,7 +25,7 @@ steps:
       description: Nation data as defined by TPC-H
       isMultisource: false
       locationName: TARGET_DB
-      materializationType: Dynamic Table
+      materializationType: dynamic table
       metadata:
         appliedNodeTests: []
         columns:
@@ -85,9 +92,9 @@ steps:
                 nodeName: NATION
             join:
               joinCondition: FROM {{ ref('SOURCE_DATA', 'NATION') }} "NATION"
-            name: DT_WRK_NATION_DIS
+            name: DT_WRK_NATION_DIS1
             noLinkRefs: []
-      name: DT_WRK_NATION_DIS
+      name: DT_WRK_NATION_DIS1
       overrideSQL: false
       schema: ""
       sqlType: "156"
