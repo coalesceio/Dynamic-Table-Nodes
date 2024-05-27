@@ -1,7 +1,17 @@
 defaultStorageMapping: TARGET_DB
 installedPackages: {}
 jobs: {}
-locations: {}
+locations:
+  SOURCE_DATA:
+    mappingDefinitions:
+      "154":
+        database: ANANDHIS_DEV
+        schema: SOURCE_DATA
+  TARGET_DB:
+    mappingDefinitions:
+      "154":
+        database: ANANDHIS_DEV
+        schema: TARGET_QA
 macros:
   Macro-1:
     id: "1"
