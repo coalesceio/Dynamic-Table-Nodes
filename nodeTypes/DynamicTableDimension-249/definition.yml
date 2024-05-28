@@ -1,0 +1,186 @@
+fileVersion: 1
+id: "249"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |
+    capitalized: Dynamic Table Dimension
+    short: DT_DIM
+    tagColor: "#E5FA31"
+    isDisabled: true
+    plural: Dynamic Tables
+
+    deployStrategy: advanced
+
+    config:
+      - groupName: Dynamic Table Options
+        items: 
+        - displayName: Warehouse on which to execute Dynamic Table
+          attributeName: warehouseName
+          type: textBox
+          default: dev_wh_xs
+          isRequired: true
+
+        - type: toggleButton
+          attributeName: downstreamOption
+          displayName: Downstream
+          default: false
+          isRequired: true
+
+        - type: tabular
+          displayName: 'Lag Specification'
+          attributeName: lagSpecification
+          columns:
+      
+          -  type: textBox
+             displayName: Time Value
+             attributeName: lagValue
+             default: 60
+             isRequired: false
+             enableIf: "{% if config.downstreamOption %} false {% else %} true {% endif %}"
+        
+          -  type: dropdownSelector
+             displayName: Time Period
+             attributeName: lagPeriod
+             default: "Minutes"
+             options:
+             - Seconds
+             - Minutes
+             - Hours
+             - Days
+             isRequired: false
+             enableIf: "{% if config.downstreamOption %} false {% else %} true {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.downstreamOption %} false {% else %} true {% endif %}"
+
+        - type: dropdownSelector
+          displayName: Refresh Mode
+          attributeName: refresh_mode
+          default: "AUTO"
+          options:
+          - AUTO
+          - INCREMENTAL
+          - FULL
+          isRequired: true
+
+        - type: dropdownSelector   
+          displayName: Initialize
+          attributeName: initialize
+          default: "ON_CREATE"
+          options:
+          - ON_CREATE
+          - ON_SCHEDULE 
+          isRequired: true
+
+      - groupName: Dimension Options
+        items:
+        - type: tabular
+          displayName: 'Table Key(s)'
+          attributeName: partitionBy
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: partColName
+             isRequired: true
+            
+          isRequired: true
+
+        - displayName: Record Versioning
+          attributeName: recordVersioning
+          type: dropdownSelector
+          default: Datetime Column
+          options:
+            - Datetime Column
+            - Date Column and Time Column
+          isRequired: true
+
+        - type: tabular
+          displayName: 'Timestamp or Sequence'
+          attributeName: orderBy
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: colName
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Datetime Column') %} true {% else %} false {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.recordVersioning in ('Datetime Column') %} true {% else %} false {% endif %}"
+
+        - type: tabular
+          displayName: 'Date / Timestamp Columns'
+          attributeName: orderByDateTime
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Date Column
+             attributeName: colNameDate
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+        
+          -  type: columnDropdownSelector
+             displayName: Timestamp Column
+             attributeName: colNameTimestamp
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+        
+          -  type: dropdownSelector
+             displayName: Sort Order
+             attributeName: sortOrdDateTimestamp
+             default: desc
+             options:
+             - desc
+             - asc
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+
+
+      - groupName: Hidden Config
+        enableIf: "false"
+        items:
+        - displayName: Type
+          type: materializationSelector
+          default: Dynamic Table
+          options:
+          - Dynamic Table
+          isRequired: false
+
+    systemColumns:
+    - displayName: '{{NODE_NAME}}_KEY'
+      transform: '{{ dimensionHistoryPk() }}'
+      dataType: STRING
+      placement: beginning
+      attributeName: isSurrogateKey
+
+    - displayName: RECORD_START_TIME
+      transform: '{{ order_by_col() }}'
+      dataType: TIMESTAMP
+      placement: end
+      attributeName: isSystemStartDate
+
+    - displayName: RECORD_END_TIME
+      transform: 'LEAD({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)'
+      dataType: TIMESTAMP
+      placement: end
+      attributeName: isSystemEndDate
+
+    - displayName: RECORD_CURRENT_FLAG
+      transform: 'CASE WHEN (LEAD({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)) IS NULL THEN 1 ELSE 0 END'
+      dataType: NUMERIC
+      placement: end
+      attributeName: isRecordCurrent
+
+    - displayName: RECORD_CREATED_DATE
+      transform: 'FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)'
+      dataType: TIMESTAMP
+      placement: end
+      attributeName: recordCreated
+name: Dynamic Table Dimension
+type: NodeType

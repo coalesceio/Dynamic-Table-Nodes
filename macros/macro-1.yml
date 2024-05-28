@@ -1,0 +1,92 @@
+fileVersion: 1
+id: "1"
+macroString: |
+
+  {#-- The below block of code initialises variables in case of node typess using advance deployment strategy #}
+
+  {% if desiredState %}
+      {% set columns = desiredState.columns %}
+      {% set storageLocations = desiredState.storageLocations %}
+      {% set config = desiredState.config %}
+      {% set sources = desiredState.sources %}
+      {% set node = desiredState.node %}
+      {% set parameters = desiredState.parameters %}
+  {% endif %}
+
+
+  {%- macro partition_by() -%}
+
+      {%- set nsVariables = namespace(partition="") -%}
+      {%- set sourceTableName = node.name -%}
+
+      {%- for i in config.partitionBy.get('items') -%}
+          {%- set colName = i.partColName.name -%}
+          {%- if loop.first -%}
+              {%- set nsVariables.partition = getSourceNameFromColumnName(colName) + '."' + colName + '"' -%}
+          {%- else -%}
+              {%- set nsVariables.partition = nsVariables.partition + ',' + getSourceNameFromColumnName(colName) + '."' + colName + '"' -%}
+          {%- endif -%}
+
+      {%- endfor -%}
+
+      {{- nsVariables.partition -}}
+  {%- endmacro -%}
+
+  {% macro order_by_col(return) %}
+
+      {% set nsVariables = namespace(orderBy="") -%}
+
+      {% if config.recordVersioning in ('Datetime Column','Numeric Column') -%}
+          {% set datetimeNumericColSort = config.orderBy.get('items') -%}
+          {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colName.name') | first -%}        
+          {% set nsVariables.orderBy = getSourceNameFromColumnName(dateTimeCol) + '."' + dateTimeCol + '"' -%}
+      {% else -%}
+          {% set dateTimeColSort = config.orderByDateTime.get('items') -%}
+          {% set dateCol = dateTimeColSort | map(attribute='colNameDate.name') | first -%}
+          {% set timeCol = dateTimeColSort | map(attribute='colNameTimestamp.name') | first -%}
+          {% set nsVariables.orderBy = 'to_timestamp(' + getSourceNameFromColumnName(dateCol) + '."' + dateCol + '" || ' + '\'T\'' + ' ||' + getSourceNameFromColumnName(timeCol) + '."' + timeCol + '")' -%}
+      {% endif -%}
+
+      {{ nsVariables.orderBy }}
+
+  {% endmacro %}
+
+
+  {% macro dimensionHistoryPk() %}
+      {%- set nsVariables = namespace(dimensionHistoryColumns="") -%}
+
+      {%- set partitionBy = partition_by().split(",") -%}
+      {%- set orderBy = order_by_col() -%}
+
+      {%- for col in partitionBy -%}
+          {%- if loop.first -%}
+              {%- set nsVariables.dimensionHistoryColumns = col -%}
+          {%- else -%}
+              {%- set nsVariables.dimensionHistoryColumns = nsVariables.dimensionHistoryColumns + ' || ' + '\'-\'' + ' ||' + col -%}
+          {%- endif -%}
+      {%- endfor -%}
+
+      {%- set nsVariables.dimensionHistoryColumns = nsVariables.dimensionHistoryColumns + ' || ' + '\'-\'' + ' || date_part(epoch_milliseconds, ' + orderBy + ')' -%}
+
+      {{- nsVariables.dimensionHistoryColumns -}}
+
+  {% endmacro %}
+
+
+  {%- macro getColumnId( colName ) -%}
+
+      {%- set columnId = columns | selectattr('name','equalto',colName) | map(attribute='id') | first -%}
+
+      {{- columnId -}}
+
+  {%- endmacro -%}
+
+  {% macro getSourceNameFromColumnName( colName ) %}
+
+      {%- set sourceObject = sources[0].columns | selectattr('id','eq',getColumnId( colName )) | map(attribute='sourceColumns')  | first | map(attribute='node.name') | first -%}
+
+      "{{- sourceObject -}}"
+
+  {% endmacro %}
+name: macro
+type: Macro
