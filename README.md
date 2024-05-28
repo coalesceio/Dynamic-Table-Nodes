@@ -40,8 +40,6 @@ The Dynamic Table Dimension has three configuration groups:
 
 ![node_config_options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/2be55d50-4ef6-4acc-a658-c14edb234822)
 
-<img src="https://github.com/Coalesce-Software-Inc/node_marketplace/blob/75a94c9ac5b8aac1c1faf8a6948fbd024c9ef2e9/images/node_config_options.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:150px;">
-
 ### Node Properties
 There are four configs within the **Node Properties** group.
 
@@ -71,8 +69,8 @@ There are three configs within the **Dynamic Table Options** group.
     * **ON_CREATE**: Refreshes the dynamic table synchronously at creation
     * **ON_SCHEDULE**: Refreshes the dynamic table at the next scheduled refresh.
 
-<img src="https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/bad33b2fa51c18a63854ae167d6a983b6cf491f1/images/Dynamic_Table_Options.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:400px;">
-  
+![dynamic_table_dimension_options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/842a221d-9967-4025-8021-ac2a5ca6cbe2)
+ 
 ### General Options
 
 There are three configs related to the General Options group.
@@ -86,7 +84,7 @@ There are three configs related to the General Options group.
             -Allow Expressions Cluster Key-True ->allows to add an expression to the specified cluster key
     * False – No clustering done
 
-<img src="https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/aafb753b053abae7e775da246823b4cda533912a/images/dynamic%20table1.1_general.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:350px;">
+![dynamic table1 1_general](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/2c663f13-8e7c-43c0-a7e0-c4abc1edfa14)
 
 ## Deployment
 
@@ -217,7 +215,7 @@ The Dynamic Table Dimension has three configuration groups:
 * [Dynamic Table Options](#dynamic-table-options)
 * [Dimension Options](#dimension-options)
   
-<img src="https://github.com/Coalesce-Software-Inc/node_marketplace/blob/8b9d65fc3d60fe551671c404778c766d797305d0/images/dynamic_table_dimension_options.png" style="width:280px;height:150px;" alt="Dynamic table dimension configuration options">
+![dynamic_table_dimension_options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/dab17b38-547b-408a-b864-e27e44728ac3)
 
 ### Dimension Options
 
@@ -230,7 +228,7 @@ There are three configs within the Dimension group.
 * **Timestamp or sequence:** The timestamp column name needs to be specified if Datetime column is chosen for Record versioning.
 * **Date/Timestamp Columns:** Date column,time column, and sort order of the columns to be specified if Date column and Time column is chosen for Record versioning.
 
-<img src="https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/ad212918d499922dd35cc71dd52f8c0ffb93164d/images/Dynamic%20table%20dimension%20options.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:400px;">
+![Dynamic table dimension options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/9b156c00-31a3-4e2a-814d-5bbe929713e7)
 
 ### General Options
 
@@ -242,7 +240,7 @@ There are two configs related to the General Options group.
             -Allow Expressions Cluster Key-True ->allows to add an expression to the specified cluster key
     * False – No clustering done
  
-<img src="https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/aafb753b053abae7e775da246823b4cda533912a/images/dynamictable1.1-dimgeneral.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:350px;">
+![dynamictable1 1-dimgeneral](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/dda1c53c-a3da-4701-8449-0023db1ac44a)
 
 ## Deployment
 
@@ -393,7 +391,7 @@ There are three configs within the Record Versioning Options group.
 * **Timestamp or sequence:** The timestamp column name needs to be specified if Datetime column is chosen for Record versioning.
 * **Date/Timestamp Columns:** Date column,time column, and sort order of the columns to be specified if Date column and Time column is chosen for Record versioning.
 
-<img src="https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/ad212918d499922dd35cc71dd52f8c0ffb93164d/images/Record%20versioning.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:400px;">
+![Record versioning](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/f45665a6-0f91-4138-ad34-ba4d919f1e73)
 
 ### General Options
 
@@ -405,7 +403,8 @@ There are two configs related to the General Options group.
             -Allow Expressions Cluster Key-True ->allows to add an expression to the specified cluster key
     * False – No clustering done
  
-<img src="https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/aafb753b053abae7e775da246823b4cda533912a/images/dynamictable1.1-dimgeneral.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:350px;">
+![dynamictable1 1-dimgeneral](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/cfeb40cf-312b-4a5c-9f4f-11f1352d017e)
+
 ## Deployment
 
 ### Deployment Parameters
@@ -511,16 +510,15 @@ This is executed as a single stage:
 # Code
 
 ## Dynamic table work
-* [Node definition](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/ee64505006f9786db1081f55aeebaab58c3acb99/Code-files/Dynamic%20Table%20Work%201.1-Node%20def.yml)
-* [Create Template](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/888ee2adf171cd339c7797310dd2c3aa59f656a9/Code-files/Dynamic%20worke1.1-create1.js.sql)
+* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableWork-156/definition.yml)
+* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableWork-156/create.sql.j2)
 
 ## Dynamic table dimension
-* [Node definition](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/ee64505006f9786db1081f55aeebaab58c3acb99/Code-files/Dynamic%20table%20dimension1.1-node%20def.yml)
-* [Create Template](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/888ee2adf171cd339c7797310dd2c3aa59f656a9/Code-files/Dynamicdimension1.1-create1.js.sql)
+* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableDimension-249/definition.yml)
+* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableDimension-249/create.sql.j2)
 
 ## Dynamic table latest record version
+* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-260/definition.yml)
+* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-260/create.sql.j2)
 
-* [Node definition](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/ee64505006f9786db1081f55aeebaab58c3acb99/Code-files/Dynamic%20table%20latest%20record%20version1.1-node%20def.yml)
-* [Create Template](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/888ee2adf171cd339c7797310dd2c3aa59f656a9/Code-files/Dynamiclv-create1.js.sql)
-  
-  [Macros](https://github.com/Coalesce-Software-Inc/coalesce_marketplace/blob/28da7344409986af70169700d8fcb73749ed8afe/Code-files/Macros_dynamictable.txt)
+[Macros](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/macros/macro-1.yml)
