@@ -507,7 +507,7 @@ This is executed as a single stage:
 
 `Drop Dynamic Table`
 
-# Code
+# Code 
 
 ## Dynamic table work
 * [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableWork-156/definition.yml)
@@ -522,3 +522,6 @@ This is executed as a single stage:
 * [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-260/create.sql.j2)
 
 [Macros](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/macros/macro-1.yml)
+
+
+[<img src="https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/01631be6-0604-4e4f-9a64-825ec98eb3ea" alt="Git Logo" height="40">](https://github.com/coalesceio/Dynamic-Table-Nodes)
