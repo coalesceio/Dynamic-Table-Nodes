@@ -1,0 +1,152 @@
+fileVersion: 1
+id: 545baa32-56a4-4beb-966a-fa7672ecd5af
+name: DT_WRK_NATION_REGION_DS_SAM
+operation:
+  config:
+    clusterKey: false
+    downstreamOption: false
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION
+    lagSpecification:
+      items:
+        - lagPeriod: Days
+          lagValue: 60
+    refresh_mode: INCREMENTAL
+    selectDistinct: true
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: transient dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 0f242a42-4914-4e6a-8a59-e14b78c96ea0
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        hashDetails: null
+        name: N_NATIONKEY
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 2781aecf-8d87-445f-bfa3-0304d357f1c3
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 4d660f69-e62d-4411-8d8c-8be320c66562
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        hashDetails: null
+        name: N_NAME
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 4398170a-f2d3-4708-94c7-d0a5045e07ea
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 0f0f9ebd-a642-48c4-9933-8a754d4f7e40
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        hashDetails: null
+        name: N_REGIONKEY
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 79c96fdb-85b7-46e8-b04e-105221a73d5c
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: b1a6e40f-9e1b-4a9b-9fc0-8be962397fc5
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: VARCHAR(152)
+        description: ""
+        hashDetails: null
+        name: N_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: d8328074-5df8-4ef5-87b6-e6837781304a
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 37711e90-b7ba-45cc-882b-bf0fc0d18e4f
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        hashDetails: null
+        name: R_REGIONKEY
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 16b9da1b-d16e-4bcd-b617-f34781bf4675
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: dc8f3f4f-9dc5-43b5-9761-d28a276e3495
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        hashDetails: null
+        name: R_NAME
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: a261e83d-ce64-4b50-bf79-e1ab545d37ba
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 024ffb6a-61f6-4a10-ba29-0d0ef5ac2270
+          stepCounter: 545baa32-56a4-4beb-966a-fa7672ecd5af
+        config: {}
+        dataType: VARCHAR(152)
+        description: ""
+        hashDetails: null
+        name: R_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 5a3e4338-6676-4962-8e05-dc2af86fba18
+                stepCounter: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          DT_WRK_NATION_REGION_SAMP: ce9c6194-00b8-409e-94e4-4e0d6e1aa81e
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: DT_WRK_NATION_REGION_SAMP
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_NATION_REGION_SAMP') }} "DT_WRK_NATION_REGION_SAMP"
+        name: DT_WRK_NATION_REGION_DS_SAM
+        noLinkRefs: []
+  name: DT_WRK_NATION_REGION_DS_SAM
+  overrideSQL: false
+  schema: ""
+  sqlType: "156"
+  type: sql
+  version: 1
+type: Node
