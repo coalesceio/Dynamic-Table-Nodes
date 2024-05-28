@@ -4,8 +4,8 @@ name: DT_WRK_NATION_DIS
 operation:
   config:
     downstreamOption: false
-    groupByAll: true
-    initialize: ON_SCHEDULE
+    groupByAll: false
+    initialize: ON_CREATE
     insertStrategy: UNION
     lagSpecification:
       items:
