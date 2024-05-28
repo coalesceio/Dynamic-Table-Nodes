@@ -38,6 +38,8 @@ The Dynamic Table Dimension has three configuration groups:
 * [Dynamic Table Options](#dynamic-table-options)
 * [General Options](#general-options)
 
+![node_config_options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/2be55d50-4ef6-4acc-a658-c14edb234822)
+
 <img src="https://github.com/Coalesce-Software-Inc/node_marketplace/blob/75a94c9ac5b8aac1c1faf8a6948fbd024c9ef2e9/images/node_config_options.png" alt="Dynamic Tables Dimension Node Configuration Options" style="width:280px;height:150px;">
 
 ### Node Properties
