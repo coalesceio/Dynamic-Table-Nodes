@@ -37,7 +37,7 @@ operation:
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
-  description: ""
+  description: Dim Customer Changes
   isMultisource: false
   locationName: TARGET_DB
   materializationType: dynamic table
