@@ -7,13 +7,14 @@ The Dynamic Tables Package includes:
 * [Dynamic Table Latest Record Version](#dynamic-tables-latest-record-version)
 * [Code](#code)
 
-<h2 id="dynamic-table-work">Dynamic Table Work<h2>
+<h2 id="dynamic-table-work">Dynamic Table Work</h2>
 
 The Coalesce Dynamic Table Work UDN is a versatile node that allows you to develop and deploy a single Dynamic Table Work or a DAG of Dynamic Tables in Snowflake. 
 
 [Dynamic tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-about) are a new table type offered by Snowflake that allow data teams to use SQL statements to declaratively define the results of data pipelines. Dynamic tables simplify the process of creating and managing data pipelines by streamlining data transformations without having to manage Streams and Tasks. 
 
 ## Version Information
+
  * UDN Name: Dynamic Table Work
  * Package Name: 
 
