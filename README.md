@@ -186,9 +186,14 @@ Go to the node and select the **Config tab** to see the Node Properties, Dynamic
   
 <h3 id="dynamic-table-dimension-node-properties">Node Properties</h3>
 
-[Missing content]
+* **Storage Location**: Storage Location where the WORK will be created.
+* **Node Type**: Name of template used to create node objects.
+* **Description**: A description of the node's purpose.
+* **Deploy Enabled**:
+  * If TRUE the node will be deployed / redeployed when changes are detected.
+  * If FALSE the node will not be deployed or will be dropped during redeployment.
 
-<h3 id="dynamic-table-dimension-options"> Dynamic Table Dimension Options</h3>
+<h3 id="dynamic-table-dimension-options"> Dynamic Table Options</h3>
 
 There are three configs within the Dimension group.
 
@@ -330,9 +335,14 @@ The Dynamic Table Latest Record Version has three configuration groups:
 
 Go to the node and select the **Config tab** to see the Node Properties, Dynamic Table Options and General Options.
 
-<h4 id="dynamic-table-latest-record-node-properties">Dynamic Table Latest Record Node Properties</h4>
+<h4 id="dynamic-table-latest-record-node-properties">Node Properties</h4>
 
-[Missing Content]
+* **Storage Location**: Storage Location where the WORK will be created.
+* **Node Type**: Name of template used to create node objects.
+* **Description**: A description of the node's purpose.
+* **Deploy Enabled**:
+  * If TRUE the node will be deployed / redeployed when changes are detected.
+  * If FALSE the node will not be deployed or will be dropped during redeployment.
 
 <h3 id="dynamic-table-latest-record-version-options">Dynamic Table Latest Record Version Record Versioning Options</h3>
 
