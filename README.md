@@ -220,7 +220,7 @@ There are three configs within the **Dynamic Table Options** group.
 
 ![dynamic table options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/44235450-1383-4530-a68a-28f040bd5c48)
 
-<h3 id="dynamic-table-dimension-options"> Dimension Options</h3>
+<h3 id="dimension-options"> Dimension Options</h3>
 
 There are three configs within the Dimension group.
 
