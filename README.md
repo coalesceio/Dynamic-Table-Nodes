@@ -13,6 +13,7 @@ The Coalesce Dynamic Table Work UDN is a versatile node that allows you to devel
 
 [Dynamic tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-about) are a new table type offered by Snowflake that allow data teams to use SQL statements to declaratively define the results of data pipelines. Dynamic tables simplify the process of creating and managing data pipelines by streamlining data transformations without having to manage Streams and Tasks. 
 
+
 ### Dynamic Table Work Node Configuration
 
 The Dynamic Table Dimension has three configuration groups:
@@ -41,7 +42,7 @@ There are three configs within the **Dynamic Table Options** group.
 * **Warehouse on which to execute Dynamic Table (required)**: The name of the warehouse used to refresh the Dynamic Table.
 * **Downstream(required)**: True or False Toggle to determine Dynamic Table refresh schedule.
   * True - Specifies that the dynamic table should be refreshed on demand when other dynamic tables that depend on it need to refresh.
-    * False - Allows you to set a Lag Specification for the Dynamic Table refresh.
+  * False - Allows you to set a Lag Specification for the Dynamic Table refresh.
 * **Lag Specification**:  If the Downstream option is set to false you can set the refresh schedule using Lag Specification. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag.
   * **Time Value**: Number representing the frequency of refresh for a given Time Period.
   * **Time Period**: Seconds / Minutes / Hours Days related to the entered Time Value.
@@ -105,6 +106,7 @@ When deployed for the first time into an environment the Dynamic Table Work node
 When a DAG of related Dynamic Tables are deployed together Coalesce will deploy the Dynamic Tables in the order that the Dynamic Tables are ordered.
 
 ### Dynamic Table Redeployment
+
 
 After the Dynamic Table Work has deployed for the first time into a target environment, subsequent deployments may result in either altering the Dynamic Table or recreating the Dynamic table.
 
@@ -250,6 +252,7 @@ When deployed for the first time into an environment the Dynamic Table Latest Re
 
 * **Create Dynamic Work Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
 
+
 #### Deploying a DAG of Dynamic Tables
 
 When a DAG of related Dynamic Tables are deployed together Coalesce will deploy the Dynamic Tables in the order that the Dynamic Tables are ordered.
@@ -298,6 +301,7 @@ If the materialization type from transient dynamic table to dynamic table and al
  5. **Apply Table Clustering(if cluster key option is provided)**
  6. **Resume Recluster Table(if cluster key option is provided)**
 
+
 #### Recreating the Dynamic Table
 
 If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-the-dynamic-table-1) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE` statement.
@@ -318,7 +322,6 @@ This is executed as a single stage:
 
 * **Drop Dynamic Table**
 
-
 <h2 id="dynamic-tables-latest-record-version">Dynamic Table Latest Record Version</h2>
 
 The Coalesce Dynamic Table Latest Record Version UDN is a versatile node that allows you to develop and deploy a single Dynamic Table Work or a DAG of Dynamic Tables with only the latest version of rows in Snowflake.
@@ -335,7 +338,9 @@ The Dynamic Table Latest Record Version has three configuration groups:
 
 Go to the node and select the **Config tab** to see the Node Properties, Dynamic Table Options and General Options.
 
+
 <h4 id="dynamic-table-latest-record-node-properties">Node Properties</h4>
+
 
 * **Storage Location**: Storage Location where the WORK will be created.
 * **Node Type**: Name of template used to create node objects.
@@ -357,14 +362,15 @@ There are three configs within the Record Versioning Options group.
 
 ![Record versioning](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/f45665a6-0f91-4138-ad34-ba4d919f1e73)
 
-
 <h3 id="dynamic-table-latest-record-general-options">Dynamic Table Latest Record Version General Options</h3>
 
 There are two configs related to the General Options group.
 
 * **Create As**:Provides option to choose materialization type as ‘dynamic table’ or ‘transient dynamic table.
 * **Cluster key**: True/False to determine whether Dimension is to be clustered or not
+
   * True -Allows you to specify the column based on which clustering is to be done.
+
 * **Allow Expressions Cluster Key**- True, allows to add an expression to the specified cluster key.
   * False – No clustering done.
  
@@ -376,6 +382,7 @@ There are two configs related to the General Options group.
 When designing DAG of Dynamic tables, you should specify the target lag. Review [# Understanding dynamic table refresh - Snowflake](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh)
 
 ### Dynamic Table Latest Record Version Deployment
+
 
 #### Dynamic Table Latest Record Version Deployment Parameters
 
@@ -433,7 +440,9 @@ There are three config changes that if made in isolation or all-together will re
   
 ### Changing Materialization Type and Dynamic Table Version Record Config Options
 
+
 #### Changing  Materialization Type From Dynamic Table to Transient Dynamic Table Version Record
+
 
 If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed
 
@@ -445,7 +454,9 @@ If the materialization type from dynamic table to transient dynamic table and al
  6. **Apply Table Clustering(if cluster key option is provided)**
  7. **Resume Recluster Table(if cluster key option is provided)**
 
+
 #### Changing  Materialization Type From Transient Dynamic Table to Dynamic Table Version Record
+
 
 If the materialization type from transient dynamic table to dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed
 
@@ -474,9 +485,11 @@ A table will be dropped if all of these are true:
 
 This is executed as a single stage:
 
+
 * **Drop Dynamic Table**
 
 <h1 id="code">Code</h1>
+
 
 ## Dynamic Table Work
 
