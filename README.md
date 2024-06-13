@@ -185,7 +185,7 @@ The Dynamic Table Dimension has three configuration groups:
 * [Node Properties](#dynamic-table-dimension-node-properties)
 * [Dynamic Table Options](#dynamic-table-dimension-options)
 * [Dimension Options](#dimension-options)
-* [General Options](#general-options)
+* [General Options](#general-dimension-options)
 
 
 Go to the node and select the **Config tab** to see the Node Properties, Dynamic Table Options and General Options.
