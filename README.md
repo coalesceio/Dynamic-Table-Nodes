@@ -53,7 +53,9 @@ There are three configs within the **Dynamic Table Options** group.
 * **Initialize(required)**: Specifies the behavior of the initial refresh of the dynamic table. 
   * **ON_CREATE**: Refreshes the dynamic table synchronously at creation
   * **ON_SCHEDULE**: Refreshes the dynamic table at the next scheduled refresh.
- 
+    
+ ![dynamic table options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/e4fbc362-f0c6-463c-9e82-ac454709c700)
+
 <h3 id="dynamic-table-general-options">General Options</h3>
 
 There are three configs related to the General Options group.
@@ -182,7 +184,9 @@ The Dynamic Table Dimension has three configuration groups:
 
 * [Node Properties](#dynamic-table-dimension-node-properties)
 * [Dynamic Table Options](#dynamic-table-dimension-options)
-* [General Options](#general-dimension-options)
+* [Dimension Options](#dimension-options)
+* [General Options](#general-options)
+
 
 Go to the node and select the **Config tab** to see the Node Properties, Dynamic Table Options and General Options.
   
@@ -197,6 +201,27 @@ Go to the node and select the **Config tab** to see the Node Properties, Dynamic
 
 <h3 id="dynamic-table-dimension-options"> Dynamic Table Options</h3>
 
+There are three configs within the **Dynamic Table Options** group.
+
+* **Warehouse on which to execute Dynamic Table (required)**: The name of the warehouse used to refresh the Dynamic Table.
+* **Downstream(required)**: True or False Toggle to determine Dynamic Table refresh schedule.
+  * True - Specifies that the dynamic table should be refreshed on demand when other dynamic tables that depend on it need to refresh.
+  * False - Allows you to set a Lag Specification for the Dynamic Table refresh.
+* **Lag Specification**:  If the Downstream option is set to false you can set the refresh schedule using Lag Specification. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag.
+  * **Time Value**: Number representing the frequency of refresh for a given Time Period.
+  * **Time Period**: Seconds / Minutes / Hours Days related to the entered Time Value.
+* **Refresh_Mode(required)**: Specifies the refresh type for the dynamic table.
+  * **AUTO**: Enforces an incremental refresh of the dynamic table by default. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.
+  * **INCREMENTAL**: Enforces an incremental refresh of the dynamic table.
+  * **FULL**: Enforces a full refresh of the dynamic table
+* **Initialize(required)**: Specifies the behavior of the initial refresh of the dynamic table. 
+  * **ON_CREATE**: Refreshes the dynamic table synchronously at creation
+  * **ON_SCHEDULE**: Refreshes the dynamic table at the next scheduled refresh.
+
+![dynamic table options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/44235450-1383-4530-a68a-28f040bd5c48)
+
+<h3 id="dynamic-table-dimension-options"> Dimension Options</h3>
+
 There are three configs within the Dimension group.
 
 * **Table keys (required):** The business keys columns based on which the Dimension key is formed.
@@ -206,7 +231,7 @@ There are three configs within the Dimension group.
 * **Timestamp or sequence:** The timestamp column name needs to be specified if Datetime column is chosen for Record versioning.
 * **Date/Timestamp Columns:** Date column,time column, and sort order of the columns to be specified if Date column and Time column is chosen for Record versioning.
 
-![Dynamic table dimension options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/9b156c00-31a3-4e2a-814d-5bbe929713e7)
+![Dimension options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/b3f8d788-b8a8-4884-b9bd-2ff85039d9df)
 
 <h3 id="general-dimension-options"> General Options </h3>
 
