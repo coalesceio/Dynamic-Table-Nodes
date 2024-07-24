@@ -17,7 +17,7 @@ operation:
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "30"
+          lagValue: "60"
     refresh_mode: FULL
     selectDistinct: false
     warehouseName: dev_wh_xs

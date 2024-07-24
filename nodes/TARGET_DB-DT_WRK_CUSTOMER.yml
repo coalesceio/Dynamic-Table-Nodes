@@ -1,5 +1,5 @@
 fileVersion: 1
-id: 62e34542-9839-49ee-a3b0-1249531e2cd1
+id: bf7f1bb8-16ae-4282-b8ee-519e13cda062
 name: DT_WRK_CUSTOMER
 operation:
   config:
@@ -33,8 +33,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 2b76a564-1a5c-41a0-abb2-1ae4551d7f57
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: 228196fb-0e9c-4f81-8862-40fb550fa996
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -47,8 +47,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: c952701d-d849-49e2-8892-0d966bf035fc
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: 84fb68cf-8326-49cd-a645-a83d6e32b464
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: VARCHAR(25)
         description: ""
@@ -61,8 +61,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: d46192cf-e860-42c1-b155-04f65db11ecc
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: b43117e0-2b8f-48f7-9f85-cb65cbe4f651
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: VARCHAR(40)
         description: ""
@@ -75,8 +75,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: e00ef8d6-36f9-41ad-874a-dc7ba886b225
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: f9be29f7-f9bb-43d3-91fd-20b4ab6b3e64
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -89,8 +89,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: f3f973f2-cb75-4281-9422-06ce63afee26
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: cfe2efab-e5a7-4c8f-9ad3-88b3a0db351a
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: VARCHAR(15)
         description: ""
@@ -103,8 +103,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 66eac6f4-31b7-4887-9f98-7f8392d4f224
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: f0dbb35e-900c-4133-b44b-f033eb93a8d0
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: NUMBER(12,2)
         description: ""
@@ -117,8 +117,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 4ad16959-8f09-4872-923d-83bca912cc70
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: a18132fe-c991-4348-af2d-af533f2333e8
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: VARCHAR(10)
         description: ""
@@ -131,8 +131,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: cb1674e1-e99e-478b-b7cb-43864649ab54
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: e317e24b-8977-411d-9ed8-337fb0764801
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: VARCHAR(117)
         description: ""
@@ -145,8 +145,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 7262988b-cfe5-4ea4-8603-dfc46ad2fa11
-          stepCounter: 62e34542-9839-49ee-a3b0-1249531e2cd1
+          columnCounter: 45b91d54-ff52-4785-ab9e-7b2d6676f2c6
+          stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: TIMESTAMP_LTZ(9)
         description: ""
@@ -173,7 +173,7 @@ operation:
   name: DT_WRK_CUSTOMER
   overrideSQL: false
   schema: ""
-  sqlType: DT101:::156
+  sqlType: "156"
   type: sql
   version: 1
 type: Node
