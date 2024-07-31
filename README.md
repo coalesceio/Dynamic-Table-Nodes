@@ -536,4 +536,3 @@ This is executed as a single stage:
 * [Macros](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/macros/macro-1.yml)
 
 
-[<img src="https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/01631be6-0604-4e4f-9a64-825ec98eb3ea" alt="Git Logo" height="40">](https://github.com/coalesceio/Dynamic-Table-Nodes)
