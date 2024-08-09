@@ -1,0 +1,95 @@
+fileVersion: 1
+id: b202995f-8268-4436-8b3d-e88b5d5a7811
+name: SAMPLES
+operation:
+  database: ""
+  dataset: ""
+  deployEnabled: true
+  description: null
+  locationName: SOURCE_DATA
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: fc20d5a9-478b-426f-8c80-83de42be9df3
+          stepCounter: b202995f-8268-4436-8b3d-e88b5d5a7811
+        config: {}
+        dataType: VARCHAR(16777216)
+        defaultValue: ""
+        description: ""
+        name: A2
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 32e66031-d8dc-4fa6-91a9-772ac92b15a8
+          stepCounter: b202995f-8268-4436-8b3d-e88b5d5a7811
+        config: {}
+        dataType: VARCHAR(16777216)
+        defaultValue: ""
+        description: ""
+        name: A1
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 2c79d9b8-802b-47fd-b3f6-c4b1c775003c
+          stepCounter: b202995f-8268-4436-8b3d-e88b5d5a7811
+        config: {}
+        dataType: NUMBER(38,0)
+        defaultValue: ""
+        description: ""
+        name: B1
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 263518b8-d042-43b5-a046-b57f46c4666a
+          stepCounter: b202995f-8268-4436-8b3d-e88b5d5a7811
+        config: {}
+        dataType: NUMBER(38,0)
+        defaultValue: ""
+        description: ""
+        name: C1
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+    join:
+      joinCondition: FROM {{ ref('SOURCE_DATA', 'SAMPLES') }}
+  name: SAMPLES
+  schema: ""
+  sqlType: Source
+  table: SAMPLES
+  type: sourceInput
+type: Node

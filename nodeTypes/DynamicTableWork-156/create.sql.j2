@@ -26,9 +26,11 @@ select 1 = 0
     ## Identify all config changes that would cause a CREATE instead of ALTER
     {% if currentState != undefined %} 
         ## General metadata
-        {% set columnsTest = currentState.columns == desiredState.columns %}
+        
         {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
         {% set joinTest = currentState.join == desiredState.join %}
+
+            
 
         {# Test to see if the transform in a column has changed #}
         {# Desired Namespace Variables Transform #}
@@ -44,44 +46,15 @@ select 1 = 0
         ## Only need to account for updated Storage Location mappings 
         ## sourceTest handles changed Storage Location Names
         ## Current Namespace Variables
-        {% set nsVariables = namespace(nsCurrentDepStorageLocations="") %}
-        {% set nsVariables = namespace(nsCurrentSourceStorageLocations="") %}
-        {% set nsVariables = namespace(nsCurrentTargetStorageLocations="") %}
-        {% set nsVariables = namespace(nsCurrentUsedStorageLocations="") %}
-
-        ## Current State Storage Location Info
-        {% for source in currentState.sources %}
-            {% for dep in source.dependencies %}
-                {% set depSourceLocation = dep.node.location.name %}
-                {% if loop.first %}
-                    {% set nsVariables.nsCurrentDepStorageLocations = depSourceLocation %}
-                {% else %}
-                    {% set nsVariables.nsCurrentDepStorageLocations = nsVariables.nsCurrentDepStorageLocations + ',' + depSourceLocation %}
-                {% endif %}
-            {% endfor %}
-            
-            {% if loop.first %}
-                {% set nsVariables.nsCurrentSourceStorageLocations = nsVariables.nsCurrentDepStorageLocations %}
-            {% else %}
-                {% set nsVariables.nsCurrentSourceStorageLocations = nsVariables.nsCurrentSourceStorageLocations + ',' + nsVariables.nsCurrentDepStorageLocations %}
-            {% endif %}
-        {% endfor %}
-
-        {% set nsVariables.nsCurrentTargetStorageLocations = currentState.node.location.name  %}
-
-        {% set nsVariables.nsCurrentUsedStorageLocations = nsVariables.nsCurrentSourceStorageLocations + ',' + nsVariables.nsCurrentTargetStorageLocations %}
-
-        {% set currentStorageLocations = (nsVariables.nsCurrentUsedStorageLocations).split(',') | list %}
-        {% set currentUniqueStorageLocations = currentStorageLocations | unique | sort | list %}
 
         ## Desired Namespace Variables
-        {% set nsVariables = namespace(nsDesiredDepStorageLocations="") %}
-        {% set nsVariables = namespace(nsDesiredSourceStorageLocations="") %}
-        {% set nsVariables = namespace(nsDesiredTargetStorageLocations="") %}
-        {% set nsVariables = namespace(nsDesiredUsedStorageLocations="") %}
-
-        {% set nsVariables = namespace(storageLocationTest="") %}
-
+        {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
+        nsDesiredTargetStorageLocations="",
+        nsDesiredUsedStorageLocations="",
+        storageLocationTest="",
+        descolchanges = 0,
+        othercolchanges = 0) %}
+        
         ## Desired State Storage Location Info
         {% for source in desiredState.sources %}
             {% for dep in source.dependencies %}
@@ -132,6 +105,8 @@ select 1 = 0
             {% endif %}
         {% endfor %}
 
+        
+
         ## Config
         {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
         {% set groupByAllTest = currentState.config.groupByAll == desiredState.config.groupByAll %}
@@ -148,10 +123,40 @@ select 1 = 0
         ## Initialize test
         {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
 
+        {# Column description changes and other column level changes #}
+            {% for alterCurCol in currentState.columns %}        
+                {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+              
+                    {% set currentDescription = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+                    {% set currentDatatype = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='dataType') | first %}
+                    {% set currentNullable = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='nullable') | first %}
+                    {% set currentDefaultValue = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='defaultValue') | first %}
+                    
+                    {% set desiredColumnName = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
+                    {% set desiredDescription = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+                    {% set desiredDatatype = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='dataType') | first %}
+                    {% set desiredNullable = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='nullable') | first %}
+                    {% set desiredDefaultValue = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='defaultValue') | first %}
+                        
+
+                   {% set datatypeTest = currentDatatype == desiredDatatype %}
+                   {% set nullableTest = currentNullable == desiredNullable %}
+                   {% set defaultValueTest = currentDefaultValue == desiredDefaultValue %}
+                   {% set descriptionTest = currentDescription == desiredDescription %}
+
+                    {% if (descriptionTest == false) %}
+                        {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
+                    {%elif (datatypeTest == false or nullableTest == false or defaultValueTest == false )%}
+                        {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
+                    {% endif %}
+
+                {%endif%}    
+            {% endfor %}
+
 
         ## If any of the above are false then a CREATE must be run
         {% if 
-            columnsTest == false or
+            nsVariables.othercolchanges > 0 or
             sourcesTest == false or
             joinTest == false or
             columnsTransformTest == false or
@@ -204,7 +209,7 @@ select 1 = 0
             lagSpecificationTest == false or
             downstreamOptionTest == false or
             nodeCommentTest == false or
-            clusterTest == false %}    
+            clusterTest == false or nsVariables.descolchanges > 0%}    
 
             {% set alterOnlyTest = true %}
         {% else %}
@@ -454,6 +459,26 @@ select 1 = 0
            {{ stage('Refresh Dynamic Table', true, "sql", "create") }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         {%endif%}
+
+        {# Change in column description #}
+            {% set nsVariables = namespace(colchanges="") %}
+            {% for alterCurCol in currentState.columns %}        
+                {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+              
+                    {% set currentDescription = alterCurCol.description %}
+
+                    {% set desiredColumnName = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
+                    {% set desiredDescription = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+
+                    {% set descriptionTest = currentDescription == desiredDescription %}
+
+                    {% if (descriptionTest == false) %}
+                    {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                    {% endif %}
+
+                {%endif%}    
+            {% endfor %}
 
     {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType) %}
         
