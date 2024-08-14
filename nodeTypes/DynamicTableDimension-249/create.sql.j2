@@ -17,7 +17,7 @@ does not permit copying or modification for any other purpose.
 {{ stage('Nothing to do.') }}
 select 1 = 0
 
-{% elif desiredState %}
+{% elif desiredState  %}
 
     ## Materialization type
     {%if  desiredState.node.materializationType == 'transient dynamic table' %}
@@ -26,13 +26,13 @@ select 1 = 0
 
  
 
-       ## Identify all config changes that would cause a CREATE instead of ALTER
+    ## Identify all config changes that would cause a CREATE instead of ALTER
     {% if currentState != undefined %} 
         ## General metadata
-        {% set columnsTest = currentState.columns == desiredState.columns %}
+        
         {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
         {% set joinTest = currentState.join == desiredState.join %}
-
+            
         {# Test to see if the transform in a column has changed #}
         {# Desired Namespace Variables Transform #}
         {% set desiredTransformArray = desiredState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
@@ -46,45 +46,15 @@ select 1 = 0
         ## Storage Location Tests
         ## Only need to account for updated Storage Location mappings 
         ## sourceTest handles changed Storage Location Names
-        ## Current Namespace Varialbes
-        {% set nsVariables = namespace(nsCurrentDepStorageLocations="") %}
-        {% set nsVariables = namespace(nsCurrentSourceStorageLocations="") %}
-        {% set nsVariables = namespace(nsCurrentTargetStorageLocations="") %}
-        {% set nsVariables = namespace(nsCurrentUsedStorageLocations="") %}
-
-        ## Current State Storage Location Info
-        {% for source in currentState.sources %}
-            {% for dep in source.dependencies %}
-                {% set depSourceLocation = dep.node.location.name %}
-                {% if loop.first %}
-                    {% set nsVariables.nsCurrentDepStorageLocations = depSourceLocation %}
-                {% else %}
-                    {% set nsVariables.nsCurrentDepStorageLocations = nsVariables.nsCurrentDepStorageLocations + ',' + depSourceLocation %}
-                {% endif %}
-            {% endfor %}
-            
-            {% if loop.first %}
-                {% set nsVariables.nsCurrentSourceStorageLocations = nsVariables.nsCurrentDepStorageLocations %}
-            {% else %}
-                {% set nsVariables.nsCurrentSourceStorageLocations = nsVariables.nsCurrentSourceStorageLocations + ',' + nsVariables.nsCurrentDepStorageLocations %}
-            {% endif %}
-        {% endfor %}
-
-        {% set nsVariables.nsCurrentTargetStorageLocations = currentState.node.location.name  %}
-
-        {% set nsVariables.nsCurrentUsedStorageLocations = nsVariables.nsCurrentSourceStorageLocations + ',' + nsVariables.nsCurrentTargetStorageLocations %}
-
-        {% set currentStorageLocations = (nsVariables.nsCurrentUsedStorageLocations).split(',') | list %}
-        {% set currentUniqueStorageLocations = currentStorageLocations | unique | sort | list %}
-
+        
         ## Desired Namespace Variables
-        {% set nsVariables = namespace(nsDesiredDepStorageLocations="") %}
-        {% set nsVariables = namespace(nsDesiredSourceStorageLocations="") %}
-        {% set nsVariables = namespace(nsDesiredTargetStorageLocations="") %}
-        {% set nsVariables = namespace(nsDesiredUsedStorageLocations="") %}
-
-        {% set nsVariables = namespace(storageLocationTest="") %}
-
+        {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",											 
+        nsDesiredTargetStorageLocations="",
+        nsDesiredUsedStorageLocations="",
+        storageLocationTest= true,
+        descolchanges = 0,
+        othercolchanges = 0 ) %}
+        
         ## Desired State Storage Location Info
         {% for source in desiredState.sources %}
             {% for dep in source.dependencies %}
@@ -109,24 +79,31 @@ select 1 = 0
 
         {% set desiredStorageLocations = (nsVariables.nsDesiredUsedStorageLocations).split(',') | list %}
         {% set desiredUniqueStorageLocations = desiredStorageLocations | unique | sort | list %}
+        {% set currentstoragelocations = currentState.storageLocations | map (attribute='name') | list%}
 
-        ## Test 
+        ## Storage Location Tests
+        ## Only need to account for updated Storage Location mappings
+        ## sourceTest handles changed Storage Location Names
         {% set nsVariables.storageLocationTest = true %}
-        {% for name in desiredUniqueStorageLocations if nsVariables.storageLocationTest == true %}
+        {% for name in desiredUniqueStorageLocations %}
             ## Current mappings
-            {%if currentState.storageLocations | length > 0 %}
-              {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | first %}
-              {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | first %}
-               {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}
-            {%else%}
+        
+            {%if currentState.storageLocations|length ==     0%}																		
               {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | string %}
               {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | string %}
-              {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}          
+               {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}
+            {%elif name in currentstoragelocations %}
+            
+                {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | first %}
+                {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | first %}
+                {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}  
             {%endif%}
+            
             ## Desired mappings
             {% set desiredDatabase = desiredState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | first %}
             {% set desiredSchema = desiredState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | first %}
             {% set desiredDatabaseSchema = desiredDatabase + '.' + desiredSchema %}
+
 
             {% if currentDatabaseSchema != desiredDatabaseSchema %}
                 {% set nsVariables.storageLocationTest = false %}
@@ -134,12 +111,10 @@ select 1 = 0
         {% endfor %}
 
         ## Config
-        {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
         {% set partitionByTest = currentState.config.partitionBy == desiredState.config.partitionBy %}
         {% set orderByTest = currentState.config.orderBy == desiredState.config.orderBy %}
         {% set orderByDateTimeTest = currentState.config.orderByDateTime == desiredState.config.orderByDateTime %}
-        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}
-
+        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}																										  
         ## Node
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
         {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
@@ -152,30 +127,76 @@ select 1 = 0
         ## Initialize test
         {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
 
+       
+        {# Column description changes and other column level changes #}
+            {% for alterCurCol in currentState.columns %}        
+                {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+              
+                    {% set currentDescription = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+                    {% set currentDatatype = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='dataType') | first %}
+                    {% set currentNullable = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='nullable') | first %}
+                    {% set currentDefaultValue = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='defaultValue') | first %}
+                    
+                    {% set desiredColumnName = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
+                    {% set desiredDescription = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+                    {% set desiredDatatype = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='dataType') | first %}
+                    {% set desiredNullable = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='nullable') | first %}
+                    {% set desiredDefaultValue = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='defaultValue') | first %}
+                        
+
+                   {% set datatypeTest = currentDatatype == desiredDatatype %}
+                   {% set nullableTest = currentNullable == desiredNullable %}
+                   {% set defaultValueTest = currentDefaultValue == desiredDefaultValue %}
+                   {% set descriptionTest = currentDescription == desiredDescription %}
+
+                    {% if (descriptionTest == false) %}
+                        {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
+                    {%elif (datatypeTest == false or nullableTest == false or defaultValueTest == false )%}
+                        {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
+                    {% endif %}
+
+                {%endif%}    
+            {% endfor %}
+
+
         ## If any of the above are false then a CREATE must be run
+       {%if nsVariables.storageLocationTest == false or nodeNameTest == false or nsVariables.descolchanges > 0%}
+
+           {%set altercreate = true %}
+
+       {%endif%}
+         
+        
         {% if 
-            columnsTest == false or
+            nsVariables.othercolchanges > 0 or
             sourcesTest == false or
             joinTest == false or
-            columnsTransformTest == false or
-            nsVariables.storageLocationTest == false or
-            insertStrategyTest == false or 
-            partitionByTest == false or 
+            columnsTransformTest == false or          
+			partitionByTest == false or 
             orderByTest == false or 
             orderByDateTimeTest == false or 
-            recordVersioningTest == false or 
-            nodeNameTest == false or
-            nodeMaterializationType == false or 
-            nodeIsMultisource == false or 
-            initializeTest == false or 
-            refreshTest == false %}    
+            recordVersioningTest == false or   
+            initializeTest == false or
+            refreshTest == false or (currentState.storageLocations | length ==0)  %}    
 
             {% set createTest = true %}
         {% else %}
             {% set createTest = false %}
         {% endif %}
+        
+         
+        {%if (altercreate == true and createTest == true) or(altercreate == false and createTest == true) %}
+
+          {% set createTest = true %}        
+
+        {%endif%}
+
+
     {% endif %}
     
+
+        
+
     ## Identify config changes that would only result in ALTER
     {% if createTest == false %}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
@@ -186,7 +207,7 @@ select 1 = 0
         {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
         {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
         {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
-        
+
             {# Clustering Test #}
             {% set clusterKeyTest = currentState.config.clusterKey == desiredState.config.clusterKey %}
             {% set clusterKeyExpressionsTest = currentState.config.clusterKeyExpressions == desiredState.config.clusterKeyExpressions %}
@@ -199,7 +220,7 @@ select 1 = 0
                 clusterKeyConfigTest == false or
                 clusterKeyConfigExpressionsTest == false %}
 
-            {% set clusterTest = false %}
+                {% set clusterTest = false %}
             {% else %}
                 {% set clusterTest = true %}
             {% endif %}
@@ -208,7 +229,11 @@ select 1 = 0
             warehouseTest == false or
             lagSpecificationTest == false or
             downstreamOptionTest == false or
-            nodeCommentTest == false or clusterTest == false %}    
+            nodeCommentTest == false or
+            clusterTest == false or 
+            nsVariables.descolchanges > 0 or
+            nsVariables.storageLocationTest == false or 
+            nodeNameTest == false %}    
 
             {% set alterOnlyTest = true %}
         {% else %}
@@ -218,12 +243,14 @@ select 1 = 0
 
 
     ## CREATE or ALTER
-    {% if (currentState == undefined) or (createTest == true and desiredState.node.materializationType == currentState.node.materializationType ) %}
+    {% if (currentState == undefined) or (createTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}      
 
-        
-    {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+        ## Materialization type
+        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
-    {%endif%}
+        {%endif%}
+         
+
         {# Figure out cluster key #}
         {% set nsVariables = namespace(finalClusterKey="") %}
         {% if desiredState.config.clusterKey == true %}
@@ -240,7 +267,7 @@ select 1 = 0
                     {% endif %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% else %}
 
@@ -252,10 +279,15 @@ select 1 = 0
                     {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% endif %}
         {% endif %}
+
+        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+          {% set keyword = 'TRANSIENT'  %}
+        {%endif%}
+
 
         ## Dynamic Table Name
         {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
@@ -279,7 +311,7 @@ select 1 = 0
 
             {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
         {% endif %}
-    
+	
 
         ## Refresh-type option
         {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
@@ -287,13 +319,18 @@ select 1 = 0
         ##Initialize option
         {% set dynamicTableinitialize = desiredState.config.initialize %}
 
+        ## Node description
+        {%- if desiredState.node.description | length > 0 %} 
+            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
+        {% endif %}
+
         {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
             REFRESH_MODE   = {{dynamicTablerefresh}}
             INITIALIZE = {{dynamicTableinitialize}}
-            {%- if desiredState.node.description | length > 0 %} COMMENT = '{{ desiredState.node.description }}'{% endif %}
+            {{ dynamicTableComment }}
         (
             {% for col in desiredState.columns %}
                 "{{ col.name }}"
@@ -310,21 +347,23 @@ select 1 = 0
             {% endfor %}
 
             {{ source.join }}
-
+           
             {% if not loop.last %}
                 {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
                     {{ desiredState.config.insertStrategy }}
                 {% endif %}
             {% endif %}
         {% endfor %}
+        
 
-        {% if desiredState.config.clusterKey == true %}
+                {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "create") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
                    {{ stage('Resume Recluster Table', true, "sql", "create") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
-        {% endif %}
+
+               {% endif %}
 
     {% elif (currentState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
 
@@ -332,6 +371,12 @@ select 1 = 0
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+
+        ## Current Dynamic Table Name 
+
+        {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+        {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+        {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
         ## Desired Warehouse
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
@@ -352,6 +397,7 @@ select 1 = 0
         {% endif %}
 
 
+
         ## Current Warehouse
         {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
@@ -369,6 +415,7 @@ select 1 = 0
             {% set currentDynamicTableLagSpecification = currentDynamicTableLagValue ~ ' ' ~ currentDynamicTableLagValuePeriod %}
         {% endif %}
 
+
         ## ALTER for Warehouse if necessary
         {% set dynamicTableWarehouse = '' %}
         {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
@@ -385,39 +432,35 @@ select 1 = 0
             {% endif %}
         {% endif %}
 
-        {%- if desiredState.node.description | length > 0 %}
+        {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
         {% endif %}
 
-        	{# Figure out cluster key #}
-            {% set nsVariables = namespace(finalClusterKey="") %}
+            {# Figure out cluster key #}
+            {% set nsVariables = namespace(finalClusterKey="",clusterValues=[]) %}
             {% if clusterTest == false %}
                 {% if desiredState.config.clusterKeyExpressions == true %}
                     {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
 
-                    {%- set nsVariables = namespace(clusterValues=[]) %}
-
                     {% for r in column %}
                         {% if expression[loop.index0] == "" %}
-                            {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                         {% else %}
-                            {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues +[expression[loop.index0]] %}
                         {% endif %}
                     {% endfor %}
 
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
                 {% elif desiredState.config.clusterKey == true %}
 
                     {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
 
-                    {%- set nsVariables = namespace(clusterValues=[]) %}
-
                     {% for r in column %}
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
+                        {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                     {% endfor %}
 
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
                 
                 {% else %}
 
@@ -425,30 +468,55 @@ select 1 = 0
 
                 {% endif %}
 
-                {{ stage('Recluster TABLE', true, "sql", "create") }}
+                {{ stage('Recluster TABLE', true, "sql", "alter") }}
                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
                 {{ nsVariables.finalClusterKey }}
 
-            {% endif %}
-
-        {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %} 
+            {% endif %}											   
         
-        {{ stage('Alter Dynamic Table', true, "sql", "create") }}
-        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
+        {# Change in column description #}           
+            {% for alterCurCol in currentState.columns %}        
+                {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+              
+                    {% set currentDescription = alterCurCol.description %}
+
+                    {% set desiredColumnName = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
+                    {% set desiredDescription = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+
+                    {% set descriptionTest = currentDescription == desiredDescription %}
+
+                    {% if (descriptionTest == false) %}
+                    {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                    {% endif %}
+
+                {%endif%}    
+            {% endfor %}
+
+            {# Change in storage mappings,target location or node name #}
+         {% if nsVariables.storageLocationTest == false or 
+             nodeNameTest == false  %}
+                {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                  ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
+          {%endif%}
+
+
+        {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
+           {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+           ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
             {{ dynamicTableWarehouse }}
             {{ dynamicTableLagSpecification }}
             {{ dynamicTableComment }}
         
-        {{ stage('Refresh Dynamic Table', true, "sql", "create") }}
-        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
+           {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
+           ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%endif%}
+       
 
     {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType) %}
-
-        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-          {% set keyword = 'TRANSIENT'  %}
-        {%endif%}
+        
+				 
         {# Figure out cluster key #}
         {% set nsVariables = namespace(finalClusterKey="") %}
         {% if desiredState.config.clusterKey == true %}
@@ -456,6 +524,7 @@ select 1 = 0
                 {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
 
                 {%- set nsVariables = namespace(clusterValues=[]) %}
+
                 {% for r in column %}
                     {% if expression[loop.index0] == "" %}
                         {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
@@ -463,16 +532,28 @@ select 1 = 0
                         {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
                     {% endif %}
                 {% endfor %}
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
+
             {% else %}
+
                 {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
+
                 {%- set nsVariables = namespace(clusterValues=[]) %}
+
                 {% for r in column %}
-                    {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
+                    {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                 {% endfor %}
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
+
             {% endif %}
         {% endif %}
+
+        ## Materialization type
+        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+          {% set keyword = 'TRANSIENT'  %}
+        {%endif%}
 
         ## Dynamic Table Name
         {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
@@ -511,9 +592,14 @@ select 1 = 0
         {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
         {% endif %}
+      
+        {%if currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == false%}
+          
+        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+          {% set keyword = 'TRANSIENT'  %}
+        {%endif%}
 
-
-        {%if currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table'%}
+																																			  
 
            ## Desired Dynamic Table Name
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
@@ -586,6 +672,41 @@ select 1 = 0
              {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
               DROP DYNAMIC TABLE IF EXISTS {{fullyQualifiedTargetDynamicTableNamenew}}
 
+             {# Change in column description #}
+            
+            {% for alterCurCol in currentState.columns %}        
+                {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+              
+                    {% set currentDescription = alterCurCol.description %}
+
+                    {% set desiredColumnName = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
+                    {% set desiredDescription = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+
+                    {% set descriptionTest = currentDescription == desiredDescription %}
+
+                    {% if (descriptionTest == false) %}
+                    {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                    {% endif %}
+
+                {%endif%}    
+            {% endfor %}
+
+            {# Change in storage mappings,target location or node name #}
+         {% if nsVariables.storageLocationTest == false or 
+             nodeNameTest == false  %}
+                {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+                  ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
+          {%endif%}
+
+          {% if clusterTest == false %}
+		 
+                  {{ stage('Recluster TABLE', true, "sql", "create") }}
+                ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
+                {{ nsVariables.finalClusterKey }}
+
+         {%endif%}
+		 
              {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
                 
                 {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
@@ -598,12 +719,17 @@ select 1 = 0
                ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
              {%endif%}
+        
+        
 
-        {%elif currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table'%}
+        {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
+        (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == true) %}
             
+            ## Materialization type
             {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-              {% set keyword = 'TRANSIENT'  %}
-           {%endif%}
+                {% set keyword = 'TRANSIENT'  %}
+            {%endif%}
+
                 {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "alter") }}
                 DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
@@ -630,7 +756,7 @@ select 1 = 0
                {% endfor %}
 
               {{ source.join }}
-
+               {% if desiredState.config.groupByAll %} GROUP BY ALL {% endif %}
               {% if not loop.last %}
                 {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
                     {{ desiredState.config.insertStrategy }}
@@ -638,6 +764,7 @@ select 1 = 0
               {% endif %}
             {% endfor %}
 
+           
 
         {%endif%}   
           
@@ -650,6 +777,7 @@ select 1 = 0
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
             {%endif%}
+
     {% else %}
         {{ stage('Nothing to do.') }}
         select 1 = 0
@@ -663,13 +791,13 @@ select 1 = 0
     {% set targetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
     {% set fullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
-    {{ stage('Drop' + '{{currentState.node.materializationType}}', true, "sql", "drop") }}
+    {{ stage('Drop ' + '{{currentState.node.materializationType}}', true, "sql", "drop") }}
     DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}
 
 
 {%- else -%}
 
-{{ stage('Nothing to do.') }}
-select 1 = 0
+    {{ stage('Nothing to do.') }}
+      select 1 = 0
 
 {% endif %}
