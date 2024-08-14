@@ -271,7 +271,7 @@ select 1 = 0
                     {% endif %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% else %}
 
@@ -283,7 +283,7 @@ select 1 = 0
                     {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% endif %}
         {% endif %}
@@ -455,7 +455,7 @@ select 1 = 0
                         {% endif %}
                     {% endfor %}
 
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
                 {% elif desiredState.config.clusterKey == true %}
 
@@ -538,7 +538,7 @@ select 1 = 0
                     {% endif %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% else %}
 
@@ -550,7 +550,7 @@ select 1 = 0
                     {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '"")' %}
 
             {% endif %}
         {% endif %}
