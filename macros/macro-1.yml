@@ -14,6 +14,12 @@ macroString: |
   {% endif %}
 
 
+  {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
+  {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
+  {% for source in sources %}
+      {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
+  {% endfor %}
+
   {%- macro partition_by() -%}
 
       {%- set nsVariables = namespace(partition="") -%}
@@ -21,10 +27,12 @@ macroString: |
 
       {%- for i in config.partitionBy.get('items') -%}
           {%- set colName = i.partColName.name -%}
+          {%- set colId = getColumnId(colName) -%}
+          {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
           {%- if loop.first -%}
-              {%- set nsVariables.partition = getSourceNameFromColumnName(colName) + '."' + colName + '"' -%}
+              {%- set nsVariables.partition = get_source_transform(columnMetadata) -%}
           {%- else -%}
-              {%- set nsVariables.partition = nsVariables.partition + ',' + getSourceNameFromColumnName(colName) + '."' + colName + '"' -%}
+              {%- set nsVariables.partition = nsVariables.partition + ',' + get_source_transform(columnMetadata) -%}
           {%- endif -%}
 
       {%- endfor -%}

@@ -164,7 +164,8 @@ select 1 = 0
            {%set altercreate = true %}
 
        {%endif%}
-       
+         
+        
         {% if 
             nsVariables.othercolchanges > 0 or
             sourcesTest == false or
@@ -173,7 +174,6 @@ select 1 = 0
             insertStrategyTest == false or 
             groupByAllTest == false or 
             selectDistinctTest == false or 
-            nodeMaterializationType == false or 
             nodeIsMultisource == false or 
             initializeTest == false or
             refreshTest == false or (currentState.storageLocations | length ==0)  %}    
@@ -182,7 +182,8 @@ select 1 = 0
         {% else %}
             {% set createTest = false %}
         {% endif %}
-
+        
+         
         {%if (altercreate == true and createTest == true) or(altercreate == false and createTest == true) %}
 
           {% set createTest = true %}        
@@ -264,7 +265,7 @@ select 1 = 0
                     {% endif %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% else %}
 
@@ -276,7 +277,7 @@ select 1 = 0
                     {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% endif %}
         {% endif %}
@@ -434,44 +435,40 @@ select 1 = 0
         {% endif %}
 
             {# Figure out cluster key #}
-            {% set ns = namespace(finalClusterKey="") %}
+            {% set nsVariables = namespace(finalClusterKey="",clusterValues=[]) %}
             {% if clusterTest == false %}
                 {% if desiredState.config.clusterKeyExpressions == true %}
                     {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
 
-                    {%- set ns = namespace(clusterValues=[]) %}
-
                     {% for r in column %}
                         {% if expression[loop.index0] == "" %}
-                            {% set ns.clusterValues = nsVariables.clusterValues + [r] %}
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                         {% else %}
-                            {% set ns.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues +[expression[loop.index0]] %}
                         {% endif %}
                     {% endfor %}
 
-                    {% set ns.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
                 {% elif desiredState.config.clusterKey == true %}
 
                     {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
 
-                    {%- set ns = namespace(clusterValues=[]) %}
-
                     {% for r in column %}
-                        {% set ns.clusterValues = nsVariables.clusterValues + [r] %}
+                        {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                     {% endfor %}
 
-                    {% set ns.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
                 
                 {% else %}
 
-                    {% set ns.finalClusterKey = 'DROP CLUSTERING KEY' %}
+                    {% set nsVariables.finalClusterKey = 'DROP CLUSTERING KEY' %}
 
                 {% endif %}
 
-                {{ stage('Recluster TABLE', true, "sql", "create") }}
+                {{ stage('Recluster TABLE', true, "sql", "alter") }}
                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
-                {{ ns.finalClusterKey }}
+                {{ nsVariables.finalClusterKey }}
 
             {% endif %}
         
@@ -488,7 +485,7 @@ select 1 = 0
                     {% set descriptionTest = currentDescription == desiredDescription %}
 
                     {% if (descriptionTest == false) %}
-                    {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+                    {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
                        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
                     {% endif %}
 
@@ -498,19 +495,19 @@ select 1 = 0
             {# Change in storage mappings,target location or node name #}
          {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
-                {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+                {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
                   ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
           {%endif%}
 
 
         {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
-           {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+           {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
             {{ dynamicTableWarehouse }}
             {{ dynamicTableLagSpecification }}
             {{ dynamicTableComment }}
         
-           {{ stage('Refresh Dynamic Table', true, "sql", "create") }}
+           {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         {%endif%}
 
@@ -534,7 +531,7 @@ select 1 = 0
                     {% endif %}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% else %}
 
@@ -543,10 +540,10 @@ select 1 = 0
                 {%- set nsVariables = namespace(clusterValues=[]) %}
 
                 {% for r in column %}
-                    {% set nsVariables.clusterValues = nsVariables.clusterValues + [r] %}
+                    {% set nsVariables.clusterValues = nsVariables.clusterValues + [r]%}
                 {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
 
             {% endif %}
         {% endif %}
@@ -594,8 +591,7 @@ select 1 = 0
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
         {% endif %}
       
-        {%if (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
-        (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == true)%}
+        {%if currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == false%}
           
         {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
@@ -722,8 +718,8 @@ select 1 = 0
         
         
 
-        {%elif currentState.node.materializationType 
-         != desiredState.node.materializationType and createTest == false %}
+        {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
+        (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == true) %}
             
             ## Materialization type
             {%if  desiredState.node.materializationType == 'transient dynamic table' %}
