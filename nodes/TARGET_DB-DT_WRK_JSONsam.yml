@@ -1,0 +1,326 @@
+fileVersion: 1
+id: f19273da-375e-466e-ae5c-5e81b4c4c65c
+name: DT_WRK_JSONsam
+operation:
+  config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - columnNameExpressions:
+            columnCounter: f2d4bdd2-7e1d-49f3-afeb-f5877e1ccfcd
+            stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+          sqlExpression: trunc("address_city", -5)
+        - columnNameExpressions:
+            columnCounter: 9a861f67-4441-4a12-95e3-952a0c9266f2
+            stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+    clusterKeyExpressions: true
+    downstreamOption: false
+    initialize: ON_CREATE
+    lagSpecification:
+      items:
+        - lagPeriod: Days
+          lagValue: 60
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 362db0c8-936b-422a-bcc1-a857c03e5f9f
+            stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+    orderByDateTime:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: f2d4bdd2-7e1d-49f3-afeb-f5877e1ccfcd
+            stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+    recordVersioning: Datetime Column
+    refresh_mode: AUTO
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: a0b20405-51fc-41cb-8620-b350509bec54
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: VARIANT
+        description: ""
+        name: SRC
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 362db0c8-936b-422a-bcc1-a857c03e5f9f
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: TIMESTAMP_NTZ
+        description: ""
+        name: LOAD_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 529a94b1-aba6-4c4b-83e5-5d24aa762f4c
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 65dc04fc-254c-456f-97aa-888e78cd4aa9
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: FILENAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: c890fe4d-6b50-4367-b984-2d943a4659b4
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: ac40e70a-ba1d-4bf8-ae24-1f0fd140cd09
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: NUMBER
+        description: ""
+        name: FILE_ROW_NUMBER
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 48165b99-b5a7-47dc-9f85-05f33f4a5cda
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5af53103-a50e-4aaa-87ab-5d2fe2e74586
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: TIMESTAMP_NTZ
+        description: ""
+        name: FILE_LAST_MODIFIED
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e28f3b9e-1898-4dfb-acf0-f6d5df6f5be8
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 54e11c44-9190-4335-81f9-2f1c1a9d6e7e
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: TIMESTAMP_NTZ
+        description: ""
+        name: SCAN_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 8094b4b7-d17a-45d5-b3e6-2d349a701f84
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 9a861f67-4441-4a12-95e3-952a0c9266f2
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: f2d4bdd2-7e1d-49f3-afeb-f5877e1ccfcd
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: address_city
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"address\".\"city\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: dbabbd9e-379d-4729-89f3-fa72c9e8044e
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: address_state
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"address\".\"state\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: d9c5be14-17e4-4caf-872b-010cf749972c
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: address_streetAddress
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"address\".\"streetAddress\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: fab388ef-11aa-4fb6-9192-98ea6f67d99e
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: DOUBLE
+        description: ""
+        name: age
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"age\"::DOUBLE"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: c5b56727-2b60-4a20-ab25-35974997e8f2
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: firstName
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"firstName\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 70007618-7866-432a-b706-ac425d07c475
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: gender
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"gender\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7126eba1-8198-444b-bbae-f175ae7ed3eb
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: lastName
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"COPY_JSONsam\".\"SRC\":\"lastName\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ef820d6f-0c85-4aad-803d-3022ac5998cd
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: phoneNumbers_number
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"SRC_phoneNumbers\".value:\"number\"::STRING"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5853aaf7-17b0-4830-9bde-a12028381c0c
+          stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        config: {}
+        dataType: STRING
+        description: ""
+        name: phoneNumbers_type
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba56308c-7558-43fa-8eb9-e970153df747
+                stepCounter: a3cb6a8b-844b-4c79-9c75-87bdddbdda2d
+            transform: "\"SRC_phoneNumbers\".value:\"type\"::STRING"
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: COPY_JSONsam
+        join:
+          joinCondition: |-
+            FROM {{ ref('TARGET_DB', 'COPY_JSONsam') }} "COPY_JSONsam", 
+            lateral flatten(input => "SRC":"phoneNumbers", OUTER => TRUE) "SRC_phoneNumbers"
+        name: DT_WRK_JSONsam
+        noLinkRefs: []
+  name: DT_WRK_JSONsam
+  overrideSQL: false
+  schema: ""
+  sqlType: "260"
+  type: sql
+  version: 1
+type: Node

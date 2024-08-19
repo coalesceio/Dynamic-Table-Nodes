@@ -1,6 +1,6 @@
 fileVersion: 1
 id: bf7f1bb8-16ae-4282-b8ee-519e13cda062
-name: DT_WRK_CUSTOMER
+name: DT_WRK_CUSTOMER1
 operation:
   config:
     clusterKey: false
@@ -24,7 +24,7 @@ operation:
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
-  description: ""
+  description: Dynamic work table
   isMultisource: false
   locationName: TARGET_DB
   materializationType: dynamic table
@@ -37,7 +37,7 @@ operation:
           stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         config: {}
         dataType: NUMBER(38,0)
-        description: ""
+        description: CUSTOMER KEY
         name: C_CUSTKEY
         nullable: true
         sourceColumnReferences:
@@ -168,9 +168,9 @@ operation:
             nodeName: CUSTOMER
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMER') }} "CUSTOMER"
-        name: DT_WRK_CUSTOMER
+        name: DT_WRK_CUSTOMER1
         noLinkRefs: []
-  name: DT_WRK_CUSTOMER
+  name: DT_WRK_CUSTOMER1
   overrideSQL: false
   schema: ""
   sqlType: "156"
