@@ -189,7 +189,7 @@ metadata:
              isRequired: false
       
           -  type: textBox
-             displayName: Expression
+             displayName: Expression (Column name to be enclosed within double quotes)
              attributeName: sqlExpression
              default: "ex. trunc(<column_name>, -5)"
              isRequired: false

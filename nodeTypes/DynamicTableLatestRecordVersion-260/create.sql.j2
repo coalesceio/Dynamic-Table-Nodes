@@ -436,6 +436,14 @@ select 1 = 0
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
         {% endif %}
 
+
+             {# Change in storage mappings,target location or node name #}
+         {% if nsVariables.storageLocationTest == false or 
+             nodeNameTest == false  %}
+                {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                  ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
+          {%endif%}
+ 
             {# Figure out cluster key #}
             {% set nsVariables = namespace(finalClusterKey="",clusterValues=[]) %}
             {% if clusterTest == false %}
@@ -473,7 +481,8 @@ select 1 = 0
                 {{ nsVariables.finalClusterKey }}
 
             {% endif %}
-        
+
+
         {# Change in column description #}
             
             {% for alterCurCol in currentState.columns %}        
@@ -493,14 +502,6 @@ select 1 = 0
 
                 {%endif%}    
             {% endfor %}
-
-            {# Change in storage mappings,target location or node name #}
-         {% if nsVariables.storageLocationTest == false or 
-             nodeNameTest == false  %}
-                {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
-                  ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
-          {%endif%}
-
 
         {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
            {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
