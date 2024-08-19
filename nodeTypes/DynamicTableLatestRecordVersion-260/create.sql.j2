@@ -713,14 +713,7 @@ select 1 = 0
 
                 {%endif%}    
             {% endfor %}
-
-            {# Change in storage mappings,target location or node name #}
-         {% if nsVariables.storageLocationTest == false or 
-             nodeNameTest == false  %}
-                {{ stage('Alter Dynamic Table', true, "sql", "create") }}
-                  ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
-          {%endif%}
-
+            
           {% if clusterTest == false %}
 		 
                   {{ stage('Recluster TABLE', true, "sql", "create") }}
