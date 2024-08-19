@@ -1,6 +1,6 @@
 fileVersion: 1
 id: d2dfc2a5-d54a-4af0-bd0f-94b61e43c589
-name: DT_DIM_CUSTOMER
+name: DT_DIM_CUSTOMER1
 operation:
   config:
     clusterKey: true
@@ -74,20 +74,6 @@ operation:
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: 228196fb-0e9c-4f81-8862-40fb550fa996
-                stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
-          columnCounter: 32318263-89b0-40fe-8b07-bef29c5851c2
-          stepCounter: d2dfc2a5-d54a-4af0-bd0f-94b61e43c589
-        config: {}
-        dataType: VARCHAR(25)
-        description: ""
-        name: C_NAME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: 84fb68cf-8326-49cd-a645-a83d6e32b464
                 stepCounter: bf7f1bb8-16ae-4282-b8ee-519e13cda062
             transform: ""
       - appliedColumnTests: {}
@@ -259,17 +245,18 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_CUSTOMER1: bf7f1bb8-16ae-4282-b8ee-519e13cda062
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER
+            nodeName: DT_WRK_CUSTOMER1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER') }} "DT_WRK_CUSTOMER"
-        name: DT_DIM_CUSTOMER
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
+        name: DT_DIM_CUSTOMER1
         noLinkRefs: []
-  name: DT_DIM_CUSTOMER
+  name: DT_DIM_CUSTOMER1
   overrideSQL: false
   schema: ""
   sqlType: "249"
