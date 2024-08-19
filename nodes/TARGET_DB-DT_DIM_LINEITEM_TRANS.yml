@@ -64,7 +64,7 @@ operation:
           columnCounter: daec3322-95ba-48ba-9a17-52867684de29
           stepCounter: f771da5d-16d9-49cf-8999-25ead4c7ab15
         config: {}
-        dataType: NUMBER(38,0)
+        dataType: NUMBER(38,2)
         description: ""
         name: L_ORDERKEY
         nullable: true
