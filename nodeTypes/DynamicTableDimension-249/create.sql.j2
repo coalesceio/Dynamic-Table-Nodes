@@ -676,20 +676,20 @@ select 1 = 0
             #Materialization type change from dynamic table to transient dynamic table
 
         {%if (currentState.node.name != desiredState.node.name) or (desiredState.node.location.name !=  currentState.node.location.name) or nsVariables.storageLocationTest == false%}
-             {{ stage('Clone Work node', true, "sql", "alter") }}
+             {{ stage('Clone Dimension node', true, "sql", "alter") }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} clone {{cfullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Work node', true, "sql", "alter") }}
+             {{ stage('Swap Dimension node', true, "sql", "alter") }}
              ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{cfullyQualifiedTargetDynamicTableName}}
 
              {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
               DROP DYNAMIC TABLE IF EXISTS {{cfullyQualifiedTargetDynamicTableName}}
 
            {%else%}
-             {{ stage('Clone Work node', true, "sql", "alter") }}
+             {{ stage('Clone Dimension node', true, "sql", "alter") }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableNamenew }} clone {{fullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Work node', true, "sql", "alter") }}
+             {{ stage('Swap Dimension node', true, "sql", "alter") }}
              ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{fullyQualifiedTargetDynamicTableNamenew }}
 
              {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
