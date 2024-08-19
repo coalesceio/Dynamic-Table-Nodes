@@ -346,8 +346,7 @@ select 1 = 0
             {% endfor %}
 
             {{ source.join }}
-																			
-
+            
             {% if not loop.last %}
                 {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
                     {{ desiredState.config.insertStrategy }}
@@ -707,7 +706,7 @@ select 1 = 0
                     {% set descriptionTest = currentDescription == desiredDescription %}
 
                     {% if (descriptionTest == false) %}
-                    {{ stage('Alter Dynamic Table', true, "sql", "create") }}
+                    {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
                        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
                     {% endif %}
 
@@ -716,7 +715,7 @@ select 1 = 0
             
           {% if clusterTest == false %}
 		 
-                  {{ stage('Recluster TABLE', true, "sql", "create") }}
+                  {{ stage('Recluster TABLE', true, "sql", "alter") }}
                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
                 {{ nsVariables.finalClusterKey }}
 
