@@ -12,7 +12,7 @@ operation:
         - columnNameExpressions:
             columnCounter: 3a431b07-b22b-4e01-bb4c-65f1c12e9f71
             stepCounter: d2dfc2a5-d54a-4af0-bd0f-94b61e43c589
-          sqlExpression: trunc(c_address, -5)
+          sqlExpression: trunc("C_ADDRESS", -5)
     clusterKeyExpressions: true
     downstreamOption: false
     initialize: ON_CREATE
