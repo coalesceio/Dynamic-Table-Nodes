@@ -366,7 +366,7 @@ select 1 = 0
 
                {% endif %}
 
-    {% elif (currentState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
+    {% elif (currentState != undefined and desiredState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
 
         ## Desired Dynamic Table Name
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
@@ -451,7 +451,7 @@ select 1 = 0
                         {% endif %}
                     {% endfor %}
 
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
 
                 {% elif desiredState.config.clusterKey == true %}
 
@@ -510,13 +510,12 @@ select 1 = 0
             {{ dynamicTableLagSpecification }}
             {{ dynamicTableComment }}
         
-           {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
-           ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         {%endif%}
 
-        
+        {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
+           ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
 
-    {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType) %}
+    {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType and desiredState != undefined) %}
         
         {# Figure out cluster key #}
         {% set nsVariables = namespace(finalClusterKey="") %}
@@ -738,12 +737,11 @@ select 1 = 0
                  {{ dynamicTableLagSpecification }}
                  {{ dynamicTableComment }}
         
-                {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
-               ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
-
              {%endif%}
-        
-        
+
+             {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
+               ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
+      
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
         (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' ) %}

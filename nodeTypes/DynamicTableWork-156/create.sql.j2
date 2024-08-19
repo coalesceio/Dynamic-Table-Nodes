@@ -284,9 +284,6 @@ select 1 = 0
         {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        
-
-
         ## Warehouse
         ## Can be updated during deployment via a parameter to account for different warehouse names in different deployments
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
@@ -371,7 +368,7 @@ select 1 = 0
 
                {% endif %}
 
-    {% elif (currentState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
+    {% elif (currentState != undefined and desiredState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
 
         ## Desired Dynamic Table Name
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
@@ -449,7 +446,7 @@ select 1 = 0
                     {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
 
                     {% for r in column %}
-                        {% if expression[loop.index0] == "" %}
+                        {% if expression[loop.index0] == "" or expression[loop.index0] is undefined%}
                             {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"']%}
                         {% else %}
                             {% set nsVariables.clusterValues = nsVariables.clusterValues +[expression[loop.index0]] %}
@@ -466,7 +463,7 @@ select 1 = 0
                         {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"']%}
                     {% endfor %}
 
-                    {% set nsVariables.finalClusterKey = 'CLUSTER BY ("' + nsVariables.clusterValues | join('","') + '")' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
                 
                 {% else %}
 
@@ -521,7 +518,7 @@ select 1 = 0
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         
 
-    {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType) %}
+    {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType and desiredState != undefined) %}
         
         {# Figure out cluster key #}
         {% set nsVariables = namespace(finalClusterKey="") %}
@@ -532,7 +529,7 @@ select 1 = 0
                 {%- set nsVariables = namespace(clusterValues=[]) %}
 
                 {% for r in column %}
-                    {% if expression[loop.index0] == "" %}
+                    {% if expression[loop.index0] == "" or expression[loop.index0] is undefined%}
                         {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
                     {% else %}
                         {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
@@ -579,8 +576,6 @@ select 1 = 0
         {% set new_table_name =  '"' ~ parts[-1].strip('"')~ '_NEW"' %}
         {% set parts = parts[:-1] + [new_table_name] %} 
         {% set cfullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
-
-
 
         ## Warehouse
         ## Can be updated during deployment via a parameter to account for different warehouse names in different deployments
@@ -738,12 +733,11 @@ select 1 = 0
                  {{ dynamicTableLagSpecification }}
                  {{ dynamicTableComment }}
         
-                {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
-               ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
-
+              
              {%endif%}
         
-        
+              {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
+               ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
         (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' ) %}
