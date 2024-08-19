@@ -1,0 +1,14 @@
+fileVersion: 1
+id: "236"
+mappingDefinitions:
+  SOURCE_DATA:
+    database: ANANDHIS_DEV
+    schema: SOURCE_DATA
+  TARGET_DB:
+    database: ANANDHIS_DEV
+    schema: TARGET_QA
+  TARGET_DEV:
+    database: ANANDHIS_DEV
+    schema: TARGET_DEV
+name: QA_TEST
+type: Environment
