@@ -6,13 +6,14 @@ operation:
     clusterKey: true
     clusterKeyConfig:
       items:
-        - columnName:
-            columnCounter: f2d4bdd2-7e1d-49f3-afeb-f5877e1ccfcd
-            stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+        - {}
     clusterKeyConfigExpressions:
       items:
-        - {}
-    clusterKeyExpressions: false
+        - columnNameExpressions:
+            columnCounter: f2d4bdd2-7e1d-49f3-afeb-f5877e1ccfcd
+            stepCounter: f19273da-375e-466e-ae5c-5e81b4c4c65c
+          sqlExpression: trunc(address_city, -5)
+    clusterKeyExpressions: true
     downstreamOption: false
     initialize: ON_CREATE
     lagSpecification:
