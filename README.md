@@ -101,7 +101,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 
 When deployed for the first time into an environment the Dynamic Table Work node will execute the following stage:
 
-* **Create Dynamic Work Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
+* **Create Work Dynamic Table/Dynamic Transient Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
 
 ### Deploying a DAG of Dynamic Tables
 
@@ -109,16 +109,13 @@ When a DAG of related Dynamic Tables are deployed together Coalesce will deploy 
 
 ### Dynamic Table Redeployment
 
-
 After the Dynamic Table Work has deployed for the first time into a target environment, subsequent deployments may result in either altering the Dynamic Table or recreating the Dynamic table.
 
 If a Dynamic Table is altered this will run two stages:
 
-* **Stage 1: Alter Dynamic Table**
-  * This stage will execute an `ALTER` statement and alter the Dynamic Table in the target environment setting the new parameters.
-* **Stage 2: Refresh Dynamic Table**
-  * This stage will refresh the Dynamic Table so that data is available after refresh is complete.
-
+* **Alter Dynamic Table**:This stage will execute an `ALTER` statement and alter the Dynamic Table in the target environment setting the new parameters.
+* **Refresh Dynamic Table**:This stage will refresh the Dynamic Table so that data is available after refresh is complete.
+  
 ### Altering the Dynamic Table
 
 There are three config changes that if made in isolation or all-together will result in an `ALTER` statement to modify the Dynamic Table in the target environment.
@@ -127,11 +124,13 @@ There are three config changes that if made in isolation or all-together will re
 * Downstream
 * Lag Specification
 
+Also if the location of the node,node name,column level description and table level description results in an `ALTER`statement whereas the other column or table level changes like data type change,column name change,column addition/deletion results in a `CREATE` statement
+
 ### Changing Materialization Type and Dynamic Table Config Options
 
 #### Changing  Materialization Type From Dynamic Table to Transient Dynamic Table
 
-If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed:
+If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options or table level changes that result in ALTER ,the following steps gets executed:
 
 1. **Clone Work node**
 2. **Swap Work node**
@@ -141,20 +140,30 @@ If the materialization type from dynamic table to transient dynamic table and al
 6. **Apply Table Clustering(if cluster key option is provided)**
 7. **Resume Recluster Table(if cluster key option is provided)**
 
+If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options or table level changes that result in `CREATE`,the following steps gets executed:
+
+1. **Drop dynamic table**
+2. **Create Work dynamic transient table**
+5. **Apply Table Clustering(if cluster key option is provided)**
+6. **Resume Recluster Table(if cluster key option is provided)**
+
 #### Changing  Materialization Type From Transient Dynamic Table to Dynamic Table
 
 If the materialization type from transient dynamic table to dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed:
 
 1. **Drop transient dynamic table**
-2. **Create dynamic table**
-3. **Alter Dynamic Table**
-4. **Refresh Dynamic Table**
+2. **Create Work dynamic table**
 5. **Apply Table Clustering(if cluster key option is provided)**
 6. **Resume Recluster Table(if cluster key option is provided)**
 
 ### Recreating the Dynamic Table
 
 If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-the-dynamic-table) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE `statement.
+
+If the changes in node results in recreating the Dynamic table,then following stages are executed
+
+* **Drop table/transient table**:Table is dropped before recreating in case the node name or location is changed
+* **Create Work Dynamic table/Dynamic transient table**:Dynamic table is created
 
 ### Redeploying a DAG of Dynamic Tables
 
@@ -273,80 +282,87 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 
 ### Dynamic Table Initial Deployment
 
-When deployed for the first time into an environment the Dynamic Table Latest Record Version node will execute the below stage:
+When deployed for the first time into an environment the Dynamic Table Work node will execute the following stage:
 
-* **Create Dynamic Work Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
+* **Create Dimension Dynamic Table/Dynamic Transient Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
 
-
-#### Deploying a DAG of Dynamic Tables
+### Deploying a DAG of Dynamic Tables
 
 When a DAG of related Dynamic Tables are deployed together Coalesce will deploy the Dynamic Tables in the order that the Dynamic Tables are ordered.
 
 ### Dynamic Table Redeployment
 
-After the Dynamic Table Latest Record Version has deployed for the first time into a target environment, subsequent deployments may result in either altering the Dynamic Table or recreating the Dynamic table.
+After the Dynamic Table Dimension has deployed for the first time into a target environment, subsequent deployments may result in either altering the Dynamic Table or recreating the Dynamic table.
 
-If a Dynamic Table is to be altered this will run two stages:
+If a Dynamic Table is altered this will run two stages:
 
-* **Stage 1: Alter Dynamic Table**
-  * This stage will execute an `ALTER` statement and alter the Dynamic Table in the target environment setting the new parameters.
-* **Stage 2: Refresh Dynamic Table**
-  * This stage will refresh the Dynamic Table so that data is available for analysis as soon as the refresh is complete.
+* **Alter Dynamic Table**:This stage will execute an `ALTER` statement and alter the Dynamic Table in the target environment setting the new parameters.
+* **Refresh Dynamic Table**:This stage will refresh the Dynamic Table so that data is available after refresh is complete.
+  
+### Altering the Dynamic Table
 
-#### Altering the Dynamic Table
-
-There are three config changes that if made in isolation or all-together will result in an ALTER statement to modify the Dynamic Table in the target environment.
+There are three config changes that if made in isolation or all-together will result in an `ALTER` statement to modify the Dynamic Table in the target environment.
 
 * Warehouse Name
 * Downstream
 * Lag Specification
-  
+
+Also if the location of the node,node name,column level description and table level description results in an `ALTER`statement whereas the other column or table level changes like data type change,column name change,column addition/deletion results in a `CREATE` statement
+
 ### Changing Materialization Type and Dynamic Table Config Options
 
 #### Changing  Materialization Type From Dynamic Table to Transient Dynamic Table
 
-If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed:
+If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options or table level changes that result in ALTER ,the following steps gets executed:
 
- 1. **Clone Dimension node**
- 2. **Swap Dimension node**
- 3. **Drop dynamic table**
- 4. **Alter Dynamic Table**
- 5. **Refresh Dynamic Table**
- 6. **Apply Table Clustering(if cluster key option is provided)**
- 7. **Resume Recluster Table(if cluster key option is provided)**
+1. **Clone Dimension node**
+2. **Swap Dimension node**
+3. **Drop dynamic table**
+4. **Alter Dynamic Table**
+5. **Refresh Dynamic Table**
+6. **Apply Table Clustering(if cluster key option is provided)**
+7. **Resume Recluster Table(if cluster key option is provided)**
+
+If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options or table level changes that result in `CREATE`,the following steps gets executed:
+
+1. **Drop dynamic table**
+2. **Create Dimension dynamic transient table**
+5. **Apply Table Clustering(if cluster key option is provided)**
+6. **Resume Recluster Table(if cluster key option is provided)**
 
 #### Changing  Materialization Type From Transient Dynamic Table to Dynamic Table
 
-If the materialization type from transient dynamic table to dynamic table and also if there are changes in dynamic table config options the following steps gets executed:
+If the materialization type from transient dynamic table to dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed:
 
- 1. **Drop transient dynamic table**
- 2. **Create dimension dynamic table**
- 3. **Alter Dynamic Table**
- 4. **Refresh Dynamic Table**
- 5. **Apply Table Clustering(if cluster key option is provided)**
- 6. **Resume Recluster Table(if cluster key option is provided)**
+1. **Drop transient dynamic table**
+2. **Create Dimension dynamic table**
+5. **Apply Table Clustering(if cluster key option is provided)**
+6. **Resume Recluster Table(if cluster key option is provided)**
 
+### Recreating the Dynamic Table
 
-#### Recreating the Dynamic Table
+If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-the-dynamic-table) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE `statement.
 
-If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-the-dynamic-table-1) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE` statement.
+If the changes in node results in recreating the Dynamic table,then following stages are executed
 
-#### Redeploying a DAG of Dynamic Tables
+* **Drop table/transient table**:Table is dropped before recreating in case the node name or location is changed
+* **Create Dimension Dynamic table/Dynamic transient table**:Dynamic table is created
+
+### Redeploying a DAG of Dynamic Tables
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-###  Dynamic Tables Undeployment
+### Dynamic Tables Undeployment
 
 A table will be dropped if all of these are true:
 
-* The Dynamic Table Latest Record Version Node is deleted from a Workspace.
+* The Dynamic Dimension Node is deleted from a Workspace.
 * The Workspace is committed to Git. 
 * The Workspace committed to Git is deployed to a higher level environment.
 
 This is executed as a single stage:
 
-* **Drop Dynamic Table**
-
+`Drop Dynamic Table`
 <h2 id="dynamic-tables-latest-record-version">Dynamic Table Latest Record Version</h2>
 
 The Coalesce Dynamic Table Latest Record Version UDN is a versatile node that allows you to develop and deploy a single Dynamic Table Work or a DAG of Dynamic Tables with only the latest version of rows in Snowflake.
@@ -438,7 +454,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 
 When deployed for the first time into an environment the Dynamic Table Latest Record Version node will execute the below stage:
 
-* **Create Dynamic Work Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
+* **Create Dynamic Work Table/Transient Table**: This stage will execute a `CREATE OR REPLACE` statement and create a Dynamic Table in the target environment.
 
 #### Deploying a DAG of Dynamic Table Latest Record Version
 
@@ -462,31 +478,36 @@ There are three config changes that if made in isolation or all-together will re
 * Warehouse Name
 * Downstream
 * Lag Specification
+
+Also if the location of the node,node name,column level description and table level description results in an `ALTER`statement whereas the other column or table level changes like data type change,column name change,column addition/deletion results in a `CREATE` statement
   
 ### Changing Materialization Type and Dynamic Table Version Record Config Options
 
-
 #### Changing  Materialization Type From Dynamic Table to Transient Dynamic Table Version Record
 
+If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options or table level changes that result in ALTER ,the following steps gets executed:
 
-If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed
+1. **Clone Work node**
+2. **Swap Work node**
+3. **Drop dynamic table**
+4. **Alter Dynamic Table**
+5. **Refresh Dynamic Table**
+6. **Apply Table Clustering(if cluster key option is provided)**
+7. **Resume Recluster Table(if cluster key option is provided)**
 
- 1. **Clone Work node**
- 2. **Swap Work node**
- 3. **Drop dynamic table**
- 4. **Alter Dynamic Table**
- 5. **Refresh Dynamic Table**
- 6. **Apply Table Clustering(if cluster key option is provided)**
- 7. **Resume Recluster Table(if cluster key option is provided)**
+If the materialization type from dynamic table to transient dynamic table and also if there are changes in dynamic table config options or table level changes that result in `CREATE`,the following steps gets executed:
 
+1. **Drop dynamic table**
+2. **Create Work Dynamic transient table**
+5. **Apply Table Clustering(if cluster key option is provided)**
+6. **Resume Recluster Table(if cluster key option is provided)**
 
 #### Changing  Materialization Type From Transient Dynamic Table to Dynamic Table Version Record
-
 
 If the materialization type from transient dynamic table to dynamic table and also if there are changes in dynamic table config options ,the following steps gets executed
 
 1. **Drop transient dynamic table**
-2. **Create dynamic table**
+2. **Create Work dynamic table**
 3. **Alter Dynamic Table**
 4. **Refresh Dynamic Table**
 5. **Apply Table Clustering(if cluster key option is provided)**
@@ -494,7 +515,12 @@ If the materialization type from transient dynamic table to dynamic table and al
 
 #### Recreating the Dynamic Table Version Record
 
-If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-dynamic-table-latest-record-version) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE` statement.
+If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-the-dynamic-table) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE `statement.
+
+If the changes in node results in recreating the Dynamic table,then following stages are executed
+
+* **Drop table/transient table**:Table is dropped before recreating in case the node name or location is changed
+* **Create Work Dynamic table/Dynamic transient table**:Dynamic table is created
 
 #### Redeploying a DAG of Dynamic Table Version Record
 
@@ -510,11 +536,9 @@ A table will be dropped if all of these are true:
 
 This is executed as a single stage:
 
-
 * **Drop Dynamic Table**
 
 <h1 id="code">Code</h1>
-
 
 ## Dynamic Table Work
 
