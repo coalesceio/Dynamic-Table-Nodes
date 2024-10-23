@@ -131,7 +131,7 @@ metadata:
           displayName: Allow Expressions in Cluster Key
           default: false
           isRequired: false
-          enableIf: "{% if config.clusterKey %} true {% else %} false {% endif %}"
+          enableIf: "{% if config.clusterKey and (node.materializationType != 'iceberg dynamic table') %} true {% else %} false {% endif %}"
         
         - type: tabular
           displayName: 'Cluster Key'
@@ -144,7 +144,7 @@ metadata:
              isRequired: false
       
           isRequired: false
-          enableIf: "{% if (config.clusterKey and not config.clusterKeyExpressions) %} true {% else %} false {% endif %}"
+          enableIf: "{% if (config.clusterKey and not config.clusterKeyExpressions)  %} true {% else %} false {% endif %}"
 
         - type: tabular
           displayName: 'Cluster Key'
@@ -163,7 +163,7 @@ metadata:
              isRequired: false
       
           isRequired: false
-          enableIf: "{% if (config.clusterKey and config.clusterKeyExpressions) %} true {% else %} false {% endif %}"
+          enableIf: "{% if (config.clusterKey and (node.materializationType != 'iceberg dynamic table') and config.clusterKeyExpressions)  %} true {% else %} false {% endif %}"
         
 
        
