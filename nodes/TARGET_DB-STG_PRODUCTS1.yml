@@ -89,7 +89,7 @@ operation:
   name: STG_PRODUCTS1
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: "353"
   type: sql
   version: 1
 type: Node
