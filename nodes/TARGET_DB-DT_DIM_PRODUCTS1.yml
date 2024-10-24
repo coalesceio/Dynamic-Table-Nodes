@@ -14,25 +14,29 @@ operation:
     clusterKeyExpressions: false
     downstreamOption: false
     externalVolume: sficebergextvol1
-    initialize: ON_CREATE
+    initialize: ON_SCHEDULE
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: 60
     orderBy:
       items:
-        - colName:
-            columnCounter: f71abf42-57dc-483d-9a93-fb9835c1198b
-            stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
+        - {}
     orderByDateTime:
       items:
-        - {}
+        - colNameDate:
+            columnCounter: f71abf42-57dc-483d-9a93-fb9835c1198b
+            stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
+          colNameTimestamp:
+            columnCounter: b97c5270-8ba6-45f3-9fef-d0cce2b477ad
+            stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
+          sortOrdDateTimestamp: desc
     partitionBy:
       items:
         - partColName:
             columnCounter: d6751f23-8480-4183-ac1a-f7d6ebe37c9e
             stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
-    recordVersioning: Datetime Column
+    recordVersioning: Date Column and Time Column
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
   database: ""
@@ -91,6 +95,18 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
+          columnCounter: 84d61eb0-8d11-4815-8a1d-fb7663a85472
+          stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
+        config: {}
+        dataType: VARCHAR(255)
+        description: ""
+        name: NAME_CODE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: CONCAT("STG_PRODUCTS"."PRODUCT_ID","STG_PRODUCTS"."PRODUCT_NAME")
+      - appliedColumnTests: {}
+        columnReference:
           columnCounter: 21d969e0-fca5-4fe1-9ed6-96cd2971b9c1
           stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
         config: {}
@@ -129,6 +145,20 @@ operation:
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: b97c5270-8ba6-45f3-9fef-d0cce2b477ad
+          stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
+        config: {}
+        dataType: TIME
+        description: ""
+        name: TIME_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 24f15e20-1259-4ef3-b6ca-fe70578c751c
                 stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
             transform: ""
       - acceptedValues:
@@ -202,14 +232,18 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_PRODUCTS: 62e36283-9b73-4215-9336-4d259c7eefbc
+          STG_PRODUCTS_JOIN: 62e36283-9b73-4215-9336-4d259c7eefbc
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
             nodeName: STG_PRODUCTS
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS"
+          joinCondition: |-
+            FROM {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS"
+            JOIN  {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS_JOIN"
         name: DT_DIM_PRODUCTS1
         noLinkRefs: []
   name: DT_DIM_PRODUCTS1

@@ -93,6 +93,20 @@ operation:
                 stepCounter: "0"
             transform: CURRENT_DATE()
         systemColumnType: None
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 24f15e20-1259-4ef3-b6ca-fe70578c751c
+          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+        config: {}
+        dataType: TIME
+        description: ""
+        name: TIME_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: CURRENT_TIME()
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:

@@ -1,0 +1,178 @@
+fileVersion: 1
+id: f86df666-8e0d-42df-b24b-a101595bbd15
+name: DT_WRK_PRODUCTS1
+operation:
+  config:
+    baseLocation: baseloc
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: dfa322dc-e01d-4f2e-8f58-cea3f31298e6
+            stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: sficebergextvol1
+    initialize: ON_SCHEDULE
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    orderBy:
+      items:
+        - {}
+    orderByDateTime:
+      items:
+        - colNameDate:
+            columnCounter: f29b1152-90b8-40fc-8361-8d2b54484670
+            stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+          colNameTimestamp:
+            columnCounter: 4142e8c5-3e47-4e88-a44c-cac928d78e6b
+            stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+          sortOrdDateTimestamp: desc
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: dfa322dc-e01d-4f2e-8f58-cea3f31298e6
+            stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+    recordVersioning: Date Column and Time Column
+    refresh_mode: AUTO
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: iceberg dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: dfa322dc-e01d-4f2e-8f58-cea3f31298e6
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: PRODUCT_ID
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: acb04f62-3c9e-46dc-8d86-0b8f25326c57
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c30fe31f-4ee6-4cc4-a4a9-b3c613e7c351
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: VARCHAR(255)
+        description: ""
+        name: PRODUCT_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e7833da9-8fe1-4866-af68-7e5455f09b9c
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 27be0167-ceae-4028-a242-07264ee9ba95
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: VARCHAR(100)
+        description: ""
+        name: BRAND
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: b065fb36-7f69-45f8-8905-ef5017a6113f
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5b8061b5-c540-4235-a783-c189185b86d6
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: VARCHAR(50)
+        description: ""
+        name: COLOUR
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: bae4ca57-a917-40c3-85a4-2b7c58743eda
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: f29b1152-90b8-40fc-8361-8d2b54484670
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        name: DATE_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 4142e8c5-3e47-4e88-a44c-cac928d78e6b
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: TIME
+        description: ""
+        name: TIME_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 24f15e20-1259-4ef3-b6ca-fe70578c751c
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 4b6ccdea-e714-4b7b-9dc1-3ec75747ca4c
+          stepCounter: f86df666-8e0d-42df-b24b-a101595bbd15
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          STG_PRODUCTS: 62e36283-9b73-4215-9336-4d259c7eefbc
+          STG_PRODUCTS_JOIN: 62e36283-9b73-4215-9336-4d259c7eefbc
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: STG_PRODUCTS
+        join:
+          joinCondition: |-
+            FROM {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS"
+            JOIN {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS_JOIN"
+            ON STG_PRODUCTS_JOIN."PRODUCT_ID"=STG_PRODUCTS."PRODUCT_ID"
+        name: DT_WRK_PRODUCTS1
+        noLinkRefs: []
+  name: DT_WRK_PRODUCTS1
+  overrideSQL: false
+  schema: ""
+  sqlType: "351"
+  type: sql
+  version: 1
+type: Node
