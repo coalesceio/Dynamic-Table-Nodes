@@ -6,6 +6,6 @@ mappingDefinitions:
     schema: EDW_QA
   TARGET_DB:
     database: POONAMM_DEV
-    schema: EDW_QA
+    schema: EDW_QA_1
 name: QA Test
 type: Environment
