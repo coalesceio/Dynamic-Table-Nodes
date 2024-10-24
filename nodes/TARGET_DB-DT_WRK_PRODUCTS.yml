@@ -15,15 +15,14 @@ operation:
             stepCounter: adbb4c43-820e-4d65-8173-fd133f60eb46
           sqlExpression: trunc("PRODUCT_ID", -5)
     clusterKeyExpressions: true
-    downstreamOption: false
+    downstreamOption: true
     externalVolume: sficebergextvol1
     groupByAll: false
     initialize: ON_SCHEDULE
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - lagPeriod: Seconds
-          lagValue: 60
+        - {}
     refresh_mode: FULL
     selectDistinct: true
     warehouseName: dev_wh_xs
