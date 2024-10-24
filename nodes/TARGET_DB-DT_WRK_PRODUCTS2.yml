@@ -1,0 +1,177 @@
+fileVersion: 1
+id: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+name: DT_WRK_PRODUCTS2
+operation:
+  config:
+    baseLocation: baseloc
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 39833f28-b4f5-42a5-8fe8-a12bf9cb64bf
+            stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: true
+    externalVolume: sficebergextvol1
+    initialize: ON_SCHEDULE
+    lagSpecification:
+      items:
+        - {}
+    orderBy:
+      items:
+        - {}
+    orderByDateTime:
+      items:
+        - colNameDate:
+            columnCounter: 5ca39fba-1532-4c26-b3cf-fff1e278a4b1
+            stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+          colNameTimestamp:
+            columnCounter: 41b55617-1ab2-42ea-af3a-982484672b21
+            stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+          sortOrdDateTimestamp: desc
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 39833f28-b4f5-42a5-8fe8-a12bf9cb64bf
+            stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+    recordVersioning: Date Column and Time Column
+    refresh_mode: AUTO
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: iceberg dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 39833f28-b4f5-42a5-8fe8-a12bf9cb64bf
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: PRODUCT_ID
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: acb04f62-3c9e-46dc-8d86-0b8f25326c57
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: a7b0b5f2-ef44-4775-886e-4a8a6df44ac0
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: VARCHAR(255)
+        description: ""
+        name: PRODUCT_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e7833da9-8fe1-4866-af68-7e5455f09b9c
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 85aa35e8-c36d-4eeb-b20a-da21ce124ca0
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: VARCHAR(100)
+        description: ""
+        name: BRAND
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: b065fb36-7f69-45f8-8905-ef5017a6113f
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 4539c32a-16b4-4d1f-8ea9-138aea5c3497
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: VARCHAR(50)
+        description: ""
+        name: COLOUR
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: bae4ca57-a917-40c3-85a4-2b7c58743eda
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5ca39fba-1532-4c26-b3cf-fff1e278a4b1
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        name: DATE_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 41b55617-1ab2-42ea-af3a-982484672b21
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: TIME
+        description: ""
+        name: TIME_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 24f15e20-1259-4ef3-b6ca-fe70578c751c
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5e9dd473-3e63-4782-8c87-67f4ada3a8ff
+          stepCounter: c59832f3-23f8-4f24-ae0b-85f6821fffc2
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          STG_PRODUCTS: 62e36283-9b73-4215-9336-4d259c7eefbc
+          STG_PRODUCTS_JOIN: 62e36283-9b73-4215-9336-4d259c7eefbc
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: STG_PRODUCTS
+        join:
+          joinCondition: |-
+            FROM {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS"
+            JOIN {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS_JOIN"
+            ON STG_PRODUCTS_JOIN."PRODUCT_ID"=STG_PRODUCTS."PRODUCT_ID"
+        name: DT_WRK_PRODUCTS2
+        noLinkRefs: []
+  name: DT_WRK_PRODUCTS2
+  overrideSQL: false
+  schema: ""
+  sqlType: "351"
+  type: sql
+  version: 1
+type: Node
