@@ -4,7 +4,7 @@ name: PRODUCTS
 operation:
   database: ""
   dataset: ""
-  deployEnabled: true
+  deployEnabled: false
   description: ""
   locationName: SOURCE_DATA
   metadata:
