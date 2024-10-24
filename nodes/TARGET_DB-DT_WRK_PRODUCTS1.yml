@@ -14,13 +14,12 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
-    downstreamOption: false
+    downstreamOption: true
     externalVolume: sficebergextvol1
     initialize: ON_SCHEDULE
     lagSpecification:
       items:
-        - lagPeriod: Minutes
-          lagValue: 60
+        - {}
     orderBy:
       items:
         - {}
