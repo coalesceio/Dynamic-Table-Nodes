@@ -4,16 +4,13 @@ name: DT_WRK_PRODUCTS
 operation:
   config:
     baseLocation: test
-    clusterKey: true
+    clusterKey: false
     clusterKeyConfig:
       items:
         - {}
     clusterKeyConfigExpressions:
       items:
-        - columnNameExpressions:
-            columnCounter: 822c04b6-2142-4c6b-944c-be65d4b42a13
-            stepCounter: adbb4c43-820e-4d65-8173-fd133f60eb46
-          sqlExpression: trunc("PRODUCT_ID", -5)
+        - {}
     clusterKeyExpressions: true
     downstreamOption: true
     externalVolume: sficebergextvol1
@@ -23,7 +20,7 @@ operation:
     lagSpecification:
       items:
         - {}
-    refresh_mode: FULL
+    refresh_mode: AUTO
     selectDistinct: true
     warehouseName: dev_wh_xs
   database: ""
@@ -31,7 +28,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: dynamic table
+  materializationType: iceberg dynamic table
   metadata:
     appliedNodeTests: []
     columns:
