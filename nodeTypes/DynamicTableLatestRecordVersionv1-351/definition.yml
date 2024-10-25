@@ -147,12 +147,12 @@ metadata:
           attributeName: externalVolume
           type: textBox
           default: ""
-          isRequired: true
+          isRequired: false
         - displayName: Base location name
           attributeName: baseLocation
           type: textBox
           default: ""
-          isRequired: true
+          isRequired: false
       - groupName: General Options
         items: 
 
