@@ -803,7 +803,7 @@ select 1 = 0
         select 1 = 0
     
     {% endif %}
-   ## Materialization type iceberg dynamic table
+
    {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}
        ## Materialization type
 		{% set keyword = 'ICEBERG'  %}
