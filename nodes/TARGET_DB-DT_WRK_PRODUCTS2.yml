@@ -3,7 +3,7 @@ id: 8b4b35bc-17d9-432e-a6ef-00e8146169b0
 name: DT_WRK_PRODUCTS2
 operation:
   config:
-    baseLocation: ""
+    baseLocation: baseloc
     clusterKey: false
     clusterKeyConfig:
       items:
@@ -13,7 +13,7 @@ operation:
         - {}
     clusterKeyExpressions: false
     downstreamOption: false
-    externalVolume: ""
+    externalVolume: sficebergextvol1
     groupByAll: false
     initialize: ON_CREATE
     insertStrategy: UNION ALL

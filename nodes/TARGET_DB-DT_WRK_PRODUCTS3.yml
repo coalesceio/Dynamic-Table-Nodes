@@ -3,7 +3,7 @@ id: 9aedf193-da32-4699-982e-e9e7e807333b
 name: DT_WRK_PRODUCTS3
 operation:
   config:
-    baseLocation: ""
+    baseLocation: baseloc
     clusterKey: false
     clusterKeyConfig:
       items:
@@ -13,7 +13,7 @@ operation:
         - {}
     clusterKeyExpressions: false
     downstreamOption: false
-    externalVolume: ""
+    externalVolume: sficebergextvol1
     groupByAll: false
     initialize: ON_CREATE
     insertStrategy: UNION ALL
@@ -29,7 +29,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient dynamic table
+  materializationType: iceberg dynamic table
   metadata:
     appliedNodeTests: []
     columns:
