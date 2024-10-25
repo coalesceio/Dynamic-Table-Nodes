@@ -4,6 +4,7 @@ The Dynamic Tables Package includes:
 
 * [Dynamic Table Work](#dynamic-table-work)
 * [Dynamic Table Dimension](#dynamic-table-dimension)
+* [Dynamic Iceberg Table Options](#dynamic-iceberg-table-options)
 * [Dynamic Table Latest Record Version](#dynamic-tables-latest-record-version)
 * [Code](#code)
 
@@ -20,6 +21,7 @@ The Dynamic Table Dimension has three configuration groups:
 
 * [Node Properties](#dynamic-table-work-node-properties)
 * [Dynamic Table Options](#dynamic-table-options)
+* [Dynamic Iceberg Table Options](#dynamic-iceberg-table-options)
 * [General Options](#dynamic-table-general-options)
 
 Go to the node and select the **Config tab** to see the Node Properties, Dynamic Table Options and General Options.
@@ -55,6 +57,11 @@ There are three configs within the **Dynamic Table Options** group.
   * **ON_SCHEDULE**: Refreshes the dynamic table at the next scheduled refresh.
     
  ![dynamic table options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/e4fbc362-f0c6-463c-9e82-ac454709c700)
+
+<h3 id="dynamic-iceberg-table-options">Dynamic Iceberg Options</h3>
+ 
+* **Snowflake EXTERNAL VOLUME name**: Specifies the identifier (name) for the external volume where the Iceberg table stores its metadata files and data in Parquet format. [External volume](https://docs.snowflake.com/sql-reference/sql/create-external-volume) needs to be created in snowflake as a prerequisite.
+* **Base location name**: The path to a directory where Snowflake can write data and metadata files for the table. Specify a relative path from the table’s EXTERNAL_VOLUME location.
 
 <h3 id="dynamic-table-general-options">General Options</h3>
 
@@ -194,6 +201,7 @@ The Dynamic Table Dimension has three configuration groups:
 * [Node Properties](#dynamic-table-dimension-node-properties)
 * [Dynamic Table Options](#dynamic-table-dimension-options)
 * [Dimension Options](#dimension-options)
+* [Dynamic Iceberg Table Options](#dynamic-iceberg-table-options)
 * [General Options](#general-dimension-options)
 
 
@@ -242,15 +250,20 @@ There are three configs within the Dimension group.
 
 ![Dimension options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/b3f8d788-b8a8-4884-b9bd-2ff85039d9df)
 
+<h3 id="dynamic-iceberg-table-options">Dynamic Iceberg Options</h3>
+ 
+* **Snowflake EXTERNAL VOLUME name**: Specifies the identifier (name) for the external volume where the Iceberg table stores its metadata files and data in Parquet format. [External volume](https://docs.snowflake.com/sql-reference/sql/create-external-volume) needs to be created in snowflake as a prerequisite.
+* **Base location name**: The path to a directory where Snowflake can write data and metadata files for the table. Specify a relative path from the table’s EXTERNAL_VOLUME location.
+
 <h3 id="general-dimension-options"> General Options </h3>
 
 There are two configs related to the General Options group.
 
-* **Create As**:Provides option to choose materialization type as ‘dynamic table’ or ‘transient dynamic table.
+* **Create As**:Provides option to choose materialization type as ‘dynamic table’ or ‘transient dynamic table’ or ‘iceberg dynamic table’.
 * **Cluster key**: True/False to determine whether Dimension is to be clustered or not.
 	* True - Allows you to specify the column based on which clustering is to be done.
 * **Allow Expressions Cluster Key**- True allows to add an expression to the specified cluster key.
-  * False – No clustering done
+  * False – No clustering done.Not supported for iceberg dynamic table.
  
 ![dynamictable1 1-dimgeneral](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/dda1c53c-a3da-4701-8449-0023db1ac44a)
 
@@ -375,6 +388,7 @@ The Dynamic Table Latest Record Version has three configuration groups:
 
 * [Node Properties](#dynamic-table-latest-record-node-properties)
 * [Record Versioning Options](#dynamic-table-latest-record-version-options)
+* [Dynamic Iceberg Table Options](#dynamic-iceberg-table-options)
 * [General Options](#dynamic-table-latest-record-general-options)
 
 Go to the node and select the **Config tab** to see the Node Properties, Dynamic Table Options and General Options.
@@ -400,6 +414,11 @@ There are three configs within the Record Versioning Options group.
   * Date and Time column
 * **Timestamp or sequence:** The timestamp column name needs to be specified if Datetime column is chosen for Record versioning.
 * **Date/Timestamp Columns:** Date column,time column, and sort order of the columns to be specified if Date column and Time column is chosen for Record versioning.
+
+<h3 id="dynamic-iceberg-table-options">Dynamic Iceberg Options</h3>
+ 
+* **Snowflake EXTERNAL VOLUME name**: Specifies the identifier (name) for the external volume where the Iceberg table stores its metadata files and data in Parquet format. [External volume](https://docs.snowflake.com/sql-reference/sql/create-external-volume) needs to be created in snowflake as a prerequisite.
+* **Base location name**: The path to a directory where Snowflake can write data and metadata files for the table. Specify a relative path from the table’s EXTERNAL_VOLUME location.
 
 ![Record versioning](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/f45665a6-0f91-4138-ad34-ba4d919f1e73)
 
@@ -542,21 +561,19 @@ This is executed as a single stage:
 
 ## Dynamic Table Work
 
-* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableWork-156/definition.yml)
-* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableWork-156/create.sql.j2)
+* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/tree/main/nodeTypes/DynamicTableWork-347/definition.yml)
+* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableWork-347/create.sql.j2)
 
 ## Dynamic Table Dimension
 
-* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableDimension-249/definition.yml)
-* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableDimension-249/create.sql.j2)
+* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableDimension-350/definition.yml)
+* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableDimension-350/create.sql.j2)
 
 ## Dynamic Table Latest Record Version
 
-* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-260/definition.yml)
-* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-260/create.sql.j2)
+* [Node definition](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-351/definition.yml)
+* [Create Template](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/nodeTypes/DynamicTableLatestRecordVersion-351/create.sql.j2)
 
 ## Macros
 
 * [Macros](https://github.com/coalesceio/Dynamic-Table-Nodes/blob/main/macros/macro-1.yml)
-
-
