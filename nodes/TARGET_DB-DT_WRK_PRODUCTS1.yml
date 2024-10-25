@@ -90,7 +90,7 @@ operation:
           - columnReferences:
               - columnCounter: b065fb36-7f69-45f8-8905-ef5017a6113f
                 stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
-            transform: ""
+            transform: "'test brand'"
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 5b8061b5-c540-4235-a783-c189185b86d6
