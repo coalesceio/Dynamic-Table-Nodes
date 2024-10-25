@@ -12,7 +12,7 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
-    downstreamOption: true
+    downstreamOption: false
     externalVolume: sficebergextvol1
     initialize: ON_SCHEDULE
     lagSpecification:

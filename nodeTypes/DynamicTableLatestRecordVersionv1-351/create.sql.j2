@@ -5,11 +5,12 @@ Unauthorized reproduction, distribution, or disclosure of this material is stric
 Coalesce permits you to copy and modify this script for the purposes of using with Coalsce but
 does not permit copying or modification for any other purpose.  
 #}
-{# == Node Type Version        : 1.1  == #}
+{# == Node Type Version        : 1.2  == #}
 {# == Node Type Name           : Dynamic Table Latest Record Version  == #}
 {# == Node Type Description    : This node creates and runs dynamic table work with latest record version.Materialization type and cluster key added with this version == #}
 {#Release date:20231215  Version:1.0#}
 {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
+{#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
 {% if desiredState == currentState %}
 
@@ -17,8 +18,8 @@ does not permit copying or modification for any other purpose.
 select 1 = 0
 
 {% elif desiredState  %}
- ## Materialization type transient dynamic table or dynamic table
- {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
+   ## Materialization type transient dynamic table or dynamic table
+   {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
     ## Materialization type
     {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
@@ -783,7 +784,6 @@ select 1 = 0
 
         {%endif%}   
           
-
             {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "alter") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
@@ -798,20 +798,8 @@ select 1 = 0
         select 1 = 0
     
     {% endif %}
-    
-   
-{% elif currentState != undefined and desiredState == undefined %}
-
-    ## Dynamic Table Name
-    {% set targetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-    {% set targetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-    {% set fullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-
-    {{ stage('Drop ' + '{{currentState.node.materializationType}}', true, "sql", "drop") }}
-    DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}
-
-## Materialization type iceberg dynamic table
- {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}
+      ## Materialization type iceberg dynamic table
+   {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}
        ## Materialization type
 		{% set keyword = 'ICEBERG'  %}
         {# Figure out cluster key #}
@@ -887,6 +875,17 @@ select 1 = 0
         {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
         {% endif %}
+
+         {%- if currentState!=undefined %} 
+		 {%- if  (currentState.node.materializationType == 'dynamic table' or currentState.node.materializationType == 'transient dynamic table')%} 
+           {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+           {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+           {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+           {{ stage('Drop Dynamic Table '+'{{ fullyQualifiedTargetDynamicTableName }}', true, "sql", "alter") }}
+            DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}        
+		 {% endif %}        
+         {% endif %}
+
         
         {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
@@ -900,10 +899,8 @@ select 1 = 0
                 {{ stage('Drop Dynamic Table at old location/name', true, "sql", "alter") }}
                   DROP DYNAMIC ICEBERG TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
         {%endif%}
-        {%if  currentState.node.materializationType == 'dynamic table' or currentState.node.materializationType == 'transient dynamic table'%}
-                {{ stage('Drop Dynamic Table'+'{{ fullyQualifiedTargetDynamicTableName }}' + ' type ' +' {{currentState.node.materializationType}}', true, "sql", "alter") }}
-                  DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}
-		{%endif%}
+
+		
         {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
 
         CREATE OR REPLACE DYNAMIC {{ keyword }} TABLE {{ fullyQualifiedTargetDynamicTableName }}
@@ -944,17 +941,18 @@ select 1 = 0
         {% endfor %}
 
             QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
-  {% endif %}
+   {% endif %}        
+{% elif currentState != undefined and desiredState == undefined %}
 
-{%elif  currentState != undefined and desiredState == undefined%}
+    ## Dynamic Table Name
+    {% set targetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+    {% set targetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+    {% set fullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
-    {# Table or View Name #}
-    {% set targetObjectDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-    {% set targetObjectSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-    {% set fullyQualifiedTargetObjectName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-           
-        {{ stage('Drop iceberg dynamic table', true, "sql", "drop") }}
-         DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetObjectName }}
+    {{ stage('Drop ' + '{{currentState.node.materializationType}}', true, "sql", "drop") }}
+    DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}
+
+
 {%- else -%}
 
     {{ stage('Nothing to do.') }}
