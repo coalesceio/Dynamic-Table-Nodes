@@ -28,7 +28,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: dynamic table
+  materializationType: iceberg dynamic table
   metadata:
     appliedNodeTests: []
     columns:
