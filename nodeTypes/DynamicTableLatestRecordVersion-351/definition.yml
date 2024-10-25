@@ -5,7 +5,7 @@ metadata:
   defaultStorageLocation: null
   error: null
   nodeMetadataSpec: |-
-    capitalized: Copy of Dyanmic Table Latest Record Version
+    capitalized: Dyanmic Table Latest Record Version
     short: DT_WRK
     tagColor: "#FFD202"
     isDisabled: true
@@ -216,5 +216,5 @@ metadata:
         placement: end
         attributeName: recordCreated
         
-name: Dynamic Table Latest Record Version v1
+name: Dynamic Table Latest Record Version
 type: NodeType

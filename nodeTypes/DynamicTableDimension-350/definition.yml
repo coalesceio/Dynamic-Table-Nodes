@@ -5,7 +5,7 @@ metadata:
   defaultStorageLocation: null
   error: null
   nodeMetadataSpec: |
-    capitalized: Copy of Dynamic Table Dimension
+    capitalized: Dynamic Table Dimension
     short: DT_DIM
     tagColor: "#E5FA31"
     isDisabled: true
@@ -240,5 +240,5 @@ metadata:
       dataType: TIMESTAMP
       placement: end
       attributeName: recordCreated
-name: Dynamic Table Dimension v1
+name: Dynamic Table Dimension
 type: NodeType

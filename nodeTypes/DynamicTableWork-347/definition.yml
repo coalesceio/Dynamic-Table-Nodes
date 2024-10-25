@@ -1,11 +1,11 @@
 fileVersion: 1
-id: "156"
-isDisabled: true
+id: "347"
+isDisabled: false
 metadata:
   defaultStorageLocation: null
   error: null
   nodeMetadataSpec: |-
-    capitalized:  Dynamic Table Work
+    capitalized: Dynamic Table Work
     short: DT_WRK
     tagColor: "#F6FF3C"
     isDisabled: true
@@ -73,7 +73,18 @@ metadata:
           - ON_CREATE
           - ON_SCHEDULE 
           isRequired: true
-
+      - groupName: Dynamic Iceberg Table Options
+        items: 
+        - displayName: Snowflake EXTERNAL VOLUME Name
+          attributeName: externalVolume
+          type: textBox
+          default: ""
+          isRequired: false
+        - displayName: Base location name
+          attributeName: baseLocation
+          type: textBox
+          default: ""
+          isRequired: false
       - groupName: General Options
         items: 
 
@@ -82,6 +93,7 @@ metadata:
           options:
           - dynamic table
           - transient dynamic table
+          - iceberg dynamic table
           isRequired: true
 
         - type: toggleButton
@@ -119,7 +131,7 @@ metadata:
           displayName: Allow Expressions in Cluster Key
           default: false
           isRequired: false
-          enableIf: "{% if config.clusterKey %} true {% else %} false {% endif %}"
+          enableIf: "{% if config.clusterKey and (node.materializationType != 'iceberg dynamic table') %} true {% else %} false {% endif %}"
         
         - type: tabular
           displayName: 'Cluster Key'
@@ -132,7 +144,7 @@ metadata:
              isRequired: false
       
           isRequired: false
-          enableIf: "{% if (config.clusterKey and not config.clusterKeyExpressions) %} true {% else %} false {% endif %}"
+          enableIf: "{% if (config.clusterKey and not config.clusterKeyExpressions)  %} true {% else %} false {% endif %}"
 
         - type: tabular
           displayName: 'Cluster Key'
@@ -151,7 +163,7 @@ metadata:
              isRequired: false
       
           isRequired: false
-          enableIf: "{% if (config.clusterKey and config.clusterKeyExpressions) %} true {% else %} false {% endif %}"
+          enableIf: "{% if (config.clusterKey and (node.materializationType != 'iceberg dynamic table') and config.clusterKeyExpressions)  %} true {% else %} false {% endif %}"
         
 
        
