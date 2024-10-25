@@ -4,7 +4,6 @@ The Dynamic Tables Package includes:
 
 * [Dynamic Table Work](#dynamic-table-work)
 * [Dynamic Table Dimension](#dynamic-table-dimension)
-* [Dynamic Iceberg Table Options](#dynamic-iceberg-table-options)
 * [Dynamic Table Latest Record Version](#dynamic-tables-latest-record-version)
 * [Code](#code)
 
