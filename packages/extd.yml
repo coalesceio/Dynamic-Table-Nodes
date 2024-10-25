@@ -3,31 +3,31 @@ config:
     nodeTypes:
       "298":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "299":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "302":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "303":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "323":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "324":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "327":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "346":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "347":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
   packageVariables: ""
 fileVersion: 1
 id: "@coalesce/external-data-package"
