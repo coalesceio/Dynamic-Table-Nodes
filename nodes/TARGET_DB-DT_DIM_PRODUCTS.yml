@@ -37,7 +37,7 @@ operation:
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
-  description: ""
+  description: It's Comment of Table
   isMultisource: false
   locationName: TARGET_DB
   materializationType: iceberg dynamic table
@@ -109,7 +109,7 @@ operation:
           stepCounter: df7b4e96-27f2-4a85-a875-c55a69dd793e
         config: {}
         dataType: VARCHAR(50)
-        description: ""
+        description: It's Comment of Column
         name: COLOUR
         nullable: true
         sourceColumnReferences:
