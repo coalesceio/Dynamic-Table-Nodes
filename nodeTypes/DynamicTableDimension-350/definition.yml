@@ -141,19 +141,7 @@ metadata:
           isRequired: false
           enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
 
-      - groupName: Dynamic Iceberg Table Options
-        items: 
-        - displayName: Snowflake EXTERNAL VOLUME Name
-          attributeName: externalVolume
-          type: textBox
-          default: ""
-          isRequired: false
-        - displayName: Base location name
-          attributeName: baseLocation
-          type: textBox
-          default: ""
-          isRequired: false
-          
+       
       - groupName: General Options
         items: 
 
@@ -210,6 +198,18 @@ metadata:
           isRequired: false
           enableIf: "{% if (config.clusterKey and config.clusterKeyExpressions and (node.materializationType != 'iceberg dynamic table') ) %} true {% else %} false {% endif %}"
 
+        - displayName: Snowflake EXTERNAL VOLUME Name
+          attributeName: externalVolume
+          type: textBox
+          default: ""
+          isRequired: false
+          enableIf: "{% if node.materializationType == 'iceberg dynamic table'%} true {% else %} false {% endif %}"
+        - displayName: Base location name
+          attributeName: baseLocation
+          type: textBox
+          default: ""
+          isRequired: false
+          enableIf: "{% if node.materializationType == 'iceberg dynamic table'%} true {% else %} false {% endif %}"
     systemColumns:
     - displayName: '{{NODE_NAME}}_KEY'
       transform: '{{ dimensionHistoryPk() }}'
