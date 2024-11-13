@@ -1,6 +1,6 @@
 fileVersion: 1
 id: adbb4c43-820e-4d65-8173-fd133f60eb46
-name: DT_WRK_PRODUCTS
+name: DT_WRK_PRODUCTS_1
 operation:
   config:
     baseLocation: test
@@ -15,7 +15,7 @@ operation:
     downstreamOption: true
     externalVolume: sficebergextvol1
     groupByAll: false
-    initialize: ON_SCHEDULE
+    initialize: ON_CREATE
     insertStrategy: UNION ALL
     lagSpecification:
       items:
@@ -119,7 +119,7 @@ operation:
           joinCondition: |-
             FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
             JOIN {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS_JOIN"
-        name: DT_WRK_PRODUCTS
+        name: DT_WRK_PRODUCTS_1
         noLinkRefs: []
       - aliases:
           PRODUCTS: d8023274-54ca-4a34-9f39-ef45fe21e441
@@ -132,7 +132,7 @@ operation:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
         name: DT_WRK_PRODUCTS
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS
+  name: DT_WRK_PRODUCTS_1
   overrideSQL: false
   schema: ""
   sqlType: "347"
