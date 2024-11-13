@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 62e36283-9b73-4215-9336-4d259c7eefbc
-name: STG_PRODUCTS
+id: 8812db68-50d0-4f9e-92ed-4857d5734c77
+name: STG_PRODUCTS1
 operation:
   config:
     insertStrategy: INSERT
@@ -19,8 +19,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: acb04f62-3c9e-46dc-8d86-0b8f25326c57
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 18af7106-d594-4ee3-94dc-477759fb7dfc
+          stepCounter: 8812db68-50d0-4f9e-92ed-4857d5734c77
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -33,8 +33,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: e7833da9-8fe1-4866-af68-7e5455f09b9c
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 7bcbd51a-0bdd-4e63-af0c-67d8de5415bd
+          stepCounter: 8812db68-50d0-4f9e-92ed-4857d5734c77
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -47,8 +47,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b065fb36-7f69-45f8-8905-ef5017a6113f
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 1adf8629-f055-413d-b2f6-279ca51c71ea
+          stepCounter: 8812db68-50d0-4f9e-92ed-4857d5734c77
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -61,8 +61,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: bae4ca57-a917-40c3-85a4-2b7c58743eda
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 5a23be91-9852-4b36-89ec-a20af5d30da4
+          stepCounter: 8812db68-50d0-4f9e-92ed-4857d5734c77
         config: {}
         dataType: VARCHAR(50)
         description: ""
@@ -78,8 +78,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 8e371af5-0c01-4c57-8489-8bf78fe24602
+          stepCounter: 8812db68-50d0-4f9e-92ed-4857d5734c77
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -95,8 +95,8 @@ operation:
         systemColumnType: None
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 24f15e20-1259-4ef3-b6ca-fe70578c751c
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: d43c9559-23b7-4a07-b562-f54e9f3a1f2f
+          stepCounter: 8812db68-50d0-4f9e-92ed-4857d5734c77
         config: {}
         dataType: TIME
         description: ""
@@ -118,9 +118,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: STG_PRODUCTS
+        name: STG_PRODUCTS1
         noLinkRefs: []
-  name: STG_PRODUCTS
+  name: STG_PRODUCTS1
   overrideSQL: false
   schema: ""
   sqlType: Stage
