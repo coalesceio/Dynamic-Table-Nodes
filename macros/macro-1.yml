@@ -1,24 +1,6 @@
 fileVersion: 1
 id: "1"
 macroString: |
-  {% macro icebergcoldatatype( coldatatype ) %}
-     
-      {% set nsVariables = namespace(ibcoldatatype="") %}
-      {%if 'VARCHAR' in coldatatype %}
-           {% set nsVariables.ibcoldatatype = 'STRING' %}
-      {%elif 'TIMESTAMP' in coldatatype%}
-           {% set nsVariables.ibcoldatatype = 'TIMESTAMP' %}
-      {%elif 'TIME' in coldatatype%}
-           {% set nsVariables.ibcoldatatype = 'TIME' %}
-      {%else%}
-            {% set nsVariables.ibcoldatatype = coldatatype %}
-      {%endif%}
-         
-      {{ nsVariables.ibcoldatatype }}
-   
-  {% endmacro %}
-
-
   {#-- The below block of code initialises variables in case of node typess using advance deployment strategy #}
 
   {% if desiredState %}
@@ -112,6 +94,23 @@ macroString: |
 
       "{{- sourceObject -}}"
 
+  {% endmacro %}
+
+  {% macro icebergcoldatatype( coldatatype ) %}
+     
+      {% set nsVariables = namespace(ibcoldatatype="") %}
+      {%if 'VARCHAR' in coldatatype %}
+           {% set nsVariables.ibcoldatatype = 'STRING' %}
+      {%elif 'TIMESTAMP' in coldatatype%}
+           {% set nsVariables.ibcoldatatype = 'TIMESTAMP' %}
+      {%elif 'TIME' in coldatatype%}
+           {% set nsVariables.ibcoldatatype = 'TIME' %}
+      {%else%}
+            {% set nsVariables.ibcoldatatype = coldatatype %}
+      {%endif%}
+         
+      {{ nsVariables.ibcoldatatype }}
+   
   {% endmacro %}
 name: macro
 type: Macro

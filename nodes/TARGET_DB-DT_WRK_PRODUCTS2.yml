@@ -1,9 +1,9 @@
 fileVersion: 1
-id: adbb4c43-820e-4d65-8173-fd133f60eb46
-name: DT_WRK_PRODUCTS
+id: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
+name: DT_WRK_PRODUCTS2
 operation:
   config:
-    baseLocation: test
+    baseLocation: ""
     clusterKey: false
     clusterKeyConfig:
       items:
@@ -11,31 +11,32 @@ operation:
     clusterKeyConfigExpressions:
       items:
         - {}
-    clusterKeyExpressions: true
-    downstreamOption: true
-    externalVolume: sficebergextvol1
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: ""
     groupByAll: false
-    initialize: ON_SCHEDULE
+    initialize: ON_CREATE
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Minutes
+          lagValue: 60
     refresh_mode: AUTO
-    selectDistinct: true
+    selectDistinct: false
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: iceberg dynamic table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 822c04b6-2142-4c6b-944c-be65d4b42a13
-          stepCounter: adbb4c43-820e-4d65-8173-fd133f60eb46
+          columnCounter: fd865bbb-c320-4bcc-82cc-dafc7c52600e
+          stepCounter: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -46,14 +47,10 @@ operation:
               - columnCounter: ea4df73e-bb72-4d33-8711-837cf9bbb701
                 stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
             transform: ""
-          - columnReferences:
-              - columnCounter: ea4df73e-bb72-4d33-8711-837cf9bbb701
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
-            transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: bb97eaa1-4434-4d42-b807-2ce3b8b25eea
-          stepCounter: adbb4c43-820e-4d65-8173-fd133f60eb46
+          columnCounter: 0777bc51-db5d-4f02-b519-cdc2a24e669e
+          stepCounter: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -64,14 +61,10 @@ operation:
               - columnCounter: 93adc20b-9e7d-40ff-a3c4-cdf80ffcf325
                 stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
             transform: ""
-          - columnReferences:
-              - columnCounter: 93adc20b-9e7d-40ff-a3c4-cdf80ffcf325
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
-            transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 412481d2-ac78-4341-aafe-9d9bcd9d0d25
-          stepCounter: adbb4c43-820e-4d65-8173-fd133f60eb46
+          columnCounter: 473a5613-9441-40ec-9f27-f140e5ed85e9
+          stepCounter: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -81,15 +74,11 @@ operation:
           - columnReferences:
               - columnCounter: c2ed942d-1193-439d-8c03-eb0c49d79d28
                 stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
-            transform: "'test brand'"
-          - columnReferences:
-              - columnCounter: c2ed942d-1193-439d-8c03-eb0c49d79d28
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 07d9a37d-fb7a-4abe-9bc2-2537b8d5c207
-          stepCounter: adbb4c43-820e-4d65-8173-fd133f60eb46
+          columnCounter: 4f35bf17-acf1-4f5f-a884-4bad1c516d54
+          stepCounter: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
         config: {}
         dataType: VARCHAR(50)
         description: ""
@@ -100,29 +89,10 @@ operation:
               - columnCounter: 236bca9b-c83e-4411-88ec-a53db124c154
                 stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
             transform: ""
-          - columnReferences:
-              - columnCounter: 236bca9b-c83e-4411-88ec-a53db124c154
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
-            transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases:
-          PRODUCTS: d8023274-54ca-4a34-9f39-ef45fe21e441
-          PRODUCTS_JOIN: d8023274-54ca-4a34-9f39-ef45fe21e441
-        customSQL:
-          customSQL: ""
-        dependencies:
-          - locationName: SOURCE_DATA
-            nodeName: PRODUCTS
-        join:
-          joinCondition: |-
-            FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-            JOIN {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS_JOIN"
-        name: DT_WRK_PRODUCTS
-        noLinkRefs: []
-      - aliases:
-          PRODUCTS: d8023274-54ca-4a34-9f39-ef45fe21e441
+      - aliases: {}
         customSQL:
           customSQL: ""
         dependencies:
@@ -130,9 +100,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: DT_WRK_PRODUCTS
+        name: DT_WRK_PRODUCTS2
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS
+  name: DT_WRK_PRODUCTS2
   overrideSQL: false
   schema: ""
   sqlType: "347"

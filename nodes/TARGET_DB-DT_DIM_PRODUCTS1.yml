@@ -135,20 +135,6 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: f71abf42-57dc-483d-9a93-fb9835c1198b
-          stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
-        config: {}
-        dataType: TIMESTAMP
-        description: ""
-        name: DATE_TEST
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
-                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
           columnCounter: b97c5270-8ba6-45f3-9fef-d0cce2b477ad
           stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
         config: {}
@@ -229,6 +215,26 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ccb5320e-f152-4f1d-9629-7d569a1d285d
+          stepCounter: b556dd97-a4f2-429c-b6a2-fd784e83f66f
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: DATE_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
+                stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+            transform: ""
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
