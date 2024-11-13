@@ -1,0 +1,153 @@
+fileVersion: 1
+id: ad155765-9037-4912-a58c-750e0b2a1f2d
+name: DT_WRK_PRODUCTS1
+operation:
+  config:
+    baseLocation: baseloc
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: sficebergextvol1
+    initialize: ON_CREATE
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    orderBy:
+      items:
+        - colName:
+            columnCounter: f12191aa-d03b-48de-a52e-d2606e72c6a9
+            stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+    orderByDateTime:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 63881732-aaef-4f72-acbc-4f5ef94f3115
+            stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+    recordVersioning: Datetime Column
+    refresh_mode: AUTO
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: It's Comment of Table
+  isMultisource: false
+  locationName: TARGET_DB_TEST
+  materializationType: iceberg dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 63881732-aaef-4f72-acbc-4f5ef94f3115
+          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: PRODUCT_ID
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e0e59650-d9ac-42e7-bcbe-e30e4f3f44ee
+                stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: a0f6724c-374b-42b5-ba56-a0d6946ee8ae
+          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+        config: {}
+        dataType: VARCHAR(255)
+        description: ""
+        name: PRODUCT_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 2a4027a9-c660-44d1-b49c-06be335b62d2
+                stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 003d7f6c-8294-407a-9529-d85ab6c15417
+          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+        config: {}
+        dataType: VARCHAR(100)
+        description: ""
+        name: BRAND
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: b7acc321-85c2-43c1-848d-dc28fd2850c1
+                stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 9afbf0dd-4e8f-403f-aedf-8769a7639cee
+          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+        config: {}
+        dataType: VARCHAR(50)
+        description: It's Comment of Column
+        name: COLOUR
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 14266420-6af3-41c1-9502-f1b5aade4724
+                stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: f12191aa-d03b-48de-a52e-d2606e72c6a9
+          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        name: TIME_TEST
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 6659664d-def4-4c8b-a796-8c830b9e52ae
+                stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 175a002d-2201-4e98-a714-dce13199c620
+          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: V_PRODUCTS
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
+        name: DT_WRK_PRODUCTS1
+        noLinkRefs: []
+  name: DT_WRK_PRODUCTS1
+  overrideSQL: false
+  schema: ""
+  sqlType: "351"
+  type: sql
+  version: 1
+type: Node

@@ -63,7 +63,7 @@ select 1 = 0
                 {% if loop.first %}
                     {% set nsVariables.nsDesiredDepStorageLocations = depSourceLocation %}
                 {% else %}
-                    {% set nsVariables.nnsDesiredDepStorageLocations = nsVariables.nsDesiredDepStorageLocations + ',' + depSourceLocation %}
+                    {% set nsVariables.nsDesiredDepStorageLocations = nsVariables.nsDesiredDepStorageLocations + ',' + depSourceLocation %}
                 {% endif %}
             {% endfor %}
             
@@ -313,7 +313,7 @@ select 1 = 0
 
         ## Node description
         {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
+            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description | escape + "'" %}
         {% endif %}
         
         {% if nsVariables.storageLocationTest == false or 
@@ -335,7 +335,7 @@ select 1 = 0
             WAREHOUSE = {{dynamicTableWarehouse}}
             REFRESH_MODE   = {{dynamicTablerefresh}}
             INITIALIZE = {{dynamicTableinitialize}}
-            {{ dynamicTableComment }}
+            {{ dynamicTableComment}}
         (
             {% for col in desiredState.columns %}
                 "{{ col.name }}"
@@ -439,14 +439,17 @@ select 1 = 0
         {% endif %}
 
         {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
+            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
         {% endif %}
 
          {# Change in storage mappings,target location or node name #}
          {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
+                {% set srcSchName = currentState.node.location.name %}
+                {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
+                {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
                 {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
-                  ALTER DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}} RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
+                  ALTER DYNAMIC TABLE IF EXISTS "{{cdb}}"."{{csch}}"."{{currentState.node.name}}" RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
           {%endif%}
  
 
@@ -502,7 +505,7 @@ select 1 = 0
 
                     {% if (descriptionTest == false) %}
                     {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
-                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription | escape  }}'
                     {% endif %}
 
                 {%endif%}    
@@ -514,7 +517,7 @@ select 1 = 0
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
             {{ dynamicTableWarehouse }}
             {{ dynamicTableLagSpecification }}
-            {{ dynamicTableComment }}      
+            {{ dynamicTableComment  }}      
            
         {%endif%}
 
@@ -607,7 +610,7 @@ select 1 = 0
 
         ## Node description
         {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
+            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
         {% endif %}
       
         {%if currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == false %}
@@ -714,7 +717,7 @@ select 1 = 0
 
                     {% if (descriptionTest == false) %}
                     {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
-                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription | escape }}'
                     {% endif %}
 
                 {%endif%}    
@@ -879,7 +882,7 @@ select 1 = 0
         {% set dynamicTablebaseLocation = desiredState.config.baseLocation %}
         ## Node description
         {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description + "'" %}
+            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
         {% endif %}
 		
          {%- if currentState!=undefined %} 

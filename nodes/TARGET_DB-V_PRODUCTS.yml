@@ -1,26 +1,26 @@
 fileVersion: 1
-id: 62e36283-9b73-4215-9336-4d259c7eefbc
-name: STG_PRODUCTS
+id: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+name: V_PRODUCTS
 operation:
   config:
-    insertStrategy: INSERT
-    postSQL: ""
-    preSQL: ""
-    testsEnabled: true
-    truncateBefore: true
+    OverrideSQLCreate: false
+    groupByAll: false
+    insertStrategy: UNION
+    secureoption: false
+    selectDistinct: false
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: table
+  materializationType: view
   metadata:
     appliedNodeTests: []
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: acb04f62-3c9e-46dc-8d86-0b8f25326c57
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: e0e59650-d9ac-42e7-bcbe-e30e4f3f44ee
+          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -33,8 +33,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: e7833da9-8fe1-4866-af68-7e5455f09b9c
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 2a4027a9-c660-44d1-b49c-06be335b62d2
+          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -47,8 +47,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b065fb36-7f69-45f8-8905-ef5017a6113f
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: b7acc321-85c2-43c1-848d-dc28fd2850c1
+          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -61,8 +61,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: bae4ca57-a917-40c3-85a4-2b7c58743eda
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 14266420-6af3-41c1-9502-f1b5aade4724
+          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         config: {}
         dataType: VARCHAR(50)
         description: ""
@@ -78,35 +78,21 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: df765b58-b397-44d9-92d5-13afa5a102a5
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
+          columnCounter: 6659664d-def4-4c8b-a796-8c830b9e52ae
+          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
         description: ""
         keyColumnType: None
-        name: DATE_TEST
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: "0"
-                stepCounter: "0"
-            transform: CURRENT_DATE()
-        systemColumnType: None
-      - appliedColumnTests: {}
-        columnReference:
-          columnCounter: 24f15e20-1259-4ef3-b6ca-fe70578c751c
-          stepCounter: 62e36283-9b73-4215-9336-4d259c7eefbc
-        config: {}
-        dataType: TIME
-        description: ""
         name: TIME_TEST
         nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: "0"
                 stepCounter: "0"
-            transform: CURRENT_TIME()
+            transform: SYSDATE()
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -118,12 +104,12 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: STG_PRODUCTS
+        name: V_PRODUCTS
         noLinkRefs: []
-  name: STG_PRODUCTS
+  name: V_PRODUCTS
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: BN:::188
   type: sql
   version: 1
 type: Node
