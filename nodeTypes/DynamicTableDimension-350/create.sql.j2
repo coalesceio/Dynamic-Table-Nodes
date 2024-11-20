@@ -155,10 +155,13 @@ select 1 = 0
                     {% if (descriptionTest == false) %}
                         {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
                     {%endif%}
-                    {%if (datatypeTest == false or nullableTest == false or defaultValueTest == false or columnnameTest == false )%}
-                        {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
+{#                      Column nullability is not applicable to Dynamic Tables  														#}
+{#                     {%if (datatypeTest == false or nullableTest == false or defaultValueTest == false or columnnameTest == false )%} #}
+{#                         {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}                                      #}
+{#                     {% endif %} 																										#}
+                    {%if (datatypeTest == false or defaultValueTest == false or columnnameTest == false )%}
+                    {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
                     {% endif %}
-
                 {%endif%}    
             {% endfor %}
 
@@ -809,7 +812,7 @@ select 1 = 0
     {% endif %}
 
    {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}
-       ## Materialization type
+       {# Materialization type #}
 		{% set keyword = 'ICEBERG'  %}
         {# Figure out cluster key #}
         {% set nsVariables = namespace(finalClusterKey="") %}
@@ -849,20 +852,20 @@ select 1 = 0
             {% endif %}
         {% endif %}
 
-        ## Dynamic Table Name
+        {# Dynamic Table Name #}
         {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        ## Warehouse
-        ## Can be updated during deployment via a parameter to account for different warehouse names in different deployments
+        {# Warehouse #}
+        {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments #}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
         {% else %}
             {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
 
-        ## Downstream Option or Lag Specification
+        {# Downstream Option or Lag Specification #}
         {% if desiredState.config.downstreamOption == true %}
             {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -872,15 +875,15 @@ select 1 = 0
             {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
         {% endif %}
 
-        ## Refresh-type option
+        {# Refresh-type option #}
         {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
-        ##Initialize option
+        {#Initialize option #}
         {% set dynamicTableinitialize = desiredState.config.initialize %}
-        ##External Volume option
+        {#External Volume option #}
         {% set dynamicTableexternalVolume = desiredState.config.externalVolume %}
-        ##Base Location option
+        {#Base Location option#}
         {% set dynamicTablebaseLocation = desiredState.config.baseLocation %}
-        ## Node description
+        {# Node description #}
         {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
         {% endif %}
@@ -898,7 +901,7 @@ select 1 = 0
         {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
              
-             ## Current Dynamic Table Name 
+             {# Current Dynamic Table Name  #}
 
            {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
            {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 

@@ -1,6 +1,6 @@
 fileVersion: 1
-id: ad155765-9037-4912-a58c-750e0b2a1f2d
-name: DT_WRK_PRODUCTS1
+id: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
+name: DT_WRK_PRODUCTS_FD_3_ICE
 operation:
   config:
     baseLocation: baseloc
@@ -22,32 +22,32 @@ operation:
     orderBy:
       items:
         - colName:
-            columnCounter: f12191aa-d03b-48de-a52e-d2606e72c6a9
-            stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+            columnCounter: 06a0c35a-d5f7-4e09-a1aa-09a5aba583e3
+            stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
     orderByDateTime:
       items:
         - {}
     partitionBy:
       items:
         - partColName:
-            columnCounter: 63881732-aaef-4f72-acbc-4f5ef94f3115
-            stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+            columnCounter: f1cba658-34b2-4e52-b293-24a6d9511f91
+            stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
     recordVersioning: Datetime Column
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
-  description: It's Comment of Table
+  description: ""
   isMultisource: false
-  locationName: TARGET_DB_TEST
+  locationName: TARGET_DB
   materializationType: iceberg dynamic table
   metadata:
     appliedNodeTests: []
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 63881732-aaef-4f72-acbc-4f5ef94f3115
-          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+          columnCounter: f1cba658-34b2-4e52-b293-24a6d9511f91
+          stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -60,8 +60,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: a0f6724c-374b-42b5-ba56-a0d6946ee8ae
-          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+          columnCounter: eb5f2f67-c25f-497e-9ea2-3df545620c58
+          stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -74,13 +74,13 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 003d7f6c-8294-407a-9529-d85ab6c15417
-          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+          columnCounter: d2a6ca14-fa3c-40e9-b893-5b96563a39cd
+          stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
         config: {}
         dataType: VARCHAR(100)
         description: ""
         name: BRAND
-        nullable: true
+        nullable: false
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: b7acc321-85c2-43c1-848d-dc28fd2850c1
@@ -88,12 +88,12 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 9afbf0dd-4e8f-403f-aedf-8769a7639cee
-          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+          columnCounter: 70ec999a-e3b4-42f3-9f10-7f6cf7c5c4de
+          stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
         config: {}
         dataType: VARCHAR(50)
-        description: It's Comment of Column
-        name: COLOUR
+        description: ""
+        name: COLOUR2
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -102,10 +102,10 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: f12191aa-d03b-48de-a52e-d2606e72c6a9
-          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+          columnCounter: 06a0c35a-d5f7-4e09-a1aa-09a5aba583e3
+          stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
         config: {}
-        dataType: TIMESTAMP
+        dataType: TIMESTAMP_LTZ(6)
         description: ""
         name: TIME_TEST
         nullable: true
@@ -119,10 +119,10 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 175a002d-2201-4e98-a714-dce13199c620
-          stepCounter: ad155765-9037-4912-a58c-750e0b2a1f2d
+          columnCounter: 9b9bdf15-442f-4610-89be-fadb85f1245d
+          stepCounter: f11ee35e-cbeb-4e82-afc8-9b09bb2ee6d1
         config: {}
-        dataType: TIMESTAMP
+        dataType: TIMESTAMP_LTZ(6)
         defaultValue: ""
         description: ""
         name: RECORD_CREATED_DATE
@@ -142,9 +142,9 @@ operation:
             nodeName: V_PRODUCTS
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
-        name: DT_WRK_PRODUCTS1
+        name: DT_WRK_PRODUCTS_FD_3_ICE
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS1
+  name: DT_WRK_PRODUCTS_FD_3_ICE
   overrideSQL: false
   schema: ""
   sqlType: "351"

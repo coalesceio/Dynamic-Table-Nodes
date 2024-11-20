@@ -3,22 +3,22 @@ config:
     nodeTypes:
       "173":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "188":
         defaultStorageLocation: null
         isDisabled: false
       "194":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "204":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "205":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
       "248":
         defaultStorageLocation: null
-        isDisabled: false
+        isDisabled: true
   packageVariables: ""
 fileVersion: 1
 id: "@coalesce/base-node-types"

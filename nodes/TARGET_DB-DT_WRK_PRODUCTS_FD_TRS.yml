@@ -1,26 +1,42 @@
 fileVersion: 1
-id: 1f09ce00-a915-46a8-bfc0-fe1c76349042
-name: V_PRODUCTS
+id: cf880cb1-e532-48c5-b187-1953efbdfa56
+name: DT_WRK_PRODUCTS_FD_TRS
 operation:
   config:
-    OverrideSQLCreate: false
+    baseLocation: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: ""
     groupByAll: false
-    insertStrategy: UNION
-    secureoption: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
-  deployEnabled: true
+  deployEnabled: false
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: transient dynamic table
   metadata:
     appliedNodeTests: []
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: e0e59650-d9ac-42e7-bcbe-e30e4f3f44ee
-          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+          columnCounter: 966b828a-4916-4fe7-b2ab-9e7150f92b38
+          stepCounter: cf880cb1-e532-48c5-b187-1953efbdfa56
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -33,8 +49,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 2a4027a9-c660-44d1-b49c-06be335b62d2
-          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+          columnCounter: caa028ca-4d25-4495-b8b4-5bdc676a7615
+          stepCounter: cf880cb1-e532-48c5-b187-1953efbdfa56
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -47,8 +63,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b7acc321-85c2-43c1-848d-dc28fd2850c1
-          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+          columnCounter: 81cb1811-561b-4db1-9418-d7c5b4bf6b16
+          stepCounter: cf880cb1-e532-48c5-b187-1953efbdfa56
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -61,38 +77,18 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 14266420-6af3-41c1-9502-f1b5aade4724
-          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+          columnCounter: 53c473e8-05a4-4083-9433-1455728bd834
+          stepCounter: cf880cb1-e532-48c5-b187-1953efbdfa56
         config: {}
         dataType: VARCHAR(50)
         description: ""
-        name: COLOUR
+        name: COLOUR2
         nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: 236bca9b-c83e-4411-88ec-a53db124c154
                 stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
             transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 6659664d-def4-4c8b-a796-8c830b9e52ae
-          stepCounter: 1f09ce00-a915-46a8-bfc0-fe1c76349042
-        config: {}
-        dataType: TIMESTAMP_LTZ(6)
-        defaultValue: ""
-        description: ""
-        keyColumnType: None
-        name: TIME_TEST
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: "0"
-                stepCounter: "0"
-            transform: CURRENT_TIMESTAMP(6)
-        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -104,12 +100,12 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: V_PRODUCTS
+        name: DT_WRK_PRODUCTS_FD_TRS
         noLinkRefs: []
-  name: V_PRODUCTS
+  name: DT_WRK_PRODUCTS_FD_TRS
   overrideSQL: false
   schema: ""
-  sqlType: BN:::188
+  sqlType: "347"
   type: sql
   version: 1
 type: Node
