@@ -1,0 +1,14 @@
+fileVersion: 1
+id: "317"
+mappingDefinitions:
+  SOURCE_DATA:
+    database: POONAMM_DEV
+    schema: SOURCE_DATA
+  TARGET_DB:
+    database: POONAMM_DEV
+    schema: EDW_QA_4
+  TARGET_DB_TEST:
+    database: POONAMM_DEV
+    schema: EDW_QA_4
+name: QA TEST 2
+type: Environment
