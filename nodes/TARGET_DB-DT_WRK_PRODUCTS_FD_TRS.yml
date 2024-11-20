@@ -69,7 +69,7 @@ operation:
         dataType: VARCHAR(100)
         description: ""
         name: BRAND
-        nullable: false
+        nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: c2ed942d-1193-439d-8c03-eb0c49d79d28
