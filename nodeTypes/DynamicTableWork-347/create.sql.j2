@@ -153,8 +153,12 @@ select 1 = 0
                     {% if (descriptionTest == false) %}
                         {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
                     {%endif%}
-                    {%if (datatypeTest == false or nullableTest == false or defaultValueTest == false or columnnameTest == false )%}
-                        {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
+{#                      Column nullability is not applicable to Dynamic Tables  														#}
+{#                     {%if (datatypeTest == false or nullableTest == false or defaultValueTest == false or columnnameTest == false )%} #}
+{#                         {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}                                      #}
+{#                     {% endif %} 																										#}
+                    {%if (datatypeTest == false or defaultValueTest == false or columnnameTest == false )%}
+                    {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
                     {% endif %}
 
                 {%endif%}    

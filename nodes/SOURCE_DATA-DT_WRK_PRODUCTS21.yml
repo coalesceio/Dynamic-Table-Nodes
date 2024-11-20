@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
-name: DT_WRK_PRODUCTS2
+name: DT_WRK_PRODUCTS21
 operation:
   config:
     baseLocation: ""
@@ -28,7 +28,7 @@ operation:
   deployEnabled: true
   description: ""
   isMultisource: false
-  locationName: TARGET_DB
+  locationName: SOURCE_DATA
   materializationType: dynamic table
   metadata:
     appliedNodeTests: []
@@ -100,9 +100,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: DT_WRK_PRODUCTS2
+        name: DT_WRK_PRODUCTS21
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS2
+  name: DT_WRK_PRODUCTS21
   overrideSQL: false
   schema: ""
   sqlType: "347"
