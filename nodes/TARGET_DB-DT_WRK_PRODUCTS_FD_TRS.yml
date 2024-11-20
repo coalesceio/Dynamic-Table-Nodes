@@ -25,7 +25,7 @@ operation:
     selectDistinct: false
     warehouseName: dev_wh_xs
   database: ""
-  deployEnabled: true
+  deployEnabled: false
   description: ""
   isMultisource: false
   locationName: TARGET_DB
