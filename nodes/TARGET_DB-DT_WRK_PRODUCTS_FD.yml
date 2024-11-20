@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 5b5d8859-3916-4eb1-9639-a3c230a04381
-name: DT_WRK_PRODUCTS4
+id: eedb2008-4f68-4977-902d-fc909437e614
+name: DT_WRK_PRODUCTS_FD
 operation:
   config:
     baseLocation: ""
@@ -19,7 +19,7 @@ operation:
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - lagPeriod: Seconds
+        - lagPeriod: Minutes
           lagValue: 60
     refresh_mode: AUTO
     selectDistinct: false
@@ -35,8 +35,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 4c8f9926-ec18-4a5f-984a-c2a983f9ea20
-          stepCounter: 5b5d8859-3916-4eb1-9639-a3c230a04381
+          columnCounter: 9c469501-51fb-4488-b6e6-ef8c79cb3869
+          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -49,8 +49,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 18b7a907-4360-4f79-a138-15d481095c0a
-          stepCounter: 5b5d8859-3916-4eb1-9639-a3c230a04381
+          columnCounter: 9bcfa8ba-4238-4b57-8c3b-6fc8eb6490df
+          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -63,8 +63,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b8f16e89-6514-40e2-9263-a681d9d59944
-          stepCounter: 5b5d8859-3916-4eb1-9639-a3c230a04381
+          columnCounter: 4a1e6539-b54c-4682-b7fb-32e182afb9ee
+          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -77,8 +77,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 054591b4-682d-4390-9408-10746d00bbd4
-          stepCounter: 5b5d8859-3916-4eb1-9639-a3c230a04381
+          columnCounter: 72944b56-78a6-4a34-a2a8-090a0416cca2
+          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
         config: {}
         dataType: VARCHAR(50)
         description: ""
@@ -100,9 +100,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: DT_WRK_PRODUCTS4
+        name: DT_WRK_PRODUCTS_FD
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS4
+  name: DT_WRK_PRODUCTS_FD
   overrideSQL: false
   schema: ""
   sqlType: "347"
