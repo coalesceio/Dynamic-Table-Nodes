@@ -55,7 +55,7 @@ operation:
         dataType: VARCHAR(255)
         description: ""
         name: PRODUCT_NAME
-        nullable: true
+        nullable: false
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: 93adc20b-9e7d-40ff-a3c4-cdf80ffcf325

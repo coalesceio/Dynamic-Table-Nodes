@@ -111,7 +111,7 @@ operation:
         dataType: VARCHAR(50)
         description: ""
         name: COLOUR2
-        nullable: false
+        nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: 14266420-6af3-41c1-9502-f1b5aade4724
