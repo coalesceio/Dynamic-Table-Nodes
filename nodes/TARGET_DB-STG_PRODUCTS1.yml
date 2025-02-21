@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 4c65ef39-fad0-40a8-b688-bf847f89656e
-name: STG_PRODUCTS
+name: STG_PRODUCTS1
 operation:
   config:
     insertStrategy: INSERT
@@ -84,9 +84,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: STG_PRODUCTS
+        name: STG_PRODUCTS1
         noLinkRefs: []
-  name: STG_PRODUCTS
+  name: STG_PRODUCTS1
   overrideSQL: false
   schema: ""
   sqlType: Stage

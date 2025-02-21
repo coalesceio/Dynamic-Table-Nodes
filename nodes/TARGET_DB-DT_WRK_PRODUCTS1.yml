@@ -19,13 +19,14 @@ operation:
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Seconds
+          lagValue: 60
     refresh_mode: AUTO
     selectDistinct: false
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
-  description: ""
+  description: Table dynamic
   isMultisource: false
   locationName: TARGET_DB
   materializationType: dynamic table
@@ -52,8 +53,8 @@ operation:
           stepCounter: d4583fe0-8d6b-495d-8b54-817b2ad5d55f
         config: {}
         dataType: VARCHAR(255)
-        description: ""
-        name: PRODUCT_NAME
+        description: product_name
+        name: PRODUCT_NAME1
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -91,14 +92,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_PRODUCTS1: 4c65ef39-fad0-40a8-b688-bf847f89656e
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_PRODUCTS
+            nodeName: STG_PRODUCTS1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_PRODUCTS') }} "STG_PRODUCTS"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_PRODUCTS1') }} "STG_PRODUCTS1"
         name: DT_WRK_PRODUCTS1
         noLinkRefs: []
   name: DT_WRK_PRODUCTS1
