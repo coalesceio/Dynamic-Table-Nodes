@@ -109,7 +109,7 @@ operation:
   name: V_PRODUCTS
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: bn:::188
   type: sql
   version: 1
 type: Node
