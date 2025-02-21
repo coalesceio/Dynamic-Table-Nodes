@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 1f09ce00-a915-46a8-bfc0-fe1c76349042
-name: V_PRODUCTS
+name: V_PRODUCTS123
 operation:
   config:
     OverrideSQLCreate: false
@@ -104,9 +104,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: V_PRODUCTS
+        name: V_PRODUCTS123
         noLinkRefs: []
-  name: V_PRODUCTS
+  name: V_PRODUCTS123
   overrideSQL: false
   schema: ""
   sqlType: bn:::188

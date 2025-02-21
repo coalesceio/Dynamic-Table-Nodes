@@ -36,7 +36,7 @@ operation:
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
   database: ""
-  deployEnabled: false
+  deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
@@ -202,14 +202,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          V_PRODUCTS123: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: V_PRODUCTS
+            nodeName: V_PRODUCTS123
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
+          joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS123') }} "V_PRODUCTS123"
         name: DT_DIM_PRODUCTS_FD_TRS
         noLinkRefs: []
   name: DT_DIM_PRODUCTS_FD_TRS
