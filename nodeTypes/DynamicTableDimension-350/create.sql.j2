@@ -12,12 +12,8 @@ does not permit copying or modification for any other purpose.
 {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 {#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
-{% if desiredState == currentState %}
 
-{{ stage('Nothing to do.') }}
-select 1 = 0
-
-{% elif desiredState  %}
+{% if desiredState  %}
  ## Materialization type transient dynamic table or dynamic table
  {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
     ## Materialization type
@@ -26,11 +22,24 @@ select 1 = 0
     {%endif%}
 
     ## Identify all config changes that would cause a CREATE instead of ALTER
-    {% if currentState != undefined %} 
-        ## General metadata
+    {% if currentState != undefined %}   
+	   
+	        {#Tests#}
+
+        {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
+            nsDesiredTargetStorageLocations="",
+            nsDesiredUsedStorageLocations="",
+            storageLocationTest= true,
+            descolchanges = 0,
+            othercolchanges = 0, joinTest = True ) %}
         
         {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
-        {% set joinTest = currentState.join == desiredState.join %}
+		
+	    {% for src in desiredState.sources %}
+                {% if  currentState.sources[loop.index0].join != src.join %}
+                    {% set nsVariables.joinTest = false %}  {# Set joinTest to false if changes are detected #}
+                {% endif %}
+        {% endfor %}
 
             
         {# Test to see if the transform in a column has changed #}
@@ -43,10 +52,6 @@ select 1 = 0
 
         {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
 
-        ## Storage Location Tests
-        ## Only need to account for updated Storage Location mappings 
-        ## sourceTest handles changed Storage Location Names
-        ## Current Namespace Variables
 
         ## Desired Namespace Variables
         {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
@@ -83,8 +88,7 @@ select 1 = 0
         {% set currentstoragelocations = currentState.storageLocations | map (attribute='name') | list%}
 
         ## Storage Location Tests
-        ## Only need to account for updated Storage Location mappings
-        ## sourceTest handles changed Storage Location Names
+
         {% set nsVariables.storageLocationTest = true %}
         {% for name in desiredUniqueStorageLocations %}
             ## Current mappings
@@ -155,10 +159,7 @@ select 1 = 0
                     {% if (descriptionTest == false) %}
                         {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
                     {%endif%}
-{#                      Column nullability is not applicable to Dynamic Tables  														#}
-{#                     {%if (datatypeTest == false or nullableTest == false or defaultValueTest == false or columnnameTest == false )%} #}
-{#                         {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}                                      #}
-{#                     {% endif %} 																										#}
+					
                     {%if (datatypeTest == false or defaultValueTest == false or columnnameTest == false )%}
                     {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
                     {% endif %}
@@ -171,7 +172,7 @@ select 1 = 0
         {% if 
             nsVariables.othercolchanges > 0 or
             sourcesTest == false or
-            joinTest == false or
+            nsVariables.joinTest == false or
             columnsTransformTest == false or
 			partitionByTest == false or 
             orderByTest == false or 
@@ -223,7 +224,7 @@ select 1 = 0
             nodeCommentTest == false or
             clusterTest == false or 
             nsVariables.descolchanges > 0 or
-             nsVariables.storageLocationTest == false or 
+            nsVariables.storageLocationTest == false or 
              nodeNameTest == false %}    
 
             {% set alterOnlyTest = true %}
@@ -789,13 +790,10 @@ select 1 = 0
                     {{ desiredState.config.insertStrategy }}
                 {% endif %}
               {% endif %}
-            {% endfor %}
-
-           
+            {% endfor %}         
 
         {%endif%}   
           
-
             {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "alter") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
@@ -803,12 +801,7 @@ select 1 = 0
                    {{ stage('Resume Recluster Table', true, "sql", "alter") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-            {%endif%}
-
-    {% else %}
-        {{ stage('Nothing to do.') }}
-        select 1 = 0
-    
+            {%endif%}   
     {% endif %}
 
    {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}
@@ -958,9 +951,5 @@ select 1 = 0
            
         {{ stage('Drop iceberg dynamic table', true, "sql", "drop") }}
          DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetObjectName }}
-{%- else -%}
-
-    {{ stage('Nothing to do.') }}
-      select 1 = 0
 
 {% endif %}
