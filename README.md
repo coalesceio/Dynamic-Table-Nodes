@@ -165,6 +165,10 @@ If the changes in node results in recreating the Dynamic table,then following st
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
+### Redeployment with no changes 
+
+If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+
 ### Dynamic Tables Work Undeployment
 
 A table will be dropped if all of these are true:
@@ -345,6 +349,10 @@ If the changes in node results in recreating the Dynamic table, then following s
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
+### Redeployment with no changes 
+
+If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+
 ### Dimension Tables Work Undeployment
 
 A table will be dropped if all of these are true:
@@ -513,6 +521,10 @@ If the changes in node results in recreating the Dynamic table, then following s
 ### Redeploying a DAG of Latest Record Version
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
+
+### Redeployment with no changes 
+
+If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
 
 ### Latest Record Version Work Undeployment
 
