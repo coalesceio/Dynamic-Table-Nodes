@@ -24,8 +24,7 @@ does not permit copying or modification for any other purpose.
 
     ## Identify all config changes that would cause a CREATE instead of ALTER
     {% if currentState != undefined %} 
-        
-        
+                
         {#Tests#}
         
         {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
@@ -53,14 +52,6 @@ does not permit copying or modification for any other purpose.
         {% set currentTransformArray = currentState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
 
         {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
-
-        ## Desired Namespace Variables
-        {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
-        nsDesiredTargetStorageLocations="",
-        nsDesiredUsedStorageLocations="",
-        storageLocationTest= true,
-        descolchanges = 0,
-        othercolchanges = 0 ) %}
         
         ## Desired State Storage Location Info
         {% for source in desiredState.sources %}

@@ -163,14 +163,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          WRK_CUSTOMERS1: 10d0fa8b-105b-4070-9a65-550ef647e1d5
+          WRK_CUSTOMERS123: 10d0fa8b-105b-4070-9a65-550ef647e1d5
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: WRK_CUSTOMERS1
+            nodeName: WRK_CUSTOMERS123
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_CUSTOMERS1') }} "WRK_CUSTOMERS1"
+          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_CUSTOMERS123') }} "WRK_CUSTOMERS123"
         name: DT_WRK_CUSTOMERS_RV
         noLinkRefs: []
   name: DT_WRK_CUSTOMERS_RV
