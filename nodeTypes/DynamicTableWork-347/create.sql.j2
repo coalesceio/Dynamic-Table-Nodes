@@ -118,7 +118,10 @@ does not permit copying or modification for any other purpose.
                     {% if (descriptionTest == false) %}
                         {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
                     {%endif%}
-																								
+			          {# Column nullability is not applicable to Dynamic Table#}
+                      {# {%if (datatypeTest == false or nullableTest == false or defaultValueTest == false or columnnameTest == false )%} #}
+                      {# {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %} #}
+                      {#{% endif %} #}															
                     {%if (datatypeTest == false or defaultValueTest == false or columnnameTest == false )%}
                     {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
                     {% endif %}
