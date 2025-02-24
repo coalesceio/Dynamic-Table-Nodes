@@ -6,9 +6,9 @@ mappingDefinitions:
     schema: SOURCE_DATA
   TARGET_DB:
     database: ANANDHIS_DEV
-    schema: TARGET_DEV
+    schema: TARGET_QA
   TARGET_DB_TEST:
     database: ANANDHIS_DEV
-    schema: TARGET
+    schema: TARGET_DEV
 name: DEV test1
 type: Environment
