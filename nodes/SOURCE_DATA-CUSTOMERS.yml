@@ -1,0 +1,153 @@
+fileVersion: 1
+id: a826d9df-fa1c-4644-909f-717abac6073d
+name: CUSTOMERS
+operation:
+  database: ""
+  dataset: ""
+  deployEnabled: false
+  description: ""
+  locationName: SOURCE_DATA
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 1176a347-7eed-44d0-9410-e626d8f3234e
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: VARCHAR(16777216)
+        defaultValue: ""
+        description: ""
+        name: EMAIL
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 63618f21-a257-4786-af0a-694a1974145e
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        defaultValue: ""
+        description: ""
+        name: JOIN_DATE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: a30bbd30-f647-44f5-bcf3-c0c1e23ab033
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: NUMBER(6,0)
+        defaultValue: ""
+        description: ""
+        name: AGE_BAND
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 89387bc0-28c2-4574-81fb-16281e9d6bbe
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: VARCHAR(18)
+        defaultValue: ""
+        description: ""
+        name: HOUSEHOLD_INCOME
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 648ef329-2430-42e0-9ca9-e70b431ef9fe
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: VARCHAR(8)
+        defaultValue: ""
+        description: ""
+        name: MARITAL_STATUS
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7249cefa-318e-43fc-b648-1323feec09a0
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: FLOAT
+        defaultValue: ""
+        description: ""
+        name: HOUSEHOLD_SIZE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: a82abfde-06ae-40e6-8406-97a33fb65ca4
+          stepCounter: a826d9df-fa1c-4644-909f-717abac6073d
+        config: {}
+        dataType: FLOAT
+        defaultValue: ""
+        description: ""
+        name: TOTAL_ORDER_VALUE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+    join:
+      joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMERS') }}
+  name: CUSTOMERS
+  schema: ""
+  sqlType: Source
+  table: CUSTOMERS
+  type: sourceInput
+  version: 1
+type: Node

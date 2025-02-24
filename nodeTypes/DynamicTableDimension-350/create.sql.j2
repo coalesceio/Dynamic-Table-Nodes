@@ -24,7 +24,7 @@ does not permit copying or modification for any other purpose.
     ## Identify all config changes that would cause a CREATE instead of ALTER
     {% if currentState != undefined %}   
 	   
-	        {#Tests#}
+	    {#Tests#}
 
         {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
             nsDesiredTargetStorageLocations="",
@@ -37,7 +37,8 @@ does not permit copying or modification for any other purpose.
 		
 	    {% for src in desiredState.sources %}
                 {% if  currentState.sources[loop.index0].join != src.join %}
-                    {% set nsVariables.joinTest = false %}  {# Set joinTest to false if changes are detected #}
+                    {# Set joinTest to false if changes are detected #}
+                    {% set nsVariables.joinTest = false %}  
                 {% endif %}
         {% endfor %}
 
