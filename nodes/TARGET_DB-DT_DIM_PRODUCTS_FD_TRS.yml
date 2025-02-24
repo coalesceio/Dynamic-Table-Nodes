@@ -203,14 +203,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          V_PRODUCTS123: 1f09ce00-a915-46a8-bfc0-fe1c76349042
+          V_PRODUCTS1234: 1f09ce00-a915-46a8-bfc0-fe1c76349042
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: V_PRODUCTS123
+            nodeName: V_PRODUCTS1234
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS123') }} "V_PRODUCTS123"
+          joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS1234') }} "V_PRODUCTS1234"
         name: DT_DIM_PRODUCTS_FD_TRS
         noLinkRefs: []
   name: DT_DIM_PRODUCTS_FD_TRS
