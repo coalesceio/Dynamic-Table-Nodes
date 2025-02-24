@@ -53,60 +53,30 @@ does not permit copying or modification for any other purpose.
 
         {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
         
-        ## Desired State Storage Location Info
-        {% for source in desiredState.sources %}
-            {% for dep in source.dependencies %}
-                {% set depSourceLocation = dep.node.location.name %}
-                {% if loop.first %}
-                    {% set nsVariables.nsDesiredDepStorageLocations = depSourceLocation %}
-                {% else %}
-                    {% set nsVariables.nsDesiredDepStorageLocations = nsVariables.nsDesiredDepStorageLocations + ',' + depSourceLocation %}
-                {% endif %}
-            {% endfor %}
-            
-            {% if loop.first %}
-                {% set nsVariables.nsDesiredSourceStorageLocations = nsVariables.nsDesiredDepStorageLocations %}
-            {% else %}
-                {% set nsVariables.nsDesiredSourceStorageLocations = nsVariables.nsDesiredSourceStorageLocations + ',' + nsVariables.nsDesiredDepStorageLocations %}
-            {% endif %}
-        {% endfor %}
-
-        {% set nsVariables.nsDesiredTargetStorageLocations = desiredState.node.location.name  %}
-
-        {% set nsVariables.nsDesiredUsedStorageLocations = nsVariables.nsDesiredSourceStorageLocations + ',' + nsVariables.nsDesiredTargetStorageLocations %}
-
-        {% set desiredStorageLocations = (nsVariables.nsDesiredUsedStorageLocations).split(',') | list %}
-        {% set desiredUniqueStorageLocations = desiredStorageLocations | unique | sort | list %}
-        {% set currentstoragelocations = currentState.storageLocations | map (attribute='name') | list%}
-
-        ## Storage Location Tests
-
-        {% set nsVariables.storageLocationTest = true %}
-        {% for name in desiredUniqueStorageLocations %}
-            ## Current mappings
-        
-            {%if currentState.storageLocations|length == 0%}
-              
-              {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | string %}
-              {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | string %}
+            {# Change Node Name or Change Storage Location #}
+            {# Storage Location Tests #}
+            {# Test  #}
+            {%if currentState.storageLocations|length == 0%}          
+              {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | string %}
+              {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | string %}
                {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}
-            {%elif name in currentstoragelocations %}
+               
+            {%else %}   
+            {# Current target node mappings #}
+            {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | first %}
+            {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | first %}
+            {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}  
+			{% endif %}		 
+        
+            {# Desired target node mappings #}
+            {% set desiredDatabase = desiredState.storageLocations | selectattr('name', 'equalto', desiredState.node.location.name) | map(attribute='database') | first %}
+            {% set desiredSchema = desiredState.storageLocations | selectattr('name', 'equalto', desiredState.node.location.name) | map(attribute='schema') | first %}
+            {% set desiredDatabaseSchema = desiredDatabase + '.' + desiredSchema %}           
             
-                {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | first %}
-                {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | first %}
-                {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}  
-            {%endif%}
-            
-            ## Desired mappings
-            {% set desiredDatabase = desiredState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='database') | first %}
-            {% set desiredSchema = desiredState.storageLocations | selectattr('name', 'equalto', name) | map(attribute='schema') | first %}
-            {% set desiredDatabaseSchema = desiredDatabase + '.' + desiredSchema %}
-
-
-            {% if currentDatabaseSchema != desiredDatabaseSchema %}
+             {% if currentDatabaseSchema != desiredDatabaseSchema %}
                 {% set nsVariables.storageLocationTest = false %}
-            {% endif %}
-        {% endfor %}
+             {% endif %}
+
 
         ## Config
         {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
