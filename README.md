@@ -20,7 +20,7 @@ The Dynamic Table Work has three configuration groups:
 
 * [Node Properties](#dynamic-table-work-node-properties)
 * [Dynamic Table Options](#dynamic-table-work-options) 
-* [General Options](#dynamic-table-workgeneral-options)
+* [General Options](#dynamic-table-work-general-options)
 
 #### Dynamic Table Work Node Properties
 
