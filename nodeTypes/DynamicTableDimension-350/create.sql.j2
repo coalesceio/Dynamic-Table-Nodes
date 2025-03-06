@@ -12,6 +12,17 @@ does not permit copying or modification for any other purpose.
 {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 {#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
+{%if desiredState and currentState != desiredState%}
+     {%if desiredState.parameters == {} or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+
+         {{stage('WARNING')}}
+         
+          /*Add parameter targetDynamicTableWarehouse in workspace settings and deployment environment for successful execution of node.
+          The default value for the parameter is 'DEV ENVIRONMENT'.
+          Refer to documentation for more info */
+
+      {%endif%}
+{%endif%}
 
 {% if desiredState  %}
  ## Materialization type transient dynamic table or dynamic table
