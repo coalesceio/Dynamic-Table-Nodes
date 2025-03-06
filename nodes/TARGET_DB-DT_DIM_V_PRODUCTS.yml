@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
-name: DT_DIM_PRODUCTS_FD
+id: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
+name: DT_DIM_V_PRODUCTS
 operation:
   config:
     baseLocation: ""
@@ -17,30 +17,30 @@ operation:
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - lagPeriod: Minutes
+        - lagPeriod: Days
           lagValue: 60
     orderBy:
       items:
         - colName:
-            columnCounter: 4e7fa517-bfa0-410b-a5b5-2731662cb741
-            stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+            columnCounter: cd18c64f-e3de-4aef-a192-13f48cae4969
+            stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
     orderByDateTime:
       items:
         - {}
     partitionBy:
       items:
         - partColName:
-            columnCounter: 24c59f83-c455-4e6f-9cee-0502e24fe8cd
-            stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+            columnCounter: 64d9589f-12ac-4801-abc1-a7bf667afe62
+            stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
     recordVersioning: Datetime Column
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
   database: ""
-  deployEnabled: false
+  deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient dynamic table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -49,22 +49,22 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 51f098d0-245e-440c-8b74-9c84148af947
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 294166e4-345c-48ba-839b-cc87b0c0b6ee
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: STRING
         defaultValue: ""
         description: ""
         isSurrogateKey: true
-        name: DT_DIM_PRODUCTS_KEY
+        name: DT_DIM_V_PRODUCTS_KEY
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
             transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 24c59f83-c455-4e6f-9cee-0502e24fe8cd
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 64d9589f-12ac-4801-abc1-a7bf667afe62
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -77,8 +77,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 6549e3e8-a9c5-4196-a991-d4dc85d2fbce
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: db013404-eae8-4af8-a311-7c17ceaf1ffe
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -91,8 +91,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: a9e8cd86-9f00-4166-abdb-8e8428fe7118
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 3c34433d-d0b6-40d3-97e7-e354f6cee9c6
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -105,13 +105,13 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 3142955d-8677-4d4c-aa3a-afc1d74d628e
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 2e70b30a-3861-449b-8d30-55362a93b203
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: VARCHAR(50)
         description: ""
-        name: COLOUR1
-        nullable: false
+        name: COLOUR
+        nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: 14266420-6af3-41c1-9502-f1b5aade4724
@@ -119,10 +119,10 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 4e7fa517-bfa0-410b-a5b5-2731662cb741
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: cd18c64f-e3de-4aef-a192-13f48cae4969
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
-        dataType: TIMESTAMP
+        dataType: TIMESTAMP_LTZ(6)
         description: ""
         name: TIME_TEST
         nullable: true
@@ -136,8 +136,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 95acfe77-2c7b-4d16-84cc-1eb6b34b78e2
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 1de03f9c-e115-4194-be8d-8bad6c94d895
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -153,8 +153,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 52c6a1e6-2b39-42b1-bcdb-6f5f4379fc79
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 98ea0827-d3b6-4b0e-988b-2879f168fdd7
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -170,8 +170,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: a9efee75-302b-467e-9b24-510513f55509
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: 008c1d77-c6c7-4a88-aa08-d7d156357977
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: NUMERIC
         defaultValue: ""
@@ -187,8 +187,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 75414652-e611-4b1b-98fe-46b2ed426bf0
-          stepCounter: 8cee5bd7-346e-4f3f-bc97-5dd616d63d9b
+          columnCounter: e1157ef2-c63e-484d-933f-f03f746943c6
+          stepCounter: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -210,9 +210,9 @@ operation:
             nodeName: V_PRODUCTS
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
-        name: DT_DIM_PRODUCTS_FD
+        name: DT_DIM_V_PRODUCTS
         noLinkRefs: []
-  name: DT_DIM_PRODUCTS_FD
+  name: DT_DIM_V_PRODUCTS
   overrideSQL: false
   schema: ""
   sqlType: "350"

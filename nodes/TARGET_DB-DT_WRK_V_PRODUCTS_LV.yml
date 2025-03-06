@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-name: DT_DIM_PRODUCTS
+id: 59955a08-6422-46d0-8786-3550b53df32b
+name: DT_WRK_V_PRODUCTS_LV
 operation:
   config:
     baseLocation: ""
@@ -17,16 +17,21 @@ operation:
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Days
+          lagValue: 60
     orderBy:
       items:
-        - {}
+        - colName:
+            columnCounter: e0d2a90e-3825-41d3-95cd-aabe8f8dba6f
+            stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
     orderByDateTime:
       items:
         - {}
     partitionBy:
       items:
-        - {}
+        - partColName:
+            columnCounter: c0112072-c0d9-48ba-b401-70372a92a070
+            stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
     recordVersioning: Datetime Column
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
@@ -39,27 +44,10 @@ operation:
   metadata:
     appliedNodeTests: []
     columns:
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 638066e1-c496-4346-8bfa-7061429b9774
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-        config: {}
-        dataType: STRING
-        defaultValue: ""
-        description: ""
-        isSurrogateKey: true
-        name: DT_DIM_PRODUCTS_KEY
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: f4b5c649-dc0b-4bf2-9273-9286155a08cb
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          columnCounter: c0112072-c0d9-48ba-b401-70372a92a070
+          stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -72,8 +60,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: cd676fd4-dbae-4acc-86fd-2de3bd782ae6
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          columnCounter: 100c50eb-28e6-431c-8ed3-57e00afc57e4
+          stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -86,8 +74,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 6710f671-b4f2-4991-86df-7e57c341ae67
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          columnCounter: 639b9d0d-e41a-4b68-9d0a-194d99b861f3
+          stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
         config: {}
         dataType: VARCHAR(100)
         description: ""
@@ -100,8 +88,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 70ddc44d-b8b8-406c-879b-42582747f2a6
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          columnCounter: 9f0a8464-8b21-4276-b1ed-3504588a7259
+          stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
         config: {}
         dataType: VARCHAR(50)
         description: ""
@@ -114,8 +102,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: c43e43a4-ebfb-4d60-ab47-4e39383b3b7b
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          columnCounter: e0d2a90e-3825-41d3-95cd-aabe8f8dba6f
+          stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
         config: {}
         dataType: TIMESTAMP_LTZ(6)
         description: ""
@@ -131,59 +119,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 9ebf92be-c392-42a9-b136-c0964a9ccef2
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemStartDate: true
-        name: RECORD_START_TIME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: "{{ order_by_col() }}"
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 9b8f67ac-3bb7-4a44-81b4-a1e87f3bd8ec
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemEndDate: true
-        name: RECORD_END_TIME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: LEAD({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 03ab0e69-8ac4-40c6-b607-0762939bbac5
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-        config: {}
-        dataType: NUMERIC
-        defaultValue: ""
-        description: ""
-        isRecordCurrent: true
-        name: RECORD_CURRENT_FLAG
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CASE WHEN (LEAD({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)) IS NULL THEN 1 ELSE 0 END
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 05157ff1-3a00-462e-ad73-15dc434604ce
-          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          columnCounter: 247aabd9-fb46-4e7f-a531-784f5f93eb09
+          stepCounter: 59955a08-6422-46d0-8786-3550b53df32b
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -205,12 +142,12 @@ operation:
             nodeName: V_PRODUCTS
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
-        name: DT_DIM_PRODUCTS
+        name: DT_WRK_V_PRODUCTS_LV
         noLinkRefs: []
-  name: DT_DIM_PRODUCTS
+  name: DT_WRK_V_PRODUCTS_LV
   overrideSQL: false
   schema: ""
-  sqlType: "350"
+  sqlType: "351"
   type: sql
   version: 1
 type: Node
