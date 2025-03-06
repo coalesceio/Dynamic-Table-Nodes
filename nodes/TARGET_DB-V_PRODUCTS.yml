@@ -9,7 +9,7 @@ operation:
     secureoption: false
     selectDistinct: false
   database: ""
-  deployEnabled: false
+  deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
@@ -109,7 +109,7 @@ operation:
   name: V_PRODUCTS
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: bt:::188
   type: sql
   version: 1
 type: Node
