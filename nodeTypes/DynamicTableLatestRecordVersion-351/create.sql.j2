@@ -13,6 +13,31 @@ does not permit copying or modification for any other purpose.
 {#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
 
+{# Parameter check #}
+
+{%if desiredState and currentState != desiredState%}
+     {%if desiredState.parameters == {} or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+
+         {{stage('WARNING')}}
+         
+         /*Add parameter targetDynamicTableWarehouse in workspace settings and deployment environment for successful execution of node.
+         The default value for the parameter is 'DEV ENVIRONMENT'.
+         Refer to documentation for more info */
+
+      {%endif%}
+{%endif%}
+
+{%if desiredState and currentState != desiredState%}
+     {%if desiredState.parameters == {} or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+
+         {{stage('WARNING')}}
+         
+         /*Add parameter targetDynamicTableWarehouse for successful execution of node.The default value for the parameter is 'DEV ENVIRONMENT'*/
+         
+      {%endif%}
+  {%endif%}
+
+
 {% if desiredState  %}
 
    {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}

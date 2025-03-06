@@ -15,7 +15,18 @@ metadata:
 
     config:
       - groupName: Dynamic Table Options
-        items: 
+        items:     
+         
+        - type: label
+          attributeName: note2
+          displayName: 
+                       "NOTE:
+                       \n
+                       Ensure the parameter targetDynamicTableWarehouse is added in Workspace and 
+                       deployment environment  for successful creation of dynamic table.  
+                       Refer documentation for more info"
+          enableIf: "{%- if parameters == {} or parameters.targetDynamicTableWarehouse == '' -%} true {%- else -%} false {%- endif -%}"
+
         - displayName: Warehouse on which to execute Dynamic Table
           attributeName: warehouseName
           type: textBox

@@ -12,16 +12,29 @@ does not permit copying or modification for any other purpose.
 {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 {#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
+{%if desiredState and currentState != desiredState%}
+     {%if desiredState.parameters == {} or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+
+         {{stage('WARNING')}}
+         
+          /*Add parameter targetDynamicTableWarehouse in workspace settings and deployment environment for successful execution of node.
+          The default value for the parameter is 'DEV ENVIRONMENT'.
+          Refer to documentation for more info */
+
+      {%endif%}
+{%endif%}
 
 {% if desiredState  %}
- ## Materialization type transient dynamic table or dynamic table
+
+ {# Materialization type transient dynamic table or dynamic table #}
  {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
-    ## Materialization type
+
+    {# Materialization type#}
     {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
     {%endif%}
 
-    ## Identify all config changes that would cause a CREATE instead of ALTER
+    {# Identify all config changes that would cause a CREATE instead of ALTER#}
     {% if currentState != undefined %}   
 	   
 	    {#Tests#}
@@ -77,21 +90,21 @@ does not permit copying or modification for any other purpose.
                 {% set nsVariables.storageLocationTest = false %}
              {% endif %}
 
-        ## Config
+        {# Config #}
         {% set partitionByTest = currentState.config.partitionBy == desiredState.config.partitionBy %}
         {% set orderByTest = currentState.config.orderBy == desiredState.config.orderBy %}
         {% set orderByDateTimeTest = currentState.config.orderByDateTime == desiredState.config.orderByDateTime %}
         {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}																				
 		
-        ## Node
+        {# Node #}
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
         {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
         
 
-        ## Refresh_mode test
+        {# Refresh_mode test #}
         {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
 
-        ## Initialize test
+        {# Initialize test #}
         {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
 
        
@@ -133,7 +146,7 @@ does not permit copying or modification for any other purpose.
             {% endfor %}
 
         
-        ## If any of the above are false then a CREATE must be run
+        {# If any of the above are false then a CREATE must be run #}
         
         {% if 
             nsVariables.othercolchanges > 0 or
@@ -154,7 +167,7 @@ does not permit copying or modification for any other purpose.
 
     {% endif %}
 
-    ## Identify config changes that would only result in ALTER
+    {# Identify config changes that would only result in ALTER #}
     {% if createTest == false %}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set warehouseTest = currentState.config.warehouseName == desiredState.config.warehouseName %}
@@ -198,10 +211,10 @@ does not permit copying or modification for any other purpose.
         {% endif %}
     {% endif %}
 
-    ## CREATE or ALTER
+    {# CREATE or ALTER #}
     {% if (currentState == undefined) or (createTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}      
 
-        ## Materialization type
+        {# Materialization type #}
         {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
         {%endif%}
@@ -251,20 +264,20 @@ does not permit copying or modification for any other purpose.
         {%endif%}
 
 
-        ## Dynamic Table Name
+        {# Dynamic Table Name #}
         {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        ## Warehouse
-        ## Can be updated during deployment via a parameter to account for different warehouse names in different deployments
+        {# Warehouse #}
+        {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
         {% else %}
             {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
 
-        ## Downstream Option or Lag Specification
+        {# Downstream Option or Lag Specification #}
         {% if desiredState.config.downstreamOption == true %}
             {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -274,13 +287,13 @@ does not permit copying or modification for any other purpose.
             {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
         {% endif %}
 
-        ## Refresh-type option
+        {# Refresh-type option #}
         {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
 
-        ##Initialize option
+        {#Initialize option #}
         {% set dynamicTableinitialize = desiredState.config.initialize %}
 
-        ## Node description
+        {# Node description #}
         {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description | escape + "'" %}
         {% endif %}
@@ -288,7 +301,7 @@ does not permit copying or modification for any other purpose.
         {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
              
-             ## Current Dynamic Table Name 
+             {# Current Dynamic Table Name #}
 
            {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
            {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
@@ -342,18 +355,18 @@ does not permit copying or modification for any other purpose.
 
     {% elif (currentState != undefined and desiredState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
 
-        ## Desired Dynamic Table Name
+        {# Desired Dynamic Table Name #}
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        ## Current Dynamic Table Name 
+        {#Current Dynamic Table Name #}
 
         {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
         {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
         {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
-        ## Desired Warehouse
+        {# Desired Warehouse #}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set desiredDynamicTableWarehouse = desiredState.config.warehouseName %}
         {% else %}
@@ -361,7 +374,7 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
 
-        ## Desired Downstream Option or Lag Specification
+        {# Desired Downstream Option or Lag Specification #}
         {% if desiredState.config.downstreamOption == true %}
             {% set desiredDynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -373,14 +386,14 @@ does not permit copying or modification for any other purpose.
 
 
 
-        ## Current Warehouse
+        {# Current Warehouse #}
         {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
         {% else %}
             {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
 
-        ## Current Downstream Option or Lag Specification
+        {# Current Downstream Option or Lag Specification#}
         {% if currentState.config.downstreamOption == true %}
             {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -391,13 +404,13 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
 
-        ## ALTER for Warehouse if necessary
+        {# ALTER for Warehouse if necessary #}
         {% set dynamicTableWarehouse = '' %}
         {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
             {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
         {% endif %}
 
-        ## Alter for Target lag if necessary
+        {# Alter for Target lag if necessary #}
         {% set dynamicTableLagSpecification = '' %}
         {% if desiredDynamicTableLagSpecification != currentDynamicTableLagSpecification %}
             {% if desiredDynamicTableLagSpecification == 'DOWNSTREAM' %}
@@ -529,13 +542,13 @@ does not permit copying or modification for any other purpose.
             {% endif %}
         {% endif %}
 
-        ## Materialization type
+        {# Materialization type #}
         {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
         {%endif%}
 
         
-        ## Dynamic Table Name
+        {# Dynamic Table Name#}
         {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
@@ -544,7 +557,7 @@ does not permit copying or modification for any other purpose.
         {% set parts = parts[:-1] + [new_table_name] %} 
         {% set fullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
 
-        ## Current Dynamic Table Name
+        {# Current Dynamic Table Name #}
         {% set ctargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
         {% set ctargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
         {% set cfullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
@@ -553,15 +566,15 @@ does not permit copying or modification for any other purpose.
         {% set parts = parts[:-1] + [new_table_name] %} 
         {% set cfullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
 
-        ## Warehouse
-        ## Can be updated during deployment via a parameter to account for different warehouse names in different deployments
+        {# Warehouse #}
+        {#Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
         {% else %}
             {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
 
-        ## Downstream Option or Lag Specification
+        {# Downstream Option or Lag Specification #}
         {% if desiredState.config.downstreamOption == true %}
             {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -571,13 +584,13 @@ does not permit copying or modification for any other purpose.
             {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
         {% endif %}
 
-        ## Refresh-type option
+        {# Refresh-type option #}
         {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
 
-        ##Initialize option
+        {#Initialize option#}
         {% set dynamicTableinitialize = desiredState.config.initialize %}
 
-        ## Node description
+        {# Node description#}
         {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
         {% endif %}
@@ -589,12 +602,12 @@ does not permit copying or modification for any other purpose.
         {%endif%}
 
 
-           ## Desired Dynamic Table Name
+           {# Desired Dynamic Table Name #}
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        ## Desired Warehouse
+        {# Desired Warehouse #}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set desiredDynamicTableWarehouse = desiredState.config.warehouseName %}
         {% else %}
@@ -602,7 +615,7 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
 
-        ## Desired Downstream Option or Lag Specification
+        {# Desired Downstream Option or Lag Specification #}
         {% if desiredState.config.downstreamOption == true %}
             {% set desiredDynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -612,14 +625,14 @@ does not permit copying or modification for any other purpose.
             {% set desiredDynamicTableLagSpecification = desiredDynamicTableLagValue ~ ' ' ~ desiredDynamicTableLagValuePeriod %}
         {% endif %}
 
-        ## Current Warehouse
+        {# Current Warehouse#}
         {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
             {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
         {% else %}
             {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
 
-        ## Current Downstream Option or Lag Specification
+        {# Current Downstream Option or Lag Specification #}
         {% if currentState.config.downstreamOption == true %}
             {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
@@ -630,14 +643,14 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
 
-        ## ALTER for Warehouse if necessary
+        {# ALTER for Warehouse if necessary #}
         {% set dynamicTableWarehouse = '' %}
         {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
             {%set  warehouseTest = false %}
             {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
         {% endif %}
 
-        ## Alter for Target lag if necessary
+        {# Alter for Target lag if necessary #}
         {% set dynamicTableLagSpecification = '' %}
         {% if desiredDynamicTableLagSpecification != currentDynamicTableLagSpecification %}
             {%set lagSpecificationTest = false%}
@@ -718,7 +731,7 @@ does not permit copying or modification for any other purpose.
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
         (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' ) %}
             
-            ## Materialization type
+            {# Materialization type #}
             {%if  desiredState.node.materializationType == 'transient dynamic table' %}
                 {% set keyword = 'TRANSIENT'  %}
             {%endif%}
