@@ -1,9 +1,9 @@
 fileVersion: 1
-id: eedb2008-4f68-4977-902d-fc909437e614
-name: DT_WRK_PRODUCTS_FD
+id: 0e955627-7450-4dcf-8817-bb674d4980c1
+name: DT_WRK_PRODUCTS_FD_ICE11
 operation:
   config:
-    baseLocation: ""
+    baseLocation: test
     clusterKey: false
     clusterKeyConfig:
       items:
@@ -13,7 +13,7 @@ operation:
         - {}
     clusterKeyExpressions: false
     downstreamOption: false
-    externalVolume: ""
+    externalVolume: sficebergextvol1
     groupByAll: false
     initialize: ON_CREATE
     insertStrategy: UNION ALL
@@ -29,14 +29,14 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient dynamic table
+  materializationType: iceberg dynamic table
   metadata:
     appliedNodeTests: []
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 9c469501-51fb-4488-b6e6-ef8c79cb3869
-          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
+          columnCounter: f1cba658-34b2-4e52-b293-24a6d9511f91
+          stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -49,13 +49,13 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 9bcfa8ba-4238-4b57-8c3b-6fc8eb6490df
-          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
+          columnCounter: eb5f2f67-c25f-497e-9ea2-3df545620c58
+          stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: VARCHAR(255)
         description: ""
         name: PRODUCT_NAME
-        nullable: true
+        nullable: false
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: 93adc20b-9e7d-40ff-a3c4-cdf80ffcf325
@@ -63,13 +63,13 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 4a1e6539-b54c-4682-b7fb-32e182afb9ee
-          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
+          columnCounter: d2a6ca14-fa3c-40e9-b893-5b96563a39cd
+          stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: VARCHAR(100)
         description: ""
         name: BRAND
-        nullable: false
+        nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: c2ed942d-1193-439d-8c03-eb0c49d79d28
@@ -77,12 +77,12 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 72944b56-78a6-4a34-a2a8-090a0416cca2
-          stepCounter: eedb2008-4f68-4977-902d-fc909437e614
+          columnCounter: 70ec999a-e3b4-42f3-9f10-7f6cf7c5c4de
+          stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: VARCHAR(50)
         description: ""
-        name: COLOUR1
+        name: COLOUR2
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -100,9 +100,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: DT_WRK_PRODUCTS_FD
+        name: DT_WRK_PRODUCTS_FD_ICE11
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS_FD
+  name: DT_WRK_PRODUCTS_FD_ICE11
   overrideSQL: false
   schema: ""
   sqlType: "347"

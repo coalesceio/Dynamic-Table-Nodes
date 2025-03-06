@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 59955a08-6422-46d0-8786-3550b53df32b
-name: DT_WRK_V_PRODUCTS_LV
+name: DT_WRK_V_PRODUCTS_LV11
 operation:
   config:
     baseLocation: ""
@@ -142,9 +142,9 @@ operation:
             nodeName: V_PRODUCTS
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
-        name: DT_WRK_V_PRODUCTS_LV
+        name: DT_WRK_V_PRODUCTS_LV11
         noLinkRefs: []
-  name: DT_WRK_V_PRODUCTS_LV
+  name: DT_WRK_V_PRODUCTS_LV11
   overrideSQL: false
   schema: ""
   sqlType: "351"

@@ -1,6 +1,6 @@
 fileVersion: 1
 id: e9ebc045-0468-4b27-9cc1-0a49dd2a2111
-name: DT_DIM_V_PRODUCTS
+name: DT_DIM_V_PRODUCTS_11
 operation:
   config:
     baseLocation: ""
@@ -210,9 +210,9 @@ operation:
             nodeName: V_PRODUCTS
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_PRODUCTS') }} "V_PRODUCTS"
-        name: DT_DIM_V_PRODUCTS
+        name: DT_DIM_V_PRODUCTS_11
         noLinkRefs: []
-  name: DT_DIM_V_PRODUCTS
+  name: DT_DIM_V_PRODUCTS_11
   overrideSQL: false
   schema: ""
   sqlType: "350"
