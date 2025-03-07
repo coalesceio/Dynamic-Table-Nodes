@@ -1,5 +1,14 @@
 fileVersion: 1
 id: "380"
-mappingDefinitions: {}
+mappingDefinitions:
+  SOURCE_DATA:
+    database: POONAMM_DEV
+    schema: SOURCE_DATA
+  TARGET_DB:
+    database: POONAMM_DEV
+    schema: EDW_QA
+  TARGET_DB_TEST:
+    database: POONAMM_DEV
+    schema: EDW_QA_5
 name: DEV test1
 type: Environment
