@@ -88,7 +88,10 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
     "targetDynamicTableWarehouse": "compute_wh"
 }
 ```
-
+> 📘 **Deployment of nodes without adding parameters**
+>
+> This results in a WARNING stage getting executed insisting to execute the node after adding parameters
+ 
 ### Dynamic Table Work Initial Deployment
 
 When deployed for the first time into an environment the Dynamic Table Work node will execute the following stage:
