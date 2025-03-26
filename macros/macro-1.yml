@@ -68,7 +68,7 @@ macroString: |
   {% macro dimensionHistoryPk() %}
       {%- set nsVariables = namespace(dimensionHistoryColumns="") -%}
 
-      {%- set partitionBy = partition_by(DIM).split("~") -%}
+      {%- set partitionBy = partition_by('DIM').split("~") -%}
       {%- set orderBy = order_by_col() -%}
 
       {%- for col in partitionBy -%}

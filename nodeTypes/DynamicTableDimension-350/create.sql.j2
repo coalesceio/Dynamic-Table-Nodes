@@ -13,7 +13,7 @@ does not permit copying or modification for any other purpose.
 {#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
 {%if desiredState and currentState != desiredState%}
-     {%if desiredState.parameters == {} or targetDynamicTableWarehouse not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+     {%if desiredState.parameters == {} or 'targetDynamicTableWarehouse' not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == ''%}
 
          {{stage('WARNING')}}
          
