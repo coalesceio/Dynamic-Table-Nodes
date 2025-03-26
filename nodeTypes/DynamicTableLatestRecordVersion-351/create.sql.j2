@@ -1,19 +1,20 @@
-{#
+{##
     Copyright (c) 2023 Coalesce. All rights reserved.
 This script and its associated documentation are confidential and proprietary to Coalesce.
 Unauthorized reproduction, distribution, or disclosure of this material is strictly prohibited.
-Coalesce permits you to copy and modify this script for the purposes of using with Coalesce but
+Coalesce permits you to copy and modify this script for the purposes of using with Coalsce but
 does not permit copying or modification for any other purpose.  
 #}
 {# == Node Type Version        : 1.2  == #}
-{# == Node Type Name           : Dynamic Table Dimension  == #}
-{# == Node Type Description    : This node creates and runs dynamic table dimension.Materialization type and cluster key added with this version == #}
+{# == Node Type Name           : Dynamic Table Latest Record Version  == #}
+{# == Node Type Description    : This node creates and runs dynamic table work with latest record version.Materialization type and cluster key added with this version == #}
 {#Release date:20231215  Version:1.0#}
 {#Release date:20240527  Version:1.1 Released By:AS  Description: Materialization type and cluster key added with this version #}
 {#Release date:20241025  Version:1.2 Released By:PM  Description: Materialization type iceberg dynamic table added #}
 
+
 {%if desiredState and currentState != desiredState%}
-     {%if desiredState.parameters == {} or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+     {%if desiredState.parameters == {} or targetDynamicTableWarehouse not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == ''%}
 
          {{stage('WARNING')}}
          
@@ -90,16 +91,16 @@ does not permit copying or modification for any other purpose.
                 {% set nsVariables.storageLocationTest = false %}
              {% endif %}
 
-        {# Config #}
-        {% set partitionByTest = currentState.config.partitionBy == desiredState.config.partitionBy %}
+        ## Config
+		{% set partitionByTest = currentState.config.partitionBy == desiredState.config.partitionBy %}
         {% set orderByTest = currentState.config.orderBy == desiredState.config.orderBy %}
         {% set orderByDateTimeTest = currentState.config.orderByDateTime == desiredState.config.orderByDateTime %}
-        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}																				
+        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}	
 		
         {# Node #}
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
         {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
-        
+
 
         {# Refresh_mode test #}
         {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
@@ -153,10 +154,10 @@ does not permit copying or modification for any other purpose.
             sourcesTest == false or
             nsVariables.joinTest == false or
             columnsTransformTest == false or
-			partitionByTest == false or 
+            partitionByTest == false or 
             orderByTest == false or 
             orderByDateTimeTest == false or 
-            recordVersioningTest == false or   
+            recordVersioningTest == false or 
             initializeTest == false or
             refreshTest == false or (currentState.storageLocations | length ==0)  %}    
 
@@ -311,7 +312,7 @@ does not permit copying or modification for any other purpose.
                   DROP DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
         {%endif%}
 
-        {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+        {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
@@ -342,6 +343,8 @@ does not permit copying or modification for any other purpose.
                 {% endif %}
             {% endif %}
         {% endfor %}
+		
+		QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
         
 
                 {% if desiredState.config.clusterKey == true %}
@@ -664,20 +667,20 @@ does not permit copying or modification for any other purpose.
             #Materialization type change from dynamic table to transient dynamic table
 
         {%if (currentState.node.name != desiredState.node.name) or (desiredState.node.location.name !=  currentState.node.location.name) or nsVariables.storageLocationTest == false%}
-             {{ stage('Clone Dimension node', true, "sql", "alter") }}
+             {{ stage('Clone Work node', true, "sql", "alter") }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} clone {{cfullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Dimension node', true, "sql", "alter") }}
+             {{ stage('Swap Work node', true, "sql", "alter") }}
              ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{cfullyQualifiedTargetDynamicTableName}}
 
              {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
               DROP DYNAMIC TABLE IF EXISTS {{cfullyQualifiedTargetDynamicTableName}}
 
            {%else%}
-             {{ stage('Clone Dimension node', true, "sql", "alter") }}
+             {{ stage('Clone Work node', true, "sql", "alter") }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableNamenew }} clone {{fullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Dimension node', true, "sql", "alter") }}
+             {{ stage('Swap Work node', true, "sql", "alter") }}
              ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{fullyQualifiedTargetDynamicTableNamenew }}
 
              {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
@@ -739,7 +742,7 @@ does not permit copying or modification for any other purpose.
                 {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "alter") }}
                 DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "alter") }}
+                {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "alter") }}
                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                 TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                 WAREHOUSE = {{dynamicTableWarehouse}}
