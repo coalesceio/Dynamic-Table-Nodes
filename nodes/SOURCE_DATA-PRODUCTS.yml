@@ -3,7 +3,6 @@ id: d8023274-54ca-4a34-9f39-ef45fe21e441
 name: PRODUCTS
 operation:
   database: ""
-  dataset: ""
   deployEnabled: false
   description: ""
   locationName: SOURCE_DATA
@@ -85,12 +84,9 @@ operation:
             transform: ""
         transform: ""
         uniqueKey: false
-    join:
-      joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }}
   name: PRODUCTS
   schema: ""
   sqlType: Source
-  table: PRODUCTS
   type: sourceInput
   version: 1
 type: Node
