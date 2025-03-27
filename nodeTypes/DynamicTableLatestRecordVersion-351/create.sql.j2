@@ -335,17 +335,9 @@ does not permit copying or modification for any other purpose.
             {% endfor %}
 
             {{ source.join }}
-            
-
-            {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-		
-		QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
+            QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
         
+        {% endfor %}
 
                 {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "create") }}
@@ -765,12 +757,8 @@ does not permit copying or modification for any other purpose.
                {% endfor %}
 
               {{ source.join }}
-               
-              {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
-                {% endif %}
-              {% endif %}
+              QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
+            
             {% endfor %}         
 
         {%endif%}   

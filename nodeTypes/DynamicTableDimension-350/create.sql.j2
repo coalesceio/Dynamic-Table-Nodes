@@ -335,12 +335,6 @@ does not permit copying or modification for any other purpose.
 
             {{ source.join }}
             
-
-            {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
-                {% endif %}
-            {% endif %}
         {% endfor %}
         
 
@@ -763,11 +757,6 @@ does not permit copying or modification for any other purpose.
 
               {{ source.join }}
                
-              {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
-                {% endif %}
-              {% endif %}
             {% endfor %}         
 
         {%endif%}   
@@ -904,20 +893,14 @@ does not permit copying or modification for any other purpose.
         )
         AS
         {% for source in desiredState.sources %}
-            SELECT {% if desiredState.config.selectDistinct %} DISTINCT {% endif %}
+            SELECT 
             {% for col in source.columns %}
                 {{ get_source_transform(col) }} AS "{{ col.name }}"
                 {%- if not loop.last -%}, {% endif %}
             {% endfor %}
 
             {{ source.join }}
-            {% if desiredState.config.groupByAll %} GROUP BY ALL {% endif %}
-
-            {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
-                {% endif %}
-            {% endif %}
+           
         {% endfor %}
    {% endif %}        
 {%elif  currentState != undefined and desiredState == undefined%}
