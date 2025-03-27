@@ -23,7 +23,7 @@ operation:
           lagValue: 60
     refresh_mode: AUTO
     selectDistinct: false
-    warehouseName: dev_wh_xs
+    warehouseName: "{{parameters.targetlargewh}}"
   database: ""
   deployEnabled: false
   description: ""

@@ -4,10 +4,12 @@ name: DT_WRK_PRODUCTS21
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 473a5613-9441-40ec-9f27-f140e5ed85e9
+            stepCounter: 177f88b7-a4b4-477c-b7bd-aab6924d1f34
     clusterKeyConfigExpressions:
       items:
         - {}

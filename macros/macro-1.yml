@@ -19,10 +19,16 @@ macroString: |
       {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
   {% endfor %}
 
-  {%- macro partition_by() -%}
+  {%- macro partition_by( nodetype ) -%}
 
-      {%- set nsVariables = namespace(partition="") -%}
+      {%- set nsVariables = namespace(partition="",delim="") -%}
       {%- set sourceTableName = node.name -%}
+
+      {%-if nodetype == 'DIM' -%}
+              {%set nsVariables.delim = '~'%}
+      {%else%}
+              {%set nsVariables.delim = ','%}
+      {%- endif -%}
 
       {%- for i in config.partitionBy.get('items') -%}
           {%- set colName = i.partColName.name -%}
@@ -31,7 +37,7 @@ macroString: |
           {%- if loop.first -%}
               {%- set nsVariables.partition = get_source_transform(columnMetadata) -%}
           {%- else -%}
-              {%- set nsVariables.partition = nsVariables.partition + ',' + get_source_transform(columnMetadata) -%}
+              {%- set nsVariables.partition = nsVariables.partition + nsVariables.delim + get_source_transform(columnMetadata) -%}
           {%- endif -%}
 
       {%- endfor -%}
@@ -62,7 +68,7 @@ macroString: |
   {% macro dimensionHistoryPk() %}
       {%- set nsVariables = namespace(dimensionHistoryColumns="") -%}
 
-      {%- set partitionBy = partition_by().split(",") -%}
+      {%- set partitionBy = partition_by('DIM').split("~") -%}
       {%- set orderBy = order_by_col() -%}
 
       {%- for col in partitionBy -%}

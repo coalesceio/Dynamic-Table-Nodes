@@ -4,10 +4,12 @@ name: DT_DIM_PRODUCTS
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 6710f671-b4f2-4991-86df-7e57c341ae67
+            stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -17,16 +19,21 @@ operation:
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Seconds
+          lagValue: 60
     orderBy:
       items:
-        - {}
+        - colName:
+            columnCounter: c43e43a4-ebfb-4d60-ab47-4e39383b3b7b
+            stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
     orderByDateTime:
       items:
         - {}
     partitionBy:
       items:
-        - {}
+        - partColName:
+            columnCounter: f4b5c649-dc0b-4bf2-9273-9286155a08cb
+            stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
     recordVersioning: Datetime Column
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
@@ -194,6 +201,25 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: c8a20b24-7934-4e6c-a7d8-28a92d2f5111
+          stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        hashDetails:
+          hashAlgorithm: SHA1
+        hashedColumns:
+          - columnCounter: 638066e1-c496-4346-8bfa-7061429b9774
+            stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+        name: GH
+        nullable: true
+        sourceColumnReferences: []
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:

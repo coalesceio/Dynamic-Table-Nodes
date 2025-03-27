@@ -34,7 +34,7 @@ operation:
             stepCounter: e8e63752-5294-4d64-a72b-a609e52271f4
     recordVersioning: Datetime Column
     refresh_mode: AUTO
-    warehouseName: dev_wh_xs
+    warehouseName: "{{parameters.targetlargewh}}"
   database: ""
   deployEnabled: true
   description: ""
