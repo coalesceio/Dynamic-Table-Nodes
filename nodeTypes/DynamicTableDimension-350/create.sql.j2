@@ -320,7 +320,7 @@ does not permit copying or modification for any other purpose.
             {{ dynamicTableComment}}
         (
             {% for col in desiredState.columns %}
-                "{{ col.name }}"
+                "{{ col.name }}"{{ col.dataType }}
                 {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
                 {%- if not loop.last -%}, {% endif %}
             {% endfor %}
@@ -742,7 +742,7 @@ does not permit copying or modification for any other purpose.
             {{ dynamicTableComment }}
            (
             {% for col in desiredState.columns %}
-                "{{ col.name }}"
+                "{{ col.name }}"{{ col.dataType }}
                 {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
                 {%- if not loop.last -%}, {% endif %}
             {% endfor %}
