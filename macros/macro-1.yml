@@ -13,13 +13,15 @@ macroString: |
   {% endif %}
 
 
+
+  {%- macro partition_by( nodetype ) -%}
+
   {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
   {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
   {% for source in sources %}
       {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
   {% endfor %}
 
-  {%- macro partition_by( nodetype ) -%}
 
       {%- set nsVariables = namespace(partition="",delim="") -%}
       {%- set sourceTableName = node.name -%}

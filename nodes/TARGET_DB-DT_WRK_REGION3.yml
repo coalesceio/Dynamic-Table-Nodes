@@ -19,7 +19,8 @@ operation:
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Hours
+          lagValue: "6000"
     refresh_mode: AUTO
     selectDistinct: false
     warehouseName: dev_wh_xs
