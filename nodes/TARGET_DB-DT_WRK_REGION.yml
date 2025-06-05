@@ -1,0 +1,111 @@
+fileVersion: 1
+id: 0702bffd-80ba-4968-9e93-84300bf339c8
+name: DT_WRK_REGION
+operation:
+  config:
+    baseLocation: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: ""
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Hours
+          lagValue: "6000"
+    refresh_mode: AUTO
+    selectDistinct: false
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 379b9d69-33bd-45ce-9078-ce5d13b718e0
+          stepCounter: 0702bffd-80ba-4968-9e93-84300bf339c8
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: R_REGIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 00e18088-968f-4a54-bbf7-2ffd3ed835f9
+                stepCounter: 877ab621-9ece-4552-b3a0-bce3e1903125
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 306d23bb-5f52-49d6-b3c9-3702ea6a3fe2
+          stepCounter: 0702bffd-80ba-4968-9e93-84300bf339c8
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: R_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 3d43c599-47e0-422c-b123-d1f50e2beb94
+                stepCounter: 877ab621-9ece-4552-b3a0-bce3e1903125
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: eda86b67-b2a3-4da7-aed5-2221c0bf5d8b
+          stepCounter: 0702bffd-80ba-4968-9e93-84300bf339c8
+        config: {}
+        dataType: VARCHAR(152)
+        description: ""
+        name: R_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 41c1510f-9409-4f7e-9ca2-c7fd5d1b7179
+                stepCounter: 877ab621-9ece-4552-b3a0-bce3e1903125
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: bb90bf47-e1bc-4ffd-92ef-2e3abf1a396d
+          stepCounter: 0702bffd-80ba-4968-9e93-84300bf339c8
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        description: ""
+        name: R_LOAD_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: f9936b8d-e224-432a-a4ab-eb8d5bd8b056
+                stepCounter: 877ab621-9ece-4552-b3a0-bce3e1903125
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: REGION
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'REGION') }} "REGION"
+        name: DT_WRK_REGION
+        noLinkRefs: []
+  name: DT_WRK_REGION
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node
