@@ -3,13 +3,17 @@ id: b36e7e8f-b3f2-45dd-a298-69f554b3a27e
 name: STG_REGION
 operation:
   config:
+    asofJoinMain: false
+    groupByAll: false
     insertStrategy: INSERT
+    orderby: false
     postSQL: ""
     preSQL: ""
+    selectDistinct: false
     testsEnabled: true
     truncateBefore: true
   database: ""
-  deployEnabled: false
+  deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
@@ -89,7 +93,7 @@ operation:
   name: STG_REGION
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: bnd:::204
   type: sql
   version: 1
 type: Node

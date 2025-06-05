@@ -9,7 +9,7 @@ operation:
     testsEnabled: true
     truncateBefore: true
   database: ""
-  deployEnabled: false
+  deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
@@ -89,7 +89,7 @@ operation:
   name: STG_REGION1
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: bnd:::204
   type: sql
   version: 1
 type: Node
