@@ -39,7 +39,12 @@ operation:
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: NUMBER(38,0)
-        description: ""
+        description: |-
+          - Originates from the 'PRODUCT_ID' column in the 'PRODUCTS' source table.
+          - Serves as a unique identifier for products, crucial for joining with other tables like 'SALES' or 'INVENTORY'.
+          - This ID is essential for tracking product performance in reports and dashboards.
+          - It is also a primary key within the 'PRODUCTS' table.
+          - The data type is NUMBER(38,0).
         name: PRODUCT_ID
         nullable: false
         sourceColumnReferences:
@@ -53,7 +58,11 @@ operation:
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: VARCHAR(255)
-        description: ""
+        description: |-
+          - The 'PRODUCT_NAME' is sourced directly from the 'PRODUCTS' source table.
+          - It provides the name of the product.
+          - Essential for display in reports, applications, and for identifying products in data analysis.
+          - The data type is VARCHAR(255).
         name: PRODUCT_NAME
         nullable: false
         sourceColumnReferences:
@@ -67,7 +76,11 @@ operation:
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: VARCHAR(100)
-        description: ""
+        description: |-
+          - This 'BRAND' column is derived from the 'BRAND' column of the 'PRODUCTS' source table.
+          - It specifies the brand associated with a particular product.
+          - Used for filtering, grouping, and analyzing product data by brand in reports and dashboards.
+          - The data type is VARCHAR(100).
         name: BRAND
         nullable: true
         sourceColumnReferences:
@@ -81,7 +94,11 @@ operation:
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
         dataType: VARCHAR(50)
-        description: ""
+        description: |-
+          - This 'COLOUR2' column is sourced from the 'COLOUR' column in the 'PRODUCTS' source table.
+          - It represents the color of the product.
+          - Useful for product categorization, filtering, and visual representation in sales reports or inventory management systems.
+          - The data type is VARCHAR(50).
         name: COLOUR2
         nullable: true
         sourceColumnReferences:

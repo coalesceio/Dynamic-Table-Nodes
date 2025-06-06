@@ -48,11 +48,13 @@ does not permit copying or modification for any other purpose.
         descolchanges = 0,
         othercolchanges = 0, joinTest = True ) %}
 		
-        {% for src in desiredState.sources %}
+        {%if sourcesTest == true%}
+          {% for src in desiredState.sources %}
             {% if  currentState.sources[loop.index0].join != src.join %}
                 {% set nsVariables.joinTest = false %}  {# Set joinTest to false if changes are detected #}
             {% endif %}
-            {% endfor %}
+           {% endfor %}
+        {%endif%}
      
     
         {# Test to see if the transform in a column has changed #}

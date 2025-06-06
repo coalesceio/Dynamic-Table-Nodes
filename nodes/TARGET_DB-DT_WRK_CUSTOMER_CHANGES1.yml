@@ -50,7 +50,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: NUMBER(38,0)
-        description: ""
+        description: |-
+          - This column represents the unique identifier for a customer.
+          - It is sourced from the `CUSTOMER_ID` column in the `CUSTOMER_CHANGES` table.
+          - It serves as a key field for identifying customer records across various systems and reports.
+          - The `CUSTOMER_ID` is essential for linking customer data in downstream processes, such as generating customer-specific reports and metrics.
         name: CUSTOMER_ID
         nullable: true
         sourceColumnReferences:
@@ -64,7 +68,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: VARCHAR(50)
-        description: ""
+        description: |-
+          - This column stores the first name of the customer.
+          - The data originates from the `FIRST_NAME` column of the `CUSTOMER_CHANGES` table.
+          - It is a core attribute used for customer identification and personalization.
+          - This column is crucial for creating customer profiles and targeted marketing campaigns.
         name: FIRST_NAME
         nullable: true
         sourceColumnReferences:
@@ -78,7 +86,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: VARCHAR(50)
-        description: ""
+        description: |-
+          - This column contains the last name of the customer.
+          - It is populated from the `LAST_NAME` column in the `CUSTOMER_CHANGES` table.
+          - Along with the first name, it helps to uniquely identify customers.
+          - This information is used in generating customer lists, reports, and communications.
         name: LAST_NAME
         nullable: true
         sourceColumnReferences:
@@ -92,7 +104,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: VARCHAR(100)
-        description: ""
+        description: |-
+          - This column stores the email address of the customer.
+          - The data is sourced directly from the `EMAIL` column in the `CUSTOMER_CHANGES` table.
+          - It is used for customer communication, marketing, and account management.
+          - The email address is essential for digital engagement and customer support activities.
         name: EMAIL
         nullable: true
         sourceColumnReferences:
@@ -106,7 +122,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: VARCHAR(15)
-        description: ""
+        description: |-
+          - This column contains the phone number of the customer.
+          - It is extracted from the `PHONE_NUMBER` column of the `CUSTOMER_CHANGES` table.
+          - The phone number is used for direct communication, customer service, and verification purposes.
+          - It supports various business processes that require customer contact.
         name: PHONE_NUMBER
         nullable: true
         sourceColumnReferences:
@@ -120,7 +140,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: VARCHAR(365)
-        description: ""
+        description: |-
+          - This column stores the complete address of the customer.
+          - The data comes from the `FULL_ADDRESS` column in the `CUSTOMER_CHANGES` table.
+          - It provides detailed location information for the customer.
+          - This is used for shipping, billing, and geographic analysis in reports and dashboards.
         name: FULL_ADDRESS
         nullable: true
         sourceColumnReferences:
@@ -134,7 +158,11 @@ operation:
           stepCounter: d5f78051-8285-4a19-af31-ed4693ff2de2
         config: {}
         dataType: TIMESTAMP_NTZ(9)
-        description: ""
+        description: |-
+          - This column captures the timestamp of the last update to the customer record.
+          - It is sourced from the `UPDATE_TIME` column in the `CUSTOMER_CHANGES` table.
+          - The `UPDATE_TIME` column is crucial for tracking data changes and ensuring data accuracy.
+          - It can be used for auditing and monitoring purposes to understand when customer information was last modified.
         name: UPDATE_TIME
         nullable: true
         sourceColumnReferences:
@@ -152,7 +180,11 @@ operation:
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
-        description: ""
+        description: |-
+          - This column represents the timestamp when the customer record was initially created.
+          - It is system-generated using the `FIRST_VALUE` function partitioned by a specified column and ordered by another column, ensuring the capture of the earliest timestamp for each group.
+          - Useful for historical data analysis, trend identification, and understanding customer acquisition timelines.
+          - The column is generated without a direct source column, derived from a transformation.
         name: RECORD_CREATED_DATE
         nullable: true
         recordCreated: true

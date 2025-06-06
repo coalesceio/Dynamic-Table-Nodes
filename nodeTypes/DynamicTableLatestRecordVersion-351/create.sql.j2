@@ -49,12 +49,14 @@ does not permit copying or modification for any other purpose.
         
         {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
 		
-	    {% for src in desiredState.sources %}
+	    {%if sourcesTest == true %}   
+           {% for src in desiredState.sources %}
                 {% if  currentState.sources[loop.index0].join != src.join %}
                     {# Set joinTest to false if changes are detected #}
                     {% set nsVariables.joinTest = false %}  
                 {% endif %}
-        {% endfor %}
+          {% endfor %}
+        {%endif%}
 
             
         {# Test to see if the transform in a column has changed #}
