@@ -1,0 +1,11 @@
+fileVersion: 1
+id: "380"
+mappingDefinitions:
+  SOURCE_DATA:
+    database: RUHULAMINS_DEV
+    schema: SOURCE_DATA
+  TARGET_DB:
+    database: RUHULAMIN_QA
+    schema: TARGE4
+name: QA TEST 4
+type: Environment

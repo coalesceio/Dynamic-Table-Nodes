@@ -307,11 +307,11 @@ does not permit copying or modification for any other purpose.
            {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
            {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
-                {{ stage('Drop Dynamic Table at old location/name', true, "sql", "alter") }}
+                {{ stage('Drop Dynamic Table at old location/name') }}
                   DROP DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
         {%endif%}
 
-        {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+        {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}') }}
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
@@ -345,10 +345,10 @@ does not permit copying or modification for any other purpose.
         
 
                 {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering', true, "sql", "create") }}
+                  {{ stage('Apply Table Clustering') }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
-                   {{ stage('Resume Recluster Table', true, "sql", "create") }}
+                   {{ stage('Resume Recluster Table') }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
                {% endif %}
@@ -427,7 +427,7 @@ does not permit copying or modification for any other purpose.
              {# Change in storage mappings,target location or node name #}
          {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
-                {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                {{ stage('Alter Dynamic Table') }}
 				{% set srcSchName = currentState.node.location.name %}
                 {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
                 {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
@@ -467,7 +467,7 @@ does not permit copying or modification for any other purpose.
 
                 {% endif %}
 
-                {{ stage('Recluster TABLE', true, "sql", "alter") }}
+                {{ stage('Recluster TABLE') }}
                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
                 {{ nsVariables.finalClusterKey }}
 
@@ -486,7 +486,7 @@ does not permit copying or modification for any other purpose.
                     {% set descriptionTest = currentDescription == desiredDescription %}
 
                     {% if (descriptionTest == false) %}
-                    {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                    {{ stage('Alter Dynamic Table') }}
                        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
                     {% endif %}
 
@@ -497,7 +497,7 @@ does not permit copying or modification for any other purpose.
 
 
         {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
-           {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+           {{ stage('Alter Dynamic Table') }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
             {{ dynamicTableWarehouse }}
             {{ dynamicTableLagSpecification }}
@@ -505,7 +505,7 @@ does not permit copying or modification for any other purpose.
            
         {%endif%}
 
-          {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
+          {{ stage('Refresh Dynamic Table') }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         
 
@@ -666,23 +666,23 @@ does not permit copying or modification for any other purpose.
             #Materialization type change from dynamic table to transient dynamic table
 
         {%if (currentState.node.name != desiredState.node.name) or (desiredState.node.location.name !=  currentState.node.location.name) or nsVariables.storageLocationTest == false%}
-             {{ stage('Clone Work node', true, "sql", "alter") }}
+             {{ stage('Clone Work node') }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} clone {{cfullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Work node', true, "sql", "alter") }}
+             {{ stage('Swap Work node') }}
              ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{cfullyQualifiedTargetDynamicTableName}}
 
-             {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
+             {{ stage('Drop '+ '{{currentState.node.materializationType}}') }}
               DROP DYNAMIC TABLE IF EXISTS {{cfullyQualifiedTargetDynamicTableName}}
 
            {%else%}
-             {{ stage('Clone Work node', true, "sql", "alter") }}
+             {{ stage('Clone Work node') }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableNamenew }} clone {{fullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Work node', true, "sql", "alter") }}
+             {{ stage('Swap Work node') }}
              ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{fullyQualifiedTargetDynamicTableNamenew }}
 
-             {{ stage('Drop '+ '{{currentState.node.materializationType}}', true, "sql", "alter") }}
+             {{ stage('Drop '+ '{{currentState.node.materializationType}}') }}
               DROP DYNAMIC TABLE IF EXISTS {{fullyQualifiedTargetDynamicTableNamenew}}
 
            {%endif%}
@@ -700,7 +700,7 @@ does not permit copying or modification for any other purpose.
                     {% set descriptionTest = currentDescription == desiredDescription %}
 
                     {% if (descriptionTest == false) %}
-                    {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                    {{ stage('Alter Dynamic Table') }}
                        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription | escape}}'
                     {% endif %}
 
@@ -710,7 +710,7 @@ does not permit copying or modification for any other purpose.
            
           {% if clusterTest == false %}
 		 
-                  {{ stage('Recluster TABLE', true, "sql", "alter") }}
+                  {{ stage('Recluster TABLE') }}
                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
                 {{ nsVariables.finalClusterKey }}
 
@@ -718,7 +718,7 @@ does not permit copying or modification for any other purpose.
 		 
              {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
                 
-                {{ stage('Alter Dynamic Table', true, "sql", "alter") }}
+                {{ stage('Alter Dynamic Table') }}
                  ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} SET
                  {{ dynamicTableWarehouse }}
                  {{ dynamicTableLagSpecification }}
@@ -727,7 +727,7 @@ does not permit copying or modification for any other purpose.
               
              {%endif%}
         
-              {{ stage('Refresh Dynamic Table', true, "sql", "alter") }}
+              {{ stage('Refresh Dynamic Table') }}
                ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
@@ -738,10 +738,10 @@ does not permit copying or modification for any other purpose.
                 {% set keyword = 'TRANSIENT'  %}
             {%endif%}
 
-                {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "alter") }}
+                {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name)) }}
                 DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "alter") }}
+                {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}') }}
                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                 TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                 WAREHOUSE = {{dynamicTableWarehouse}}
@@ -778,10 +778,10 @@ does not permit copying or modification for any other purpose.
           
 
             {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering', true, "sql", "alter") }}
+                  {{ stage('Apply Table Clustering') }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
-                   {{ stage('Resume Recluster Table', true, "sql", "alter") }}
+                   {{ stage('Resume Recluster Table') }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
             {%endif%}
@@ -876,7 +876,7 @@ does not permit copying or modification for any other purpose.
            {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
            {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
            {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-           {{ stage('Drop Dynamic Table '+'{{ fullyQualifiedTargetDynamicTableName }}', true, "sql", "alter") }}
+           {{ stage('Drop Dynamic Table '+'{{ fullyQualifiedTargetDynamicTableName }}') }}
             DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}        
 		 {% endif %}        
          {% endif %}
@@ -890,12 +890,12 @@ does not permit copying or modification for any other purpose.
            {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
            {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
            {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-           {{ stage('Drop Dynamic Table at old location/name', true, "sql", "alter") }}
+           {{ stage('Drop Dynamic Table at old location/name') }}
             DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}
         {%endif%}
 		
 
-        {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+        {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}') }}
 
         CREATE OR REPLACE DYNAMIC {{ keyword }} TABLE {{ fullyQualifiedTargetDynamicTableName }}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
@@ -940,7 +940,7 @@ does not permit copying or modification for any other purpose.
     {% set targetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
     {% set fullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
-    {{ stage('Drop ' + '{{currentState.node.materializationType}}', true, "sql", "drop") }}
+    {{ stage('Drop ' + '{{currentState.node.materializationType}}') }}
     DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}			  
 
 {% endif %}
