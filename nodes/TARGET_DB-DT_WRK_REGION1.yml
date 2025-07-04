@@ -4,10 +4,12 @@ name: DT_WRK_REGION1
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 48444c52-c9f8-4db3-89ee-41b10fccf509
+            stepCounter: d733c849-ff36-425c-9fb6-1bc25e31f73e
     clusterKeyConfigExpressions:
       items:
         - {}

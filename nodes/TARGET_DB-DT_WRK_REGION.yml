@@ -52,7 +52,7 @@ operation:
           columnCounter: 680d5081-c099-4323-aa99-0074c5858cc5
           stepCounter: 66fd46e1-e967-4b55-988b-648594fcc2f5
         config: {}
-        dataType: VARCHAR(25)
+        dataType: VARCHAR(152)
         description: ""
         name: R_NAME
         nullable: true

@@ -1,6 +1,6 @@
 fileVersion: 1
 id: d6faef78-6675-4ba2-abc5-e5f72e4511f1
-name: DT_DIM_REGION
+name: DT_DIM_REGIONtet
 operation:
   config:
     baseLocation: ""
@@ -80,7 +80,7 @@ operation:
           columnCounter: 3b8a7d03-9b69-4050-8702-fa17d9377b99
           stepCounter: d6faef78-6675-4ba2-abc5-e5f72e4511f1
         config: {}
-        dataType: VARCHAR(25)
+        dataType: VARCHAR(152)
         description: ""
         name: R_NAME
         nullable: true
@@ -196,9 +196,9 @@ operation:
             nodeName: REGION
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'REGION') }} "REGION"
-        name: DT_DIM_REGION
+        name: DT_DIM_REGIONtet
         noLinkRefs: []
-  name: DT_DIM_REGION
+  name: DT_DIM_REGIONtet
   overrideSQL: false
   schema: ""
   sqlType: "350"
