@@ -39,7 +39,7 @@ operation:
   deployEnabled: true
   description: ""
   isMultisource: false
-  locationName: TARGET_DB1
+  locationName: TARGET_DB
   materializationType: dynamic table
   metadata:
     appliedNodeTests: []
@@ -258,7 +258,8 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_CUSTOMER_RS1: 3897bec0-98aa-4def-bfb8-2e950fb4fa3d
         customSQL:
           customSQL: ""
         dependencies:

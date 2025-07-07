@@ -28,7 +28,7 @@ operation:
   deployEnabled: true
   description: ""
   isMultisource: false
-  locationName: TARGET_DB1
+  locationName: TARGET_DB
   materializationType: dynamic table
   metadata:
     appliedNodeTests: []
@@ -162,14 +162,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          WRK_CUSTOMER_RS1: b6150d21-4c2c-45d4-8fed-afe4cef1ad15
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: TARGET_DB
+          - locationName: TARGET_DB1
             nodeName: WRK_CUSTOMER_RS1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_CUSTOMER_RS1') }} "WRK_CUSTOMER_RS1"
+          joinCondition: FROM {{ ref('TARGET_DB1', 'WRK_CUSTOMER_RS1') }} "WRK_CUSTOMER_RS1"
         name: DT_WRK_CUSTOMER_RS1
         noLinkRefs: []
   name: DT_WRK_CUSTOMER_RS1
