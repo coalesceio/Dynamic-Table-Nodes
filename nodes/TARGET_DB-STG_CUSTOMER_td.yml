@@ -3,9 +3,20 @@ id: 4df7a416-f5e9-4abd-98b1-1e1610150674
 name: STG_CUSTOMER_td
 operation:
   config:
+    asofJoinMain: false
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 7c83d764-b9e7-4cf3-884b-09be891789c6
+            stepCounter: 4df7a416-f5e9-4abd-98b1-1e1610150674
+    clusterKeyExpressions: false
+    groupByAll: false
     insertStrategy: INSERT
+    orderby: false
     postSQL: ""
     preSQL: ""
+    selectDistinct: false
     testsEnabled: true
     truncateBefore: true
   database: ""
@@ -159,7 +170,7 @@ operation:
   name: STG_CUSTOMER_td
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: "179"
   type: sql
   version: 1
 type: Node
