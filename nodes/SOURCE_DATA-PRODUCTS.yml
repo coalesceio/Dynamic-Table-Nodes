@@ -1,6 +1,6 @@
 fileVersion: 1
-id: c6002e29-fcf4-4a14-81ba-59ab766abddc
-name: REGION
+id: ec4d87ff-2062-4f4a-aaba-553dee1827c9
+name: PRODUCTS
 operation:
   database: ""
   deployEnabled: true
@@ -13,13 +13,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 2b1d8d4b-d03e-4a16-9958-29fc05205a14
-          stepCounter: c6002e29-fcf4-4a14-81ba-59ab766abddc
+          columnCounter: 89156032-0a13-45d5-9ef9-a9be506d1bc6
+          stepCounter: ec4d87ff-2062-4f4a-aaba-553dee1827c9
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: R_REGIONKEY
+        name: PRODUCT_ID
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -32,13 +32,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 60126795-5a71-4f31-8334-b7612e5c2072
-          stepCounter: c6002e29-fcf4-4a14-81ba-59ab766abddc
+          columnCounter: 47db4f05-baa9-4fa6-9452-b31f481d1b78
+          stepCounter: ec4d87ff-2062-4f4a-aaba-553dee1827c9
         config: {}
-        dataType: VARCHAR(25)
+        dataType: VARCHAR(255)
         defaultValue: ""
         description: ""
-        name: R_NAME
+        name: PRODUCT_NAME
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -51,13 +51,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 6115ca19-cbcf-42a9-af41-64c9a5876cb0
-          stepCounter: c6002e29-fcf4-4a14-81ba-59ab766abddc
+          columnCounter: 7c6d666b-c24a-4a9c-80f6-d0f9f400ad90
+          stepCounter: ec4d87ff-2062-4f4a-aaba-553dee1827c9
         config: {}
-        dataType: VARCHAR(152)
+        dataType: VARCHAR(100)
         defaultValue: ""
         description: ""
-        name: R_COMMENT
+        name: BRAND
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -70,13 +70,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 81a4d636-631e-45df-9d45-9fbdf6bd229d
-          stepCounter: c6002e29-fcf4-4a14-81ba-59ab766abddc
+          columnCounter: 9e2554c9-f276-4fc4-94ea-c7f7e508bc70
+          stepCounter: ec4d87ff-2062-4f4a-aaba-553dee1827c9
         config: {}
-        dataType: TIMESTAMP_LTZ(9)
+        dataType: VARCHAR(50)
         defaultValue: ""
         description: ""
-        name: R_LOAD_TIMESTAMP
+        name: COLOUR
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -84,7 +84,7 @@ operation:
             transform: ""
         transform: ""
         uniqueKey: false
-  name: REGION
+  name: PRODUCTS
   schema: ""
   sqlType: Source
   type: sourceInput

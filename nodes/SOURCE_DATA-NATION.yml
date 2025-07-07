@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
-name: CUSTOMER_CHANGES
+id: 47eafc1a-98b8-447b-b03f-6edce5a41e33
+name: NATION
 operation:
   database: ""
   deployEnabled: true
@@ -13,13 +13,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: be0dbfb7-1a02-4282-91b0-09f84c9f25f1
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: c0314bd1-73b2-4a08-9452-fd6664a33b29
+          stepCounter: 47eafc1a-98b8-447b-b03f-6edce5a41e33
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: CUSTOMER_ID
+        name: N_NATIONKEY
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -32,13 +32,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 47fe1904-6091-4b48-92f6-331a9b949ab1
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 20d4961d-4fb7-4f08-9a81-bcbd47df3d6e
+          stepCounter: 47eafc1a-98b8-447b-b03f-6edce5a41e33
         config: {}
-        dataType: VARCHAR(50)
+        dataType: VARCHAR(25)
         defaultValue: ""
         description: ""
-        name: FIRST_NAME
+        name: N_NAME
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -51,13 +51,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 70cbb1bd-6f96-4819-a6b2-b4f26380ab7d
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: c10c0bab-cd4d-4cc8-8003-a7a580e6d1b9
+          stepCounter: 47eafc1a-98b8-447b-b03f-6edce5a41e33
         config: {}
-        dataType: VARCHAR(50)
+        dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: LAST_NAME
+        name: N_REGIONKEY
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -70,13 +70,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 0fc66a08-7daa-43b1-8a6a-2d0a53be5887
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 71413b76-106f-4a70-a918-04bc3c363514
+          stepCounter: 47eafc1a-98b8-447b-b03f-6edce5a41e33
         config: {}
-        dataType: VARCHAR(100)
+        dataType: VARCHAR(152)
         defaultValue: ""
         description: ""
-        name: EMAIL
+        name: N_COMMENT
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -89,13 +89,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 19250e0f-a7a7-4471-bcc6-3049c869fcbf
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 5c692e00-b31d-4f42-9b8e-2ba21ef9943c
+          stepCounter: 47eafc1a-98b8-447b-b03f-6edce5a41e33
         config: {}
-        dataType: VARCHAR(15)
+        dataType: TIMESTAMP_LTZ(9)
         defaultValue: ""
         description: ""
-        name: PHONE_NUMBER
+        name: N_LOAD_TIMESTAMP
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -108,27 +108,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: b4e8dc89-1d85-4e13-926b-1084518ae68c
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
-        config: {}
-        dataType: VARCHAR(365)
-        defaultValue: ""
-        description: ""
-        name: FULL_ADDRESS
-        nullable: true
-        primaryKey: false
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: ""
-        transform: ""
-        uniqueKey: false
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 68c404b2-8e20-4a74-b1f7-0a7d6e374b0d
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 5c803ac3-a30d-491c-8303-84740ba92c43
+          stepCounter: 47eafc1a-98b8-447b-b03f-6edce5a41e33
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         defaultValue: ""
@@ -141,7 +122,7 @@ operation:
             transform: ""
         transform: ""
         uniqueKey: false
-  name: CUSTOMER_CHANGES
+  name: NATION
   schema: ""
   sqlType: Source
   type: sourceInput
