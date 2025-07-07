@@ -8,7 +8,7 @@ mappingDefinitions:
     database: RUHULAMIN_QA
     schema: TARGET5
   TARGET_DB1:
-    database: ""
-    schema: ""
+    database: RUHULAMIN_QA
+    schema: TARGE4
 name: QA TEST 4
 type: Environment
