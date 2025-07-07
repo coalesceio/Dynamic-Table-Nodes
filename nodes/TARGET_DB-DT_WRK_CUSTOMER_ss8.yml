@@ -1,0 +1,181 @@
+fileVersion: 1
+id: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+name: DT_WRK_CUSTOMER_ss8
+operation:
+  config:
+    baseLocation: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: ""
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    refresh_mode: AUTO
+    selectDistinct: false
+    warehouseName: compute_wh
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 888b2b57-134c-48ef-99aa-760498c9ee7b
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: C_CUSTKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: a99123aa-e9d1-4da6-8d97-4f2968e2a976
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3f89ea59-eb21-43ee-a193-9e40534f4033
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: C_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: a6f05f84-f0ce-4a6a-a668-0e75aeb476f7
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: b667b1d5-82fe-4839-893e-4ca06a3a952d
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: VARCHAR(40)
+        description: ""
+        name: C_ADDRESS
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: e24a2ed5-61de-403e-bc55-93c0b3074d13
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3b57c25e-6905-4540-8e35-e1a9b27683fc
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: C_NATIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: d9bb7f91-c505-4edf-8051-b08857a6cd21
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 436fbbb6-f1ff-4c3d-aca1-4fc1a9c8b325
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: VARCHAR(15)
+        description: ""
+        name: C_PHONE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ac399931-2cbf-4d0e-b129-9371e6c39b31
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 6670e325-0e1b-41a1-a4e7-4f19c0c332ce
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: NUMBER(12,2)
+        description: ""
+        name: C_ACCTBAL
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 06efaa84-955b-4f2b-ba9a-c3c6035163e0
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c52903ea-b693-4638-89b1-5c9d4e994795
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: VARCHAR(10)
+        description: ""
+        name: C_MKTSEGMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cb973eaf-7c6a-4570-8711-97367f26001e
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 68cf6bb1-652c-494f-8aa8-b78178626444
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: VARCHAR(117)
+        description: ""
+        name: C_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: c5451ae7-d2d4-4fbc-af93-a2ef2a6ea26e
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: b875b388-5a68-46e2-95c4-7828620733da
+          stepCounter: b7a69de1-dc6e-4e43-93a2-5a30759609c8
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        description: ""
+        name: C_LOAD_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cac538d1-a235-4cae-acfc-b9284829076c
+                stepCounter: cb0e75ab-46f9-4e39-a482-0af453662dce
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: WRK_CUSTOMER_ss8
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_CUSTOMER_ss8') }} "WRK_CUSTOMER_ss8"
+        name: DT_WRK_CUSTOMER_ss8
+        noLinkRefs: []
+  name: DT_WRK_CUSTOMER_ss8
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node

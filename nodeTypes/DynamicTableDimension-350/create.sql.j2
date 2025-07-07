@@ -313,7 +313,7 @@ does not permit copying or modification for any other purpose.
                   DROP DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
         {%endif%}
 
-        {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}') }}
+        {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
