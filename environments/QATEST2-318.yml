@@ -1,5 +1,8 @@
 fileVersion: 1
 id: "318"
-mappingDefinitions: {}
+mappingDefinitions:
+  TARGET_DB1:
+    database: ""
+    schema: ""
 name: QA TEST 2
 type: Environment

@@ -3,3 +3,4 @@ fileVersion: 1
 locations:
   - SOURCE_DATA
   - TARGET_DB
+  - TARGET_DB1
