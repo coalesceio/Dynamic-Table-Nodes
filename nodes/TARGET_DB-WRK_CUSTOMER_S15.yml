@@ -1,6 +1,6 @@
 fileVersion: 1
-id: a19338d6-e389-4b8b-a387-e0cc4713b70d
-name: WRK_CUSTOMER_ss4
+id: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
+name: WRK_CUSTOMER_S15
 operation:
   config:
     asofColumn:
@@ -40,8 +40,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 2709590c-47b0-4f73-86e3-b2cd39792ea0
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: d46d4a61-f51a-4352-8634-8bb1118c3233
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -54,8 +54,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 15fa8ca8-0400-4a83-8576-b3c98ab5c88a
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 323625d9-c798-4cd2-8909-f0e0a054b4c7
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: VARCHAR(25)
         description: ""
@@ -68,8 +68,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 62b6c817-4183-43f7-894f-34a175156604
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 5db54e38-623a-4082-b2b1-ab1698f58d88
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: VARCHAR(40)
         description: ""
@@ -82,8 +82,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: ac1b7d22-548b-45a9-b82b-25ea4bc0fd49
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 588be789-d862-4dac-8e6e-13ee46f048f4
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -96,8 +96,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b5f0d660-b357-428f-844f-43eeb62f0117
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 049acc5d-fd4c-4e3c-a1cc-8e0136feb96e
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: VARCHAR(15)
         description: ""
@@ -110,8 +110,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: db287f8a-adb6-4aa9-a29b-39debddbb426
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: eb5d100c-ead9-4037-867e-91aa6b41c813
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: NUMBER(12,2)
         description: ""
@@ -124,8 +124,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 1d9983d1-1965-4660-ae77-e3470a81c5bc
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 5bdf4a9c-8797-4e7e-a2ae-c8d0176907d2
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: VARCHAR(10)
         description: ""
@@ -138,8 +138,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 90e8719c-d5db-45e5-893c-87b47e5e9657
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 102bbf6a-3d05-486f-acb2-4735bb7dec96
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: VARCHAR(117)
         description: ""
@@ -152,8 +152,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: fe5683d3-ac35-49e0-bc3a-b7ce96b35a94
-          stepCounter: a19338d6-e389-4b8b-a387-e0cc4713b70d
+          columnCounter: 012b9240-fe16-4dd1-b384-89ac87491221
+          stepCounter: 02a10e93-bf6d-4555-99cb-bf4c0bb21c91
         config: {}
         dataType: TIMESTAMP_LTZ(9)
         description: ""
@@ -174,13 +174,24 @@ operation:
           - locationName: SOURCE_DATA
             nodeName: CUSTOMER
         join:
-          joinCondition: ""
-        name: WRK_CUSTOMER_ss4
+          joinCondition: |2-
+
+
+
+
+
+
+
+
+
+             
+              FROM  {{ ref('SOURCE_DATA', 'CUSTOMER') }} CUSTOMER
+        name: WRK_CUSTOMER_S15
         noLinkRefs: []
-  name: WRK_CUSTOMER_ss4
+  name: WRK_CUSTOMER_S15
   overrideSQL: false
   schema: ""
-  sqlType: "179"
+  sqlType: AD:::179
   type: sql
   version: 1
 type: Node
