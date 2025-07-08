@@ -4,10 +4,12 @@ name: DT_WRK_CUSTOMER_ss10
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 0a0ff23c-4a06-49ea-9eef-42fc3b9af4e2
+            stepCounter: cb87766c-b58e-44dc-8669-be37a01bc41b
     clusterKeyConfigExpressions:
       items:
         - {}

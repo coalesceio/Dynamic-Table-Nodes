@@ -4,10 +4,12 @@ name: DT_DIM_CUSTOMER_ss10
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 00474b9f-3808-4bfe-ab61-40cff641c9ff
+            stepCounter: 61abf25e-710c-478a-acae-371e97bc1b49
     clusterKeyConfigExpressions:
       items:
         - {}
