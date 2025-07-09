@@ -3,9 +3,12 @@ id: 4a286147-52fd-4749-b9aa-97456183ee5f
 name: STG_ORDERS_VIEW1
 operation:
   config:
+    asofJoinMain: false
+    groupByAll: false
     insertStrategy: INSERT
     postSQL: ""
     preSQL: ""
+    selectDistinct: false
     testsEnabled: true
     truncateBefore: true
   database: ""
@@ -173,7 +176,7 @@ operation:
   name: STG_ORDERS_VIEW1
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: RS:::204
   type: sql
   version: 1
 type: Node
