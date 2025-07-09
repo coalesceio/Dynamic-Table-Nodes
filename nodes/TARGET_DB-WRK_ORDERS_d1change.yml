@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 80117d48-aaee-43fe-a1e6-af62a587026c
-name: WRK_ORDERS_d1
+name: WRK_ORDERS_d1change
 operation:
   config:
     asofColumn:
@@ -192,9 +192,9 @@ operation:
 
              
               FROM  {{ ref('SOURCE_DATA', 'ORDERS') }} ORDERS
-        name: WRK_ORDERS_d1
+        name: WRK_ORDERS_d1change
         noLinkRefs: []
-  name: WRK_ORDERS_d1
+  name: WRK_ORDERS_d1change
   overrideSQL: false
   schema: ""
   sqlType: RS:::204
