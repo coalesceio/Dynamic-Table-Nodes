@@ -176,14 +176,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_ORDERS_VIEW1: ebebba0b-ab46-4d8f-a7b7-61920304f995
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_ORDERS_VIEW2
+            nodeName: STG_ORDERS_VIEW1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_ORDERS_VIEW2') }} "STG_ORDERS_VIEW2"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_ORDERS_VIEW1') }} "STG_ORDERS_VIEW1"
         name: DT_WRK_ORDERS_VIEW2
         noLinkRefs: []
   name: DT_WRK_ORDERS_VIEW2
