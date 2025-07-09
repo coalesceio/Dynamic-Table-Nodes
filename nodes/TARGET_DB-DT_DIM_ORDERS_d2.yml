@@ -272,14 +272,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_ORDERS_d2change: 0c93a9f6-69cb-47c9-ae9a-519a9cc0037f
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_ORDERS_d2
+            nodeName: DT_WRK_ORDERS_d2change
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_ORDERS_d2') }} "DT_WRK_ORDERS_d2"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_ORDERS_d2change') }} "DT_WRK_ORDERS_d2change"
         name: DT_DIM_ORDERS_d2
         noLinkRefs: []
   name: DT_DIM_ORDERS_d2

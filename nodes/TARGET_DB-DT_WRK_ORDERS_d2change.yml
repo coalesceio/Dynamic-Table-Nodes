@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 0c93a9f6-69cb-47c9-ae9a-519a9cc0037f
-name: DT_WRK_ORDERS_d2
+name: DT_WRK_ORDERS_d2change
 operation:
   config:
     baseLocation: ""
@@ -176,17 +176,18 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          WRK_ORDERS_d2change: dbcff1e3-9c0f-4553-8b96-139b0b430281
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: WRK_ORDERS_d2
+            nodeName: WRK_ORDERS_d2change
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_ORDERS_d2') }} "WRK_ORDERS_d2"
-        name: DT_WRK_ORDERS_d2
+          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_ORDERS_d2change') }} "WRK_ORDERS_d2change"
+        name: DT_WRK_ORDERS_d2change
         noLinkRefs: []
-  name: DT_WRK_ORDERS_d2
+  name: DT_WRK_ORDERS_d2change
   overrideSQL: false
   schema: ""
   sqlType: "347"
