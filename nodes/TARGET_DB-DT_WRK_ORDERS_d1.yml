@@ -177,14 +177,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          WRK_ORDERS_d1: 80117d48-aaee-43fe-a1e6-af62a587026c
+          WRK_ORDERS_d1change: 80117d48-aaee-43fe-a1e6-af62a587026c
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
             nodeName: WRK_ORDERS_d1change
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_ORDERS_d1change') }} "WRK_ORDERS_d1"
+          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_ORDERS_d1change') }} "WRK_ORDERS_d1change"
         name: DT_WRK_ORDERS_d1
         noLinkRefs: []
   name: DT_WRK_ORDERS_d1
