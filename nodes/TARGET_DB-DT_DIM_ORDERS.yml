@@ -4,10 +4,12 @@ name: DT_DIM_ORDERS
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 5cde4afe-5b16-425d-bb67-0430bdbc2d69
+            stepCounter: a87a62fc-0bda-449d-81d8-2cf0f64b007b
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -272,14 +274,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_ORDERS_tt1: f08f473e-28e9-427d-a233-2990a56ca5b8
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_ORDERS
+            nodeName: DT_WRK_ORDERS_tt1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_ORDERS') }} "DT_WRK_ORDERS"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_ORDERS_tt1') }} "DT_WRK_ORDERS_tt1"
         name: DT_DIM_ORDERS
         noLinkRefs: []
   name: DT_DIM_ORDERS

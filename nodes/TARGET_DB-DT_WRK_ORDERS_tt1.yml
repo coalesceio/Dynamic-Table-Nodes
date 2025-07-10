@@ -1,13 +1,15 @@
 fileVersion: 1
 id: f08f473e-28e9-427d-a233-2990a56ca5b8
-name: DT_WRK_ORDERS
+name: DT_WRK_ORDERS_tt1
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: c7ff21b7-50a3-4313-83a6-af14a671a366
+            stepCounter: f08f473e-28e9-427d-a233-2990a56ca5b8
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -184,9 +186,9 @@ operation:
             nodeName: WRK_ORDERS
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'WRK_ORDERS') }} "WRK_ORDERS"
-        name: DT_WRK_ORDERS
+        name: DT_WRK_ORDERS_tt1
         noLinkRefs: []
-  name: DT_WRK_ORDERS
+  name: DT_WRK_ORDERS_tt1
   overrideSQL: false
   schema: ""
   sqlType: "347"
