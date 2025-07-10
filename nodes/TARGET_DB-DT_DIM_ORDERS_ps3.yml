@@ -4,10 +4,12 @@ name: DT_DIM_ORDERS_ps3
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: b916ba91-9146-4fc2-867d-30ee91a9a143
+            stepCounter: 0a5c4b04-90d7-475c-bce8-4843efe4c2fc
     clusterKeyConfigExpressions:
       items:
         - {}

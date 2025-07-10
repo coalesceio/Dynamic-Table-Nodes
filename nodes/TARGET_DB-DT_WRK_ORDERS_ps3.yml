@@ -4,10 +4,12 @@ name: DT_WRK_ORDERS_ps3
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 522bc668-ef40-4bc6-8400-845422dc98f9
+            stepCounter: 675cbc6a-6af5-421c-9502-d279cf78abf7
     clusterKeyConfigExpressions:
       items:
         - {}
