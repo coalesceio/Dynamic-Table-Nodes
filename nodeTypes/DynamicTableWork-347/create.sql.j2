@@ -784,11 +784,7 @@ does not permit copying or modification for any other purpose.
                    {{ stage('Resume Recluster Table') }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-            {%endif%}
-
-    
-									 
-					
+            {%endif%}				
     
     {% endif %}
 
