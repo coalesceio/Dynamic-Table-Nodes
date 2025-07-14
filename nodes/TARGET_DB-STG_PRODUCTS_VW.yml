@@ -89,7 +89,7 @@ operation:
   name: STG_PRODUCTS_VW
   overrideSQL: false
   schema: ""
-  sqlType: Stage
+  sqlType: RS:::204
   type: sql
   version: 1
 type: Node
