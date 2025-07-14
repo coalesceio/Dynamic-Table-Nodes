@@ -29,7 +29,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: dynamic table
+  materializationType: transient dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -92,14 +92,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_PRODUCTS_VW: 102f2dd7-b0e6-4792-9145-967292c833d8
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: TARGET_DB
+          - locationName: TARGET_DB1
             nodeName: STG_PRODUCTS_VW
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_PRODUCTS_VW') }} "STG_PRODUCTS_VW"
+          joinCondition: FROM {{ ref('TARGET_DB1', 'STG_PRODUCTS_VW') }} "STG_PRODUCTS_VW"
         name: DT_WRK_PRODUCTS_VW
         noLinkRefs: []
   name: DT_WRK_PRODUCTS_VW
