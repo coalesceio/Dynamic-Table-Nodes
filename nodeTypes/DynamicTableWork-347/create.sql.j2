@@ -741,7 +741,7 @@ does not permit copying or modification for any other purpose.
                 {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name)) }}
                 DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}') }}
+                {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                 TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                 WAREHOUSE = {{dynamicTableWarehouse}}
