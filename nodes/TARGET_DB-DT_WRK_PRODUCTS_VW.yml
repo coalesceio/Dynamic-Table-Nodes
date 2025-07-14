@@ -4,10 +4,12 @@ name: DT_WRK_PRODUCTS_VW
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 379393c5-4cbc-498e-b229-3c8fb8d9a253
+            stepCounter: ca4bad00-b872-47c2-9a9e-0e33304b0c67
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -29,7 +31,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient dynamic table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
