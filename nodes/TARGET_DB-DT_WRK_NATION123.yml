@@ -1,0 +1,139 @@
+fileVersion: 1
+id: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+name: DT_WRK_NATION123
+operation:
+  config:
+    baseLocation: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    downstreamOption: false
+    externalVolume: ""
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    refresh_mode: AUTO
+    selectDistinct: false
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 128b912d-424c-481c-9e58-0111ed88c386
+          stepCounter: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: N_NATIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 368b0c62-da75-41fb-b8b0-7e78c2ff0d87
+                stepCounter: 21f78171-914b-4dc1-b962-bd34acd00c7d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: bffafd55-9697-4efb-8889-b63aa236de98
+          stepCounter: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: N_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: a2728689-40a1-4f13-94e6-071061e69b7b
+                stepCounter: 21f78171-914b-4dc1-b962-bd34acd00c7d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: bd913731-697e-47d9-9c98-69af0920524c
+          stepCounter: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: N_REGIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 5ab75bfe-6769-4488-9b60-872ef425cb68
+                stepCounter: 21f78171-914b-4dc1-b962-bd34acd00c7d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 0a8534da-58d9-4ccc-b467-76b8e25f1001
+          stepCounter: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+        config: {}
+        dataType: VARCHAR(152)
+        description: ""
+        name: N_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 565afeac-d3de-4be4-b3f7-b587caf3df2d
+                stepCounter: 21f78171-914b-4dc1-b962-bd34acd00c7d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c2abb481-6d1c-4919-a514-eec5ee401b25
+          stepCounter: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        description: ""
+        name: N_LOAD_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 58f78ae7-32de-4c8f-88ce-a041c508af3b
+                stepCounter: 21f78171-914b-4dc1-b962-bd34acd00c7d
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 63f129cd-fdf8-4829-bae5-6da690b79ecc
+          stepCounter: ee18399b-94bf-42ad-b059-f6b9d4496dcb
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: UPDATE_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 428a0fcb-f2f6-4ecd-a3d8-fe62c50131ab
+                stepCounter: 21f78171-914b-4dc1-b962-bd34acd00c7d
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: WRK_NATION123
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'WRK_NATION123') }} "WRK_NATION123"
+        name: DT_WRK_NATION123
+        noLinkRefs: []
+  name: DT_WRK_NATION123
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node
