@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 102f2dd7-b0e6-4792-9145-967292c833d8
-name: STG_PRODUCTS_VW
+name: STG_PRODUCTS_VW1
 operation:
   config:
     insertStrategy: INSERT
@@ -84,9 +84,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: STG_PRODUCTS_VW
+        name: STG_PRODUCTS_VW1
         noLinkRefs: []
-  name: STG_PRODUCTS_VW
+  name: STG_PRODUCTS_VW1
   overrideSQL: false
   schema: ""
   sqlType: RS:::204

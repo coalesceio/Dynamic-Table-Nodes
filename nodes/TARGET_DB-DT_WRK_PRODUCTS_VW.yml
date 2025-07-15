@@ -95,14 +95,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          STG_PRODUCTS_VW: 102f2dd7-b0e6-4792-9145-967292c833d8
+          STG_PRODUCTS_VW1: 102f2dd7-b0e6-4792-9145-967292c833d8
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB1
-            nodeName: STG_PRODUCTS_VW
+            nodeName: STG_PRODUCTS_VW1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB1', 'STG_PRODUCTS_VW') }} "STG_PRODUCTS_VW"
+          joinCondition: FROM {{ ref('TARGET_DB1', 'STG_PRODUCTS_VW1') }} "STG_PRODUCTS_VW1"
         name: DT_WRK_PRODUCTS_VW
         noLinkRefs: []
   name: DT_WRK_PRODUCTS_VW
