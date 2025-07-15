@@ -1,6 +1,6 @@
 fileVersion: 1
 id: ca4bad00-b872-47c2-9a9e-0e33304b0c67
-name: DT_WRK_PRODUCTS_VW
+name: DT_WRK_PRODUCTS_VW12
 operation:
   config:
     baseLocation: ""
@@ -31,7 +31,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: dynamic table
+  materializationType: transient dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -103,9 +103,9 @@ operation:
             nodeName: STG_PRODUCTS_VW1
         join:
           joinCondition: FROM {{ ref('TARGET_DB1', 'STG_PRODUCTS_VW1') }} "STG_PRODUCTS_VW1"
-        name: DT_WRK_PRODUCTS_VW
+        name: DT_WRK_PRODUCTS_VW12
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS_VW
+  name: DT_WRK_PRODUCTS_VW12
   overrideSQL: false
   schema: ""
   sqlType: "347"
