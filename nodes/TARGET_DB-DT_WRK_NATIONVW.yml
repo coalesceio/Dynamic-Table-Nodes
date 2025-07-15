@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
-name: DT_WRK_NATION
+name: DT_WRK_NATIONVW
 operation:
   config:
     baseLocation: ""
@@ -122,17 +122,18 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          V_NATION12: e7f14204-8069-4a2c-a30d-ef545cbccc8f
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: V_NATION
+            nodeName: V_NATION12
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'V_NATION') }} "V_NATION"
-        name: DT_WRK_NATION
+          joinCondition: FROM {{ ref('TARGET_DB', 'V_NATION12') }} "V_NATION12"
+        name: DT_WRK_NATIONVW
         noLinkRefs: []
-  name: DT_WRK_NATION
+  name: DT_WRK_NATIONVW
   overrideSQL: false
   schema: ""
   sqlType: "347"

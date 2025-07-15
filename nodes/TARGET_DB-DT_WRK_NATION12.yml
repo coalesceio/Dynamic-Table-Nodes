@@ -4,15 +4,9 @@ name: DT_WRK_NATION12
 operation:
   config:
     baseLocation: ""
-    clusterKey: true
+    clusterKey: false
     clusterKeyConfig:
-      items:
-        - columnName:
-            columnCounter: 0bdf56f5-ba30-422f-8aa8-5a442dad1bf7
-            stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
-        - columnName:
-            columnCounter: 722bda0d-7b0e-445c-bebf-b12f2523814d
-            stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
+      items: []
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -125,14 +119,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          V_NATION12: e7f14204-8069-4a2c-a30d-ef545cbccc8f
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: V_NATION
+            nodeName: V_NATION12
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'V_NATION') }} "V_NATION"
+          joinCondition: FROM {{ ref('TARGET_DB', 'V_NATION12') }} "V_NATION12"
         name: DT_WRK_NATION12
         noLinkRefs: []
   name: DT_WRK_NATION12
