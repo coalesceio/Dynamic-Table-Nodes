@@ -741,7 +741,7 @@ does not permit copying or modification for any other purpose.
                 {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "drop") }}
                 DROP DYNAMIC TABLE IF EXISTS {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+                {{ stage('Create Work1 '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                 TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                 WAREHOUSE = {{dynamicTableWarehouse}}
@@ -775,10 +775,10 @@ does not permit copying or modification for any other purpose.
         {%endif%}   
           
             {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering', true, "sql", "alter") }}
+                  {{ stage('Apply Table Clustering', true, "sql", "create") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
-                   {{ stage('Resume Recluster Table',true, "sql", "alter") }}
+                   {{ stage('Resume Recluster Table',true, "sql", "create") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
             {%endif%}				
