@@ -117,7 +117,7 @@ metadata:
           options:
           - "UNION"
           - "UNION ALL" 
-          isRequired: true
+          isRequired: false
           enableIf: "{% if node.isMultisource %} true {% else %} false {% endif %}"
 
         - type: toggleButton
