@@ -17,7 +17,7 @@ operation:
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - lagPeriod: Days
+        - lagPeriod: Minutes
           lagValue: 60
     orderBy:
       items:
