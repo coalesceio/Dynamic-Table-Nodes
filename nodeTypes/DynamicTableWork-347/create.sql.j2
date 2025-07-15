@@ -772,16 +772,13 @@ does not permit copying or modification for any other purpose.
               {% endif %}
             {% endfor %}
 
-           
-
         {%endif%}   
           
-
             {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering') }}
+                  {{ stage('Apply Table Clustering',, true, "sql", "alter") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
-                   {{ stage('Resume Recluster Table') }}
+                   {{ stage('Resume Recluster Table',true, "sql", "alter") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
             {%endif%}				
