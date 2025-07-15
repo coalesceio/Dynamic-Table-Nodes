@@ -761,18 +761,19 @@ does not permit copying or modification for any other purpose.
               {{ source.join }}
               QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
             
-            {% endfor %}         
+            {% endfor %}    
 
-        {%endif%}   
-          
-            {% if desiredState.config.clusterKey == true %}
+              {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "create") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
                    {{ stage('Resume Recluster Table', true, "sql", "create") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-            {%endif%}   
+             {%endif%} 
+             
+        {%endif%}   
+            
     {% endif %}
 
    {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}

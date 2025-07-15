@@ -759,10 +759,8 @@ does not permit copying or modification for any other purpose.
 
               {{ source.join }}
                
-            {% endfor %}         
+            {% endfor %} 
 
-        {%endif%}   
-          
             {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "create") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
@@ -770,7 +768,10 @@ does not permit copying or modification for any other purpose.
                    {{ stage('Resume Recluster Table', true, "sql", "create") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-            {%endif%}   
+            {%endif%} 
+            
+        {%endif%}   
+            
     {% endif %}
 
    {%elif  desiredState.node.materializationType == 'iceberg dynamic table' %}
