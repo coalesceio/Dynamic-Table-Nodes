@@ -1,6 +1,6 @@
 fileVersion: 1
 id: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
-name: DT_WRK_NATION1
+name: DT_WRK_NATION12
 operation:
   config:
     baseLocation: ""
@@ -9,6 +9,9 @@ operation:
       items:
         - columnName:
             columnCounter: 0bdf56f5-ba30-422f-8aa8-5a442dad1bf7
+            stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
+        - columnName:
+            columnCounter: 722bda0d-7b0e-445c-bebf-b12f2523814d
             stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
     clusterKeyConfigExpressions:
       items:
@@ -31,7 +34,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient dynamic table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -130,9 +133,9 @@ operation:
             nodeName: V_NATION
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_NATION') }} "V_NATION"
-        name: DT_WRK_NATION1
+        name: DT_WRK_NATION12
         noLinkRefs: []
-  name: DT_WRK_NATION1
+  name: DT_WRK_NATION12
   overrideSQL: false
   schema: ""
   sqlType: "347"

@@ -666,6 +666,7 @@ does not permit copying or modification for any other purpose.
             #Materialization type change from dynamic table to transient dynamic table
 
         {%if (currentState.node.name != desiredState.node.name) or (desiredState.node.location.name !=  currentState.node.location.name) or nsVariables.storageLocationTest == false%}
+
              {{ stage('Clone Work node') }}
              CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} clone {{cfullyQualifiedTargetDynamicTableName }}
 
@@ -772,8 +773,6 @@ does not permit copying or modification for any other purpose.
               {% endif %}
             {% endfor %}
 
-        {%endif%}   
-          
             {% if desiredState.config.clusterKey == true %}
                   {{ stage('Apply Table Clustering', true, "sql", "create") }}
                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
@@ -781,7 +780,9 @@ does not permit copying or modification for any other purpose.
                    {{ stage('Resume Recluster Table',true, "sql", "create") }}
                   ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-            {%endif%}				
+            {%endif%}	
+            
+        {%endif%}   			
     
     {% endif %}
 
