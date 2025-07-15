@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
-name: DT_WRK_NATION
+id: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
+name: DT_WRK_NATION1
 operation:
   config:
     baseLocation: ""
@@ -8,8 +8,8 @@ operation:
     clusterKeyConfig:
       items:
         - columnName:
-            columnCounter: ab357474-bd80-4a7e-a684-326b05bfd4de
-            stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+            columnCounter: 0bdf56f5-ba30-422f-8aa8-5a442dad1bf7
+            stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -25,7 +25,7 @@ operation:
           lagValue: 60
     refresh_mode: AUTO
     selectDistinct: false
-    warehouseName: compute_wh
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
@@ -37,8 +37,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: ab357474-bd80-4a7e-a684-326b05bfd4de
-          stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+          columnCounter: 0bdf56f5-ba30-422f-8aa8-5a442dad1bf7
+          stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -51,8 +51,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 166c66c8-3edd-4676-873c-3bb3c9fbcd8b
-          stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+          columnCounter: 6be716d0-9962-4173-bccb-c7a09b2601c1
+          stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
         config: {}
         dataType: VARCHAR(25)
         description: ""
@@ -65,8 +65,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 1c67245f-3b1c-4ffa-9236-21a47670232d
-          stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+          columnCounter: 722bda0d-7b0e-445c-bebf-b12f2523814d
+          stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -79,8 +79,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 071335f1-0387-4a8b-afa0-8f6ec72fae8d
-          stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+          columnCounter: fbfe83b4-f2da-457c-b9ca-d82d1a44d696
+          stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
         config: {}
         dataType: VARCHAR(152)
         description: ""
@@ -93,8 +93,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 182854c9-6cd6-44b1-9258-78074f1461d2
-          stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+          columnCounter: a57e98c2-9974-4575-9bf6-79a268119f62
+          stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
         config: {}
         dataType: TIMESTAMP_LTZ(9)
         description: ""
@@ -107,8 +107,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 0376121f-c438-4923-ba3b-cd4ddba89f31
-          stepCounter: 2f1a4e92-19f3-48c4-92fb-7afdd6847b9b
+          columnCounter: 6919744c-a7f8-4888-b9c4-2e51789f5fc4
+          stepCounter: fb9620cb-4d1b-4afb-b249-da1ff2410cf0
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         description: ""
@@ -130,9 +130,9 @@ operation:
             nodeName: V_NATION
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'V_NATION') }} "V_NATION"
-        name: DT_WRK_NATION
+        name: DT_WRK_NATION1
         noLinkRefs: []
-  name: DT_WRK_NATION
+  name: DT_WRK_NATION1
   overrideSQL: false
   schema: ""
   sqlType: "347"
