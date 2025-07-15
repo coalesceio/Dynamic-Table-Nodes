@@ -4,10 +4,12 @@ name: DT_DIM_NATION123
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 0ad468cc-9de8-4442-a5c1-f11c7e6b7b32
+            stepCounter: 7e7a1b21-6c59-4764-be5d-c8f377d35d94
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -40,7 +42,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: dynamic table
+  materializationType: transient dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -216,14 +218,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_NATION1234: ee18399b-94bf-42ad-b059-f6b9d4496dcb
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_NATION123
+            nodeName: DT_WRK_NATION1234
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_NATION123') }} "DT_WRK_NATION123"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_NATION1234') }} "DT_WRK_NATION1234"
         name: DT_DIM_NATION123
         noLinkRefs: []
   name: DT_DIM_NATION123
