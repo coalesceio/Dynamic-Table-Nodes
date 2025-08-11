@@ -84,6 +84,9 @@ metadata:
           - ON_SCHEDULE 
           isRequired: true
 
+        - type: toggleButton
+          displayName: Copy grants
+
       - groupName: Dimension Options
         items:
         - type: tabular

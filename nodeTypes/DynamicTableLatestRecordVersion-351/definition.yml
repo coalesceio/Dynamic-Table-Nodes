@@ -83,7 +83,10 @@ metadata:
           - ON_CREATE
           - ON_SCHEDULE 
           isRequired: true
-
+        
+        - type: toggleButton
+          displayName: Copy grants
+        
       - groupName: Record Versioning Options
         items:
         - type: tabular
