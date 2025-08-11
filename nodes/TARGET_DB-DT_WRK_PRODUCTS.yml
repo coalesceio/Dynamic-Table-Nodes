@@ -12,6 +12,7 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
+    cpygrants: true
     downstreamOption: false
     externalVolume: ""
     groupByAll: false
@@ -19,7 +20,8 @@ operation:
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Minutes
+          lagValue: "6000"
     refresh_mode: AUTO
     selectDistinct: false
     warehouseName: dev_wh_xs
