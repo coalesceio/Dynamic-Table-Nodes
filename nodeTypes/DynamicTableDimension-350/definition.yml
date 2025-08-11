@@ -84,8 +84,12 @@ metadata:
           - ON_SCHEDULE 
           isRequired: true
 
+      - groupName: Advanced Options
+        items:
+        
         - type: toggleButton
           displayName: Copy grants
+          attributeName: cpygrants
 
       - groupName: Dimension Options
         items:
