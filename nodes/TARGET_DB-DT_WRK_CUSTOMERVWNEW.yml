@@ -192,14 +192,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          STG_CUSTOMERVW: b0710473-65d8-4826-ab90-67531a73c737
+          STG_CUSTOMERVW12: b0710473-65d8-4826-ab90-67531a73c737
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
             nodeName: STG_CUSTOMERVW12
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_CUSTOMERVW12') }} "STG_CUSTOMERVW"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_CUSTOMERVW12') }} "STG_CUSTOMERVW12"
         name: DT_WRK_CUSTOMERVWNEW
         noLinkRefs: []
   name: DT_WRK_CUSTOMERVWNEW
