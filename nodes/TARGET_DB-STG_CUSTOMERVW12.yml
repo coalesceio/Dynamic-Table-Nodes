@@ -1,6 +1,6 @@
 fileVersion: 1
 id: b0710473-65d8-4826-ab90-67531a73c737
-name: STG_CUSTOMERVW
+name: STG_CUSTOMERVW12
 operation:
   config:
     insertStrategy: INSERT
@@ -154,9 +154,9 @@ operation:
             nodeName: CUSTOMER
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMER') }} "CUSTOMER"
-        name: STG_CUSTOMERVW
+        name: STG_CUSTOMERVW12
         noLinkRefs: []
-  name: STG_CUSTOMERVW
+  name: STG_CUSTOMERVW12
   overrideSQL: false
   schema: ""
   sqlType: Stage
