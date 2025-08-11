@@ -1,6 +1,6 @@
 fileVersion: 1
 id: e4b69436-da4a-434c-8532-497bf2e25d07
-name: DT_WRK_PRODUCTS
+name: DT_WRK_PRODUCTSVWNEW
 operation:
   config:
     baseLocation: ""
@@ -101,9 +101,9 @@ operation:
             nodeName: PRODUCTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: DT_WRK_PRODUCTS
+        name: DT_WRK_PRODUCTSVWNEW
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS
+  name: DT_WRK_PRODUCTSVWNEW
   overrideSQL: false
   schema: ""
   sqlType: "347"

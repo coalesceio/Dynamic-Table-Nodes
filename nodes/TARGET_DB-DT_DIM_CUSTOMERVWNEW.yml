@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 787d529e-2756-4b5a-b98d-1f3e96b8b8f1
-name: DT_DIM_CUSTOMERVW
+name: DT_DIM_CUSTOMERVWNEW
 operation:
   config:
     baseLocation: ""
@@ -267,9 +267,9 @@ operation:
             nodeName: STG_CUSTOMERVW
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'STG_CUSTOMERVW') }} "STG_CUSTOMERVW"
-        name: DT_DIM_CUSTOMERVW
+        name: DT_DIM_CUSTOMERVWNEW
         noLinkRefs: []
-  name: DT_DIM_CUSTOMERVW
+  name: DT_DIM_CUSTOMERVWNEW
   overrideSQL: false
   schema: ""
   sqlType: "350"
