@@ -879,7 +879,7 @@ does not permit copying or modification for any other purpose.
         {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
 
         CREATE OR REPLACE DYNAMIC {{ keyword }} TABLE {{ fullyQualifiedTargetDynamicTableName }}
-            {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
+            {%if desiredState.config.cpygrants%}COPY GRANTS{%endif%}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
             REFRESH_MODE   = {{dynamicTablerefresh}}
