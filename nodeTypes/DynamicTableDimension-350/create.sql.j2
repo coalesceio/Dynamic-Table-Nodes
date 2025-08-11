@@ -427,7 +427,7 @@ does not permit copying or modification for any other purpose.
                 {% set srcSchName = currentState.node.location.name %}
                 {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
                 {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
-                {{ stage('Alter Dynamic Table') }}
+                {{ stage('Alter Dynamic Table',true,"sql","create") }}
                   ALTER DYNAMIC TABLE IF EXISTS "{{cdb}}"."{{csch}}"."{{currentState.node.name}}" RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
           {%endif%}
  
