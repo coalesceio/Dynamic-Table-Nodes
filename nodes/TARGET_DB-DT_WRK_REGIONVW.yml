@@ -96,14 +96,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          STG_REGIONVW1: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
+          STG_REGIONVW1EX: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_REGIONVW1
+            nodeName: STG_REGIONVW1EX
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_REGIONVW1') }} "STG_REGIONVW1"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_REGIONVW1EX') }} "STG_REGIONVW1EX"
         name: DT_WRK_REGIONVW
         noLinkRefs: []
   name: DT_WRK_REGIONVW
