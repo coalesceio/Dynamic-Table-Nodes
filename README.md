@@ -21,6 +21,7 @@ The Dynamic Table Work has three configuration groups:
 * [Node Properties](#dynamic-table-work-node-properties)
 * [Dynamic Table Options](#dynamic-table-work-options) 
 * [General Options](#dynamic-table-work-general-options)
+* [Advanced Options](#dynamic-table-work-advanced-options)
 
 #### Dynamic Table Work Node Properties
 
@@ -62,6 +63,12 @@ The Dynamic Table Work has three configuration groups:
 | **Create As** | Choose 'dynamic table' or 'transient dynamic table' |
 | **Cluster key** | True/False toggle for clustering:<br/>- **True**: Specify clustering column and optional expressions<br/>- **False**: No clustering |
 | **Allow Expressions Cluster Key**| When cluster key is set to true. Allows to add an expression to the specified cluster key| 
+
+#### Dynamic Table Work Advanced Options
+
+| **Option** | **Description** |
+|------------|----------------|
+| **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 
 ### Dynamic Table Work Deployment
 
@@ -200,6 +207,7 @@ The Dynamic Table Dimension has four configuration groups:
 * [Dynamic Table Options](#dimension-table-options)
 * [Dimension Options](#dimension-options)
 * [General Options](#dimension-general-options)
+* [Advanced Options](#dimension-advanced-options)
 
 #### Dimension Node Properties
 
@@ -249,6 +257,12 @@ The Dynamic Table Dimension has four configuration groups:
 | **Create As** | Choose 'dynamic table' or 'transient dynamic table' |
 | **Cluster key** | True/False toggle for clustering:<br/>- **True**: Specify clustering column and optional expressions<br/>- **False**: No clustering |
 | **Allow Expressions Cluster Key**| When cluster key is set to true. Allows to add an expression to the specified cluster key|
+
+#### Dimension Advanced Options
+
+| **Option** | **Description** |
+|------------|----------------|
+| **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 
 ### Dimension Deployment
 
@@ -384,9 +398,10 @@ The Coalesce Dynamic Table Latest Record Version UDN is a versatile node that al
 The Dynamic Table Dimension has four configuration groups:
 
 * [Node Properties](#latest-record-version-node-properties)
-* [Dynamic Table Options](#dimension-table-options)
-* [Dimension Options](#dimension-options)
-* [General Options](#dimension-general-options)
+* [Dynamic Table Options](#latest-record-version-options)
+* [Dimension Options](#latest-record-version-dimension-options)
+* [General Options](#latest-record-version-general-options)
+* [Advanced Options](#latest-record-version-advanced-options)
 
 #### Latest Record Version Node Properties
 
@@ -421,6 +436,13 @@ The Dynamic Table Dimension has four configuration groups:
 | **Create As** | Choose 'dynamic table' or 'transient dynamic table' |
 | **Cluster key** | True/False toggle for clustering:<br/>- **True**: Specify clustering column and optional expressions<br/>- **False**: No clustering |
 | **Allow Expressions Cluster Key**| When cluster key is set to true. Allows to add an expression to the specified cluster key|
+
+#### Latest Record Version Advanced Options
+
+| **Option** | **Description** |
+|------------|----------------|
+| **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
+
 
 ### DAG of Dynamic Table Latest Record Version
 
