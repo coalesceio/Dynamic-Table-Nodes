@@ -94,14 +94,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          STG_HEAVY_WEATHERVW: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+          STG_HEAVY_WEATHERVW12: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_HEAVY_WEATHERVW
+            nodeName: STG_HEAVY_WEATHERVW12
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_HEAVY_WEATHERVW') }} "STG_HEAVY_WEATHERVW"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_HEAVY_WEATHERVW12') }} "STG_HEAVY_WEATHERVW12"
         name: DT_WRK_HEAVY_WEATHERVW
         noLinkRefs: []
   name: DT_WRK_HEAVY_WEATHERVW

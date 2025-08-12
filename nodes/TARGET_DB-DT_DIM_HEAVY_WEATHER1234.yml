@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 6cae319c-ef26-4e00-b57d-cae6585a02da
-name: DT_DIM_HEAVY_WEATHER123
+name: DT_DIM_HEAVY_WEATHER1234
 operation:
   config:
     baseLocation: ""
@@ -198,9 +198,9 @@ operation:
             nodeName: DT_WRK_HEAVY_WEATHERVW
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_HEAVY_WEATHERVW') }} "DT_WRK_HEAVY_WEATHERVW"
-        name: DT_DIM_HEAVY_WEATHER123
+        name: DT_DIM_HEAVY_WEATHER1234
         noLinkRefs: []
-  name: DT_DIM_HEAVY_WEATHER123
+  name: DT_DIM_HEAVY_WEATHER1234
   overrideSQL: false
   schema: ""
   sqlType: "350"
