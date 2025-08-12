@@ -359,7 +359,7 @@ does not permit copying or modification for any other purpose.
         {# Desired Dynamic Table Name#}
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+        {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
 
         {# Current Dynamic Table Name #}
 
@@ -605,7 +605,7 @@ does not permit copying or modification for any other purpose.
         {# Desired Dynamic Table Name #}
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+        {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
 
         {#Desired Warehouse#}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
