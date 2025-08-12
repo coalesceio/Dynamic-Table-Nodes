@@ -1,0 +1,112 @@
+fileVersion: 1
+id: 2fc32202-8e60-4135-8578-6d09ab7c6b46
+name: DT_WRK_REGIONVW
+operation:
+  config:
+    baseLocation: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: true
+    downstreamOption: false
+    externalVolume: ""
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "6000"
+    refresh_mode: AUTO
+    selectDistinct: false
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 278036c6-476f-46f3-99d2-88aa91683309
+          stepCounter: 2fc32202-8e60-4135-8578-6d09ab7c6b46
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: R_REGIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 77314e7b-4f31-4227-ae89-b64f81825ba4
+                stepCounter: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 18e7d377-0f06-4e45-9a71-f52073bea85d
+          stepCounter: 2fc32202-8e60-4135-8578-6d09ab7c6b46
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: R_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 5456fffd-d8d9-4f5a-97b2-f4f81633d10a
+                stepCounter: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 077b784e-020d-4645-97cc-58c71aa37070
+          stepCounter: 2fc32202-8e60-4135-8578-6d09ab7c6b46
+        config: {}
+        dataType: VARCHAR(152)
+        description: ""
+        name: R_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 1f47cd6b-dc66-4077-ab53-cf12cc15a06e
+                stepCounter: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c949fe88-fc0e-4d4d-9cd0-a9f058f87ba0
+          stepCounter: 2fc32202-8e60-4135-8578-6d09ab7c6b46
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        description: ""
+        name: R_LOAD_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 9076e11c-6185-4f4a-bba5-06b2c8700ca6
+                stepCounter: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases: {}
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: STG_REGIONVW
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_REGIONVW') }} "STG_REGIONVW"
+        name: DT_WRK_REGIONVW
+        noLinkRefs: []
+  name: DT_WRK_REGIONVW
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node
