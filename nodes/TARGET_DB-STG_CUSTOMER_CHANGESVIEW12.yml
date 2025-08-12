@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 2f61e58c-b520-4d50-b5af-bc2acba468be
-name: STG_CUSTOMER_CHANGESVIEW
+name: STG_CUSTOMER_CHANGESVIEW12
 operation:
   config:
     insertStrategy: INSERT
@@ -126,9 +126,9 @@ operation:
             nodeName: CUSTOMER_CHANGES
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMER_CHANGES') }} "CUSTOMER_CHANGES"
-        name: STG_CUSTOMER_CHANGESVIEW
+        name: STG_CUSTOMER_CHANGESVIEW12
         noLinkRefs: []
-  name: STG_CUSTOMER_CHANGESVIEW
+  name: STG_CUSTOMER_CHANGESVIEW12
   overrideSQL: false
   schema: ""
   sqlType: Stage

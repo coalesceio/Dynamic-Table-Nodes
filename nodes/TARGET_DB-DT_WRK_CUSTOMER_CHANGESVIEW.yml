@@ -30,7 +30,7 @@ operation:
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: dynamic table
+  materializationType: transient dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -135,14 +135,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_CUSTOMER_CHANGESVIEW12: 2f61e58c-b520-4d50-b5af-bc2acba468be
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_CUSTOMER_CHANGESVIEW
+            nodeName: STG_CUSTOMER_CHANGESVIEW12
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_CUSTOMER_CHANGESVIEW') }} "STG_CUSTOMER_CHANGESVIEW"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_CUSTOMER_CHANGESVIEW12') }} "STG_CUSTOMER_CHANGESVIEW12"
         name: DT_WRK_CUSTOMER_CHANGESVIEW
         noLinkRefs: []
   name: DT_WRK_CUSTOMER_CHANGESVIEW
