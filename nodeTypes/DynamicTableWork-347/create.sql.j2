@@ -503,7 +503,7 @@ does not permit copying or modification for any other purpose.
            
         {%endif%}
 
-          {{ stage('Refresh Dynamic Table') }}
+          {{ stage('Refresh Dynamic Table',true,"sql","create") }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         
 
@@ -726,7 +726,7 @@ does not permit copying or modification for any other purpose.
               
              {%endif%}
         
-              {{ stage('Refresh Dynamic Table') }}
+              {{ stage('Refresh Dynamic Table',true,"sql","create") }}
                ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
