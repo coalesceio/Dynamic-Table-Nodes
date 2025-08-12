@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 832bda7c-5689-499c-92e4-96b57e77ad89
-name: DT_WRK_HEAVY_WEATHER
+name: DT_WRK_HEAVY_WEATHERVW
 operation:
   config:
     baseLocation: ""
@@ -93,17 +93,18 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_HEAVY_WEATHERVW: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_HEAVY_WEATHER
+            nodeName: STG_HEAVY_WEATHERVW
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_HEAVY_WEATHER') }} "STG_HEAVY_WEATHER"
-        name: DT_WRK_HEAVY_WEATHER
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_HEAVY_WEATHERVW') }} "STG_HEAVY_WEATHERVW"
+        name: DT_WRK_HEAVY_WEATHERVW
         noLinkRefs: []
-  name: DT_WRK_HEAVY_WEATHER
+  name: DT_WRK_HEAVY_WEATHERVW
   overrideSQL: false
   schema: ""
   sqlType: "347"

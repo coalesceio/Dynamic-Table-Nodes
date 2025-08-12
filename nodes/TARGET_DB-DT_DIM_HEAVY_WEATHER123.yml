@@ -189,14 +189,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_HEAVY_WEATHERVW: 832bda7c-5689-499c-92e4-96b57e77ad89
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_HEAVY_WEATHER
+            nodeName: DT_WRK_HEAVY_WEATHERVW
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_HEAVY_WEATHER') }} "DT_WRK_HEAVY_WEATHER"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_HEAVY_WEATHERVW') }} "DT_WRK_HEAVY_WEATHERVW"
         name: DT_DIM_HEAVY_WEATHER123
         noLinkRefs: []
   name: DT_DIM_HEAVY_WEATHER123
