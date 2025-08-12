@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 35310f5b-f8f4-4758-a060-0e56d1a37db3
-name: DT_DIM_CUSTOMER_CHANGESVIEW12
+name: DT_DIM_CUSTOMER_CHANGESVIEW123
 operation:
   config:
     baseLocation: ""
@@ -241,9 +241,9 @@ operation:
             nodeName: DT_WRK_CUSTOMER_CHANGESVIEW
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER_CHANGESVIEW') }} "DT_WRK_CUSTOMER_CHANGESVIEW"
-        name: DT_DIM_CUSTOMER_CHANGESVIEW12
+        name: DT_DIM_CUSTOMER_CHANGESVIEW123
         noLinkRefs: []
-  name: DT_DIM_CUSTOMER_CHANGESVIEW12
+  name: DT_DIM_CUSTOMER_CHANGESVIEW123
   overrideSQL: false
   schema: ""
   sqlType: "350"
