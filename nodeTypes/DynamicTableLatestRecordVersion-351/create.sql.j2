@@ -99,6 +99,9 @@ does not permit copying or modification for any other purpose.
         {% set orderByDateTimeTest = currentState.config.orderByDateTime == desiredState.config.orderByDateTime %}
         {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}	
 		
+        {# grant config change#}
+        {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
+		
         {# Node #}
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
         {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
@@ -161,6 +164,7 @@ does not permit copying or modification for any other purpose.
             orderByDateTimeTest == false or 
             recordVersioningTest == false or 
             initializeTest == false or
+            granttest == false or
             refreshTest == false or (currentState.storageLocations | length ==0)  %}    
 
             {% set createTest = true %}
@@ -316,6 +320,7 @@ does not permit copying or modification for any other purpose.
 
         {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
+            {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
             REFRESH_MODE   = {{dynamicTablerefresh}}
@@ -355,7 +360,7 @@ does not permit copying or modification for any other purpose.
         {# Desired Dynamic Table Name #}
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+        {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
 
         {#Current Dynamic Table Name #}
 
@@ -380,8 +385,6 @@ does not permit copying or modification for any other purpose.
 
             {% set desiredDynamicTableLagSpecification = desiredDynamicTableLagValue ~ ' ' ~ desiredDynamicTableLagValuePeriod %}
         {% endif %}
-
-
 
         {# Current Warehouse #}
         {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
@@ -427,7 +430,7 @@ does not permit copying or modification for any other purpose.
                 {% set srcSchName = currentState.node.location.name %}
                 {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
                 {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
-                {{ stage('Alter Dynamic Table') }}
+                {{ stage('Alter Dynamic Table',true,"sql","create") }}
                   ALTER DYNAMIC TABLE IF EXISTS "{{cdb}}"."{{csch}}"."{{currentState.node.name}}" RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
           {%endif%}
  
@@ -500,7 +503,7 @@ does not permit copying or modification for any other purpose.
            
         {%endif%}
 
-          {{ stage('Refresh Dynamic Table') }}
+          {{ stage('Refresh Dynamic Table',true,"sql","create") }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         
 
@@ -602,7 +605,7 @@ does not permit copying or modification for any other purpose.
            {# Desired Dynamic Table Name #}
         {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
         {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+        {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
 
         {# Desired Warehouse #}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
@@ -722,7 +725,7 @@ does not permit copying or modification for any other purpose.
               
              {%endif%}
         
-              {{ stage('Refresh Dynamic Table') }}
+              {{ stage('Refresh Dynamic Table',true,"sql","create") }}
                ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
@@ -738,6 +741,7 @@ does not permit copying or modification for any other purpose.
 
                 {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
+               {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
                 TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                 WAREHOUSE = {{dynamicTableWarehouse}}
                 REFRESH_MODE   = {{dynamicTablerefresh}}
@@ -877,6 +881,7 @@ does not permit copying or modification for any other purpose.
         {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
 
         CREATE OR REPLACE DYNAMIC {{ keyword }} TABLE {{ fullyQualifiedTargetDynamicTableName }}
+            {%if desiredState.config.cpygrants%}COPY GRANTS{%endif%}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
             WAREHOUSE = {{dynamicTableWarehouse}}
             REFRESH_MODE   = {{dynamicTablerefresh}}

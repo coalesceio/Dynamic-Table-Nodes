@@ -1,0 +1,113 @@
+fileVersion: 1
+id: 832bda7c-5689-499c-92e4-96b57e77ad89
+name: DT_WRK_HEAVY_WEATHERVW
+operation:
+  config:
+    baseLocation: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: true
+    downstreamOption: false
+    externalVolume: ""
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "6000"
+    refresh_mode: AUTO
+    selectDistinct: false
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: transient dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: ca5f2ec8-f845-40f7-b7ba-2119da31f3c9
+          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: START_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ace2739e-5484-4463-b318-06c05193a8a1
+                stepCounter: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 274c031c-e54d-4bb5-b143-7bde601dd8c6
+          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+        config: {}
+        dataType: NUMBER(3,2)
+        description: ""
+        name: PRECIP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: bd631387-8a78-4b4e-8ca0-7b0c57831cb2
+                stepCounter: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 6f4418bb-e884-4179-9629-771d7009d05b
+          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+        config: {}
+        dataType: VARCHAR(20)
+        description: ""
+        name: CITY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 0d98703d-f0e1-448a-a6ef-27a6e1809fe0
+                stepCounter: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: cb63956f-82d4-4dee-b5bd-e80c5b7e8d3c
+          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+        config: {}
+        dataType: VARCHAR(20)
+        description: ""
+        name: COUNTY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: b64d2f64-60d9-4fd1-bd8e-b6cdd340eacd
+                stepCounter: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          STG_HEAVY_WEATHERVW12: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: STG_HEAVY_WEATHERVW12
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_HEAVY_WEATHERVW12') }} "STG_HEAVY_WEATHERVW12"
+        name: DT_WRK_HEAVY_WEATHERVW
+        noLinkRefs: []
+  name: DT_WRK_HEAVY_WEATHERVW
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node

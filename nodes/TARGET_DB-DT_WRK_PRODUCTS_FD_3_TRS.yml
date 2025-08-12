@@ -22,7 +22,7 @@ operation:
     orderBy:
       items:
         - colName:
-            columnCounter: 291ae2c1-c787-4c65-92ea-9cae4a1050c5
+            columnCounter: afb497e8-e996-43e1-9b45-2688d02e9853
             stepCounter: e2f1b8b5-675a-4a29-b30c-cf154ec96a3c
     orderByDateTime:
       items:

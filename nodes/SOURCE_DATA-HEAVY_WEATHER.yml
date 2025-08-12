@@ -1,0 +1,92 @@
+fileVersion: 1
+id: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
+name: HEAVY_WEATHER
+operation:
+  database: ""
+  deployEnabled: true
+  description: ""
+  locationName: SOURCE_DATA
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3746e5a2-ccad-4c93-b0b1-664a129834ec
+          stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        defaultValue: ""
+        description: ""
+        name: START_TIME
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 2245b44b-e0b3-479a-9435-19b55827c3a6
+          stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
+        config: {}
+        dataType: NUMBER(3,2)
+        defaultValue: ""
+        description: ""
+        name: PRECIP
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: aefcb4f6-b203-4c3f-a561-98b1c6e36793
+          stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
+        config: {}
+        dataType: VARCHAR(20)
+        defaultValue: ""
+        description: ""
+        name: CITY
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 22775c47-2b73-4078-b7df-ec857a7f3214
+          stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
+        config: {}
+        dataType: VARCHAR(20)
+        defaultValue: ""
+        description: ""
+        name: COUNTY
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+  name: HEAVY_WEATHER
+  schema: ""
+  sqlType: Source
+  type: sourceInput
+  version: 1
+type: Node
