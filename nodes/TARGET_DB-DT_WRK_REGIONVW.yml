@@ -4,10 +4,12 @@ name: DT_WRK_REGIONVW
 operation:
   config:
     baseLocation: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 18e7d377-0f06-4e45-9a71-f52073bea85d
+            stepCounter: 2fc32202-8e60-4135-8578-6d09ab7c6b46
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -93,14 +95,15 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          STG_REGIONVW1: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: STG_REGIONVW
+            nodeName: STG_REGIONVW1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_REGIONVW') }} "STG_REGIONVW"
+          joinCondition: FROM {{ ref('TARGET_DB', 'STG_REGIONVW1') }} "STG_REGIONVW1"
         name: DT_WRK_REGIONVW
         noLinkRefs: []
   name: DT_WRK_REGIONVW

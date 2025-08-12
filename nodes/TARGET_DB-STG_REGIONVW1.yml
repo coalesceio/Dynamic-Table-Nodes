@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 78ce81b6-53cb-4458-9299-e2d5a33c52a1
-name: STG_REGIONVW
+name: STG_REGIONVW1
 operation:
   config:
     insertStrategy: INSERT
@@ -84,9 +84,9 @@ operation:
             nodeName: REGION
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'REGION') }} "REGION"
-        name: STG_REGIONVW
+        name: STG_REGIONVW1
         noLinkRefs: []
-  name: STG_REGIONVW
+  name: STG_REGIONVW1
   overrideSQL: false
   schema: ""
   sqlType: Stage

@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 2945ef05-ad4b-4e8b-b7d2-ad4be0439650
-name: DT_DIM_REGIONVW
+name: DT_DIM_REGIONVW12
 operation:
   config:
     baseLocation: ""
@@ -197,9 +197,9 @@ operation:
             nodeName: DT_WRK_REGIONVW
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_REGIONVW') }} "DT_WRK_REGIONVW"
-        name: DT_DIM_REGIONVW
+        name: DT_DIM_REGIONVW12
         noLinkRefs: []
-  name: DT_DIM_REGIONVW
+  name: DT_DIM_REGIONVW12
   overrideSQL: false
   schema: ""
   sqlType: "350"

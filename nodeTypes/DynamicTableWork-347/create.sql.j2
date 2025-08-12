@@ -427,7 +427,7 @@ does not permit copying or modification for any other purpose.
              {# Change in storage mappings,target location or node name #}
          {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
-                {{ stage('Alter Dynamic Table',true,"sql","create") }}
+                {{ stage('Alter Dynamic Table') }}
 				{% set srcSchName = currentState.node.location.name %}
                 {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
                 {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
@@ -503,7 +503,7 @@ does not permit copying or modification for any other purpose.
            
         {%endif%}
 
-          {{ stage('Refresh Dynamic Table',true,"sql","create") }}
+          {{ stage('Refresh Dynamic Table') }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         
 
@@ -726,7 +726,7 @@ does not permit copying or modification for any other purpose.
               
              {%endif%}
         
-              {{ stage('Refresh Dynamic Table',true,"sql","create") }}
+              {{ stage('Refresh Dynamic Table') }}
                ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table') or
