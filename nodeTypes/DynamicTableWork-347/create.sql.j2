@@ -492,7 +492,7 @@ does not permit copying or modification for any other purpose.
 
                     {% if (descriptionTest == false) %}
                     {{ stage('Alter Dynamic Table') }}
-                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                       ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription | escape }}'
                     {% endif %}
 
                 {%endif%}    
