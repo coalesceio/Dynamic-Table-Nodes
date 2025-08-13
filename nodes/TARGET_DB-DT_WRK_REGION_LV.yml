@@ -12,7 +12,7 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
-    cpygrants: true
+    cpygrants: false
     downstreamOption: false
     externalVolume: ""
     initialize: ON_CREATE
