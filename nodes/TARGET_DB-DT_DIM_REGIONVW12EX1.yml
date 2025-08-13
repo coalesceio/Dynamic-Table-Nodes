@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 2945ef05-ad4b-4e8b-b7d2-ad4be0439650
-name: DT_DIM_REGIONVW12EX
+name: DT_DIM_REGIONVW12EX1
 operation:
   config:
     baseLocation: ""
@@ -189,17 +189,18 @@ operation:
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
-      - aliases: {}
+      - aliases:
+          DT_WRK_REGIONVW12: 2fc32202-8e60-4135-8578-6d09ab7c6b46
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_REGIONVW
+            nodeName: DT_WRK_REGIONVW12
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_REGIONVW') }} "DT_WRK_REGIONVW"
-        name: DT_DIM_REGIONVW12EX
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_REGIONVW12') }} "DT_WRK_REGIONVW12"
+        name: DT_DIM_REGIONVW12EX1
         noLinkRefs: []
-  name: DT_DIM_REGIONVW12EX
+  name: DT_DIM_REGIONVW12EX1
   overrideSQL: false
   schema: ""
   sqlType: "350"

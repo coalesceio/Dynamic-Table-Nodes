@@ -96,8 +96,11 @@ does not permit copying or modification for any other purpose.
         {% set partitionByTest = currentState.config.partitionBy == desiredState.config.partitionBy %}
         {% set orderByTest = currentState.config.orderBy == desiredState.config.orderBy %}
         {% set orderByDateTimeTest = currentState.config.orderByDateTime == desiredState.config.orderByDateTime %}
-        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}																				
-		
+        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}
+
+        {# grant config change#}
+        {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
+																						
         {# Node #}
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
         {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
@@ -160,6 +163,7 @@ does not permit copying or modification for any other purpose.
             orderByDateTimeTest == false or 
             recordVersioningTest == false or   
             initializeTest == false or
+            granttest == false or
             refreshTest == false or (currentState.storageLocations | length ==0)  %}    
 
             {% set createTest = true %}

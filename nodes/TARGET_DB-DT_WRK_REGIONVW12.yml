@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 2fc32202-8e60-4135-8578-6d09ab7c6b46
-name: DT_WRK_REGIONVW
+name: DT_WRK_REGIONVW12
 operation:
   config:
     baseLocation: ""
@@ -104,9 +104,9 @@ operation:
             nodeName: STG_REGIONVW1EX
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'STG_REGIONVW1EX') }} "STG_REGIONVW1EX"
-        name: DT_WRK_REGIONVW
+        name: DT_WRK_REGIONVW12
         noLinkRefs: []
-  name: DT_WRK_REGIONVW
+  name: DT_WRK_REGIONVW12
   overrideSQL: false
   schema: ""
   sqlType: "347"

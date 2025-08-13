@@ -96,6 +96,9 @@ does not permit copying or modification for any other purpose.
         {% set groupByAllTest = currentState.config.groupByAll == desiredState.config.groupByAll %}
         {% set selectDistinctTest = currentState.config.selectDistinct == desiredState.config.selectDistinct %}
 
+        {# grant config change#}
+        {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
+
         {# Node#}
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
         {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
@@ -157,7 +160,9 @@ does not permit copying or modification for any other purpose.
             selectDistinctTest == false or 
             nodeIsMultisource == false or 
             initializeTest == false or
-            refreshTest == false or (currentState.storageLocations | length ==0)  %}    
+            refreshTest == false or
+            granttest == false or 
+            (currentState.storageLocations | length ==0)  %}    
 
             {% set createTest = true %}
         {% else %}
