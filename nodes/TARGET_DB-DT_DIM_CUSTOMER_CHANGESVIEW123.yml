@@ -20,7 +20,7 @@ operation:
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - lagPeriod: Minutes
+        - lagPeriod: Hours
           lagValue: "6000"
     orderBy:
       items:
@@ -37,7 +37,7 @@ operation:
             stepCounter: 35310f5b-f8f4-4758-a060-0e56d1a37db3
     recordVersioning: Datetime Column
     refresh_mode: AUTO
-    warehouseName: dev_wh_xs
+    warehouseName: compute_wh
   database: ""
   deployEnabled: true
   description: ""
