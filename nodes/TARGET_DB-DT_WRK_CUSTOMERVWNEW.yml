@@ -93,7 +93,10 @@ operation:
           stepCounter: c9b34c02-611b-4324-bb5b-27f40dbbe826
         config: {}
         dataType: NUMBER(38,0)
-        description: ""
+        description: |-
+          -	This column represents the foreign key to the NATION table, indicating the nation of the customer, and it originates from the 'C_NATIONKEY' column in the 'STG_CUSTOMERVW12' stage table.
+          -	It links customer records to their respective nations.
+          -	This column supports geographic segmentation, international business analysis, and can be used in reports and KPIs related to customer distribution by nation.
         name: C_NATIONKEY
         nullable: true
         sourceColumnReferences:

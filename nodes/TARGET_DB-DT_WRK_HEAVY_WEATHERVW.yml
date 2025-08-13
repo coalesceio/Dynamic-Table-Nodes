@@ -54,7 +54,12 @@ operation:
           stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
         config: {}
         dataType: NUMBER(3,2)
-        description: ""
+        description: |-
+          - This column represents the amount of precipitation recorded during a weather event.
+          - It is sourced directly from the `PRECIP` column in the `STG_HEAVY_WEATHERVW12` stage table.
+          - This is a key metric for assessing the severity of weather events and is used in various reports and analyses, such as calculating average rainfall per region or identifying areas prone to flooding.
+          - The data type is NUMBER(3,2), allowing for a precision of two decimal places.
+          - It is nullable and represents the precipitation amount in some unit of measure, such as inches or millimeters.
         name: PRECIP
         nullable: true
         sourceColumnReferences:

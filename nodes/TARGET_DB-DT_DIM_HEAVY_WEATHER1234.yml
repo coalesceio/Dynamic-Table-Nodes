@@ -114,7 +114,11 @@ operation:
           stepCounter: 6cae319c-ef26-4e00-b57d-cae6585a02da
         config: {}
         dataType: VARCHAR(20)
-        description: ""
+        description: |-
+          - This column represents the county where the heavy weather event occurred.
+          - It is sourced directly from the `COUNTY` column in the `DT_WRK_HEAVY_WEATHERVW` view.
+          - This attribute is used for geographical segmentation in reports and dashboards, enabling analysis of weather patterns and impacts at the county level.
+          - The data type is VARCHAR(20), allowing for county names up to 20 characters.
         name: COUNTY
         nullable: true
         sourceColumnReferences:
