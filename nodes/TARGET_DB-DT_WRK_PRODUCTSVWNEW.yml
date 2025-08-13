@@ -64,20 +64,6 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: e0b65cab-18fc-49f8-8188-576186d31a9b
-          stepCounter: e4b69436-da4a-434c-8532-497bf2e25d07
-        config: {}
-        dataType: VARCHAR(100)
-        description: ""
-        name: BRAND
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: c2ed942d-1193-439d-8c03-eb0c49d79d28
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
           columnCounter: e0aefc22-e18e-4bf7-bd67-600d67c8f1b4
           stepCounter: e4b69436-da4a-434c-8532-497bf2e25d07
         config: {}

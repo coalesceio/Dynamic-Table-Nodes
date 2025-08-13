@@ -68,7 +68,11 @@ operation:
           stepCounter: 6cae319c-ef26-4e00-b57d-cae6585a02da
         config: {}
         dataType: TIMESTAMP_NTZ(9)
-        description: ""
+        description: |-
+          - This column represents the start time of a heavy weather event, sourced directly from the `START_TIME` column in the `DT_WRK_HEAVY_WEATHERVW` view.
+          - It indicates when the weather event began, crucial for temporal analysis and trend identification.
+          - This timestamp is used in various reports and KPIs to understand the frequency and duration of heavy weather occurrences.
+          - The data type is TIMESTAMP_NTZ(9), providing precision to the nanosecond.
         name: START_TIME
         nullable: true
         sourceColumnReferences:
