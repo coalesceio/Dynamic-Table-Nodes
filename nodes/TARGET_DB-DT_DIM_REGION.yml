@@ -24,6 +24,7 @@ operation:
         - colName:
             columnCounter: b2dcece2-9eca-4def-ab3d-8293616e01d3
             stepCounter: d6faef78-6675-4ba2-abc5-e5f72e4511f1
+        - colName: null
     orderByDateTime:
       items:
         - {}
