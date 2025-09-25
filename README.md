@@ -237,9 +237,11 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Table keys** | (Required) Business key columns for Dimension key formation |
-| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column |
-| **Timestamp/sequence** | Required if Datetime column chosen for Record versioning |
-| **Date/Timestamp Columns** | Required if Date and Time columns chosen for Record versioning |
+| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column<br/>-Integer column |
+| **Timestamp** | Required if Datetime column chosen for Record versioning.**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
+| **Sequence** | Required if Integer column chosen for Record versioning|
+| **Timetamp-track data load**| Required if Integer column chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
+| **Date/Timestamp Columns** | Required if Date and Time columns chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
 
 #### Dimension Iceberg Options
 
@@ -414,13 +416,15 @@ The Dynamic Table Dimension has four configuration groups:
 
 #### Latest Record Version Options
 
-| **Options** | **Description** |
-|-------------|----------------|
-| **Table keys** | The business keys columns based on which the Dimension key is formed. (required) |
-| **Record versioning** | Type of column based on which columns that maintain history are updated. (required) |
-| **Datetime column** | Date and Time column |
-| **Timestamp or sequence** | The timestamp column name needs to be specified if Datetime column is chosen for Record versioning. |
-| **Date/Timestamp Columns** | Date column, time column, and sort order of the columns to be specified if Date column and Time column is chosen for Record versioning. |
+| **Option** | **Description** |
+|------------|----------------|
+| **Table keys** | (Required) Business key columns for Dimension key formation |
+| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column<br/>-Integer column |
+| **Timestamp** | Required if Datetime column chosen for Record versioning.**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
+| **Sequence** | Required if Integer column chosen for Record versioning|
+| **Timetamp-track data load**| Required if Integer column chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
+| **Date/Timestamp Columns** | Required if Date and Time columns chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
+
 
 #### Latest Record Version Iceberg Options
 
