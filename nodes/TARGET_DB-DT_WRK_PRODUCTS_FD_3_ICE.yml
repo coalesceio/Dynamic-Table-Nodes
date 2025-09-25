@@ -12,6 +12,7 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
+    cpygrants: false
     downstreamOption: false
     externalVolume: sficebergextvol1
     initialize: ON_CREATE
