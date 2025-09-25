@@ -237,7 +237,7 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Table keys** | (Required) Business key columns for Dimension key formation |
-| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column<br/>-Integer column |
+| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column<br/>- Integer column |
 | **Timestamp** | Required if Datetime column chosen for Record versioning.**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
 | **Sequence** | Required if Integer column chosen for Record versioning|
 | **Timetamp-track data load**| Required if Integer column chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
@@ -419,7 +419,7 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Table keys** | (Required) Business key columns for Dimension key formation |
-| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column<br/>-Integer column |
+| **Record versioning** | (Required) Type of column for history maintenance:<br/>- Datetime column<br/>- Date and Time column<br/>- Integer column |
 | **Timestamp** | Required if Datetime column chosen for Record versioning.**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
 | **Sequence** | Required if Integer column chosen for Record versioning|
 | **Timetamp-track data load**| Required if Integer column chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
