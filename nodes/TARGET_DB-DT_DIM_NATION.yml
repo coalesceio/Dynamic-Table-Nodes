@@ -23,9 +23,6 @@ operation:
     orderBy:
       items:
         - colName:
-            columnCounter: 301d1c90-412c-467c-b295-8f313f0404d2
-            stepCounter: 2dbaaa02-7817-4221-adc9-b73ef2982c78
-        - colName:
             columnCounter: 78b5b649-4cf1-4e04-8f1e-429a9dba6015
             stepCounter: 2dbaaa02-7817-4221-adc9-b73ef2982c78
     orderByDateTime:

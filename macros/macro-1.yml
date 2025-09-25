@@ -1,6 +1,6 @@
 fileVersion: 1
 id: "1"
-macroString: |
+macroString: |-
   {#-- The below block of code initialises variables in case of node typess using advance deployment strategy #}
 
   {% if desiredState %}
@@ -161,6 +161,31 @@ macroString: |
          
       {{ nsVariables.ibcoldatatype }}
    
+  {% endmacro %}
+
+  {% macro order_by_col_int(return) %}
+
+      {% set nsVariables = namespace(orderBy="") -%}
+      {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
+      {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
+      {% for source in sources %}
+         {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
+      {% endfor %}
+
+
+          {%- for i in config.recordorderBy.get('items') -%}
+            {% set dateTimeCol = i.ocolName.name -%} 
+            {%- set colId = getColumnId(dateTimeCol) -%}
+            {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}    
+            {%- if loop.first -%}
+              {%- set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
+            {%- else -%}
+              {%- set nsVariables.orderBy = nsVariables.orderBy + ',' + get_source_transform(columnMetadata) -%}
+            {%- endif -%}   
+          {%-endfor -%}
+
+      {{ nsVariables.orderBy }}
+
   {% endmacro %}
 name: macro
 type: Macro
