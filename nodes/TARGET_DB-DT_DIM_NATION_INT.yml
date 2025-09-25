@@ -41,6 +41,9 @@ operation:
         - partColName:
             columnCounter: 09a8a72d-8826-4807-acf7-24e44c7de883
             stepCounter: bf0180bf-3984-44c5-9327-66bc7340b654
+        - partColName:
+            columnCounter: ff17108b-f692-424f-813b-bf0a1e168cf0
+            stepCounter: bf0180bf-3984-44c5-9327-66bc7340b654
     recordVersioning: Integer Column
     recordorderBy:
       items:
