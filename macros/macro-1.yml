@@ -1,6 +1,6 @@
 fileVersion: 1
 id: "1"
-macroString: |-
+macroString: |
   {#-- The below block of code initialises variables in case of node typess using advance deployment strategy #}
 
   {% if desiredState %}
@@ -16,7 +16,7 @@ macroString: |-
 
   {%- macro partition_by( nodetype ) -%}
 
-  {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not -- #}
+  {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
   {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
   {% for source in sources %}
       {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
@@ -50,6 +50,7 @@ macroString: |-
   {% macro order_by_col(return) %}
 
       {% set nsVariables = namespace(orderBy="") -%}
+    
       {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
       {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
       {% for source in sources %}
@@ -57,55 +58,56 @@ macroString: |-
       {% endfor %}
 
 
-      {% if config.recordVersioning in ('Datetime Column') -%}
-          {%- for i in config.orderBy.get('items') -%}
-            {% set dateTimeCol = i.colName.name -%} 
-            {%- set colId = getColumnId(dateTimeCol) -%}
-            {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}    
-            {%- if loop.first -%}
-              {%- set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
-            {%- else -%}
-              {%- set nsVariables.orderBy = nsVariables.orderBy + ',' + get_source_transform(columnMetadata) -%}
-            {%- endif -%}   
-          {%-endfor -%}
-      {% elif config.recordVersioning in ('Integer Column')%}
-          {%- for i in config.orderseq.get('items') -%}
-            {% set dateTimeCol = i.colNameseq.name -%} 
-            {%- set colId = getColumnId(dateTimeCol) -%}
-            {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}    
-            {%- if loop.first -%}
-              {%- set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
-            {%- else -%}
-              {%- set nsVariables.orderBy = nsVariables.orderBy + ',' + get_source_transform(columnMetadata) -%}
-            {%- endif -%}   
-          {%-endfor -%}
+      {% if config.recordVersioning in ('Datetime Column','Numeric Column') -%}
+          {% set datetimeNumericColSort = config.orderBy.get('items') -%}
+          {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colName.name') | first -%}        
+          {%- set colId = getColumnId(dateTimeCol) -%}
+          {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
+          {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
+
+  	{% elif config.recordVersioning in ('Integer Column')%}
+          
+        {% set dateTimeCol = config.orderseq.get('items') -%}
+  	  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colNameseq.name') | first -%}        
+        {%- set colId = getColumnId(dateTimeCol) -%}
+        {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
+        {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
+
+            
       {% else -%}
-          {%- for i in config.orderByDateTime.get('items') -%}
-            {% set dateCol = i.colNameDate.name -%}
-            {% set timeCol = i.colNameTimestamp.name-%}
-            {%- set dcolId = getColumnId(dateCol) -%}
-            {%- set tcolId = getColumnId(timeCol) -%}
-            {%- set dcolumnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',dcolId) | first -%}    
-            {%- set tcolumnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',tcolId) | first -%}     
-            {%- if loop.first -%}
-              {%- set nsVariables.orderBy = 'to_timestamp(' + get_source_transform(dcolumnMetadata) + ' ||' + '\'T\'' + '||' + get_source_transform(tcolumnMetadata)+ ')' -%}
-            {%- else -%}
-              {%- set nsVariables.orderBy = nsVariables.orderBy + ','+ 'to_timestamp(' + get_source_transform(dcolumnMetadata) + ' ||' + '\'T\'' + '||' + get_source_transform(tcolumnMetadata)+ ')' -%}
-            {%- endif -%}  
-          {%- endfor -%} 
+          {% set dateTimeColSort = config.orderByDateTime.get('items') -%}
+          {% set dateCol = dateTimeColSort | map(attribute='colNameDate.name') | first -%}
+          {% set timeCol = dateTimeColSort | map(attribute='colNameTimestamp.name') | first -%}
+          {%- set colId1 = getColumnId(dateCol) -%}
+          {%- set columnMetadata1 = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
+          {%- set colId = getColumnId(timeCol) -%}
+          {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
+          {% set nsVariables.orderBy = 'to_timestamp(' + get_source_transform(columnMetadata1) +  '|| ' + '\'T\'' + ' ||' + get_source_transform(columnMetadata) +  ')' -%}
+          
       {% endif -%}
 
       {{ nsVariables.orderBy }}
 
   {% endmacro %}
 
+  {% macro order_by_col_int(return) %}
+
+        {% set dateTimeCol = config.recordorderBy.get('items') %}
+  	  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='ocolName.name') | first -%}      
+        {%- set colId = getColumnId(dateTimeCol) -%}
+        {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}  
+        {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
+            
+      {{ nsVariables.orderBy }}
+
+  {% endmacro %}
 
   {% macro dimensionHistoryPk() %}
       {%- set nsVariables = namespace(dimensionHistoryColumns="") -%}
 
       {%- set partitionBy = partition_by('DIM').split("~") -%}
-      {%- set orderBy = order_by_col().split(",") -%}
-      
+      {%- set orderBy = order_by_col() -%}
+
       {%- for col in partitionBy -%}
           {%- if loop.first -%}
               {%- set nsVariables.dimensionHistoryColumns = col -%}
@@ -113,9 +115,9 @@ macroString: |-
               {%- set nsVariables.dimensionHistoryColumns = nsVariables.dimensionHistoryColumns + ' || ' + '\'-\'' + ' ||' + col -%}
           {%- endif -%}
       {%- endfor -%}
-       
+
       {%if config.recordVersioning not in ('Integer Column')%}
-        {%-for col in orderBy-%}  
+        {%-for col in orderBy-%}
           {%- set nsVariables.dimensionHistoryColumns = nsVariables.dimensionHistoryColumns + ' || ' + '\'-\'' + ' || date_part(epoch_milliseconds, ' + col + ')' -%}
         {%-endfor -%}
       {%else%}
@@ -161,31 +163,6 @@ macroString: |-
          
       {{ nsVariables.ibcoldatatype }}
    
-  {% endmacro %}
-
-  {% macro order_by_col_int(return) %}
-
-      {% set nsVariables = namespace(orderBy="") -%}
-      {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
-      {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
-      {% for source in sources %}
-         {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
-      {% endfor %}
-
-
-          {%- for i in config.recordorderBy.get('items') -%}
-            {% set dateTimeCol = i.ocolName.name -%} 
-            {%- set colId = getColumnId(dateTimeCol) -%}
-            {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}    
-            {%- if loop.first -%}
-              {%- set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
-            {%- else -%}
-              {%- set nsVariables.orderBy = nsVariables.orderBy + ',' + get_source_transform(columnMetadata) -%}
-            {%- endif -%}   
-          {%-endfor -%}
-
-      {{ nsVariables.orderBy }}
-
   {% endmacro %}
 name: macro
 type: Macro
