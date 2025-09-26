@@ -343,7 +343,7 @@ does not permit copying or modification for any other purpose.
 
             {{ source.join }}
             QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
-        
+
         {% endfor %}
 
                 {% if desiredState.config.clusterKey == true %}
@@ -764,7 +764,7 @@ does not permit copying or modification for any other purpose.
 
               {{ source.join }}
               QUALIFY ROW_NUMBER() OVER (PARTITION BY  {{ partition_by() }} ORDER BY {{ order_by_col() }} DESC) = 1
-            
+             
             {% endfor %}         
             
             {% if desiredState.config.clusterKey == true %}

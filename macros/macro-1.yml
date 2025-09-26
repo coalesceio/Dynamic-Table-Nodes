@@ -58,7 +58,7 @@ macroString: |
       {% endfor %}
 
 
-      {% if config.recordVersioning in ('Datetime Column','Numeric Column') -%}
+      {% if config.recordVersioning in ('Datetime Column') -%}
           {% set datetimeNumericColSort = config.orderBy.get('items') -%}
           {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colName.name') | first -%}        
           {%- set colId = getColumnId(dateTimeCol) -%}
@@ -67,19 +67,18 @@ macroString: |
 
   	{% elif config.recordVersioning in ('Integer Column')%}
           
-        {% set dateTimeCol = config.orderseq.get('items') -%}
-  		  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colNameseq.name') | first -%}        
+        {% set datetimeNumericColSort = config.orderseq.get('items') -%}
+  	  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colNameseq.name') | first -%}        
         {%- set colId = getColumnId(dateTimeCol) -%}
         {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
         {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
-
             
       {% else -%}
           {% set dateTimeColSort = config.orderByDateTime.get('items') -%}
           {% set dateCol = dateTimeColSort | map(attribute='colNameDate.name') | first -%}
           {% set timeCol = dateTimeColSort | map(attribute='colNameTimestamp.name') | first -%}
           {%- set colId1 = getColumnId(dateCol) -%}
-          {%- set columnMetadata1 = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
+          {%- set columnMetadata1 = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId1) | first -%}
           {%- set colId = getColumnId(timeCol) -%}
           {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
           {% set nsVariables.orderBy = 'to_timestamp(' + get_source_transform(columnMetadata1) +  '|| ' + '\'T\'' + ' ||' + get_source_transform(columnMetadata) +  ')' -%}
@@ -92,7 +91,16 @@ macroString: |
 
   {% macro order_by_col_int(return) %}
 
-        {% set dateTimeCol = config.recordorderBy.get('items') %}
+      {% set nsVariables = namespace(orderBy="") -%}
+    
+      {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
+      {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
+      {% for source in sources %}
+         {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
+      {% endfor %}
+
+
+        {% set datetimeNumericColSort = config.recordorderBy.get('items') %}
   	  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='ocolName.name') | first -%}    
         {%- set colId = getColumnId(dateTimeCol) -%}
         {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}  
