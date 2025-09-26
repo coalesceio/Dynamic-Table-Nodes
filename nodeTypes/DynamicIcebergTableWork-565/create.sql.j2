@@ -1,0 +1,461 @@
+{#
+    Copyright (c) 2025 Coalesce. All rights reserved.
+This script and its associated documentation are confidential and proprietary to Coalesce.
+Unauthorized reproduction, distribution, or disclosure of this material is strictly prohibited.
+Coalesce permits you to copy and modify this script for the purposes of using with Coalesce but
+does not permit copying or modification for any other purpose.  
+#}
+{# == Node Type Name           : Dynamic Iceberg Table Work  == #}
+{# == Node Type Description    : This node creates and runs dynamic iceberg table materialization type == #}
+
+{% if desiredState and currentState != desiredState %}
+    {% if desiredState.parameters == {}
+            or 'targetDynamicTableWarehouse' not in desiredState.parameters
+            or desiredState.parameters.targetDynamicTableWarehouse == '' %}
+
+        {{stage('WARNING')}}
+        
+        /*Add parameter targetDynamicTableWarehouse in workspace settings and deployment environment for successful execution of node.
+        The default value for the parameter is 'DEV ENVIRONMENT'.
+        Refer to documentation for more info*/
+
+    {% endif %}
+{% endif %}
+
+{% if desiredState %}
+    {# --------------------------------------------------------------------------- #}
+    {# -----------Initialise all the desiredstate variables ---------------------- #}
+    {# --------------------------------------------------------------------------- #}
+    {# Dynamic Table Name #}
+    {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
+    {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
+    {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+
+    {# Warehouse #}
+    {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
+    {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+        {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
+    {% else %}
+        {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
+    {% endif %}
+
+    {# Desired target node mappings #}
+    {% set desiredDatabase = desiredState.storageLocations
+                            | selectattr('name', 'equalto', desiredState.node.location.name)
+                            | map(attribute='database')
+                            | first %}
+    {% set desiredSchema = desiredState.storageLocations
+                            | selectattr('name', 'equalto', desiredState.node.location.name)
+                            | map(attribute='schema')
+                            | first %}
+    {% set desiredDatabaseSchema = desiredDatabase + '.' + desiredSchema %}
+
+    {# Desired Downstream Option or Lag Specification #}
+    {% if desiredState.config.tgtLagSpecification == 'DOWNSTREAM' %}
+        {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
+    {% else %}
+        {% set dynamicTableLagValue = desiredState.config.lagSpecification.get('items')
+                                    | map(attribute='lagValue')
+                                    | first %}
+        {% set dynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items')
+                                    | map(attribute='lagPeriod')
+                                    | first %}
+
+        {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
+    {% endif %}
+
+    {# Node description #}
+    {%- if desiredState.node.description | length > 0 %} 
+        {% set dynamicTableComment = 'COMMENT = "' + desiredState.node.description | escape + '"' %}
+    {% endif %}
+
+    {% set dynamicTablerefresh = desiredState.config.refresh_mode %}            {# Refresh-type option #}
+    {% set dynamicTableinitialize = desiredState.config.initialize %}           {# Initialize option #}
+    {% set dynamicTableexternalVolume = desiredState.config.externalVolume %}   {# External Volume option #}
+    {% set dynamicTablebaseLocation = desiredState.config.baseLocation %}       {# Base Location option #}
+
+    {# Identify all config changes that would cause a CREATE or ALTER #}
+    {% if currentState != undefined and currentState != desiredState %} 
+
+        {# --------------------------------------------------------------------------- #}
+        {# ---------- Identify all config changes that would cause a CREATE ---------- #}
+        {# --------------------------------------------------------------------------- #}
+                
+	    {# Desired Namespace Variables #}
+        {% set nsVariables = namespace(nsDesiredDepStorageLocations = "",
+                                        nsDesiredSourceStorageLocations = "",
+                                        nsDesiredTargetStorageLocations = "",
+                                        nsDesiredUsedStorageLocations = "",
+                                        storageLocationTest = true,
+                                        descolchanges = 0,
+                                        acolchanges = 0,
+                                        dcolchanges = 0,
+                                        othercolchanges = 0,
+                                        joinTest = true ) %}
+
+        {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
+		
+        {% if sourcesTest == true %}
+          {% for src in desiredState.sources %}
+            {% if  currentState.sources[loop.index0].join != src.join %}
+                {# Set joinTest to false if changes are detected #}
+                {% set nsVariables.joinTest = false %}  
+            {% endif %}
+           {% endfor %}
+        {% endif %}
+
+        {# Desired Namespace Variables Transform #}
+        {% set desiredTransformArray = desiredState.sources
+                                        | map(attribute='columns')
+                                        | first
+                                        | map(attribute='transform')
+                                        | list -%}
+
+        {# Current Namespace Variables Transform #}
+        {% set currentTransformArray = currentState.sources
+                                        | map(attribute='columns')
+                                        | first
+                                        | map(attribute='transform')
+                                        | list -%}
+
+        {# Test to see if the transform in a column has changed #}
+        {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
+
+        {# Config #}
+        {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
+        {% set groupByAllTest = currentState.config.groupByAll == desiredState.config.groupByAll %}
+        {% set selectDistinctTest = currentState.config.selectDistinct == desiredState.config.selectDistinct %}
+        {% set nodeIsMultisource = currentState.node.isMultisource == desiredState.node.isMultisource %}
+        {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
+        {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
+        {% set cpygrantsTest = currentState.config.cpygrants == desiredState.config.cpygrants %}
+
+        {# Column description changes and other column level changes #}
+        {% for alterCurCol in currentState.columns %}        
+            {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+                {% set currentColumnName = currentState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id)
+                                            | map(attribute='name')
+                                            | first %}
+                {% set desiredColumnName = desiredState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='name') 
+                                            | first %}                                          
+        
+                {% set currentDatatype = icebergcoldatatype(currentState.columns
+                                            | selectattr('id', "equalto", alterCurCol.id)
+                                            | map(attribute='dataType')
+                                            | first) %}
+                {% set desiredDatatype = icebergcoldatatype(desiredState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='dataType') 
+                                            | first) %}                                            
+
+                {% set currentNullable = currentState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='nullable') 
+                                            | first %}
+                {% set desiredNullable = desiredState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='nullable') 
+                                            | first %}
+
+                {% set currentDefaultValue = currentState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='defaultValue') 
+                                            | first %}
+                {% set desiredDefaultValue = desiredState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='defaultValue') 
+                                            | first %}
+                    
+                {% set currentDescription = currentState.columns
+                                            | selectattr('id', "equalto", alterCurCol.id)
+                                            | map(attribute='description')
+                                            | first %}
+                {% set desiredDescription = desiredState.columns 
+                                            | selectattr('id', "equalto", alterCurCol.id) 
+                                            | map(attribute='description') 
+                                            | first %}
+
+                {% set datatypeTest = currentDatatype == desiredDatatype %}                
+                {% set descriptionTest = currentDescription == desiredDescription %}
+                {% set columnnameTest = currentColumnName == desiredColumnName %}
+
+                {% if (descriptionTest == false) %}
+                    {% set nsVariables.descolchanges = nsVariables.descolchanges + 1 %}
+                {% endif %}
+
+                {% if (datatypeTest == false or defaultValueTest == false or columnnameTest == false ) %}
+                    {% set nsVariables.othercolchanges = nsVariables.othercolchanges + 1 %}
+                {% endif %}
+
+            {% else %}
+                {# Dropped Columns #}
+                {% set nsVariables.dcolchanges = nsVariables.dcolchanges + 1 %}
+            {%endif%}  
+        {% endfor %}
+
+        {# Added Columns #}
+        {% for addDesCol in desiredState.columns %}
+            {% if addDesCol.id not in currentState.columns | map(attribute="id") %}
+                {% set nsVariables.acolchanges = nsVariables.acolchanges + 1 %}
+            {%endif%}
+        {% endfor %}
+
+        {# Change Node Name or Change Storage Location #}
+        {%if currentState.storageLocations | length == 0%}          
+            {% set currentDatabase = currentState.storageLocations 
+                                    | selectattr('name', 'equalto', currentState.node.location.name)
+                                    | map(attribute='database')
+                                    | string %}
+            {% set currentSchema = currentState.storageLocations
+                                    | selectattr('name', 'equalto', currentState.node.location.name)
+                                    | map(attribute='schema')
+                                    | string %}
+            {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}
+            
+        {%else %}  
+
+            {# Current target node mappings #}
+            {% set currentDatabase = currentState.storageLocations
+                                    | selectattr('name', 'equalto', currentState.node.location.name)
+                                    | map(attribute='database')
+                                    | first %}
+            {% set currentSchema = currentState.storageLocations 
+                                    | selectattr('name', 'equalto', currentState.node.location.name)
+                                    | map(attribute='schema')
+                                    | first %}
+            {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}  
+        {% endif %}
+
+        {# If any of the above are false then a CREATE must be run #}
+        {% if nsVariables.othercolchanges   > 0
+            or sourcesTest                  == false
+            or nsVariables.joinTest         == false
+            or columnsTransformTest         == false
+            or insertStrategyTest           == false
+            or groupByAllTest               == false
+            or selectDistinctTest           == false
+            or nodeIsMultisource            == false
+            or initializeTest               == false
+            or refreshTest                  == false
+            or cpygrantsTest                == false
+            or nsVariables.acolchanges      > 0
+            or nsVariables.dcolchanges      > 0  %}    
+
+            {% set createTest = true %}
+        {% else %}
+            {% set createTest = false %}
+        {% endif %}
+
+        {# --------------------------------------------------------------------------- #}
+        {# ---------Identify all config changes that would cause an ALTER------------- #}
+        {# --------------------------------------------------------------------------- #}
+
+        {#Current Warehouse#}
+        {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+            {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
+        {% else %}
+            {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
+        {% endif %}
+
+        {% set warehouseTest = dynamicTableWarehouse == currentDynamicTableWarehouse %}
+
+        {% if currentDatabaseSchema != desiredDatabaseSchema %}
+            {% set nsVariables.storageLocationTest = false %}
+        {% endif %}
+
+        {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
+
+        {% set lagSpecificationTest = currentState.config.tgtLagSpecification == desiredState.config.tgtLagSpecification %}
+        {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
+        {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
+
+        {# Clustering Test #}
+        {% set clusterKeyTest = currentState.config.clusterKey == desiredState.config.clusterKey %}
+        {% set clusterKeyConfigTest = currentState.config.clusterKeyConfig == desiredState.config.clusterKeyConfig %}
+
+        {% if warehouseTest                     == false
+            or lagSpecificationTest             == false
+            or downstreamOptionTest             == false
+            or nodeCommentTest                  == false
+            or clusterKeyTest                   == false
+            or clusterKeyConfigTest             == false
+            or nsVariables.descolchanges        > 0
+            or nsVariables.storageLocationTest  == false
+            or nodeNameTest                     == false %}    
+
+            {% set alterOnlyTest = true %}
+        {% else %}
+            {% set alterOnlyTest = false %}
+        {% endif %}
+    {% endif %}
+
+    {% if currentState == undefined or createTest %}
+
+        {# --------------------------------------------------------------------------- #}
+        {# -------- Create table incase of initial deploy or config changes ---------- #}
+        {# --------------------------------------------------------------------------- #}
+
+        {# Build Cluster Key #}
+        {% set nsVariables = namespace(finalClusterKey="") %}
+        {% if desiredState.config.clusterKey %}
+            {% set column = desiredState.config.clusterKeyConfig.get('items') 
+                            | map(attribute='columnName.name')
+                            | list %}
+
+            {%- set nsVariables = namespace(clusterValues=[]) %}
+
+            {% for clustCol in column %}
+                {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"' + clustCol + '"'] %}
+            {% endfor %}
+
+            {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+
+        {% endif %}
+
+        {{ stage('Create Dynamic Iceberg Table', true, "sql", "create") }}
+        CREATE OR REPLACE DYNAMIC ICEBERG TABLE {{ fullyQualifiedTargetDynamicTableName }}
+            {% if desiredState.config.cpygrants %}
+                COPY GRANTS
+            {% endif %}
+            TARGET_LAG = '{{ dynamicTableLagSpecification }}'
+            WAREHOUSE = {{ dynamicTableWarehouse }}
+            REFRESH_MODE   = {{ dynamicTablerefresh }}
+            INITIALIZE = {{ dynamicTableinitialize }}
+            {{nsVariables.finalClusterKey }}
+            EXTERNAL_VOLUME = {{ dynamicTableexternalVolume }}
+            CATALOG = 'SNOWFLAKE'
+            BASE_LOCATION = {{ dynamicTablebaseLocation }}
+            {{ dynamicTableComment }}
+        (
+            {% for col in desiredState.columns %}
+                "{{ col.name }}" {{ icebergcoldatatype(col.dataType) }}
+                {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}' {% endif %}
+                {%- if not loop.last -%}, {% endif %}
+            {% endfor %}
+        )
+        AS
+        {% for source in desiredState.sources %}
+            SELECT
+                {% if desiredState.config.selectDistinct %}
+            DISTINCT
+                {% endif %}
+
+                {% for col in source.columns %}
+            {{ get_source_transform(col) }} AS "{{ col.name }}"
+                    {%- if not loop.last -%}, {% endif %}
+                {% endfor %}
+
+            {{ source.join }}
+
+                {% if desiredState.config.groupByAll %}
+            GROUP BY ALL
+                {% endif %}
+
+                {% if not loop.last %}
+                    {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
+            {{ desiredState.config.insertStrategy }}
+                    {% endif %}
+                {% endif %}
+        {% endfor %}
+
+    {% elif currentState != undefined and alterOnlyTest == true %}
+
+        {# --------------------------------------------------------------------------- #}
+        {# ------------- Alter Only config changes and refresh table ----------------- #}
+        {# --------------------------------------------------------------------------- #}
+
+        {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+        {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+
+        {% if warehouseTest == false
+                or lagSpecificationTest == false
+                or downstreamOptionTest == false
+                or nodeCommentTest == false %}
+
+            {{ stage('Alter Dynamic Iceberg Table') }}
+             ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
+             SET WAREHOUSE = {{ dynamicTableWarehouse }}
+             TARGET_LAG = '{{ dynamicTableLagSpecification }}' {{ dynamicTableComment }}      
+    
+        {%endif%}
+
+        {# Figure out cluster key changes #}
+        {% set nsVariables = namespace(finalClusterKey = "", clusterValues = []) %}
+        {% if clusterKeyTest == false or clusterKeyConfigTest == false %}
+            {% if desiredState.config.clusterKey == true %}
+                {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
+
+                {% for clustCol in column %}
+                    {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"' + clustCol + '"']%}
+                {% endfor %}
+
+                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                
+            {% else %}
+
+                {% set nsVariables.finalClusterKey = 'DROP CLUSTERING KEY' %}
+
+            {% endif %}
+
+            {{ stage('Recluster Dynamic Iceberg TABLE') }}
+            ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
+            {{ nsVariables.finalClusterKey }}
+
+        {% endif %}
+
+        {# Change in storage mappings, target location or node name #}
+        {% if nsVariables.storageLocationTest == false or nodeNameTest == false  %}
+            {{ stage('Rename Dynamic Iceberg Table') }}
+            {% set srcSchName = currentState.node.location.name %}
+            {% set cdb = currentState.storageLocations
+                        | selectattr('name', 'equalto', srcSchName)
+                        | map(attribute='database')
+                        | first %}
+            {% set csch = currentState.storageLocations
+                        | selectattr('name', 'equalto', srcSchName)
+                        | map(attribute='schema')
+                        | first %}
+            ALTER DYNAMIC TABLE IF EXISTS  "{{cdb}}"."{{csch}}"."{{currentState.node.name}}"
+            RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
+        {% endif %}
+
+        {# Change in column description #}
+        {% for alterCurCol in currentState.columns %}        
+            {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
+            
+                {% set currentDescription = alterCurCol.description %}
+
+                {% set desiredColumnName = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
+                {% set desiredDescription = desiredState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='description') | first %}
+
+                {% set descriptionTest = currentDescription == desiredDescription %}
+
+                {% if descriptionTest == false %}
+                    {{ stage('Alter Dynamic Iceberg Table-Modify Column') }}
+                    ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
+                    MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
+                {% endif %}
+
+            {%endif%}    
+        {% endfor %}
+
+        {{ stage('Refresh Dynamic Iceberg Table') }}
+        ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
+        REFRESH
+
+    {% endif %}
+
+{% elif currentState != undefined and desiredState == undefined %}
+
+    {# Dynamic Table Name #}
+    {% set targetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+    {% set targetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+    {% set fullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+
+    {{ stage('Drop Dynamic Iceberg Table') }}
+    DROP DYNAMIC TABLE IF EXISTS {{ fullyQualifiedTargetDynamicTableName }}
+
+{% endif %}

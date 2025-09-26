@@ -1,0 +1,148 @@
+fileVersion: 1
+id: "565"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: Dynamic Iceberg Table Work
+    short: ICDT_WRK
+    tagColor: "#E1F24D"
+    isDisabled: true
+    plural: Dynamic Iceberg Tables
+
+    deployStrategy: advanced
+
+    config:
+      - groupName: Dynamic Iceberg Table Options
+        items: 
+
+        - type: label
+          attributeName: note2
+          displayName: 
+                       "NOTE: Ensure the parameter targetDynamicTableWarehouse is added in Workspace and deployment environment for successful creation of dynamic table.
+                       **Refer documentation for more info**"
+          enableIf: "{%- if parameters == {} or parameters.targetDynamicTableWarehouse == '' -%} true {%- else -%} false {%- endif -%}"
+
+        - displayName: Warehouse To Execute Dynamic Iceberg Table
+          attributeName: warehouseName
+          type: textBox
+          default: dev_wh_xs
+          isRequired: true
+
+        - displayName: Snowflake EXTERNAL VOLUME Name
+          attributeName: externalVolume
+          type: textBox
+          default: ""
+          isRequired: true
+
+        - displayName: Base Location Name
+          attributeName: baseLocation
+          type: textBox
+          default: ""
+          isRequired: false
+
+        - type: dropdownSelector
+          displayName: Target Lag Specification
+          attributeName: tgtLagSpecification
+          default: "DOWNSTREAM"
+          options:
+          - DOWNSTREAM
+          - TIME BASED
+          isRequired: true
+
+        - type: tabular
+          displayName: 'Lag Specification'
+          attributeName: lagSpecification
+          isRequired: false
+          enableIf: "{% if config.tgtLagSpecification == 'TIME BASED' %} true {% else %} false {% endif %}"
+
+          columns:
+      
+          -  type: textBox
+             displayName: Time Value
+             attributeName: lagValue
+             default: 60
+             isRequired: false
+
+          -  type: dropdownSelector
+             displayName: Time Period
+             attributeName: lagPeriod
+             default: "Minutes"
+             options:
+             - Seconds
+             - Minutes
+             - Hours
+             - Days
+             isRequired: false
+
+        - type: dropdownSelector
+          displayName: Refresh Mode
+          attributeName: refresh_mode
+          default: "AUTO"
+          options:
+          - AUTO
+          - INCREMENTAL
+          - FULL
+          isRequired: true
+
+        - type: dropdownSelector   
+          displayName: Initialize
+          attributeName: initialize
+          default: "ON_CREATE"
+          options:
+          - ON_CREATE
+          - ON_SCHEDULE 
+          isRequired: true
+
+        - type: toggleButton
+          displayName: Copy Grants
+          attributeName: cpygrants
+
+        - type: toggleButton
+          attributeName: clusterKey
+          displayName: Cluster Key
+          default: false
+          isRequired: false
+
+        - type: tabular
+          displayName: 'Cluster Key'
+          attributeName: clusterKeyConfig
+          columns:
+
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: columnName
+             isRequired: false
+      
+          isRequired: false
+          enableIf: "{% if config.clusterKey %} true {% else %} false {% endif %}"
+
+      - groupName: General Options
+        items: 
+
+        - type: toggleButton
+          attributeName: selectDistinct
+          displayName: Distinct
+          default: false
+          enableIf: "{% if config.groupByAll %} false {% else %} true {% endif %}"
+
+        - type: toggleButton
+          attributeName: groupByAll
+          displayName: Group By All
+          default: false
+          enableIf: "{% if config.selectDistinct %} false {% else %} true {% endif %}"
+
+        - type: multisourceToggle
+
+        - displayName: Multi Source Strategy
+          attributeName: insertStrategy
+          type: dropdownSelector
+          default: UNION ALL
+          options:
+          - "UNION"
+          - "UNION ALL" 
+          isRequired: false
+          enableIf: "{% if node.isMultisource %} true {% else %} false {% endif %}"
+name: Dynamic Iceberg Table Work
+type: NodeType

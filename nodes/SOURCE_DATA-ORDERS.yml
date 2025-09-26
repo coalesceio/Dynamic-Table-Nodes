@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
-name: CUSTOMER_CHANGES
+id: 999f2ac3-8579-4cec-8750-3ca23d9b85af
+name: ORDERS
 operation:
   database: ""
   deployEnabled: true
@@ -13,13 +13,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: be0dbfb7-1a02-4282-91b0-09f84c9f25f1
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 98ac0e08-d9dd-4236-8210-f2dc40c8e6d6
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: CUSTOMER_ID
+        name: O_ORDERKEY
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -32,13 +32,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 47fe1904-6091-4b48-92f6-331a9b949ab1
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: baab17ed-fcef-4bdf-b5d0-a82dd96c7f84
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
-        dataType: VARCHAR(50)
+        dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: FIRST_NAME
+        name: O_CUSTKEY
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -51,13 +51,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 70cbb1bd-6f96-4819-a6b2-b4f26380ab7d
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 7a4bf158-bb35-425a-914e-3c5a2fd3da29
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
-        dataType: VARCHAR(50)
+        dataType: VARCHAR(1)
         defaultValue: ""
         description: ""
-        name: LAST_NAME
+        name: O_ORDERSTATUS
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -70,13 +70,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 0fc66a08-7daa-43b1-8a6a-2d0a53be5887
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: ff7d1baa-0efa-4492-8fa8-3bee87335d87
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
-        dataType: VARCHAR(100)
+        dataType: NUMBER(12,2)
         defaultValue: ""
         description: ""
-        name: EMAIL
+        name: O_TOTALPRICE
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -89,13 +89,32 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 19250e0f-a7a7-4471-bcc6-3049c869fcbf
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 53506f81-2496-435d-b99b-3597e574bcbf
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
+        config: {}
+        dataType: DATE
+        defaultValue: ""
+        description: ""
+        name: O_ORDERDATE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 23d6e377-dcf9-43bc-a523-28c4e2d2927d
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
         dataType: VARCHAR(15)
         defaultValue: ""
         description: ""
-        name: PHONE_NUMBER
+        name: O_ORDERPRIORITY
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -108,13 +127,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: b4e8dc89-1d85-4e13-926b-1084518ae68c
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 1cc4338b-92d7-43c7-8b81-24786c5f19d0
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
-        dataType: VARCHAR(365)
+        dataType: VARCHAR(15)
         defaultValue: ""
         description: ""
-        name: FULL_ADDRESS
+        name: O_CLERK
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -127,13 +146,13 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 68c404b2-8e20-4a74-b1f7-0a7d6e374b0d
-          stepCounter: 926992b1-c168-4b15-b4c6-6cf6f88c49e3
+          columnCounter: 238f076a-f1f9-43b6-8803-560e7d8fe1d6
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
         config: {}
-        dataType: TIMESTAMP_NTZ(9)
+        dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: UPDATE_TIME
+        name: O_SHIPPRIORITY
         nullable: true
         primaryKey: false
         sourceColumnReferences:
@@ -141,7 +160,45 @@ operation:
             transform: ""
         transform: ""
         uniqueKey: false
-  name: CUSTOMER_CHANGES
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 10a561b6-2fe7-4136-8076-7305257c40ef
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
+        config: {}
+        dataType: VARCHAR(79)
+        defaultValue: ""
+        description: ""
+        name: O_COMMENT
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 07afc075-776c-4e0f-8df6-cdf37425d9c5
+          stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        defaultValue: ""
+        description: ""
+        name: O_LOAD_TIMESTAMP
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+  name: ORDERS
   schema: ""
   sqlType: Source
   type: sourceInput
