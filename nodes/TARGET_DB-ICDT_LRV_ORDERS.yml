@@ -1,40 +1,35 @@
 fileVersion: 1
-id: de564bd0-8d82-423f-8387-ed10c72abf8c
-name: ICDT_DIM_ORDERS
+id: ac03922c-978f-4251-9e79-b1f283047cfb
+name: ICDT_LRV_ORDERS
 operation:
   config:
-    baseLocation: test
+    baseLocation: ""
     clusterKey: false
     clusterKeyConfig:
       items:
         - {}
     cpygrants: false
-    externalVolume: sficebergextvol1
+    externalVolume: ""
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - lagPeriod: Minutes
-          lagValue: 60
+        - {}
     orderBy:
       items:
-        - colName:
-            columnCounter: 7acdd2ab-902b-4d1d-933a-61c862873e5e
-            stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+        - {}
     orderByDateTime:
       items:
         - {}
     orderseq:
       items:
-        - {}
+        - colNameseq: null
     partitionBy:
       items:
-        - partColName:
-            columnCounter: 2a2c81c1-bb00-410b-8836-0989d7e1ff56
-            stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-    recordVersioning: Datetime Column
+        - {}
+    recordVersioning: Integer Column
     recordorderBy:
       items:
-        - {}
+        - ocolName: null
     refresh_mode: AUTO
     tgtLagSpecification: DOWNSTREAM
     warehouseName: dev_wh_xs
@@ -47,27 +42,10 @@ operation:
   metadata:
     appliedNodeTests: []
     columns:
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 375578aa-d112-411f-b5d8-1c77adbeb7c0
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-        config: {}
-        dataType: STRING
-        defaultValue: ""
-        description: ""
-        isSurrogateKey: true
-        name: ICDT_DIM_ORDERS_KEY
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 2a2c81c1-bb00-410b-8836-0989d7e1ff56
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: 00460181-c37f-477a-aaaa-973b8ac756d7
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -80,8 +58,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: cb4a61be-32bc-4f94-b1f6-ca217e3fbc03
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: a1fd0f9a-fb75-407a-be11-21c3290cb5fb
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -94,8 +72,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 91c6d97c-0cdf-4c82-88b5-e4e4d6706065
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: cf1915ff-75b5-46e1-be0b-02d12f51e874
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: VARCHAR(1)
         description: ""
@@ -108,8 +86,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 235a92a0-f2d8-44c9-a169-16b42c6a5082
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: 25aaade9-0086-49fd-a583-18b12015cb83
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: NUMBER(12,2)
         description: ""
@@ -122,8 +100,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b2a23c8f-50e6-4918-acc6-ca4e01513031
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: fa23a02b-c984-4b7e-b038-e98317d95231
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: DATE
         description: ""
@@ -136,8 +114,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 7b6c1973-2742-4811-a171-0134975538d3
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: c0a2dfb4-6ec8-4e80-b0da-c0a1ef29fd1a
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: VARCHAR(15)
         description: ""
@@ -150,8 +128,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 9e9ce87a-4ebe-4043-9abe-a41475addcf0
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: e2285bd7-bdb1-49ae-ad2d-301d64c13f79
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: VARCHAR(15)
         description: ""
@@ -164,8 +142,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 09e16bf8-8ea0-425b-8e35-dfd338f02983
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: 7c888116-d2be-4ee6-86fc-c9912b8c63a1
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -178,8 +156,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 2eaa29fd-d998-45fd-88ac-28dd0bb52328
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: 290f0b8c-f075-40b6-bf32-6af54bfb450f
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: VARCHAR(79)
         description: ""
@@ -192,8 +170,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 7acdd2ab-902b-4d1d-933a-61c862873e5e
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: 5b781c19-d76c-4fd2-98a2-7dbbf528fdac
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: TIMESTAMP_LTZ(9)
         description: ""
@@ -209,59 +187,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 8a692b3f-e5a4-44cd-9095-3cd88fa674fc
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemStartDate: true
-        name: RECORD_START_TIME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: "{% if config.recordVersioning not in ('Integer Column') %} {{ order_by_col().split(',')[0] }} {% else %} {{ order_by_col_int().split(',')[0] }} {% endif %}"
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 19ab717a-5a95-4cc9-a510-946efd195a69
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemEndDate: true
-        name: RECORD_END_TIME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: LEAD ( {% if config.recordVersioning not in ('Integer Column')%} {{ order_by_col().split(',')[0] }} {% else %} {{ order_by_col_int().split(',')[0] }} {% endif %} ) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 29f97e9c-c43a-4a33-8787-8ff9574b399b
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-        config: {}
-        dataType: NUMBER(1, 0)
-        defaultValue: ""
-        description: ""
-        isRecordCurrent: true
-        name: RECORD_CURRENT_FLAG
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CASE WHEN ( LEAD ( {% if config.recordVersioning not in ('Integer Column') %} {{ order_by_col().split(',')[0] }} {% else %} {{ order_by_col_int().split(',')[0] }} {% endif %} ) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc) ) IS NULL THEN 1 ELSE 0 END
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: a025a390-8edc-4996-909b-3179481a0d79
-          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+          columnCounter: 4e95e086-80ed-437c-a6e9-7a3580545f59
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -283,13 +210,13 @@ operation:
           - locationName: SOURCE_DATA
             nodeName: ORDERS
         join:
-          joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS') }} "ORDERS"  Where "O_ORDERKEY" = 9697
-        name: ICDT_DIM_ORDERS
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS') }} "ORDERS"
+        name: ICDT_LRV_ORDERS
         noLinkRefs: []
-  name: ICDT_DIM_ORDERS
+  name: ICDT_LRV_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: "566"
+  sqlType: "571"
   type: sql
   version: 1
 type: Node

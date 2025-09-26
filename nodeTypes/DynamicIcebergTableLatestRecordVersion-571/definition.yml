@@ -1,0 +1,234 @@
+fileVersion: 1
+id: "571"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: Dynamic Iceberg Table Latest Record Version
+    short: ICDT_LRV
+    tagColor: "#E8BF02"
+    isDisabled: true
+    plural: Dynamic Iceberg Tables - Record Version
+
+    deployStrategy: advanced
+
+    config:
+      - groupName: Dynamic Iceberg Table Options
+        items:
+
+        - type: label
+          attributeName: note2
+          displayName: 
+                       "NOTE: Ensure the parameter targetDynamicTableWarehouse is added in Workspace and deployment environment for successful creation of dynamic table.
+                       **Refer documentation for more info**"
+          enableIf: "{%- if parameters == {} or parameters.targetDynamicTableWarehouse == '' -%} true {%- else -%} false {%- endif -%}"
+
+        - displayName: Warehouse To Execute Dynamic Iceberg Table
+          attributeName: warehouseName
+          type: textBox
+          default: dev_wh_xs
+          isRequired: true
+
+        - displayName: Snowflake EXTERNAL VOLUME Name
+          attributeName: externalVolume
+          type: textBox
+          default: ""
+          isRequired: true
+
+        - displayName: Base Location Name
+          attributeName: baseLocation
+          type: textBox
+          default: ""
+          isRequired: false
+
+        - type: dropdownSelector
+          displayName: Target Lag Specification
+          attributeName: tgtLagSpecification
+          default: "DOWNSTREAM"
+          options:
+          - DOWNSTREAM
+          - TIME BASED
+          isRequired: true
+
+        - type: tabular
+          displayName: 'Lag Specification'
+          attributeName: lagSpecification
+          isRequired: false
+          enableIf: "{% if config.tgtLagSpecification == 'TIME BASED' %} true {% else %} false {% endif %}"
+
+          columns:
+      
+          -  type: textBox
+             displayName: Time Value
+             attributeName: lagValue
+             default: 60
+             isRequired: false
+
+          -  type: dropdownSelector
+             displayName: Time Period
+             attributeName: lagPeriod
+             default: "Minutes"
+             options:
+             - Seconds
+             - Minutes
+             - Hours
+             - Days
+             isRequired: false
+
+        - type: dropdownSelector
+          displayName: Refresh Mode
+          attributeName: refresh_mode
+          default: "AUTO"
+          options:
+          - AUTO
+          - INCREMENTAL
+          - FULL
+          isRequired: true
+
+        - type: dropdownSelector   
+          displayName: Initialize
+          attributeName: initialize
+          default: "ON_CREATE"
+          options:
+          - ON_CREATE
+          - ON_SCHEDULE 
+          isRequired: true
+
+        - type: toggleButton
+          displayName: Copy Grants
+          attributeName: cpygrants
+
+        - type: toggleButton
+          attributeName: clusterKey
+          displayName: Cluster Key
+          default: false
+          isRequired: false
+
+        - type: tabular
+          displayName: 'Cluster Key'
+          attributeName: clusterKeyConfig
+          columns:
+
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: columnName
+             isRequired: false
+      
+          isRequired: false
+          enableIf: "{% if config.clusterKey %} true {% else %} false {% endif %}"
+
+      - groupName: Dimension Options
+        items:
+        - type: tabular
+          displayName: 'Table Key(s)'
+          attributeName: partitionBy
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: partColName
+             isRequired: false
+            
+          isRequired: true
+
+        - displayName: Record Versioning
+          attributeName: recordVersioning
+          type: dropdownSelector
+          default: Datetime Column
+          options:
+            - Datetime Column
+            - Date Column and Time Column
+            - Integer Column
+          isRequired: false
+
+        - type: tabular
+          displayName: 'Timestamp'
+          attributeName: orderBy
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: colName
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Datetime Column') %} true {% else %} false {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.recordVersioning in ('Datetime Column') %} true {% else %} false {% endif %}"
+
+        
+        
+        - type: tabular
+          displayName: 'Sequence'
+          attributeName: orderseq
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: colNameseq
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
+        
+         
+        - type: tabular
+          displayName: 'Timestamp-track data load'
+          attributeName: recordorderBy
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Column Name
+             attributeName: ocolName
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
+        - type: tabular
+          displayName: 'Date / Timestamp Columns'
+          attributeName: orderByDateTime
+          columns:
+      
+          -  type: columnDropdownSelector
+             displayName: Date Column
+             attributeName: colNameDate
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+        
+          -  type: columnDropdownSelector
+             displayName: Timestamp Column
+             attributeName: colNameTimestamp
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+        
+          -  type: dropdownSelector
+             displayName: Sort Order
+             attributeName: sortOrdDateTimestamp
+             default: desc
+             options:
+             - desc
+             - asc
+             isRequired: true
+             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+        
+          isRequired: false
+          enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
+
+    systemColumns:
+
+    - displayName: RECORD_CREATED_DATE
+      transform: "FIRST_VALUE
+                  (
+                    {% if config.recordVersioning not in ('Integer Column') %}
+                      {{ order_by_col().split(',')[0] }}
+                    {% else %}
+                      {{ order_by_col_int().split(',')[0] }}
+                    {% endif %}
+                  ) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)"
+      dataType: TIMESTAMP
+      placement: end
+      attributeName: recordCreated
+name: Dynamic Iceberg Table Latest Record Version
+type: NodeType
