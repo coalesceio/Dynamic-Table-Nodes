@@ -174,7 +174,7 @@ operation:
           columnCounter: 6d08c319-77e9-4047-9572-6a2a1315ed88
           stepCounter: e8e63752-5294-4d64-a72b-a609e52271f4
         config: {}
-        dataType: NUMERIC
+        dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
         isRecordCurrent: true

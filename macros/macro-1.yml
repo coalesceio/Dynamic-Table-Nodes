@@ -68,7 +68,7 @@ macroString: |
   	{% elif config.recordVersioning in ('Integer Column')%}
           
         {% set datetimeNumericColSort = config.orderseq.get('items') -%}
-  	  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colNameseq.name') | first -%}        
+  	    {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colNameseq.name') | first -%}        
         {%- set colId = getColumnId(dateTimeCol) -%}
         {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
         {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
@@ -101,7 +101,7 @@ macroString: |
 
 
         {% set datetimeNumericColSort = config.recordorderBy.get('items') %}
-  	  {% set dateTimeCol = datetimeNumericColSort  | map(attribute='ocolName.name') | first -%}    
+  	    {% set dateTimeCol = datetimeNumericColSort  | map(attribute='ocolName.name') | first -%}    
         {%- set colId = getColumnId(dateTimeCol) -%}
         {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}  
         {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%} 

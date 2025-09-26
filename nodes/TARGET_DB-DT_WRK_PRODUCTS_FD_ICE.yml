@@ -57,7 +57,7 @@ operation:
           columnCounter: eb5f2f67-c25f-497e-9ea2-3df545620c58
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
-        dataType: VARCHAR(255)
+        dataType: STRING
         description: |-
           - The 'PRODUCT_NAME' is sourced directly from the 'PRODUCTS' source table.
           - It provides the name of the product.
@@ -75,7 +75,7 @@ operation:
           columnCounter: d2a6ca14-fa3c-40e9-b893-5b96563a39cd
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
-        dataType: VARCHAR(100)
+        dataType: STRING
         description: |-
           - This 'BRAND' column is derived from the 'BRAND' column of the 'PRODUCTS' source table.
           - It specifies the brand associated with a particular product.
@@ -93,7 +93,7 @@ operation:
           columnCounter: 70ec999a-e3b4-42f3-9f10-7f6cf7c5c4de
           stepCounter: 0e955627-7450-4dcf-8817-bb674d4980c1
         config: {}
-        dataType: VARCHAR(50)
+        dataType: STRING
         description: |-
           - This 'COLOUR2' column is sourced from the 'COLOUR' column in the 'PRODUCTS' source table.
           - It represents the color of the product.
