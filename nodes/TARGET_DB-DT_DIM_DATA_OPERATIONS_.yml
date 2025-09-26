@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 37b21715-c48c-484c-b2b2-97f164bd9e8a
-name: DT_DIM_DATA_OPERATIONS
+id: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
+name: DT_DIM_DATA_OPERATIONS_
 operation:
   config:
     baseLocation: ""
@@ -23,8 +23,8 @@ operation:
     orderBy:
       items:
         - colName:
-            columnCounter: 7c836938-296a-4d06-8234-50dd7c1ca06f
-            stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+            columnCounter: 27386d86-6cc0-4bb1-bbd9-f42bab59a13e
+            stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
     orderByDateTime:
       items:
         - {}
@@ -34,8 +34,8 @@ operation:
     partitionBy:
       items:
         - partColName:
-            columnCounter: efa8047b-ada2-4155-9343-8e486a672283
-            stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+            columnCounter: 72c8d153-61d9-48d8-8eee-ed9953549c88
+            stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
     recordVersioning: Datetime Column
     recordorderBy:
       items:
@@ -56,22 +56,22 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: e6ffb3c7-920b-4825-a183-4424404dfb45
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: a1b182c6-727e-4e3e-b38c-c82e353af45e
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: STRING
         defaultValue: ""
         description: ""
         isSurrogateKey: true
-        name: DT_DIM_DATA_OPERATIONS_KEY
+        name: DT_DIM_DATA_OPERATIONS1_KEY
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
             transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 8224fe4e-9124-4273-828a-8cce561fbcd0
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 57029e52-e1d5-41ab-a8fa-6737a95a9d35
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         description: ""
@@ -84,8 +84,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: efa8047b-ada2-4155-9343-8e486a672283
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 72c8d153-61d9-48d8-8eee-ed9953549c88
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -98,8 +98,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: b160fffe-652c-4ecb-9b04-7080d9738a40
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 2a5f4eaf-18af-4c43-b68d-47cadcd6508b
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -112,8 +112,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 09de91a0-2fbb-427e-9fcf-25f2cb7d3bdd
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 024c7a55-03cf-4c1e-a214-abb1766fc53b
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -126,8 +126,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 30bc07f8-5057-44f0-8b4f-4eec0ccdf2d2
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 87d4922b-28bf-4d12-a026-bba798958393
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: VARCHAR(255)
         description: ""
@@ -140,8 +140,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 789d557e-8522-410d-8d67-fcbc964b1aee
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: b32e2ce2-c7d0-4c8e-981f-c280b21f275d
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: VARCHAR(10)
         description: ""
@@ -154,8 +154,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 4aa8bf5e-3d98-41a2-b1d1-78b1a8be5fea
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 2661cb65-df08-450c-b19b-965336f64903
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: VARCHAR(10)
         description: ""
@@ -168,8 +168,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: bb4498c3-8699-45d2-9dbf-a3e891a81324
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 6f30faf8-0cdb-45a0-8822-6eb7a020392f
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -185,8 +185,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: b050e029-6827-4a9c-98ed-75c8d4750411
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 86ef5d5e-ac44-4b6f-8fa1-6c7106fc3203
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -196,14 +196,14 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col().split}{%else%} {{order_by_col_int}}{%endif%}"
+            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}"
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 7494c4c0-cc5f-4432-b98b-b6d644d5adab
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 6739c61b-f406-4c08-8923-a4f8949e920b
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -213,14 +213,14 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col().split(',')[0]}}{%else%}{{order_by_col_int().split(',')[0]}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 7ac05e90-66fa-4b05-b92c-6ad23f2413c1
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 6a6bb6f1-3099-4e8e-9a0b-7d0ac6bea8f8
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: NUMERIC
         defaultValue: ""
@@ -230,14 +230,14 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CASE WHEN (LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col().split(',')[0]}}{%else%}{{order_by_col_int().split(',')[0]}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)) IS NULL THEN 1 ELSE 0 END
+            transform: CASE WHEN (LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)) IS NULL THEN 1 ELSE 0 END
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: b74d56d5-dd04-4e0d-abde-4508e1152aa3
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 5bff9d5a-99ea-49b6-9705-d460be067893
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -247,43 +247,27 @@ operation:
         recordCreated: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col().split(',')[0]}}{%else%} {{order_by_col_int().split(',')[0]}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+            transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: e111b832-fbad-4b61-9ec7-740be052b6af
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
+          columnCounter: 27386d86-6cc0-4bb1-bbd9-f42bab59a13e
+          stepCounter: 4ad2b5db-1b69-490e-8a32-3f0dfcdd389a
         config: {}
-        dataType: date
+        dataType: ""
         defaultValue: ""
         description: ""
-        name: data_date
+        keyColumnType: None
+        name: date_time
         nullable: true
         sourceColumnReferences:
           - columnReferences:
               - columnCounter: "0"
                 stepCounter: "0"
-            transform: to_date("DATA_OPERATIONS"."TIMESTAMP")
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 7c836938-296a-4d06-8234-50dd7c1ca06f
-          stepCounter: 37b21715-c48c-484c-b2b2-97f164bd9e8a
-        config: {}
-        dataType: timestamp
-        defaultValue: ""
-        description: ""
-        name: data_time
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: "0"
-                stepCounter: "0"
-            transform: to_timestamp("DATA_OPERATIONS"."TIMESTAMP")
+            transform: CONVERT_TIMEZONE('UTC', 'EST',"DATA_OPERATIONS"."TIMESTAMP")
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -296,9 +280,9 @@ operation:
             nodeName: DATA_OPERATIONS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'DATA_OPERATIONS') }} "DATA_OPERATIONS"
-        name: DT_DIM_DATA_OPERATIONS
+        name: DT_DIM_DATA_OPERATIONS_
         noLinkRefs: []
-  name: DT_DIM_DATA_OPERATIONS
+  name: DT_DIM_DATA_OPERATIONS_
   overrideSQL: false
   schema: ""
   sqlType: "350"
