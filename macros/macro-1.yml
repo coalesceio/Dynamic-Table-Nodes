@@ -117,14 +117,10 @@ macroString: |
       {%- endfor -%}
 
       {%if config.recordVersioning not in ('Integer Column')%}
-        {%-for col in orderBy-%}
-          {%- set nsVariables.dimensionHistoryColumns = nsVariables.dimensionHistoryColumns + ' || ' + '\'-\'' + ' || date_part(epoch_milliseconds, ' + col + ')' -%}
-        {%-endfor -%}
+          {%- set nsVariables.dimensionHistoryColumns = nsVariables.dimensionHistoryColumns + ' || ' + '\'-\'' + ' || date_part(epoch_milliseconds, ' + orderBy + ')' -%}
       {%else%}
-       {%-for col in orderBy-%}  
-          {%- set nsVariables.dimensionHistoryColumns =  nsVariables.dimensionHistoryColumns ~ " || '-' || " ~ col -%}
-       {%-endfor -%}
-        {%- set nsVariables.dimensionHistoryColumns = "MD5(" ~ nsVariables.dimensionHistoryColumns ~")" -%}
+          {%- set nsVariables.dimensionHistoryColumns =  nsVariables.dimensionHistoryColumns ~ " || '-' || " ~ orderBy -%}
+          {%- set nsVariables.dimensionHistoryColumns = "MD5(" ~ nsVariables.dimensionHistoryColumns ~")" -%}
       {%endif%}
 
       {{- nsVariables.dimensionHistoryColumns -}}
