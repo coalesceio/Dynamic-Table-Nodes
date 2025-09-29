@@ -22,10 +22,12 @@ operation:
             stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
     orderByDateTime:
       items:
-        - {}
+        - colNameDate: null
+          colNameTimestamp: null
+          sortOrdDateTimestamp: desc
     orderseq:
       items:
-        - {}
+        - colNameseq: null
     partitionBy:
       items:
         - partColName:
@@ -34,7 +36,7 @@ operation:
     recordVersioning: Datetime Column
     recordorderBy:
       items:
-        - {}
+        - ocolName: null
     refresh_mode: AUTO
     tgtLagSpecification: DOWNSTREAM
     warehouseName: dev_wh_xs

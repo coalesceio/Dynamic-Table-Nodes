@@ -1,0 +1,6 @@
+excludeSelector: ""
+fileVersion: 1
+id: "68"
+includeSelector: "{ location: SOURCE_DATA name: ORDERS } OR { location: TARGET_DB name: ICDT_LRV_ORDERS }"
+name: Job_LRV
+type: Job

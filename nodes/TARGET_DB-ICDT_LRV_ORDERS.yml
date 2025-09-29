@@ -3,30 +3,34 @@ id: ac03922c-978f-4251-9e79-b1f283047cfb
 name: ICDT_LRV_ORDERS
 operation:
   config:
-    baseLocation: ""
+    baseLocation: test
     clusterKey: false
     clusterKeyConfig:
       items:
         - {}
     cpygrants: false
-    externalVolume: ""
+    externalVolume: sficebergextvol1
     initialize: ON_CREATE
     lagSpecification:
       items:
         - {}
     orderBy:
       items:
-        - {}
+        - colName:
+            columnCounter: 5b781c19-d76c-4fd2-98a2-7dbbf528fdac
+            stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
     orderByDateTime:
       items:
         - {}
     orderseq:
       items:
-        - colNameseq: null
+        - {}
     partitionBy:
       items:
-        - {}
-    recordVersioning: Integer Column
+        - partColName:
+            columnCounter: 00460181-c37f-477a-aaaa-973b8ac756d7
+            stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
+    recordVersioning: Datetime Column
     recordorderBy:
       items:
         - ocolName: null
