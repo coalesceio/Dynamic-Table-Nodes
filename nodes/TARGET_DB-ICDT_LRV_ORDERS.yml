@@ -166,7 +166,7 @@ operation:
         config: {}
         dataType: VARCHAR(79)
         description: ""
-        name: O_COMMENT
+        name: O_COMMENT_NC
         nullable: true
         sourceColumnReferences:
           - columnReferences:
