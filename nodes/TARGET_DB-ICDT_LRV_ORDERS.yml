@@ -53,7 +53,7 @@ operation:
           stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: NUMBER(38,0)
-        description: This is the columnorderKey description
+        description: ""
         name: O_ORDERKEY
         nullable: true
         sourceColumnReferences:
@@ -95,7 +95,7 @@ operation:
           stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
         dataType: NUMBER(12,2)
-        description: ""
+        description: This is the column description
         name: O_TOTALPRICE
         nullable: true
         sourceColumnReferences:
