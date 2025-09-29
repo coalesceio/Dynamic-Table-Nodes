@@ -71,7 +71,7 @@ operation:
           - columnReferences:
               - columnCounter: 7a4bf158-bb35-425a-914e-3c5a2fd3da29
                 stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
-            transform: ""
+            transform: UPPER(O_ORDERSTATUS)
       - appliedColumnTests: {}
         columnReference:
           columnCounter: e042fdf0-48f0-48f0-9bd7-78001500ee0c
