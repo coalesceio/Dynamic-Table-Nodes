@@ -100,7 +100,7 @@ operation:
           stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
         config: {}
         dataType: VARCHAR(1)
-        description: ""
+        description: This is the column description
         name: O_ORDERSTATUS
         nullable: true
         sourceColumnReferences:
