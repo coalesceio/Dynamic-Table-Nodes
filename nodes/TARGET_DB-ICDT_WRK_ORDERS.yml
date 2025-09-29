@@ -170,6 +170,26 @@ operation:
               - columnCounter: 07afc075-776c-4e0f-8df6-cdf37425d9c5
                 stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
             transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 24b9496b-bd1c-46f2-aa71-9eeb88b7c434
+          stepCounter: 4a55c516-6d24-4aab-a268-c65e7a167ded
+        config: {}
+        dataType: VARCHAR(15)
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: O_CLERK_NEW
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: UPPER(O_CLERK)
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
