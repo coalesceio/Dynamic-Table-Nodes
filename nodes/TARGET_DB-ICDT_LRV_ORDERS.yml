@@ -13,7 +13,8 @@ operation:
     initialize: ON_CREATE
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Minutes
+          lagValue: 60
     orderBy:
       items:
         - colName:
@@ -35,7 +36,7 @@ operation:
       items:
         - ocolName: null
     refresh_mode: AUTO
-    tgtLagSpecification: DOWNSTREAM
+    tgtLagSpecification: TIME BASED
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
@@ -214,7 +215,7 @@ operation:
           - locationName: SOURCE_DATA
             nodeName: ORDERS
         join:
-          joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS') }} "ORDERS"
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS') }} "ORDERS" Where "O_ORDERKEY" = 9697
         name: ICDT_LRV_ORDERS
         noLinkRefs: []
   name: ICDT_LRV_ORDERS

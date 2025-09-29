@@ -38,7 +38,7 @@ operation:
       items:
         - ocolName: null
     refresh_mode: AUTO
-    tgtLagSpecification: DOWNSTREAM
+    tgtLagSpecification: TIME BASED
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true

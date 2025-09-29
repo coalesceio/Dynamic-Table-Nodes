@@ -82,11 +82,7 @@ does not permit copying or modification for any other purpose.
         {# --------------------------------------------------------------------------- #}
                 
 	    {# Desired Namespace Variables #}
-        {% set nsVariables = namespace(nsDesiredDepStorageLocations = "",
-                                        nsDesiredSourceStorageLocations = "",
-                                        nsDesiredTargetStorageLocations = "",
-                                        nsDesiredUsedStorageLocations = "",
-                                        storageLocationTest = true,
+        {% set nsVariables = namespace( storageLocationTest = true,
                                         descolchanges = 0,
                                         acolchanges = 0,
                                         dcolchanges = 0,
@@ -296,7 +292,7 @@ does not permit copying or modification for any other purpose.
     {% if currentState == undefined or createTest %}
 
         {# --------------------------------------------------------------------------- #}
-        {# -------- Create table incase of initial deploy or config changes ---------- #}
+        {# -------- CREATE table incase of initial deploy or config changes ---------- #}
         {# --------------------------------------------------------------------------- #}
 
         {# Build Cluster Key #}
@@ -350,7 +346,7 @@ does not permit copying or modification for any other purpose.
     {% elif currentState != undefined and alterOnlyTest == true %}
 
         {# --------------------------------------------------------------------------- #}
-        {# ------------- Alter Only config changes and refresh table ----------------- #}
+        {# ------------- ALTER Only config changes and refresh table ----------------- #}
         {# --------------------------------------------------------------------------- #}
 
         {% set desiredFullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
@@ -362,9 +358,17 @@ does not permit copying or modification for any other purpose.
                 or nodeCommentTest == false %}
 
             {{ stage('Alter Dynamic Iceberg Table') }}
-             ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
-             SET WAREHOUSE = {{ dynamicTableWarehouse }}
-             TARGET_LAG = '{{ dynamicTableLagSpecification }}' {{ dynamicTableComment }}      
+            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
+            SET
+                {% if warehouseTest == false %}
+            WAREHOUSE = {{ dynamicTableWarehouse }}
+                {% endif %}
+                {% if  lagSpecificationTest == false or downstreamOptionTest == false %}
+            TARGET_LAG = '{{ dynamicTableLagSpecification }}'
+                {% endif %}
+                {% if nodeCommentTest == false %}
+            {{ dynamicTableComment }}
+                {% endif %}      
     
         {%endif%}
 
@@ -425,7 +429,7 @@ does not permit copying or modification for any other purpose.
                     MODIFY COLUMN {{desiredColumnName}} COMMENT '{{desiredDescription }}'
                 {% endif %}
 
-            {%endif%}    
+            {% endif %}    
         {% endfor %}
 
         {{ stage('Refresh Dynamic Iceberg Table') }}

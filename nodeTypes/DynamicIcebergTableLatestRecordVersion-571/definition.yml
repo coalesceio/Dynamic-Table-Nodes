@@ -118,7 +118,7 @@ metadata:
           isRequired: false
           enableIf: "{% if config.clusterKey %} true {% else %} false {% endif %}"
 
-      - groupName: Dimension Options
+      - groupName: Latest Version Record Options
         items:
         - type: tabular
           displayName: 'Table Key(s)'

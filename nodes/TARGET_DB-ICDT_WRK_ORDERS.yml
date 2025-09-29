@@ -15,10 +15,11 @@ operation:
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Minutes
+          lagValue: 60
     refresh_mode: AUTO
     selectDistinct: false
-    tgtLagSpecification: DOWNSTREAM
+    tgtLagSpecification: TIME BASED
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true

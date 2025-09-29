@@ -82,11 +82,7 @@ does not permit copying or modification for any other purpose.
         {# --------------------------------------------------------------------------- #}
                 
 	    {# Desired Namespace Variables #}
-        {% set nsVariables = namespace(nsDesiredDepStorageLocations = "",
-                                        nsDesiredSourceStorageLocations = "",
-                                        nsDesiredTargetStorageLocations = "",
-                                        nsDesiredUsedStorageLocations = "",
-                                        storageLocationTest = true,
+        {% set nsVariables = namespace( storageLocationTest = true,
                                         descolchanges = 0,
                                         acolchanges = 0,
                                         dcolchanges = 0,
@@ -363,11 +359,19 @@ does not permit copying or modification for any other purpose.
                 or nodeCommentTest == false %}
 
             {{ stage('Alter Dynamic Iceberg Table') }}
-             ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
-             SET WAREHOUSE = {{ dynamicTableWarehouse }}
-             TARGET_LAG = '{{ dynamicTableLagSpecification }}' {{ dynamicTableComment }}      
+            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
+            SET
+                {% if warehouseTest == false %}
+            WAREHOUSE = {{ dynamicTableWarehouse }}
+                {% endif %}
+                {% if  lagSpecificationTest == false or downstreamOptionTest == false %}
+            TARGET_LAG = '{{ dynamicTableLagSpecification }}'
+                {% endif %}
+                {% if nodeCommentTest == false %}
+            {{ dynamicTableComment }}
+                {% endif %} 
     
-        {%endif%}
+        {% endif %}
 
         {# Figure out cluster key changes #}
         {% set nsVariables = namespace(finalClusterKey = "", clusterValues = []) %}
