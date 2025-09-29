@@ -102,20 +102,6 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 745c9865-0fd4-4e47-a464-aa8bcf110429
-          stepCounter: 4a55c516-6d24-4aab-a268-c65e7a167ded
-        config: {}
-        dataType: VARCHAR(15)
-        description: ""
-        name: O_ORDERPRIORITY
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: 23d6e377-dcf9-43bc-a523-28c4e2d2927d
-                stepCounter: 999f2ac3-8579-4cec-8750-3ca23d9b85af
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
           columnCounter: 1eebcdf8-cfc8-4aeb-aa95-869ebb016236
           stepCounter: 4a55c516-6d24-4aab-a268-c65e7a167ded
         config: {}
