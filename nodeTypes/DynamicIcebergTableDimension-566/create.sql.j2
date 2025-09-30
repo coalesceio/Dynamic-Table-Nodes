@@ -125,7 +125,8 @@ does not permit copying or modification for any other purpose.
         {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
         {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
         {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
-        {% set cpygrantsTest = currentState.config.cpygrants == desiredState.config.cpygrants %}
+        {% set externalVolumeTest = currentState.config.externalVolume == desiredState.config.externalVolume %}
+        {% set baseLocationTest = currentState.config.baseLocation == desiredState.config.baseLocation %}
 
         {# Column description changes and other column level changes #}
         {% for alterCurCol in currentState.columns %}        
@@ -238,6 +239,8 @@ does not permit copying or modification for any other purpose.
             or initializeTest                   == false
             or granttest                        == false
             or refreshTest                      == false
+            or externalVolumeTest               == false
+            or baseLocationTest                 == false
             or nsVariables.acolchanges          > 0
             or nsVariables.dcolchanges          > 0  %}      
 
