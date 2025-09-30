@@ -15,7 +15,7 @@ metadata:
 
     config:
       - groupName: Dynamic Iceberg Table Options
-        items: 
+        items:
 
         - type: label
           attributeName: note2
@@ -151,12 +151,9 @@ metadata:
              displayName: Column Name
              attributeName: colName
              isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Datetime Column') %} true {% else %} false {% endif %}"
         
           isRequired: false
           enableIf: "{% if config.recordVersioning in ('Datetime Column') %} true {% else %} false {% endif %}"
-
-        
         
         - type: tabular
           displayName: 'Sequence'
@@ -167,25 +164,23 @@ metadata:
              displayName: Column Name
              attributeName: colNameseq
              isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
         
           isRequired: false
           enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
         
-         
         - type: tabular
           displayName: 'Timestamp-track data load'
           attributeName: recordorderBy
           columns:
-      
+
           -  type: columnDropdownSelector
              displayName: Column Name
              attributeName: ocolName
              isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
         
           isRequired: false
           enableIf: "{% if config.recordVersioning in ('Integer Column') %} true {% else %} false {% endif %}"
+
         - type: tabular
           displayName: 'Date / Timestamp Columns'
           attributeName: orderByDateTime
@@ -195,23 +190,11 @@ metadata:
              displayName: Date Column
              attributeName: colNameDate
              isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
         
           -  type: columnDropdownSelector
              displayName: Timestamp Column
              attributeName: colNameTimestamp
              isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
-        
-          -  type: dropdownSelector
-             displayName: Sort Order
-             attributeName: sortOrdDateTimestamp
-             default: desc
-             options:
-             - desc
-             - asc
-             isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
         
           isRequired: false
           enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
