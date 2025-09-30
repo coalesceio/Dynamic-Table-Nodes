@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 4a55c516-6d24-4aab-a268-c65e7a167ded
-name: ICDT_WRK_ORDERS
+name: ICDT_WRK_ORDERS_NC
 operation:
   config:
     baseLocation: test
@@ -237,7 +237,7 @@ operation:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS_COPY1') }} "ORDERS_COPY1" Where "O_ORDERKEY" = 9696
         name: NEW_SOURCE
         noLinkRefs: []
-  name: ICDT_WRK_ORDERS
+  name: ICDT_WRK_ORDERS_NC
   overrideSQL: false
   schema: ""
   sqlType: "565"

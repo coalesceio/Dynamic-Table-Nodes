@@ -1,6 +1,6 @@
 fileVersion: 1
 id: ac03922c-978f-4251-9e79-b1f283047cfb
-name: ICDT_LRV_ORDERS
+name: ICDT_LRV_ORDERS_NC
 operation:
   config:
     baseLocation: test
@@ -222,9 +222,9 @@ operation:
             nodeName: ORDERS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS') }} "ORDERS" Where "O_ORDERKEY" = 9697
-        name: ICDT_LRV_ORDERS
+        name: ICDT_LRV_ORDERS_NC
         noLinkRefs: []
-  name: ICDT_LRV_ORDERS
+  name: ICDT_LRV_ORDERS_NC
   overrideSQL: false
   schema: ""
   sqlType: "571"
