@@ -12,7 +12,7 @@ operation:
     externalVolume: sficebergextvol1
     groupByAll: false
     initialize: ON_CREATE
-    insertStrategy: UNION ALL
+    insertStrategy: UNION
     lagSpecification:
       items:
         - lagPeriod: Minutes
