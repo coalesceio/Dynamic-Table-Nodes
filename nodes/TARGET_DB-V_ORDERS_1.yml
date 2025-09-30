@@ -4,7 +4,7 @@ name: V_ORDERS_1
 operation:
   config:
     insertStrategy: UNION
-    selectDistinct: false
+    selectDistinct: true
   database: ""
   deployEnabled: true
   description: ""
