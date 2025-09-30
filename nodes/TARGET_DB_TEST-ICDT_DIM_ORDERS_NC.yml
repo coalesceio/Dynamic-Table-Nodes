@@ -18,13 +18,12 @@ operation:
     orderBy:
       items:
         - colName:
-            columnCounter: 7acdd2ab-902b-4d1d-933a-61c862873e5e
+            columnCounter: 19ab717a-5a95-4cc9-a510-946efd195a69
             stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
     orderByDateTime:
       items:
         - colNameDate: null
           colNameTimestamp: null
-          sortOrdDateTimestamp: desc
     orderseq:
       items:
         - colNameseq: null
