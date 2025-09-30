@@ -218,7 +218,7 @@ operation:
           columnCounter: ec797f40-aec0-4999-9dc2-cf2a9d888ab5
           stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
         config: {}
-        dataType: TIMESTAMP
+        dataType: TIME
         defaultValue: ""
         description: ""
         keyColumnType: None

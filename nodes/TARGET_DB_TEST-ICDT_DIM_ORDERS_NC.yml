@@ -25,7 +25,9 @@ operation:
         - colNameDate:
             columnCounter: b2a23c8f-50e6-4918-acc6-ca4e01513031
             stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-          colNameTimestamp: null
+          colNameTimestamp:
+            columnCounter: 92f465e2-02d9-4b8f-b4cb-83f3a4fadc8f
+            stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
     orderseq:
       items:
         - colNameseq: null
@@ -289,7 +291,7 @@ operation:
           columnCounter: 92f465e2-02d9-4b8f-b4cb-83f3a4fadc8f
           stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
         config: {}
-        dataType: TIMESTAMP
+        dataType: TIME
         defaultValue: ""
         description: ""
         keyColumnType: None
