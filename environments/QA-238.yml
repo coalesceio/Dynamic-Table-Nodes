@@ -6,9 +6,9 @@ mappingDefinitions:
     schema: SOURCE
   TARGET_DB:
     database: TANVI_DEV
-    schema: QA
+    schema: QA_PHASE
   TARGET_DB_TEST:
     database: TANVI_DEV
-    schema: QA_PHASE
+    schema: QA
 name: QA
 type: Environment
