@@ -38,7 +38,7 @@ operation:
         - partColName:
             columnCounter: 00460181-c37f-477a-aaaa-973b8ac756d7
             stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
-    recordVersioning: Integer Column
+    recordVersioning: Datetime Column
     recordorderBy:
       items:
         - ocolName:
