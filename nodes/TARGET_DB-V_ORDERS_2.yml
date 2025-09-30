@@ -165,7 +165,7 @@ operation:
           - locationName: TARGET_DB
             nodeName: V_ORDERS_1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'V_ORDERS_1') }} "V_ORDERS_1"
+          joinCondition: FROM {{ ref('TARGET_DB', 'V_ORDERS_1') }} "V_ORDERS_1" where "O_ORDERKEY" = 9697
         name: V_ORDERS_2
         noLinkRefs: []
   name: V_ORDERS_2
