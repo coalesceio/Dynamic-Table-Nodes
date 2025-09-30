@@ -210,6 +210,26 @@ operation:
                 stepCounter: "0"
             transform: UPPER(O_CLERK)
         systemColumnType: None
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ec797f40-aec0-4999-9dc2-cf2a9d888ab5
+          stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: O_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: CAST(O_LOAD_TIMESTAMP AS TIME)
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:

@@ -18,11 +18,13 @@ operation:
     orderBy:
       items:
         - colName:
-            columnCounter: b2a23c8f-50e6-4918-acc6-ca4e01513031
+            columnCounter: 7acdd2ab-902b-4d1d-933a-61c862873e5e
             stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
     orderByDateTime:
       items:
-        - colNameDate: null
+        - colNameDate:
+            columnCounter: b2a23c8f-50e6-4918-acc6-ca4e01513031
+            stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
           colNameTimestamp: null
     orderseq:
       items:
@@ -278,6 +280,26 @@ operation:
               - columnCounter: "0"
                 stepCounter: "0"
             transform: UPPER(O_CLERK)
+        systemColumnType: None
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 92f465e2-02d9-4b8f-b4cb-83f3a4fadc8f
+          stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: O_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: CAST(O_LOAD_TIMESTAMP AS TIME)
         systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
