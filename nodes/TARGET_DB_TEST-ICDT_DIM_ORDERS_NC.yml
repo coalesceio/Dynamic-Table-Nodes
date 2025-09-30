@@ -31,7 +31,7 @@ operation:
     partitionBy:
       items:
         - partColName:
-            columnCounter: cb4a61be-32bc-4f94-b1f6-ca217e3fbc03
+            columnCounter: 2a2c81c1-bb00-410b-8836-0989d7e1ff56
             stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
     recordVersioning: Datetime Column
     recordorderBy:
