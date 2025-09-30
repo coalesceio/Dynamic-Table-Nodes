@@ -36,7 +36,7 @@ operation:
         - partColName:
             columnCounter: cb4a61be-32bc-4f94-b1f6-ca217e3fbc03
             stepCounter: de564bd0-8d82-423f-8387-ed10c72abf8c
-    recordVersioning: Datetime Column
+    recordVersioning: Date Column and Time Column
     recordorderBy:
       items:
         - ocolName: null

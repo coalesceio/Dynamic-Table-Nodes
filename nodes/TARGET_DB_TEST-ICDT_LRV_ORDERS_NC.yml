@@ -22,7 +22,12 @@ operation:
             stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
     orderByDateTime:
       items:
-        - {}
+        - colNameDate:
+            columnCounter: fa23a02b-c984-4b7e-b038-e98317d95231
+            stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
+          colNameTimestamp:
+            columnCounter: ec797f40-aec0-4999-9dc2-cf2a9d888ab5
+            stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
     orderseq:
       items:
         - {}
@@ -31,7 +36,7 @@ operation:
         - partColName:
             columnCounter: 00460181-c37f-477a-aaaa-973b8ac756d7
             stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
-    recordVersioning: Datetime Column
+    recordVersioning: Date Column and Time Column
     recordorderBy:
       items:
         - ocolName: null
