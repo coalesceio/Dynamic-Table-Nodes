@@ -30,16 +30,20 @@ operation:
             stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
     orderseq:
       items:
-        - {}
+        - colNameseq:
+            columnCounter: a1fd0f9a-fb75-407a-be11-21c3290cb5fb
+            stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
     partitionBy:
       items:
         - partColName:
             columnCounter: 00460181-c37f-477a-aaaa-973b8ac756d7
             stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
-    recordVersioning: Date Column and Time Column
+    recordVersioning: Integer Column
     recordorderBy:
       items:
-        - ocolName: null
+        - ocolName:
+            columnCounter: 5b781c19-d76c-4fd2-98a2-7dbbf528fdac
+            stepCounter: ac03922c-978f-4251-9e79-b1f283047cfb
     refresh_mode: AUTO
     tgtLagSpecification: TIME BASED
     warehouseName: dev_wh_xs
