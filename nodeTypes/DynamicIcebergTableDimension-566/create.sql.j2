@@ -312,7 +312,7 @@ does not permit copying or modification for any other purpose.
 
         {% endif %}
 
-        {{ stage('Create Dynamic Iceberg Table Dimension', true, "sql", "create") }}
+        {{ stage('Create Dynamic Iceberg Table', true, "sql", "create") }}
         CREATE OR REPLACE DYNAMIC ICEBERG TABLE {{ fullyQualifiedTargetDynamicTableName }}
             {% if desiredState.config.cpygrants %}
                 COPY GRANTS
@@ -372,6 +372,22 @@ does not permit copying or modification for any other purpose.
     
         {%endif%}
 
+        {# Change in storage mappings, target location or node name #}
+        {% if nsVariables.storageLocationTest == false or nodeNameTest == false  %}
+            {{ stage('Rename Dynamic Iceberg Table') }}
+            {% set srcSchName = currentState.node.location.name %}
+            {% set cdb = currentState.storageLocations
+                        | selectattr('name', 'equalto', srcSchName)
+                        | map(attribute='database')
+                        | first %}
+            {% set csch = currentState.storageLocations
+                        | selectattr('name', 'equalto', srcSchName)
+                        | map(attribute='schema')
+                        | first %}
+            ALTER DYNAMIC TABLE IF EXISTS  "{{cdb}}"."{{csch}}"."{{currentState.node.name}}"
+            RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
+        {% endif %}
+
         {# Figure out cluster key changes #}
         {% set nsVariables = namespace(finalClusterKey = "", clusterValues = []) %}
         {% if clusterKeyTest == false or clusterKeyConfigTest == false %}
@@ -390,26 +406,10 @@ does not permit copying or modification for any other purpose.
 
             {% endif %}
 
-            {{ stage('Recluster Dynamic Iceberg TABLE') }}
+            {{ stage('Recluster Dynamic Iceberg Table') }}
             ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
             {{ nsVariables.finalClusterKey }}
 
-        {% endif %}
-
-        {# Change in storage mappings, target location or node name #}
-        {% if nsVariables.storageLocationTest == false or nodeNameTest == false  %}
-            {{ stage('Rename Dynamic Iceberg Table') }}
-            {% set srcSchName = currentState.node.location.name %}
-            {% set cdb = currentState.storageLocations
-                        | selectattr('name', 'equalto', srcSchName)
-                        | map(attribute='database')
-                        | first %}
-            {% set csch = currentState.storageLocations
-                        | selectattr('name', 'equalto', srcSchName)
-                        | map(attribute='schema')
-                        | first %}
-            ALTER DYNAMIC TABLE IF EXISTS  "{{cdb}}"."{{csch}}"."{{currentState.node.name}}"
-            RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
         {% endif %}
 
         {# Change in column description #}
