@@ -44,13 +44,6 @@ The Dynamic Table Work has three configuration groups:
 | **Refresh_Mode** | (Required) Specifies refresh type:<br/>- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
 | **Initialize** | (Required) Initial refresh behavior:<br/>- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
 
-#### Dynamic Table Work Iceberg Options
-
-| **Option** | **Description** |
-|------------|----------------|
-| **Snowflake EXTERNAL VOLUME name** | Specifies the identifier (name) for the external volume where the Iceberg table stores its metadata files and data in Parquet format. [External volume](https://docs.snowflake.com/sql-reference/sql/create-external-volume) needs to be created in snowflake as a prerequisite. |
-| **Base location name** | The path to a directory where Snowflake can write data and metadata files for the table. Specify a relative path from the table's EXTERNAL_VOLUME location. |
-
 #### Dynamic Table Work General Options
 
 ![dynamic table1 1_general](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/2c663f13-8e7c-43c0-a7e0-c4abc1edfa14)
@@ -243,13 +236,6 @@ The Dynamic Table Dimension has four configuration groups:
 | **Timetamp-track data load**| Required if Integer column chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
 | **Date/Timestamp Columns** | Required if Date and Time columns chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
 
-#### Dimension Iceberg Options
-
-| **Option** | **Description** |
-|------------|----------------|
-| **Snowflake EXTERNAL VOLUME name** | Specifies the identifier (name) for the external volume where the Iceberg table stores its metadata files and data in Parquet format. [External volume](https://docs.snowflake.com/sql-reference/sql/create-external-volume) needs to be created in snowflake as a prerequisite. |
-| **Base location name** | The path to a directory where Snowflake can write data and metadata files for the table. Specify a relative path from the table's EXTERNAL_VOLUME location. |
-
 #### Dimension General Options
 
 ![dynamictable1 1-dimgeneral](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/7216836/dda1c53c-a3da-4701-8449-0023db1ac44a)
@@ -424,14 +410,6 @@ The Dynamic Table Dimension has four configuration groups:
 | **Sequence** | Required if Integer column chosen for Record versioning|
 | **Timetamp-track data load**| Required if Integer column chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
 | **Date/Timestamp Columns** | Required if Date and Time columns chosen for Record versioning**Note:If multiple columns are chosen.The first timestamp column chosen is considered for versioning order** |
-
-
-#### Latest Record Version Iceberg Options
-
-| **Option** | **Description** |
-|------------|----------------|
-| **Snowflake EXTERNAL VOLUME name** | Specifies the identifier (name) for the external volume where the Iceberg table stores its metadata files and data in Parquet format. [External volume](https://docs.snowflake.com/sql-reference/sql/create-external-volume) needs to be created in snowflake as a prerequisite. |
-| **Base location name** | The path to a directory where Snowflake can write data and metadata files for the table. Specify a relative path from the table's EXTERNAL_VOLUME location. |
 
 #### Latest Record Version General Options
 
