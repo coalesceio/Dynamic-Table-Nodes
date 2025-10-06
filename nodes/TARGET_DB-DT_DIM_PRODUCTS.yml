@@ -14,6 +14,7 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
+    cpygrants: false
     downstreamOption: false
     externalVolume: ""
     initialize: ON_CREATE
@@ -28,13 +29,19 @@ operation:
             stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
     orderByDateTime:
       items:
-        - {}
+        - colNameDate:
+            columnCounter: 05157ff1-3a00-462e-ad73-15dc434604ce
+            stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          colNameTimestamp:
+            columnCounter: 9ebf92be-c392-42a9-b136-c0964a9ccef2
+            stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
+          sortOrdDateTimestamp: desc
     partitionBy:
       items:
         - partColName:
             columnCounter: f4b5c649-dc0b-4bf2-9273-9286155a08cb
             stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-    recordVersioning: Datetime Column
+    recordVersioning: Date Column and Time Column
     refresh_mode: AUTO
     warehouseName: dev_wh_xs
   database: ""

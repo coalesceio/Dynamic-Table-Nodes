@@ -1,0 +1,97 @@
+fileVersion: 1
+id: 2321deaa-b519-40a7-af91-6060d81a4a38
+name: DT_WRK_PRODUCT_INVENTORY
+operation:
+  config:
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: true
+    groupByAll: false
+    initialize: ON_CREATE
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    refresh_mode: AUTO
+    selectDistinct: false
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: a22221a8-cc8b-4544-84bc-f40f83fd32b6
+          stepCounter: 2321deaa-b519-40a7-af91-6060d81a4a38
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: PRODUCT_ID
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: af3d6a88-d706-48e4-897c-b09febfa9207
+                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: d5665e2e-8844-4c50-b223-a2d974797f55
+          stepCounter: 2321deaa-b519-40a7-af91-6060d81a4a38
+        config: {}
+        dataType: VARCHAR(100)
+        description: ""
+        name: PRODUCT_NAME
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cc97f4b4-2027-4df9-b066-62f39dccee52
+                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 70e4f404-4c10-478d-88a5-e533872c38be
+          stepCounter: 2321deaa-b519-40a7-af91-6060d81a4a38
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: LAST_UPDATED_TS
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 6155b859-f5b4-4d4b-a266-a9a5267460d0
+                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          PRODUCT_INVENTORY: a744dc34-66cc-42da-a24e-254683a0e576
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: PRODUCT_INVENTORY
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCT_INVENTORY') }} "PRODUCT_INVENTORY"
+        name: DT_WRK_PRODUCT_INVENTORY
+        noLinkRefs: []
+  name: DT_WRK_PRODUCT_INVENTORY
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node

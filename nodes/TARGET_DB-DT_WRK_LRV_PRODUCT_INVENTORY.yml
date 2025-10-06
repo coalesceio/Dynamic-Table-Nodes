@@ -1,0 +1,131 @@
+fileVersion: 1
+id: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+name: DT_WRK_LRV_PRODUCT_INVENTORY
+operation:
+  config:
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: true
+    initialize: ON_CREATE
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: 60
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 1030b293-4a27-473b-90be-d00ad040294c
+            stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+    orderByDateTime:
+      items:
+        - {}
+    orderseq:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 3917368c-10b7-4721-a378-23488d6e941c
+            stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - ocolName: null
+    refresh_mode: AUTO
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3917368c-10b7-4721-a378-23488d6e941c
+          stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: PRODUCT_ID
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: af3d6a88-d706-48e4-897c-b09febfa9207
+                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 1aee3ab2-1a29-4639-98ca-31838b4dd3fa
+          stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+        config: {}
+        dataType: VARCHAR(100)
+        description: ""
+        name: PRODUCT_NAME
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cc97f4b4-2027-4df9-b066-62f39dccee52
+                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 1030b293-4a27-473b-90be-d00ad040294c
+          stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: LAST_UPDATED_TS
+        nullable: false
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 6155b859-f5b4-4d4b-a266-a9a5267460d0
+                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: c3915a4e-e5cf-4b91-b72e-e1a796d93124
+          stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          PRODUCT_INVENTORY: a744dc34-66cc-42da-a24e-254683a0e576
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: PRODUCT_INVENTORY
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCT_INVENTORY') }} "PRODUCT_INVENTORY"
+        name: DT_WRK_LRV_PRODUCT_INVENTORY
+        noLinkRefs: []
+  name: DT_WRK_LRV_PRODUCT_INVENTORY
+  overrideSQL: false
+  schema: ""
+  sqlType: "351"
+  type: sql
+  version: 1
+type: Node

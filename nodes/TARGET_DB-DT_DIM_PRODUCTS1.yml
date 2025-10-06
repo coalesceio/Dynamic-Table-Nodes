@@ -199,6 +199,26 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: FIRST_VALUE({{ order_by_col()}}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 169766ed-b1c7-4602-9881-f89055900c35
+          stepCounter: 4b04e95e-09d9-4a8c-8178-b60005a00e15
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: TIME_TST1
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: "\"V_PRODUCTS\".\"TIME_TEST\""
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:

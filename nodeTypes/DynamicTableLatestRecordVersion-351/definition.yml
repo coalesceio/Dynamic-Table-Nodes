@@ -146,16 +146,6 @@ metadata:
              isRequired: true
              enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
         
-          -  type: dropdownSelector
-             displayName: Sort Order
-             attributeName: sortOrdDateTimestamp
-             default: desc
-             options:
-             - desc
-             - asc
-             isRequired: true
-             enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
-        
           isRequired: false
           enableIf: "{% if config.recordVersioning in ('Date Column and Time Column') %} true {% else %} false {% endif %}"
         
@@ -196,7 +186,6 @@ metadata:
           options:
           - dynamic table
           - transient dynamic table
-          - iceberg dynamic table
           isRequired: true
 
         - type: toggleButton
@@ -210,7 +199,7 @@ metadata:
           displayName: Allow Expressions in Cluster Key
           default: false
           isRequired: false
-          enableIf: "{% if config.clusterKey and (node.materializationType != 'iceberg dynamic table')  %} true {% else %} false {% endif %}"
+          enableIf: "{% if config.clusterKey  %} true {% else %} false {% endif %}"
         
         - type: tabular
           displayName: 'Cluster Key'
@@ -242,20 +231,7 @@ metadata:
              isRequired: false
       
           isRequired: false
-          enableIf: "{% if (config.clusterKey and config.clusterKeyExpressions and (node.materializationType != 'iceberg dynamic table') ) %} true {% else %} false {% endif %}"
-
-        - displayName: Snowflake EXTERNAL VOLUME Name
-          attributeName: externalVolume
-          type: textBox
-          default: ""
-          isRequired: false
-          enableIf: "{% if node.materializationType == 'iceberg dynamic table'%} true {% else %} false {% endif %}"
-        - displayName: Base location name
-          attributeName: baseLocation
-          type: textBox
-          default: ""
-          isRequired: false
-          enableIf: "{% if node.materializationType == 'iceberg dynamic table'%} true {% else %} false {% endif %}"
+          enableIf: "{% if (config.clusterKey and config.clusterKeyExpressions) %} true {% else %} false {% endif %}"
           
     systemColumns:
       - displayName: RECORD_CREATED_DATE
@@ -263,6 +239,5 @@ metadata:
         dataType: TIMESTAMP
         placement: end
         attributeName: recordCreated
-        
 name: Dynamic Table Latest Record Version
 type: NodeType
