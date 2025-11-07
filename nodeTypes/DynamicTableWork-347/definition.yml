@@ -71,19 +71,21 @@ metadata:
           attributeName: refresh_mode
           default: "AUTO"
           options:
+          - ''
           - AUTO
           - INCREMENTAL
           - FULL
-          isRequired: true
+          isRequired: false
 
         - type: dropdownSelector   
           displayName: Initialize
           attributeName: initialize
           default: "ON_CREATE"
           options:
+          - ''
           - ON_CREATE
           - ON_SCHEDULE 
-          isRequired: true
+          isRequired: false
         
       - groupName: Advanced Options
         items:

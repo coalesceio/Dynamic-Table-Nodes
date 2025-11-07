@@ -31,7 +31,6 @@ operation:
           colNameTimestamp:
             columnCounter: c44dbe64-a1df-48fc-94fc-62eb10e648f2
             stepCounter: 63737a86-15d8-4ed5-9793-96d4f7479a37
-          sortOrdDateTimestamp: desc
     orderseq:
       items:
         - {}

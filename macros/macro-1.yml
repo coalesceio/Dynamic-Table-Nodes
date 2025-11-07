@@ -1,7 +1,33 @@
 fileVersion: 1
 id: "1"
-macroString: |
-  {#-- The below block of code initialises variables in case of node typess using advance deployment strategy #}
+macroString: |+
+  {# ----------------------------------------------------------------------
+    Macro: colcict
+    Purpose: Builds a dictionary (ns.column_dict) of columns for all sources
+  ---------------------------------------------------------------------- #}
+  {% macro colcict(ns) %}
+    {% if sources is defined %}
+      {% for source_idx in range(sources | length) %}
+        {% set source = sources[source_idx] %}
+
+        {# Initialize the source entry if missing #}
+        {% if source_idx not in ns.column_dict %}
+          {% set _ = ns.column_dict.update({source_idx: {}}) %}
+        {% endif %}
+
+        {# Add all columns in this source to the dictionary #}
+        {% for column in source.columns %}
+          {% set _ = ns.column_dict[source_idx].update({column.id: column}) %}
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+  {% endmacro %}
+
+
+  {#--------------------------------------------------------
+    Initialize variables for node types that use the 
+    advanced deployment strategy
+  ----------------------------------------------------------#}
 
   {% if desiredState %}
       {% set columns = desiredState.columns %}
@@ -10,78 +36,73 @@ macroString: |
       {% set sources = desiredState.sources %}
       {% set node = desiredState.node %}
       {% set parameters = desiredState.parameters %}
+
+      {% set ns = namespace(column_dict = {}) %}
+      {# Populate column dictionary #}
+      {{ colcict(ns) }}
+
   {% endif %}
+    
 
 
+  {# ---------------------------------------------------------------------- 
+    Macro: partition_by
+    Purpose: Builds a partition key string for a node.
+             - Uses '~' delimiter for DIM nodes, ',' otherwise.
+             - Concatenates partitionBy config columns with proper transforms.
+  ---------------------------------------------------------------------- #}
+  {% macro partition_by(nodetype) %}
 
-  {%- macro partition_by( nodetype ) -%}
-
-  {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
-  {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
-  {% for source in sources %}
-      {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
-  {% endfor %}
+    {# Create namespaces #}
+    {% set nsVars = namespace(partition = "", delim = "") %}
 
 
-      {%- set nsVariables = namespace(partition="",delim="") -%}
-      {%- set sourceTableName = node.name -%}
+    {# Choose delimiter based on node type #}
+    {% if nodetype == 'DIM' %}
+      {% set nsVars.delim = '~' %}
+    {% else %}
+      {% set nsVars.delim = ',' %}
+    {% endif %}
 
-      {%-if nodetype == 'DIM' -%}
-              {%set nsVariables.delim = '~'%}
-      {%else%}
-              {%set nsVariables.delim = ','%}
-      {%- endif -%}
-
-      {%- for i in config.partitionBy.get('items') -%}
-          {%- set colName = i.partColName.name -%}
-          {%- set colId = getColumnId(colName) -%}
-          {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
-          {%- if loop.first -%}
-              {%- set nsVariables.partition = get_source_transform(columnMetadata) -%}
+    {# Build partition expression #}
+    {% if config is defined and config.partitionBy is defined %}
+      {% for item in config.partitionBy.get('items', []) %}
+        
+        {% set part_col = ns.column_dict[0][item.partColName.id] %}
+        
+        {%- if loop.first -%}
+              {%- set nsVars.partition = get_source_transform(part_col) -%}
           {%- else -%}
-              {%- set nsVariables.partition = nsVariables.partition + nsVariables.delim + get_source_transform(columnMetadata) -%}
+              {%- set nsVars.partition = nsVars.partition + nsVars.delim + get_source_transform(part_col) -%}
           {%- endif -%}
+      {% endfor %}
+    {% endif %}
 
-      {%- endfor -%}
+    {{ nsVars.partition }}
+  {% endmacro %}
 
-      {{- nsVariables.partition -}}
-  {%- endmacro -%}
 
   {% macro order_by_col(return) %}
 
       {% set nsVariables = namespace(orderBy="") -%}
     
-      {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
-      {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
-      {% for source in sources %}
-         {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
-      {% endfor %}
-
-
       {% if config.recordVersioning in ('Datetime Column') -%}
-          {% set datetimeNumericColSort = config.orderBy.get('items') -%}
-          {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colName.name') | first -%}        
-          {%- set colId = getColumnId(dateTimeCol) -%}
-          {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
-          {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
+          
+          {% set datetimeColSort = config.orderBy.get('items',[]) -%}		
+          {% set dateTimeCol = ns.column_dict[0][datetimeColSort[0].colName.id] -%}        
+          {% set nsVariables.orderBy = get_source_transform(dateTimeCol) -%}
 
   	{% elif config.recordVersioning in ('Integer Column')%}
           
-        {% set datetimeNumericColSort = config.orderseq.get('items') -%}
-  	    {% set dateTimeCol = datetimeNumericColSort  | map(attribute='colNameseq.name') | first -%}        
-        {%- set colId = getColumnId(dateTimeCol) -%}
-        {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
-        {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%}
+          {% set datetimeNumericColSort = config.orderseq.get('items',[]) -%}
+  	    {% set dateTimeCol = ns.column_dict[0][datetimeNumericColSort[0].colNameseq.id] -%}        
+          {% set nsVariables.orderBy = get_source_transform(dateTimeCol) -%}
             
       {% else -%}
-          {% set dateTimeColSort = config.orderByDateTime.get('items') -%}
-          {% set dateCol = dateTimeColSort | map(attribute='colNameDate.name') | first -%}
-          {% set timeCol = dateTimeColSort | map(attribute='colNameTimestamp.name') | first -%}
-          {%- set colId1 = getColumnId(dateCol) -%}
-          {%- set columnMetadata1 = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId1) | first -%}
-          {%- set colId = getColumnId(timeCol) -%}
-          {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}
-          {% set nsVariables.orderBy = 'to_timestamp(' + get_source_transform(columnMetadata1) +  '|| ' + '\'T\'' + ' ||' + get_source_transform(columnMetadata) +  ')' -%}
+          {% set dateTimeColSort = config.orderByDateTime.get('items',[]) -%}
+          {% set dateCol = ns.column_dict[0][dateTimeColSort[0].colNameDate.id] -%}
+          {% set timeCol = ns.column_dict[0][dateTimeColSort[0].colNameTimestamp.id] -%}
+          {% set nsVariables.orderBy = 'to_timestamp(' + get_source_transform(dateCol) +  '|| ' + '\'T\'' + ' ||' + get_source_transform(timeCol) +  ')' -%}
           
       {% endif -%}
 
@@ -92,25 +113,17 @@ macroString: |
   {% macro order_by_col_int(return) %}
 
       {% set nsVariables = namespace(orderBy="") -%}
-    
-      {#-- The below block of code initialises a list of all source columns in a node whether they are in the mapping grid or not #}
-      {% set nsSourceColumns = namespace(allSourceColumns=[]) %}
-      {% for source in sources %}
-         {% set nsSourceColumns.allSourceColumns = nsSourceColumns.allSourceColumns | list + source.columns | list %}
-      {% endfor %}
 
-
-        {% set datetimeNumericColSort = config.recordorderBy.get('items') %}
-  	    {% set dateTimeCol = datetimeNumericColSort  | map(attribute='ocolName.name') | first -%}    
-        {%- set colId = getColumnId(dateTimeCol) -%}
-        {%- set columnMetadata = nsSourceColumns.allSourceColumns | selectattr('id','equalto',colId) | first -%}  
-        {% set nsVariables.orderBy = get_source_transform(columnMetadata) -%} 
+        {% set datetimeNumericColSort = config.recordorderBy.get('items',[]) %}
+  	  {% set dateTimeCol = ns.column_dict[0][datetimeNumericColSort[0].ocolName.id] -%}    
+        {% set nsVariables.orderBy = get_source_transform(dateTimeCol) -%} 
             
       {{ nsVariables.orderBy }}
 
   {% endmacro %}
 
   {% macro dimensionHistoryPk() %}
+
       {%- set nsVariables = namespace(dimensionHistoryColumns="") -%}
 
       {%- set partitionBy = partition_by('DIM').split("~") -%}
@@ -135,38 +148,5 @@ macroString: |
 
   {% endmacro %}
 
-
-  {%- macro getColumnId( colName ) -%}
-
-      {%- set columnId = columns | selectattr('name','equalto',colName) | map(attribute='id') | first -%}
-
-      {{- columnId -}}
-
-  {%- endmacro -%}
-
-  {% macro getSourceNameFromColumnName( colName ) %}
-
-      {%- set sourceObject = sources[0].columns | selectattr('id','eq',getColumnId( colName )) | map(attribute='sourceColumns')  | first | map(attribute='node.name') | first -%}
-
-      "{{- sourceObject -}}"
-
-  {% endmacro %}
-
-  {% macro icebergcoldatatype( coldatatype ) %}
-     
-      {% set nsVariables = namespace(ibcoldatatype="") %}
-      {%if 'VARCHAR' in coldatatype %}
-           {% set nsVariables.ibcoldatatype = 'STRING' %}
-      {%elif 'TIMESTAMP' in coldatatype%}
-           {% set nsVariables.ibcoldatatype = 'TIMESTAMP' %}
-      {%elif 'TIME' in coldatatype%}
-           {% set nsVariables.ibcoldatatype = 'TIME' %}
-      {%else%}
-            {% set nsVariables.ibcoldatatype = coldatatype %}
-      {%endif%}
-         
-      {{ nsVariables.ibcoldatatype }}
-   
-  {% endmacro %}
 name: macro
 type: Macro

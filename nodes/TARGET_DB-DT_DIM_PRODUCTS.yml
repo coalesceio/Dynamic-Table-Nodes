@@ -35,7 +35,6 @@ operation:
           colNameTimestamp:
             columnCounter: 9ebf92be-c392-42a9-b136-c0964a9ccef2
             stepCounter: 028d3c05-3e62-40a5-a0c0-36000ccf2772
-          sortOrdDateTimestamp: desc
     partitionBy:
       items:
         - partColName:

@@ -36,6 +36,9 @@ operation:
         - partColName:
             columnCounter: ceca826b-6f4a-453b-8c68-b5771d057335
             stepCounter: 8ace1709-4fdb-4aff-9f44-d3605880bbd4
+        - partColName:
+            columnCounter: bfab31c8-39c8-4664-8502-193740378072
+            stepCounter: 8ace1709-4fdb-4aff-9f44-d3605880bbd4
     recordVersioning: Datetime Column
     recordorderBy:
       items:

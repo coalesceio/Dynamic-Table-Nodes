@@ -288,10 +288,18 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
         {# Refresh-type option #}
-        {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
+        {%- if desiredState.config.refresh_mode == '' %}
+            {% set dynamicTablerefresh = 'INCREMENTAL' %}
+        {%- else %}
+            {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
+        {% endif %}
 
-        {#Initialize option#}
-        {% set dynamicTableinitialize = desiredState.config.initialize %}
+        {# Initialize option #}
+        {% if desiredState.config.initialize == '' %}
+            {% set dynamicTableinitialize = 'ON_CREATE' %}
+        {% else %}
+            {% set dynamicTableinitialize = desiredState.config.initialize %}
+        {% endif %}
 
         {#Node description#}
         {%- if desiredState.node.description | length > 0 %} 
