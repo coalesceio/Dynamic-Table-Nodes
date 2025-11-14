@@ -41,8 +41,8 @@ The Dynamic Table Work has three configuration groups:
 | **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of the refresh<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
-| **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br>- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
-| **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br>- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
+| **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
+| **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br />- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
 
 #### Dynamic Table Work General Options
 
@@ -220,8 +220,8 @@ The Dynamic Table Dimension has four configuration groups:
 | **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
-| **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br>- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
-| **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br>- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
+| **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br />- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
+| **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br />- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
 
 #### Dimension Options
 
@@ -409,8 +409,8 @@ The Dynamic Table Dimension has four configuration groups:
 | **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
-| **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br>- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
-| **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br>- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
+| **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br />- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
+| **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br />- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
 
 
 #### Latest Record Version Options
