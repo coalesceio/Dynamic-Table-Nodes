@@ -3,14 +3,28 @@ id: 0ed8715c-64ae-42e0-9ae5-4e89feab5da7
 name: V_NATION_WORK
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 36ca8877-9715-4127-adc6-c7cc68939671
+            stepCounter: 0ed8715c-64ae-42e0-9ae5-4e89feab5da7
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -87,7 +101,7 @@ operation:
   name: V_NATION_WORK
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

@@ -3,14 +3,49 @@ id: b6501af4-8f70-4488-95fc-525674a77e80
 name: V_NATION_DIM
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 5b152ee9-e0a1-4241-a676-d822e59e829c
+            stepCounter: b6501af4-8f70-4488-95fc-525674a77e80
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 5b152ee9-e0a1-4241-a676-d822e59e829c
+            stepCounter: b6501af4-8f70-4488-95fc-525674a77e80
+    orderseq:
+      items:
+        - colNameseq:
+            columnCounter: e9561e72-ca70-4ec9-bced-597ec3976375
+            stepCounter: b6501af4-8f70-4488-95fc-525674a77e80
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 5b152ee9-e0a1-4241-a676-d822e59e829c
+            stepCounter: b6501af4-8f70-4488-95fc-525674a77e80
+    recordVersioning: Integer Column
+    recordorderBy:
+      items:
+        - ocolName:
+            columnCounter: e9561e72-ca70-4ec9-bced-597ec3976375
+            stepCounter: b6501af4-8f70-4488-95fc-525674a77e80
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -87,7 +122,7 @@ operation:
   name: V_NATION_DIM
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: "350"
   type: sql
   version: 1
 type: Node

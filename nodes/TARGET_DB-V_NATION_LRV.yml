@@ -3,14 +3,49 @@ id: dbea2c84-f87f-4a83-a3f0-1c54b5e3446e
 name: V_NATION_LRV
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: ec7c668b-75a1-4c90-a90c-1e1a58031b1d
+            stepCounter: dbea2c84-f87f-4a83-a3f0-1c54b5e3446e
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 2ba32a27-e297-4a34-8554-be3ac6e32a5c
+            stepCounter: dbea2c84-f87f-4a83-a3f0-1c54b5e3446e
+    orderseq:
+      items:
+        - colNameseq:
+            columnCounter: 2ba32a27-e297-4a34-8554-be3ac6e32a5c
+            stepCounter: dbea2c84-f87f-4a83-a3f0-1c54b5e3446e
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: ec7c668b-75a1-4c90-a90c-1e1a58031b1d
+            stepCounter: dbea2c84-f87f-4a83-a3f0-1c54b5e3446e
+    recordVersioning: Integer Column
+    recordorderBy:
+      items:
+        - ocolName:
+            columnCounter: 2ba32a27-e297-4a34-8554-be3ac6e32a5c
+            stepCounter: dbea2c84-f87f-4a83-a3f0-1c54b5e3446e
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -87,7 +122,7 @@ operation:
   name: V_NATION_LRV
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: "351"
   type: sql
   version: 1
 type: Node
