@@ -8,105 +8,105 @@ does not permit copying or modification for any other purpose.
 {# == Node Type Name           : Dynamic Table Work  == #}
 {# == Node Type Description    : This node creates and runs dynamic table work.Materialization type and cluster key added with this version == #}
  
- {%if desiredState and currentState != desiredState%}
-     {%if desiredState.parameters == {} or  'targetDynamicTableWarehouse' not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+{%if desiredState and currentState != desiredState%}
+    {%if desiredState.parameters == {} or  'targetDynamicTableWarehouse' not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == ''%}
 
-         {{stage('WARNING')}}
-         
-         /*Add parameter targetDynamicTableWarehouse in workspace settings and deployment environment for successful execution of node.
-         The default value for the parameter is 'DEV ENVIRONMENT'.
-         Refer to documentation for more info */
+        {{stage('WARNING')}}
+        
+        /*Add parameter targetDynamicTableWarehouse in workspace settings and deployment environment for successful execution of node.
+        The default value for the parameter is 'DEV ENVIRONMENT'.
+        Refer to documentation for more info */
 
-      {%endif%}
-  {%endif%}
+    {%endif%}
+{%endif%}
 
 {% if desiredState  %}
    {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
-       {# Materialization type#}
-      {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-          {% set keyword = 'TRANSIENT'  %}
-      {%endif%}
+        {# Materialization type#}
+        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+            {% set keyword = 'TRANSIENT'  %}
+        {%endif%}
     
    
-      {# Identify all config changes that would cause a CREATE instead of ALTER#}
-     {% if currentState != undefined %} 
-        {# General metadata #}
+        {# Identify all config changes that would cause a CREATE instead of ALTER#}
+        {% if currentState != undefined %} 
+            {# General metadata #}
+            
+            {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
         
-        {% set sourcesTest = currentState.sources | count == desiredState.sources | count %}
-       
-	     {# Desired Namespace Variables #}
+            {# Desired Namespace Variables #}
 
-        {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
-        nsDesiredTargetStorageLocations="",
-        nsDesiredUsedStorageLocations="",
-        storageLocationTest= true,
-        descolchanges = 0,
-        othercolchanges = 0, joinTest = True ) %}
+            {% set nsVariables = namespace(nsDesiredDepStorageLocations="",nsDesiredSourceStorageLocations="",
+            nsDesiredTargetStorageLocations="",
+            nsDesiredUsedStorageLocations="",
+            storageLocationTest= true,
+            descolchanges = 0,
+            othercolchanges = 0, joinTest = True ) %}
 		
-        {%if sourcesTest == true%}
-          {% for src in desiredState.sources %}
-            {% if  currentState.sources[loop.index0].join != src.join %}
-                {% set nsVariables.joinTest = false %}  {# Set joinTest to false if changes are detected #}
-            {% endif %}
-           {% endfor %}
-        {%endif%}
+            {%if sourcesTest == true%}
+                {% for src in desiredState.sources %}
+                    {% if  currentState.sources[loop.index0].join != src.join %}
+                        {% set nsVariables.joinTest = false %}  {# Set joinTest to false if changes are detected #}
+                    {% endif %}
+                {% endfor %}
+            {%endif%}
      
     
-        {# Test to see if the transform in a column has changed #}
-        {# Desired Namespace Variables Transform #}
-        {% set desiredTransformArray = desiredState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
+            {# Test to see if the transform in a column has changed #}
+            {# Desired Namespace Variables Transform #}
+            {% set desiredTransformArray = desiredState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
 
-        {# Test to see if the transform in a column has changed #}
-        {# Current Namespace Variables Transform #}
-        {% set currentTransformArray = currentState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
+            {# Test to see if the transform in a column has changed #}
+            {# Current Namespace Variables Transform #}
+            {% set currentTransformArray = currentState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
 
-        {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
+            {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
 
             {# Change Node Name or Change Storage Location #}
             {# Storage Location Tests #}
             {# Test  #}
             {%if currentState.storageLocations|length == 0%}          
-              {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | string %}
-              {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | string %}
-               {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}
-               
+                {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | string %}
+                {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | string %}
+                {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}
+            
             {%else %}   
-            {# Current target node mappings #}
-            {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | first %}
-            {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | first %}
-            {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}  
-			{% endif %}		 
-        
+                {# Current target node mappings #}
+                {% set currentDatabase = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | first %}
+                {% set currentSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | first %}
+                {% set currentDatabaseSchema = currentDatabase + '.' + currentSchema %}  
+            {% endif %}		 
+    
             {# Desired target node mappings #}
             {% set desiredDatabase = desiredState.storageLocations | selectattr('name', 'equalto', desiredState.node.location.name) | map(attribute='database') | first %}
             {% set desiredSchema = desiredState.storageLocations | selectattr('name', 'equalto', desiredState.node.location.name) | map(attribute='schema') | first %}
             {% set desiredDatabaseSchema = desiredDatabase + '.' + desiredSchema %}           
-            
-             {% if currentDatabaseSchema != desiredDatabaseSchema %}
+        
+            {% if currentDatabaseSchema != desiredDatabaseSchema %}
                 {% set nsVariables.storageLocationTest = false %}
-             {% endif %}
+            {% endif %}
 
-        {# Config #}
-        {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
-        {% set groupByAllTest = currentState.config.groupByAll == desiredState.config.groupByAll %}
-        {% set selectDistinctTest = currentState.config.selectDistinct == desiredState.config.selectDistinct %}
+            {# Config #}
+            {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
+            {% set groupByAllTest = currentState.config.groupByAll == desiredState.config.groupByAll %}
+            {% set selectDistinctTest = currentState.config.selectDistinct == desiredState.config.selectDistinct %}
 
-        {# grant config change#}
-        {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
+            {# grant config change#}
+            {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
 
-        {# Node#}
-        {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
-        {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
-        {% set nodeIsMultisource = currentState.node.isMultisource == desiredState.node.isMultisource %}
+            {# Node#}
+            {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
+            {% set nodeMaterializationType = currentState.node.materializationType == desiredState.node.materializationType %}
+            {% set nodeIsMultisource = currentState.node.isMultisource == desiredState.node.isMultisource %}
 
-        {# Refresh_mode test#}
-        {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
+            {# Refresh_mode test#}
+            {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
 
-        {#Initialize test#}
-        {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
+            {#Initialize test#}
+            {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
 
        
-        {# Column description changes and other column level changes #}
+            {# Column description changes and other column level changes #}
             {% for alterCurCol in currentState.columns %}        
                 {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
                      {% set currentColumnName = currentState.columns | selectattr('id', "equalto", alterCurCol.id) | map(attribute='name') | first %}
@@ -143,40 +143,40 @@ does not permit copying or modification for any other purpose.
             {% endfor %}
 
 
-        {#If any of the above are false then a CREATE must be run#}
-        
-        {% if 
-            nsVariables.othercolchanges > 0 or
-            sourcesTest == false or
-            nsVariables.joinTest == false or
-            columnsTransformTest == false or
-            insertStrategyTest == false or 
-            groupByAllTest == false or 
-            selectDistinctTest == false or 
-            nodeIsMultisource == false or 
-            initializeTest == false or
-            refreshTest == false or
-            granttest == false or 
-            (currentState.storageLocations | length ==0)  %}    
+            {#If any of the above are false then a CREATE must be run#}
+            
+            {% if 
+                nsVariables.othercolchanges > 0 or
+                sourcesTest == false or
+                nsVariables.joinTest == false or
+                columnsTransformTest == false or
+                insertStrategyTest == false or 
+                groupByAllTest == false or 
+                selectDistinctTest == false or 
+                nodeIsMultisource == false or 
+                initializeTest == false or
+                refreshTest == false or
+                granttest == false or 
+                (currentState.storageLocations | length ==0)  %}    
 
-            {% set createTest = true %}
-        {% else %}
-            {% set createTest = false %}
-        {% endif %}      
+                {% set createTest = true %}
+            {% else %}
+                {% set createTest = false %}
+            {% endif %}      
 
-    {% endif %}
+        {% endif %}
          
 
-    {# Identify config changes that would only result in ALTER #}
-    {% if createTest == false %}
-        {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set warehouseTest = currentState.config.warehouseName == desiredState.config.warehouseName %}
-        {% else %}
-            {% set warehouseTest = currentState.parameters.targetDynamicTableWarehouse == desiredState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-        {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
-        {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
-        {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
+        {# Identify config changes that would only result in ALTER #}
+        {% if createTest == false %}
+            {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set warehouseTest = currentState.config.warehouseName == desiredState.config.warehouseName %}
+            {% else %}
+                {% set warehouseTest = currentState.parameters.targetDynamicTableWarehouse == desiredState.parameters.targetDynamicTableWarehouse %}
+            {% endif %}
+            {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
+            {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
+            {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
 
             {# Clustering Test #}
             {% set clusterKeyTest = currentState.config.clusterKey == desiredState.config.clusterKey %}
@@ -195,252 +195,252 @@ does not permit copying or modification for any other purpose.
                 {% set clusterTest = true %}
             {% endif %}
 
-        {% if 
-            warehouseTest == false or
-            lagSpecificationTest == false or
-            downstreamOptionTest == false or
-            nodeCommentTest == false or
-            clusterTest == false or 
-            nsVariables.descolchanges > 0 or
-             nsVariables.storageLocationTest == false or 
-             nodeNameTest == false %}    
+            {% if 
+                warehouseTest == false or
+                lagSpecificationTest == false or
+                downstreamOptionTest == false or
+                nodeCommentTest == false or
+                clusterTest == false or 
+                nsVariables.descolchanges > 0 or
+                nsVariables.storageLocationTest == false or 
+                nodeNameTest == false %}    
 
-            {% set alterOnlyTest = true %}
-        {% else %}
-            {% set alterOnlyTest = false %}
-        {% endif %}
-    {% endif %}
-
-    {#CREATE or ALTER#}
-    {% if (currentState == undefined) or (createTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}      
-
-        {# Materialization type #}
-        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-          {% set keyword = 'TRANSIENT'  %}
-        {%endif%}
-         
-
-        {# Figure out cluster key #}
-        {% set nsVariables = namespace(finalClusterKey="") %}
-        {% if desiredState.config.clusterKey == true %}
-            {% if desiredState.config.clusterKeyExpressions == true %}
-                {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
-
-                {%- set nsVariables = namespace(clusterValues=[]) %}
-
-                {% for r in column %}
-                    {% if expression[loop.index0] == "" or expression[loop.index0] is undefined %}
-
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-					     
-                       {% else %}
-
-                       {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}        
-                                         
-						 
-                    {% endif %}
-                {% endfor %}
-
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
-
+                {% set alterOnlyTest = true %}
             {% else %}
-
-                {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
-
-                {%- set nsVariables = namespace(clusterValues=[]) %}
-
-                 {% for r in column %}
-                       {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-                {% endfor %}
-
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
-
+                {% set alterOnlyTest = false %}
             {% endif %}
         {% endif %}
 
+        {#CREATE or ALTER#}
+        {% if (currentState == undefined) or (createTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}      
+
+            {# Materialization type #}
+            {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+                {% set keyword = 'TRANSIENT'  %}
+            {%endif%}
          
-        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-          {% set keyword = 'TRANSIENT'  %}
-        {%endif%}
+
+            {# Figure out cluster key #}
+            {% set nsVariables = namespace(finalClusterKey="") %}
+            {% if desiredState.config.clusterKey == true %}
+                {% if desiredState.config.clusterKeyExpressions == true %}
+                    {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
+
+                    {%- set nsVariables = namespace(clusterValues=[]) %}
+
+                    {% for r in column %}
+                        {% if expression[loop.index0] == "" or expression[loop.index0] is undefined %}
+
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
+                            
+                        {% else %}
+
+                        {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}        
+                                            
+                            
+                        {% endif %}
+                    {% endfor %}
+
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+
+                {% else %}
+
+                    {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
+
+                    {%- set nsVariables = namespace(clusterValues=[]) %}
+
+                    {% for r in column %}
+                        {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
+                    {% endfor %}
+
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+
+                {% endif %}
+            {% endif %}
+
+         
+            {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+            {% set keyword = 'TRANSIENT'  %}
+            {%endif%}
 
 
-        {#Dynamic Table Name#}
-        {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
-        {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+            {#Dynamic Table Name#}
+            {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
+            {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
+            {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        {#Warehouse#}
-        {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
-        {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
-        {% else %}
-            {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
+            {#Warehouse#}
+            {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
+            {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
+            {% else %}
+                {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
+            {% endif %}
 
-        {#Downstream Option or Lag Specification#}
-        {% if desiredState.config.downstreamOption == true %}
-            {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
-        {% else %}
-            {% set dynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
-            {% set dynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
+            {#Downstream Option or Lag Specification#}
+            {% if desiredState.config.downstreamOption == true %}
+                {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
+            {% else %}
+                {% set dynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
+                {% set dynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
 
-            {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
-        {% endif %}
+                {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
+            {% endif %}
 
-        {# Refresh-type option #}
-        {%- if desiredState.config.refresh_mode == '' %}
-            {% set dynamicTablerefresh = 'INCREMENTAL' %}
-        {%- else %}
-            {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
-        {% endif %}
+            {# Refresh-type option #}
+            {%- if desiredState.config.refresh_mode == '' %}
+                {% set dynamicTablerefresh = 'INCREMENTAL' %}
+            {%- else %}
+                {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
+            {% endif %}
 
-        {# Initialize option #}
-        {% if desiredState.config.initialize == '' %}
-            {% set dynamicTableinitialize = 'ON_CREATE' %}
-        {% else %}
-            {% set dynamicTableinitialize = desiredState.config.initialize %}
-        {% endif %}
+            {# Initialize option #}
+            {% if desiredState.config.initialize == '' %}
+                {% set dynamicTableinitialize = 'ON_CREATE' %}
+            {% else %}
+                {% set dynamicTableinitialize = desiredState.config.initialize %}
+            {% endif %}
 
-        {#Node description#}
-        {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
-        {% endif %}
+            {#Node description#}
+            {%- if desiredState.node.description | length > 0 %} 
+                {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
+            {% endif %}
         
-        {% if nsVariables.storageLocationTest == false or 
+            {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
              
-             {# Current Dynamic Table Name #}
+                {# Current Dynamic Table Name #}
 
-           {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-           {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-           {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+                {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+                {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+                {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
 
                 {{ stage('Drop Dynamic Table at old location/name', true, "sql", "drop") }}
                   DROP DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
-        {%endif%}
+            {%endif%}
 
-        {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
-        CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
-            {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
-            TARGET_LAG = '{{ dynamicTableLagSpecification }}'
-            WAREHOUSE = {{dynamicTableWarehouse}}
-            REFRESH_MODE   = {{dynamicTablerefresh}}
-            INITIALIZE = {{dynamicTableinitialize}}
-            {{ dynamicTableComment  }}
-        (
-            {% for col in desiredState.columns %}
-                "{{ col.name }}"{{ col.dataType }}
-                {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
-                {%- if not loop.last -%}, {% endif %}
-            {% endfor %}
-        )
-        AS
-        {% for source in desiredState.sources %}
-            SELECT {% if desiredState.config.selectDistinct %} DISTINCT {% endif %}
-            {% for col in source.columns %}
-                {{ get_source_transform(col) }} AS "{{ col.name }}"
-                {%- if not loop.last -%}, {% endif %}
-            {% endfor %}
+            {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
+            CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
+                {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
+                TARGET_LAG = '{{ dynamicTableLagSpecification }}'
+                WAREHOUSE = {{dynamicTableWarehouse}}
+                REFRESH_MODE   = {{dynamicTablerefresh}}
+                INITIALIZE = {{dynamicTableinitialize}}
+                {{ dynamicTableComment  }}
+            (
+                {% for col in desiredState.columns %}
+                    "{{ col.name }}"{{ col.dataType }}
+                    {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
+                    {%- if not loop.last -%}, {% endif %}
+                {% endfor %}
+            )
+            AS
+            {% for source in desiredState.sources %}
+                SELECT {% if desiredState.config.selectDistinct %} DISTINCT {% endif %}
+                {% for col in source.columns %}
+                    {{ get_source_transform(col) }} AS "{{ col.name }}"
+                    {%- if not loop.last -%}, {% endif %}
+                {% endfor %}
 
-            {{ source.join }}
-            {% if desiredState.config.groupByAll %} GROUP BY ALL {% endif %}
+                {{ source.join }}
+                {% if desiredState.config.groupByAll %} GROUP BY ALL {% endif %}
 
-            {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
+                {% if not loop.last %}
+                    {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
+                        {{ desiredState.config.insertStrategy }}
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
         
 
-                {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering', true, "sql", "create") }}
-                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
+            {% if desiredState.config.clusterKey == true %}
+                {{ stage('Apply Table Clustering', true, "sql", "create") }}
+                ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
-                   {{ stage('Resume Recluster Table', true, "sql", "create") }}
-                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
+                {{ stage('Resume Recluster Table', true, "sql", "create") }}
+                ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-               {% endif %}
-
-    {% elif (currentState != undefined and desiredState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
-
-        {# Desired Dynamic Table Name#}
-        {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
-        {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
-
-        {# Current Dynamic Table Name #}
-
-        {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-        {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-        {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-
-        {# Desired Warehouse #}
-        {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set desiredDynamicTableWarehouse = desiredState.config.warehouseName %}
-        {% else %}
-            {% set desiredDynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-
-
-        {#Desired Downstream Option or Lag Specification#}
-        {% if desiredState.config.downstreamOption == true %}
-            {% set desiredDynamicTableLagSpecification = 'DOWNSTREAM' %}
-        {% else %}
-            {% set desiredDynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
-            {% set desiredDynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
-
-            {% set desiredDynamicTableLagSpecification = desiredDynamicTableLagValue ~ ' ' ~ desiredDynamicTableLagValuePeriod %}
-        {% endif %}
-
-
-        {# Current Warehouse#}
-        {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
-        {% else %}
-            {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-
-        {# Current Downstream Option or Lag Specification#}
-        {% if currentState.config.downstreamOption == true %}
-            {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
-        {% else %}
-            {% set currentDynamicTableLagValue = currentState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
-            {% set currentDynamicTableLagValuePeriod = currentState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
-
-            {% set currentDynamicTableLagSpecification = currentDynamicTableLagValue ~ ' ' ~ currentDynamicTableLagValuePeriod %}
-        {% endif %}
-
-
-        {# ALTER for Warehouse if necessary #}
-        {% set dynamicTableWarehouse = '' %}
-        {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
-            {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
-        {% endif %}
-
-        {# Alter for Target lag if necessary #}
-        {% set dynamicTableLagSpecification = '' %}
-        {% if desiredDynamicTableLagSpecification != currentDynamicTableLagSpecification %}
-            {% if desiredDynamicTableLagSpecification == 'DOWNSTREAM' %}
-                {% set dynamicTableLagSpecification = 'TARGET_LAG = DOWNSTREAM' %}
-            {% else %}
-                {% set dynamicTableLagSpecification = 'TARGET_LAG = ' + '\'' + desiredDynamicTableLagSpecification + '\'' %}
             {% endif %}
-        {% endif %}
 
-        {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
-        {% endif %}
+        {% elif (currentState != undefined and desiredState != undefined) and (alterOnlyTest == true and desiredState.node.materializationType == currentState.node.materializationType) %}
 
-             {# Change in storage mappings,target location or node name #}
-         {% if nsVariables.storageLocationTest == false or 
+            {# Desired Dynamic Table Name#}
+            {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
+            {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
+            {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
+
+            {# Current Dynamic Table Name #}
+
+            {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+            {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+            {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+
+            {# Desired Warehouse #}
+            {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set desiredDynamicTableWarehouse = desiredState.config.warehouseName %}
+            {% else %}
+                {% set desiredDynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
+            {% endif %}
+
+
+            {#Desired Downstream Option or Lag Specification#}
+            {% if desiredState.config.downstreamOption == true %}
+                {% set desiredDynamicTableLagSpecification = 'DOWNSTREAM' %}
+            {% else %}
+                {% set desiredDynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
+                {% set desiredDynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
+
+                {% set desiredDynamicTableLagSpecification = desiredDynamicTableLagValue ~ ' ' ~ desiredDynamicTableLagValuePeriod %}
+            {% endif %}
+
+
+            {# Current Warehouse#}
+            {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
+            {% else %}
+                {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
+            {% endif %}
+
+            {# Current Downstream Option or Lag Specification#}
+            {% if currentState.config.downstreamOption == true %}
+                {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
+            {% else %}
+                {% set currentDynamicTableLagValue = currentState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
+                {% set currentDynamicTableLagValuePeriod = currentState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
+
+                {% set currentDynamicTableLagSpecification = currentDynamicTableLagValue ~ ' ' ~ currentDynamicTableLagValuePeriod %}
+            {% endif %}
+
+
+            {# ALTER for Warehouse if necessary #}
+            {% set dynamicTableWarehouse = '' %}
+            {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
+                {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
+            {% endif %}
+
+            {# Alter for Target lag if necessary #}
+            {% set dynamicTableLagSpecification = '' %}
+            {% if desiredDynamicTableLagSpecification != currentDynamicTableLagSpecification %}
+                {% if desiredDynamicTableLagSpecification == 'DOWNSTREAM' %}
+                    {% set dynamicTableLagSpecification = 'TARGET_LAG = DOWNSTREAM' %}
+                {% else %}
+                    {% set dynamicTableLagSpecification = 'TARGET_LAG = ' + '\'' + desiredDynamicTableLagSpecification + '\'' %}
+                {% endif %}
+            {% endif %}
+
+            {%- if desiredState.node.description | length > 0 %} 
+                {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
+            {% endif %}
+
+            {# Change in storage mappings,target location or node name #}
+            {% if nsVariables.storageLocationTest == false or 
              nodeNameTest == false  %}
                 {{ stage('Alter Dynamic Table',true,"sql","create") }}
 				{% set srcSchName = currentState.node.location.name %}
                 {% set cdb = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='database') | first %}
                 {% set csch = currentState.storageLocations | selectattr('name', 'equalto', srcSchName) | map(attribute='schema') | first %}
                   ALTER DYNAMIC TABLE IF EXISTS  "{{cdb}}"."{{csch}}"."{{currentState.node.name}}" RENAME TO {{ desiredFullyQualifiedTargetDynamicTableName }}
-          {%endif%}
+            {%endif%}
  
 
             {# Figure out cluster key #}
@@ -481,7 +481,7 @@ does not permit copying or modification for any other purpose.
 
             {% endif %}
             
-        {# Change in column description #}
+            {# Change in column description #}
             
             {% for alterCurCol in currentState.columns %}        
                 {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
@@ -502,199 +502,199 @@ does not permit copying or modification for any other purpose.
             {% endfor %}
 
 
-        {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
-           {{ stage('Alter Dynamic Table') }}
-           ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
-            {{ dynamicTableWarehouse }}
-            {{ dynamicTableLagSpecification }}
-            {{ dynamicTableComment }}      
-           
-        {%endif%}
+            {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
+            {{ stage('Alter Dynamic Table') }}
+            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
+                {{ dynamicTableWarehouse }}
+                {{ dynamicTableLagSpecification }}
+                {{ dynamicTableComment }}      
+            
+            {%endif%}
 
-          {{ stage('Refresh Dynamic Table',true,"sql","create") }}
-           ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
+            {{ stage('Refresh Dynamic Table',true,"sql","create") }}
+            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
         
 
-    {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType and desiredState != undefined) %}
+        {%elif (currentState != undefined and desiredState.node.materializationType != currentState.node.materializationType and desiredState != undefined) %}
         
-        {# Figure out cluster key #}
-        {% set nsVariables = namespace(finalClusterKey="") %}
-        {% if desiredState.config.clusterKey == true %}
-            {% if desiredState.config.clusterKeyExpressions == true %}
-                {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
+            {# Figure out cluster key #}
+            {% set nsVariables = namespace(finalClusterKey="") %}
+            {% if desiredState.config.clusterKey == true %}
+                {% if desiredState.config.clusterKeyExpressions == true %}
+                    {% set column, expression = desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='columnNameExpressions.name') | list, desiredState.config.clusterKeyConfigExpressions.get('items') | map(attribute='sqlExpression') | list %}
 
-                {%- set nsVariables = namespace(clusterValues=[]) %}
+                    {%- set nsVariables = namespace(clusterValues=[]) %}
 
-                {% for r in column %}
-                    {% if expression[loop.index0] == "" or expression[loop.index0] is undefined%}
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
-                    {% else %}
-                        {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
-                    {% endif %}
-                {% endfor %}
+                    {% for r in column %}
+                        {% if expression[loop.index0] == "" or expression[loop.index0] is undefined%}
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"'] %}
+                        {% else %}
+                            {% set nsVariables.clusterValues = nsVariables.clusterValues + [expression[loop.index0]] %}
+                        {% endif %}
+                    {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
 
-            {% else %}
+                {% else %}
 
-                {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
+                    {% set column = desiredState.config.clusterKeyConfig.get('items') | map(attribute='columnName.name') | list %}
 
-                {%- set nsVariables = namespace(clusterValues=[]) %}
+                    {%- set nsVariables = namespace(clusterValues=[]) %}
 
-                {% for r in column %}
-                    {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"']%}
-                {% endfor %}
+                    {% for r in column %}
+                        {% set nsVariables.clusterValues = nsVariables.clusterValues + ['"'+r+'"']%}
+                    {% endfor %}
 
-                {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
+                    {% set nsVariables.finalClusterKey = 'CLUSTER BY (' + nsVariables.clusterValues | join(',') + ')' %}
 
+                {% endif %}
             {% endif %}
-        {% endif %}
 
-        {# Materialization type #}
-        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-          {% set keyword = 'TRANSIENT'  %}
-        {%endif%}
+            {# Materialization type #}
+            {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+            {% set keyword = 'TRANSIENT'  %}
+            {%endif%}
 
         
-        {# Dynamic Table Name #}
-        {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
-        {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
-        {% set parts = fullyQualifiedTargetDynamicTableName.split('.') %}
-        {% set new_table_name =  '"' ~ parts[-1].strip('"')~ '_NEW"' %}
-        {% set parts = parts[:-1] + [new_table_name] %} 
-        {% set fullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
+            {# Dynamic Table Name #}
+            {% set targetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
+            {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
+            {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
+            {% set parts = fullyQualifiedTargetDynamicTableName.split('.') %}
+            {% set new_table_name =  '"' ~ parts[-1].strip('"')~ '_NEW"' %}
+            {% set parts = parts[:-1] + [new_table_name] %} 
+            {% set fullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
 
-        {# Current Dynamic Table Name #}
-        {% set ctargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-        {% set ctargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-        {% set cfullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-        {% set parts = cfullyQualifiedTargetDynamicTableName.split('.') %}
-        {% set new_table_name =  '"' ~ parts[-1].strip('"')~ '_NEW"' %}
-        {% set parts = parts[:-1] + [new_table_name] %} 
-        {% set cfullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
+            {# Current Dynamic Table Name #}
+            {% set ctargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
+            {% set ctargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
+            {% set cfullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+            {% set parts = cfullyQualifiedTargetDynamicTableName.split('.') %}
+            {% set new_table_name =  '"' ~ parts[-1].strip('"')~ '_NEW"' %}
+            {% set parts = parts[:-1] + [new_table_name] %} 
+            {% set cfullyQualifiedTargetDynamicTableNamenew = '.'.join(parts) %}
 
-        {#Warehouse#}
-        {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments #}
-        {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
-        {% else %}
-            {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-
-        {# Downstream Option or Lag Specification #}
-        {% if desiredState.config.downstreamOption == true %}
-            {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
-        {% else %}
-            {% set dynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
-            {% set dynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
-
-            {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
-        {% endif %}
-
-        {# Refresh-type option #}
-        {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
-
-        {# Initialize option #}
-        {% set dynamicTableinitialize = desiredState.config.initialize %}
-
-        {# Node description#}
-        {%- if desiredState.node.description | length > 0 %} 
-            {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description | escape + "'" %}
-        {% endif %}
-      
-        {%if currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == false %}
-          
-        {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-          {% set keyword = 'TRANSIENT'  %}
-        {%endif%}
-
-
-        {# Desired Dynamic Table Name #}
-        {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
-        {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
-        {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
-
-        {#Desired Warehouse#}
-        {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set desiredDynamicTableWarehouse = desiredState.config.warehouseName %}
-        {% else %}
-            {% set desiredDynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-
-
-        {# Desired Downstream Option or Lag Specification #}
-        {% if desiredState.config.downstreamOption == true %}
-            {% set desiredDynamicTableLagSpecification = 'DOWNSTREAM' %}
-        {% else %}
-            {% set desiredDynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
-            {% set desiredDynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
-
-            {% set desiredDynamicTableLagSpecification = desiredDynamicTableLagValue ~ ' ' ~ desiredDynamicTableLagValuePeriod %}
-        {% endif %}
-
-        {#Current Warehouse#}
-        {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
-        {% else %}
-            {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-
-        {# Current Downstream Option or Lag Specification #}
-        {% if currentState.config.downstreamOption == true %}
-            {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
-        {% else %}
-            {% set currentDynamicTableLagValue = currentState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
-            {% set currentDynamicTableLagValuePeriod = currentState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
-
-            {% set currentDynamicTableLagSpecification = currentDynamicTableLagValue ~ ' ' ~ currentDynamicTableLagValuePeriod %}
-        {% endif %}
-
-
-        {# ALTER for Warehouse if necessary #}
-        {% set dynamicTableWarehouse = '' %}
-        {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
-            {%set  warehouseTest = false %}
-            {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
-        {% endif %}
-
-        {# Alter for Target lag if necessary#}
-        {% set dynamicTableLagSpecification = '' %}
-        {% if desiredDynamicTableLagSpecification != currentDynamicTableLagSpecification %}
-            {%set lagSpecificationTest = false%}
-            {% if desiredDynamicTableLagSpecification == 'DOWNSTREAM' %}
-                {% set dynamicTableLagSpecification = 'TARGET_LAG = DOWNSTREAM' %}
+            {#Warehouse#}
+            {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments #}
+            {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
             {% else %}
-                {% set dynamicTableLagSpecification = 'TARGET_LAG = ' + '\'' + desiredDynamicTableLagSpecification + '\'' %}
+                {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
             {% endif %}
-        {% endif %}
+
+            {# Downstream Option or Lag Specification #}
+            {% if desiredState.config.downstreamOption == true %}
+                {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
+            {% else %}
+                {% set dynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
+                {% set dynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
+
+                {% set dynamicTableLagSpecification = dynamicTableLagValue ~ ' ' ~ dynamicTableLagValuePeriod %}
+            {% endif %}
+
+            {# Refresh-type option #}
+            {% set dynamicTablerefresh = desiredState.config.refresh_mode %}
+
+            {# Initialize option #}
+            {% set dynamicTableinitialize = desiredState.config.initialize %}
+
+            {# Node description#}
+            {%- if desiredState.node.description | length > 0 %} 
+                {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description | escape + "'" %}
+            {% endif %}
+        
+            {%if currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' and createTest == false %}
+            
+            {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+            {% set keyword = 'TRANSIENT'  %}
+            {%endif%}
+
+
+            {# Desired Dynamic Table Name #}
+            {% set desiredTargetDynamicTableDatabase = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[0] %} 
+            {% set desiredTargetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
+            {% set desiredFullyQualifiedTargetDynamicTableName = ref(desiredState.node.location.name, desiredState.node.name) %}
+
+            {#Desired Warehouse#}
+            {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set desiredDynamicTableWarehouse = desiredState.config.warehouseName %}
+            {% else %}
+                {% set desiredDynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
+            {% endif %}
+
+
+            {# Desired Downstream Option or Lag Specification #}
+            {% if desiredState.config.downstreamOption == true %}
+                {% set desiredDynamicTableLagSpecification = 'DOWNSTREAM' %}
+            {% else %}
+                {% set desiredDynamicTableLagValue = desiredState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
+                {% set desiredDynamicTableLagValuePeriod = desiredState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
+
+                {% set desiredDynamicTableLagSpecification = desiredDynamicTableLagValue ~ ' ' ~ desiredDynamicTableLagValuePeriod %}
+            {% endif %}
+
+            {#Current Warehouse#}
+            {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
+            {% else %}
+                {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
+            {% endif %}
+
+            {# Current Downstream Option or Lag Specification #}
+            {% if currentState.config.downstreamOption == true %}
+                {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
+            {% else %}
+                {% set currentDynamicTableLagValue = currentState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}
+                {% set currentDynamicTableLagValuePeriod = currentState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
+
+                {% set currentDynamicTableLagSpecification = currentDynamicTableLagValue ~ ' ' ~ currentDynamicTableLagValuePeriod %}
+            {% endif %}
+
+
+            {# ALTER for Warehouse if necessary #}
+            {% set dynamicTableWarehouse = '' %}
+            {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
+                {%set  warehouseTest = false %}
+                {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
+            {% endif %}
+
+            {# Alter for Target lag if necessary#}
+            {% set dynamicTableLagSpecification = '' %}
+            {% if desiredDynamicTableLagSpecification != currentDynamicTableLagSpecification %}
+                {%set lagSpecificationTest = false%}
+                {% if desiredDynamicTableLagSpecification == 'DOWNSTREAM' %}
+                    {% set dynamicTableLagSpecification = 'TARGET_LAG = DOWNSTREAM' %}
+                {% else %}
+                    {% set dynamicTableLagSpecification = 'TARGET_LAG = ' + '\'' + desiredDynamicTableLagSpecification + '\'' %}
+                {% endif %}
+            {% endif %}
 
             #Materialization type change from dynamic table to transient dynamic table
 
-        {%if (currentState.node.name != desiredState.node.name) or (desiredState.node.location.name !=  currentState.node.location.name) or nsVariables.storageLocationTest == false%}
+            {%if (currentState.node.name != desiredState.node.name) or (desiredState.node.location.name !=  currentState.node.location.name) or nsVariables.storageLocationTest == false%}
 
-             {{ stage('Clone Work node') }}
-             CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} clone {{cfullyQualifiedTargetDynamicTableName }}
+                {{ stage('Clone Work node') }}
+                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} clone {{cfullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Work node') }}
-             ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{cfullyQualifiedTargetDynamicTableName}}
+                {{ stage('Swap Work node') }}
+                ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{cfullyQualifiedTargetDynamicTableName}}
 
-             {{ stage('Drop '+ '{{currentState.node.materializationType}}') }}
-              DROP DYNAMIC TABLE IF EXISTS {{cfullyQualifiedTargetDynamicTableName}}
+                {{ stage('Drop '+ '{{currentState.node.materializationType}}') }}
+                DROP DYNAMIC TABLE IF EXISTS {{cfullyQualifiedTargetDynamicTableName}}
 
-           {%else%}
-             {{ stage('Clone Work node') }}
-             CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableNamenew }} clone {{fullyQualifiedTargetDynamicTableName }}
+            {%else%}
+                {{ stage('Clone Work node') }}
+                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableNamenew }} clone {{fullyQualifiedTargetDynamicTableName }}
 
-             {{ stage('Swap Work node') }}
-             ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{fullyQualifiedTargetDynamicTableNamenew }}
+                {{ stage('Swap Work node') }}
+                ALTER DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }} SWAP WITH {{fullyQualifiedTargetDynamicTableNamenew }}
 
-             {{ stage('Drop '+ '{{currentState.node.materializationType}}') }}
-              DROP DYNAMIC TABLE IF EXISTS {{fullyQualifiedTargetDynamicTableNamenew}}
+                {{ stage('Drop '+ '{{currentState.node.materializationType}}') }}
+                DROP DYNAMIC TABLE IF EXISTS {{fullyQualifiedTargetDynamicTableNamenew}}
 
-           {%endif%}
+            {%endif%}
            
-             {# Change in column description #}
+            {# Change in column description #}
             
             {% for alterCurCol in currentState.columns %}        
                 {% if alterCurCol.id in desiredState.columns | map(attribute="id") %}
@@ -715,86 +715,83 @@ does not permit copying or modification for any other purpose.
             {% endfor %}
 
            
-          {% if clusterTest == false %}
+            {% if clusterTest == false %}
 		 
-                  {{ stage('Recluster TABLE') }}
+                {{ stage('Recluster TABLE') }}
                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }}
                 {{ nsVariables.finalClusterKey }}
 
-         {%endif%}
+            {%endif%}
 		 
-             {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
+            {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
                 
                 {{ stage('Alter Dynamic Table') }}
-                 ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} SET
-                 {{ dynamicTableWarehouse }}
-                 {{ dynamicTableLagSpecification }}
-                 {{ dynamicTableComment}}
+                ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} SET
+                {{ dynamicTableWarehouse }}
+                {{ dynamicTableLagSpecification }}
+                {{ dynamicTableComment}}
         
-              
-             {%endif%}
+            
+            {%endif%}
         
-              {{ stage('Refresh Dynamic Table',true,"sql","create") }}
-               ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
+            {{ stage('Refresh Dynamic Table',true,"sql","create") }}
+            ALTER DYNAMIC TABLE {{fullyQualifiedTargetDynamicTableName }} REFRESH
 
         {%elif (currentState.node.materializationType == 'transient dynamic table' and desiredState.node.materializationType == 'dynamic table')
             or (currentState.node.materializationType == 'dynamic table' and desiredState.node.materializationType == 'transient dynamic table' )
             or (currentState.node.materializationType != 'transient dynamic table' and currentState.node.materializationType != 'dynamic table') %}
             
-            {# Materialization type #}
-            {%if  desiredState.node.materializationType == 'transient dynamic table' %}
-                {% set keyword = 'TRANSIENT'  %}
-            {%endif%}
+                {# Materialization type #}
+                {%if  desiredState.node.materializationType == 'transient dynamic table' %}
+                    {% set keyword = 'TRANSIENT'  %}
+                {%endif%}
 
                 {{ stage('Drop ' + currentState.node.materializationType + ' ' + ref_no_link(currentState.node. location.name, currentState.node.name), true, "sql", "drop") }}
                 {% set materialization = dropMaterialization(currentState.node.materializationType) %}
                 DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
                 {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
-               CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
-               {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
+                CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
+                {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
                 TARGET_LAG = '{{ dynamicTableLagSpecification }}'
                 WAREHOUSE = {{dynamicTableWarehouse}}
                 REFRESH_MODE   = {{dynamicTablerefresh}}
                 INITIALIZE = {{dynamicTableinitialize}}
-            {{ dynamicTableComment }}
-           (
-            {% for col in desiredState.columns %}
-                "{{ col.name }}"{{ col.dataType }}
-                {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
-                {%- if not loop.last -%}, {% endif %}
-            {% endfor %}
-           )
-          AS
-            {% for source in desiredState.sources %}
-              SELECT {% if desiredState.config.selectDistinct %} DISTINCT {% endif %}
-               {% for col in source.columns %}
-                {{ get_source_transform(col) }} AS "{{ col.name }}"
-                {%- if not loop.last -%}, {% endif %}
-               {% endfor %}
+                {{ dynamicTableComment }}
+                (
+                    {% for col in desiredState.columns %}
+                        "{{ col.name }}"{{ col.dataType }}
+                        {%- if col.description | length > 0 %} COMMENT '{{ col.description | escape }}'{% endif %}
+                        {%- if not loop.last -%}, {% endif %}
+                    {% endfor %}
+                )
+                AS
+                {% for source in desiredState.sources %}
+                    SELECT {% if desiredState.config.selectDistinct %} DISTINCT {% endif %}
+                    {% for col in source.columns %}
+                        {{ get_source_transform(col) }} AS "{{ col.name }}"
+                        {%- if not loop.last -%}, {% endif %}
+                    {% endfor %}
 
-              {{ source.join }}
-               {% if desiredState.config.groupByAll %} GROUP BY ALL {% endif %}
-              {% if not loop.last %}
-                {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
-                    {{ desiredState.config.insertStrategy }}
-                {% endif %}
-              {% endif %}
-            {% endfor %}
+                    {{ source.join }}
+                    {% if desiredState.config.groupByAll %} GROUP BY ALL {% endif %}
+                    {% if not loop.last %}
+                        {% if desiredState.config.insertStrategy in ['UNION', 'UNION ALL'] %}
+                            {{ desiredState.config.insertStrategy }}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
 
-            {% if desiredState.config.clusterKey == true %}
-                  {{ stage('Apply Table Clustering', true, "sql", "create") }}
-                 ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
+                {% if desiredState.config.clusterKey == true %}
+                    {{ stage('Apply Table Clustering', true, "sql", "create") }}
+                    ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} {{ nsVariables.finalClusterKey }}
 
-                   {{ stage('Resume Recluster Table',true, "sql", "create") }}
-                  ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
+                    {{ stage('Resume Recluster Table',true, "sql", "create") }}
+                    ALTER TABLE {{ ref_no_link(desiredState.node.location.name, desiredState.node.name) }} RESUME RECLUSTER
 
-            {%endif%}	
-            
-        {%endif%}   			
-    
-    {% endif %}
-
+                {%endif%}	
+            {%endif%}   			
+        {% endif %}
    {% endif %}      
 {% elif currentState != undefined and desiredState == undefined %}
 
