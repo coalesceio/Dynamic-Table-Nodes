@@ -172,7 +172,7 @@ macroString: |-
           dynamic table IF EXISTS
       {% elif materialization == 'external table' %}
           extrenal table IF EXISTS
-      {% elif materialization == 'iceberg table' %}
+      {% elif materialization in ['iceberg table', 'dynamic iceberg table'] %}
           icebrg table IF EXISTS
       {% elif materialization == 'hybrid table' %}
           hybrid table IF EXISTS
