@@ -1,6 +1,6 @@
 fileVersion: 1
 id: "1"
-macroString: |+
+macroString: |-
   {# ----------------------------------------------------------------------
     Macro: colcict
     Purpose: Builds a dictionary (ns.column_dict) of columns for all sources
@@ -148,5 +148,35 @@ macroString: |+
 
   {% endmacro %}
 
+
+  {###########################################################################################
+  Purpose:
+  Determines the correct Snowflake DROP object syntax based on the materialization type.
+
+  Input:
+  - materialization (string): The Snowflake object type to be dropped
+    (e.g., table, view, materialized view, dynamic table, external table).
+
+  Returns:
+  - string: The appropriate DROP object keyword with IF EXISTS
+    (e.g., 'table IF EXISTS', 'view IF EXISTS', 'materialized view IF EXISTS').
+  #############################################################################################}
+  {% macro dropMaterialization(materialization) %}
+      {% if materialization in ['table', 'transient table','temporary table'] %}
+          table IF EXISTS
+      {% elif materialization in ['view', 'secure view'] %}
+          view IF EXISTS
+      {% elif materialization == 'materialized view' %}
+          materialized view IF EXISTS
+      {% elif materialization in ['dynamic table','transient dynamic table'] %}
+          dynamic table IF EXISTS
+      {% elif materialization == 'external table' %}
+          extrenal table IF EXISTS
+      {% elif materialization == 'iceberg table' %}
+          icebrg table IF EXISTS
+      {% elif materialization == 'hybrid table' %}
+          hybrid table IF EXISTS
+      {% endif %}
+  {% endmacro %}
 name: macro
 type: Macro
