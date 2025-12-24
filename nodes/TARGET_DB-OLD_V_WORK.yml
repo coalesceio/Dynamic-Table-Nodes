@@ -3,14 +3,28 @@ id: 3b4f0472-2d29-4829-9153-d352930bfcfa
 name: OLD_V_WORK
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 1db3458c-765f-40cb-a833-c0d9dfb2cb07
+            stepCounter: 3b4f0472-2d29-4829-9153-d352930bfcfa
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -171,7 +185,7 @@ operation:
   name: OLD_V_WORK
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: DT:::347
   type: sql
   version: 1
 type: Node

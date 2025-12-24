@@ -3,14 +3,24 @@ id: 826c9e03-11c7-4611-b815-a6a2f44fb8dd
 name: NEW_V_WORK
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 9062c573-1a57-4709-976e-ab6a3440795d
+            stepCounter: 826c9e03-11c7-4611-b815-a6a2f44fb8dd
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -171,7 +181,7 @@ operation:
   name: NEW_V_WORK
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

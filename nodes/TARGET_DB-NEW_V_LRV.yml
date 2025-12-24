@@ -3,14 +3,35 @@ id: 7568749c-8e05-4bd4-a091-1fb7f9610183
 name: NEW_V_LRV
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 9062c573-1a57-4709-976e-ab6a3440795d
+            stepCounter: 7568749c-8e05-4bd4-a091-1fb7f9610183
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 8987b5cc-726a-4fd7-89b9-c232dcc25328
+            stepCounter: 7568749c-8e05-4bd4-a091-1fb7f9610183
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 9062c573-1a57-4709-976e-ab6a3440795d
+            stepCounter: 7568749c-8e05-4bd4-a091-1fb7f9610183
+    recordVersioning: Datetime Column
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -171,7 +192,7 @@ operation:
   name: NEW_V_LRV
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: "351"
   type: sql
   version: 1
 type: Node

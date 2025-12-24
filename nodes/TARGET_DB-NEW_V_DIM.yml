@@ -3,14 +3,35 @@ id: a3cce90c-3541-4a3e-98f0-fe040b4f2a4c
 name: NEW_V_DIM
 operation:
   config:
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 9062c573-1a57-4709-976e-ab6a3440795d
+            stepCounter: a3cce90c-3541-4a3e-98f0-fe040b4f2a4c
+    downstreamOption: true
+    initialize: ON_CREATE
     insertStrategy: UNION
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 8987b5cc-726a-4fd7-89b9-c232dcc25328
+            stepCounter: a3cce90c-3541-4a3e-98f0-fe040b4f2a4c
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 9062c573-1a57-4709-976e-ab6a3440795d
+            stepCounter: a3cce90c-3541-4a3e-98f0-fe040b4f2a4c
+    recordVersioning: Datetime Column
+    refresh_mode: AUTO
     selectDistinct: false
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: view
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -171,7 +192,7 @@ operation:
   name: NEW_V_DIM
   overrideSQL: false
   schema: ""
-  sqlType: View
+  sqlType: "350"
   type: sql
   version: 1
 type: Node
