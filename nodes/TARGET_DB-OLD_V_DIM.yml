@@ -6,7 +6,9 @@ operation:
     clusterKey: true
     clusterKeyConfig:
       items:
-        - columnName: null
+        - columnName:
+            columnCounter: f9db3f8b-42a7-4c99-b68c-4f173f8a7046
+            stepCounter: 29e77de4-81ab-4541-be6a-48566c2fabdc
     downstreamOption: true
     initialize: ON_CREATE
     insertStrategy: UNION
