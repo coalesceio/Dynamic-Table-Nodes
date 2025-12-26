@@ -1,6 +1,6 @@
 fileVersion: 1
-id: c9368c62-2862-47e3-a55c-daf9f96ed553
-name: DT_DIM_PRODUCT_INVENTORY
+id: af0c865e-b8cb-4329-9081-02a0f7b4f71f
+name: DT_DIM_NATION1
 operation:
   config:
     clusterKey: false
@@ -12,17 +12,17 @@ operation:
         - {}
     clusterKeyExpressions: false
     cpygrants: false
-    downstreamOption: true
+    downstreamOption: false
     initialize: ON_CREATE
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: 60
+          lagValue: "60"
     orderBy:
       items:
         - colName:
-            columnCounter: 3049b9b4-73ea-41a3-8f65-0197edd62cfa
-            stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+            columnCounter: a6b82864-1f91-484f-b6ea-9ffebfd960ab
+            stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
     orderByDateTime:
       items:
         - {}
@@ -32,17 +32,14 @@ operation:
     partitionBy:
       items:
         - partColName:
-            columnCounter: 3a71bfab-8d91-47b2-a1ca-6be5c5716c57
-            stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
-        - partColName:
-            columnCounter: cd3c080d-ef22-4bcc-9d5e-9b207f2a7754
-            stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+            columnCounter: 10023e8f-4fd6-4b23-9586-f08225ec9c62
+            stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
     recordVersioning: Datetime Column
     recordorderBy:
       items:
         - {}
     refresh_mode: AUTO
-    warehouseName: dev_wh_xs
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
@@ -57,67 +54,109 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: ebfc8661-e00b-4ad5-9389-032eca87c237
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: 9335beab-dc88-486b-ba89-38d61d1c68f4
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: STRING
         defaultValue: ""
         description: ""
         isSurrogateKey: true
-        name: DT_DIM_PRODUCT_INVENTORY_KEY
+        name: DT_DIM_NATION1_KEY
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
             transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: cd3c080d-ef22-4bcc-9d5e-9b207f2a7754
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: 10023e8f-4fd6-4b23-9586-f08225ec9c62
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: NUMBER(38,0)
         description: ""
-        name: PRODUCT_ID
-        nullable: false
+        name: N_NATIONKEY
+        nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: af3d6a88-d706-48e4-897c-b09febfa9207
-                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
-            transform: PRODUCT_ID * 3
-      - appliedColumnTests: {}
-        columnReference:
-          columnCounter: 5ac8ecb5-4574-41f0-a233-bad63040f81a
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
-        config: {}
-        dataType: VARCHAR(100)
-        description: ""
-        name: PRODUCT_NAME
-        nullable: false
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: cc97f4b4-2027-4df9-b066-62f39dccee52
-                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
+              - columnCounter: 6f6079db-e0e3-43f2-9e9c-ff35b3095904
+                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 3049b9b4-73ea-41a3-8f65-0197edd62cfa
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: 13720f8b-cf9c-4a49-9aab-a9535a7f31ec
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: N_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ebd7dfde-25db-4e7f-8943-2e99fae764d4
+                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: cf16be17-5865-4d87-b1d5-809ffe6a028f
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: N_REGIONKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 2b6747c4-cfa6-4c6d-8041-6068a8f4fc03
+                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 6ad6bfad-59ff-4680-b1b6-7b5a1c7ea0f2
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
+        config: {}
+        dataType: VARCHAR(152)
+        description: ""
+        name: N_COMMENT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 6af385f1-946a-4c88-a99b-d33cd9887e8d
+                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 54b1fb4b-65db-46fa-97a5-33ff21e9048e
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        description: ""
+        name: N_LOAD_TIMESTAMP
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 10f17aad-7b73-46b1-9713-cf959861c2ca
+                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 11b3ea43-5b02-4684-81b3-0e047bc7a575
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         description: ""
-        name: LAST_UPDATED_TS
-        nullable: false
+        name: UPDATE_TIME
+        nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 6155b859-f5b4-4d4b-a266-a9a5267460d0
-                stepCounter: a744dc34-66cc-42da-a24e-254683a0e576
-            transform: LAST_UPDATED_TS + INTERVAL '2 Day'
+              - columnCounter: 9bb69d7d-b0af-4345-af7c-be614949d09a
+                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+            transform: ""
       - acceptedValues:
           strictMatch: true
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 46c1a832-0a3e-4ec4-8e26-a45a362c0389
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: a6b82864-1f91-484f-b6ea-9ffebfd960ab
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -133,8 +172,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: a011e232-ef7f-4337-b97e-2d00f6cb7056
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: 7c11b2b5-d06d-4f4d-b0b8-4728c00f3daa
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -150,8 +189,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 63dfb415-cdfa-41a7-b7bb-239f93055266
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: e7afc274-2bec-4511-b65e-9f1ae388b66f
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: NUMERIC
         defaultValue: ""
@@ -167,8 +206,8 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: ac3fafd1-443b-421a-a60d-3071c16b5292
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
+          columnCounter: d6b76b71-fd8b-4484-ad21-d0b52f2b60d1
+          stepCounter: af0c865e-b8cb-4329-9081-02a0f7b4f71f
         config: {}
         dataType: TIMESTAMP
         defaultValue: ""
@@ -179,40 +218,21 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 3a71bfab-8d91-47b2-a1ca-6be5c5716c57
-          stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
-        config: {}
-        dataType: STRING
-        defaultValue: ""
-        description: ""
-        hashDetails:
-          hashAlgorithm: SHA1
-        hashedColumns:
-          - columnCounter: cd3c080d-ef22-4bcc-9d5e-9b207f2a7754
-            stepCounter: c9368c62-2862-47e3-a55c-daf9f96ed553
-        name: GH_PRODUCT_ID
-        nullable: true
-        sourceColumnReferences: []
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          PRODUCT_INVENTORY: a744dc34-66cc-42da-a24e-254683a0e576
+          NATION: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: SOURCE_DATA
-            nodeName: PRODUCT_INVENTORY
+            nodeName: NATION
         join:
-          joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCT_INVENTORY') }} "PRODUCT_INVENTORY"
-        name: DT_DIM_PRODUCT_INVENTORY
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'NATION') }} "NATION"
+        name: DT_DIM_NATION1
         noLinkRefs: []
-  name: DT_DIM_PRODUCT_INVENTORY
+  name: DT_DIM_NATION1
   overrideSQL: false
   schema: ""
   sqlType: "350"

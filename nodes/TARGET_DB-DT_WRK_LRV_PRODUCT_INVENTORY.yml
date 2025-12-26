@@ -3,20 +3,23 @@ id: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
 name: DT_WRK_LRV_PRODUCT_INVENTORY
 operation:
   config:
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 1aee3ab2-1a29-4639-98ca-31838b4dd3fa
+            stepCounter: dd13b7b3-2b90-4cac-90f0-0cdb229ef3fd
     clusterKeyConfigExpressions:
       items:
-        - {}
+        - columnNameExpressions: null
+          sqlExpression: ex. trunc(<column_name>, -5)
     clusterKeyExpressions: false
     cpygrants: false
-    downstreamOption: true
-    initialize: ON_CREATE
+    downstreamOption: false
+    initialize: ""
     lagSpecification:
       items:
-        - lagPeriod: Minutes
+        - lagPeriod: Days
           lagValue: 60
     orderBy:
       items:
@@ -38,7 +41,7 @@ operation:
     recordorderBy:
       items:
         - ocolName: null
-    refresh_mode: AUTO
+    refresh_mode: ""
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
