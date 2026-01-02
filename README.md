@@ -34,15 +34,37 @@ The Dynamic Table Work has three configuration groups:
 
 #### Dynamic Table Work Options
 
-![dynamic table options](https://github.com/coalesceio/Dynamic-Table-Nodes/assets/169126315/e4fbc362-f0c6-463c-9e82-ac454709c700)
+<img width="417" height="646" alt="image" src="https://github.com/user-attachments/assets/1d55f0ba-0503-41c9-9393-d109eec2e924" />
+
 
 | **Option** | **Description** |
 |------------|----------------|
 | **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of the refresh<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
 | **Initialize** | Initial refresh behavior:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will be ON_CREATE.<br />- **ON_CREATE**: Refresh synchronously at creation<br/>- **ON_SCHEDULE**: Refresh at next scheduled time |
+
+
+#### Dynamic Table Work Advanced Options
+
+| **Option** | **Description** |
+|------------|----------------|
+| **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
+| **Enable Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
+| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
+
+#### Dynamic Table Work Backfill Options
+<img width="431" height="550" alt="image" src="https://github.com/user-attachments/assets/bcf786a0-3784-47c3-a9ed-7e9a4ec26962" />
+
+| **Option** | **Description** |
+|------------|----------------|
+| **Backfill Source Table**| Specifies a source table used to load historical data into the Dynamic Table.|
+|**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
+|**Time Travel Type**| If Time Travel parameters AT | BEFORE are specified, data from the backfill table is copied at the specified time. |
+| **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a specific Snowflake query ID to time travel the data to the moment that query was executed. |
+| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>- **STATEMENT**: Provide a valid Snowflake Query ID from the query history that falls within the table’s time travel retention period. |
 
 #### Dynamic Table Work General Options
 
@@ -56,12 +78,6 @@ The Dynamic Table Work has three configuration groups:
 | **Create As** | Choose 'dynamic table' or 'transient dynamic table' |
 | **Cluster key** | True/False toggle for clustering:<br/>- **True**: Specify clustering column and optional expressions<br/>- **False**: No clustering |
 | **Allow Expressions Cluster Key**| When cluster key is set to true. Allows to add an expression to the specified cluster key| 
-
-#### Dynamic Table Work Advanced Options
-
-| **Option** | **Description** |
-|------------|----------------|
-| **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 
 ### Dynamic Table Work Deployment
 
