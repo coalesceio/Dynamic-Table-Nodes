@@ -1,0 +1,206 @@
+fileVersion: 1
+id: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+name: SRC_DIM_CUSTOMER
+operation:
+  database: ""
+  deployEnabled: true
+  description: ""
+  locationName: SOURCE_DATA
+  metadata:
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: fd8e1068-2640-4050-aa45-603e9ea0c984
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: NUMBER(10,0)
+        defaultValue: ""
+        description: ""
+        name: CUSTOMER_ID
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 9cb18267-3aa4-42dc-8ac7-4b52f340417d
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: VARCHAR(100)
+        defaultValue: ""
+        description: ""
+        name: CUSTOMER_NAME
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5ce243b2-95e0-4d88-b638-5860c63dbc18
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: VARCHAR(150)
+        defaultValue: ""
+        description: ""
+        name: CUSTOMER_EMAIL
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 1a29570c-f494-43a2-9a63-22927281fe3f
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: VARCHAR(20)
+        defaultValue: ""
+        description: ""
+        name: RECORD_VERSION_TYPE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: b3600a92-b7dc-46f9-981a-cfde21b8acf6
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        defaultValue: ""
+        description: ""
+        name: LAST_UPDATED_TIMESTAMP
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 7528146e-6f77-4a4b-9643-246becae27b3
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: NUMBER(10,0)
+        defaultValue: ""
+        description: ""
+        name: RECORD_SEQUENCE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 4d8caf94-9ecb-4150-aac9-a8737bcc0017
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        defaultValue: ""
+        description: ""
+        name: DATA_LOAD_TIMESTAMP
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: d45cc5bc-43e2-4118-9c97-4c24ce5a059b
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: DATE
+        defaultValue: ""
+        description: ""
+        name: RECORD_DATE
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ba058fe4-ee94-4b0e-8bf6-9071dca455ef
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        defaultValue: ""
+        description: ""
+        name: RECORD_TIME
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: c85eb9fa-100b-4edd-9243-880492302ee8
+          stepCounter: cd6a1177-e9ec-44d9-81b3-060e283fb8f3
+        config: {}
+        dataType: VARCHAR(1)
+        defaultValue: ""
+        description: ""
+        name: ACTIVE_FLAG
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+  name: SRC_DIM_CUSTOMER
+  schema: ""
+  sqlType: Source
+  type: sourceInput
+  version: 1
+type: Node

@@ -9,7 +9,7 @@ does not permit copying or modification for any other purpose.
 {# == Node Type Description    : This node creates and runs dynamic table work with latest record version.Materialization type and cluster key added with this version == #}
 
 {%if desiredState and currentState != desiredState%}
-     {%if desiredState.parameters == {} or 'targetDynamicTableWarehouse' not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == ''%}
+    {%if not config.advanceWarehouse and (desiredState.parameters == {} or  'targetDynamicTableWarehouse' not in desiredState.parameters or desiredState.parameters.targetDynamicTableWarehouse == '') %}
 
          {{stage('WARNING')}}
          
@@ -29,6 +29,31 @@ does not permit copying or modification for any other purpose.
     {%if  desiredState.node.materializationType == 'transient dynamic table' %}
           {% set keyword = 'TRANSIENT'  %}
     {%endif%}
+
+            {# Advance Warehouse #}
+            {% if desiredState.config.advanceWarehouse %}
+                {% set refreshWarehouse = resolveWarehouseFromSize(desiredState.config.refreshWarehouseSize) %}
+                {% set initializeWarehouse = resolveWarehouseFromSize(desiredState.config.initializeWarehouseSize) %}
+            {%  else  %}
+                {#Warehouse#}
+                {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
+                {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
+                    {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
+                {% else %}
+                    {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
+                {% endif %}
+            {% endif %}
+
+        {# Backfill Source Schema#}
+        {% set currentSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %}
+
+        {% if desiredState.config.backfillSourceSchema and desiredState.config.backfillSourceSchema != '' %}
+            {% set backfillSchema = desiredState.config.backfillSourceSchema %}
+        {% else %}
+            {% set backfillSchema = currentSchema %}
+        {% endif %}
+
+        {% set backfillTableFQN = backfillSchema ~ '.' ~ desiredState.config.backfillSource %}
 
     {# Identify all config changes that would cause a CREATE instead of ALTER#}
     {% if currentState != undefined %}   
@@ -108,6 +133,18 @@ does not permit copying or modification for any other purpose.
         {# Initialize test #}
         {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
 
+        {# Immutability test#}
+        {% set immutabilityTest = currentState.config.immutableExpression == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint == desiredState.config.immutabilityConstraint %}
+
+        {# BackFill Test#}
+        {% set backfilltest = currentState.config.backfill == desiredState.config.backfill
+        and currentState.config.backfillSource == desiredState.config.backfillSource
+        and currentState.config.backfillSourceSchema == desiredState.config.backfillSourceSchema
+        and  currentState.config.timeTravel == desiredState.config.timeTravel
+        and currentState.config.timeTraveltype == desiredState.config.timeTraveltype
+        and currentState.config.timeTravelreference == desiredState.config.timeTravelreference
+        and currentState.config.timeTravelvalue == desiredState.config.timeTravelvalue %}
+
        
         {# Column description changes and other column level changes #}
             {% for alterCurCol in currentState.columns %}        
@@ -159,6 +196,7 @@ does not permit copying or modification for any other purpose.
             orderByDateTimeTest == false or 
             recordVersioningTest == false or 
             initializeTest == false or
+            backfilltest == false or
             granttest == false or
             refreshTest == false or (currentState.storageLocations | length ==0)  %}    
 
@@ -180,6 +218,11 @@ does not permit copying or modification for any other purpose.
         {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
         {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
 
+        {# Advance Warehouse Test #}
+        {%set advanceWarehouseTest = currentState.config.advanceWarehouse == desiredState.config.advanceWarehouse%}
+        {%set refreshWarehouseTest = currentState.config.refreshWarehouseSize == desiredState.config.refreshWarehouseSize %}
+        {% set initializeWarehouseTest = currentState.config.initializeWarehouseSize == desiredState.config.initializeWarehouseSize %}
+
             {# Clustering Test #}
             {% set clusterKeyTest = currentState.config.clusterKey == desiredState.config.clusterKey %}
             {% set clusterKeyExpressionsTest = currentState.config.clusterKeyExpressions == desiredState.config.clusterKeyExpressions %}
@@ -199,10 +242,14 @@ does not permit copying or modification for any other purpose.
 
         {% if 
             warehouseTest == false or
+            refreshWarehouseTest == false or
+            initializeWarehouseTest == false or
+            advanceWarehouseTest ==  false or
             lagSpecificationTest == false or
             downstreamOptionTest == false or
             nodeCommentTest == false or
             clusterTest == false or 
+            immutabilityTest == false or
             nsVariables.descolchanges > 0 or
             nsVariables.storageLocationTest == false or 
              nodeNameTest == false %}    
@@ -271,14 +318,6 @@ does not permit copying or modification for any other purpose.
         {% set targetDynamicTableSchema = ref_no_link(desiredState.node.location.name, desiredState.node.name).split('.')[1] %} 
         {% set fullyQualifiedTargetDynamicTableName = ref_no_link(desiredState.node.location.name, desiredState.node.name) %}
 
-        {# Warehouse #}
-        {# Can be updated during deployment via a parameter to account for different warehouse names in different deployments#}
-        {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set dynamicTableWarehouse = desiredState.config.warehouseName %}
-        {% else %}
-            {% set dynamicTableWarehouse = desiredState.parameters.targetDynamicTableWarehouse %}
-        {% endif %}
-
         {# Downstream Option or Lag Specification #}
         {% if desiredState.config.downstreamOption == true %}
             {% set dynamicTableLagSpecification = 'DOWNSTREAM' %}
@@ -325,9 +364,32 @@ does not permit copying or modification for any other purpose.
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
             {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
-            WAREHOUSE = {{dynamicTableWarehouse}}
+            {% if desiredState.config.advanceWarehouse %}
+                WAREHOUSE = {{ refreshWarehouse }}
+                INITIALIZATION_WAREHOUSE = {{ initializeWarehouse }}
+            {% else %}
+                WAREHOUSE = {{ dynamicTableWarehouse }}
+            {% endif %}
             REFRESH_MODE   = {{dynamicTablerefresh}}
             INITIALIZE = {{dynamicTableinitialize}}
+            {% if desiredState.config.immutabilityConstraint
+                and desiredState.config.immutableExpression != '' %}
+                IMMUTABLE WHERE ({{ desiredState.config.immutableExpression }})
+            {% endif %} 
+            {% if desiredState.config.backfill and not desiredState.config.timeTravel %}
+                BACKFILL FROM {{ backfillTableFQN }}
+            {% elif desiredState.config.backfill and desiredState.config.timeTravel %}
+                BACKFILL FROM {{ backfillTableFQN }}
+                {{ desiredState.config.timeTraveltype }}
+                (
+                    {{ desiredState.config.timeTravelreference }} => 
+                    {% if desiredState.config.timeTravelreference == 'STATEMENT' %}
+                        '{{desiredState.config.timeTravelvalue}}'
+                    {% else %}
+                        {{ desiredState.config.timeTravelvalue }}
+                    {% endif %}
+                )
+            {% endif %} 
             {{ dynamicTableComment}}
         (
             {% for col in desiredState.columns %}
@@ -404,13 +466,6 @@ does not permit copying or modification for any other purpose.
             {% set currentDynamicTableLagValuePeriod = currentState.config.lagSpecification.get('items') | map(attribute='lagPeriod') | first %}
 
             {% set currentDynamicTableLagSpecification = currentDynamicTableLagValue ~ ' ' ~ currentDynamicTableLagValuePeriod %}
-        {% endif %}
-
-
-        {# ALTER for Warehouse if necessary #}
-        {% set dynamicTableWarehouse = '' %}
-        {% if desiredDynamicTableWarehouse != currentDynamicTableWarehouse %}
-            {% set dynamicTableWarehouse = 'WAREHOUSE = ' + desiredDynamicTableWarehouse %}
         {% endif %}
 
         {# Alter for Target lag if necessary #}
@@ -496,14 +551,35 @@ does not permit copying or modification for any other purpose.
                 {%endif%}    
             {% endfor %}
 
+            {# Immutability Constranit ON -> OFF #}
+            {% if desiredState.config.immutabilityConstraint == false %}
+                {{ stage('Alter Dynamic Table - Drop Immutability Constraint') }}
+                ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
+                UNSET IMMUTABLE WHERE
+            {% endif %}
 
-            {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false %}
-            {{ stage('Alter Dynamic Table') }}
-            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
-                {{ dynamicTableWarehouse }}
-                {{ dynamicTableLagSpecification }}
-                {{ dynamicTableComment  }}      
-            
+            {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false or (immutabilityTest == false and desiredState.config.immutabilityConstraint == true) or refreshWarehouseTest ==  false or initializeWarehouseTest == false or advanceWarehouseTest == false %}
+                {{ stage('Alter Dynamic Table') }}
+                ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
+                {% if warehouseTest == false or advanceWarehouseTest == false or refreshWarehouseTest ==  false or initializeWarehouseTest == false %}
+                    {% if desiredState.config.advanceWarehouse %}
+                        WAREHOUSE = {{ refreshWarehouse }}
+                        INITIALIZATION_WAREHOUSE = {{ initializeWarehouse }}
+                    {% else %}
+                        WAREHOUSE = {{ dynamicTableWarehouse }}
+                    {% endif %}
+                {% endif %}
+                {% if lagSpecificationTest == false or downstreamOptionTest == false%}
+                    {{ dynamicTableLagSpecification }}
+                {% endif %}
+                {%if nodeCommentTest == false %}
+                    {{ dynamicTableComment }}   
+                {%endif%}
+                {% if  immutabilityTest == false %}   
+                    {% if desiredState.config.immutabilityConstraint %}
+                        IMMUTABLE WHERE ( {{desiredState.config.immutableExpression}} )
+                    {%endif%}
+                {%endif%}
             {%endif%}
 
             {{ stage('Refresh Dynamic Table',true,"sql","create") }}
@@ -587,9 +663,32 @@ does not permit copying or modification for any other purpose.
             CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
             {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
             TARGET_LAG = '{{ dynamicTableLagSpecification }}'
-            WAREHOUSE = {{dynamicTableWarehouse}}
+            {% if desiredState.config.advanceWarehouse %}
+                WAREHOUSE = {{ refreshWarehouse }}
+                INITIALIZATION_WAREHOUSE = {{ initializeWarehouse }}
+            {% else %}
+                WAREHOUSE = {{ dynamicTableWarehouse }}
+            {% endif %}
             REFRESH_MODE   = {{dynamicTablerefresh}}
             INITIALIZE = {{dynamicTableinitialize}}
+            {% if desiredState.config.immutabilityConstraint
+                and desiredState.config.immutableExpression != '' %}
+                IMMUTABLE WHERE ({{ desiredState.config.immutableExpression }})
+            {% endif %} 
+            {% if desiredState.config.backfill and not desiredState.config.timeTravel %}
+                BACKFILL FROM {{ backfillTableFQN }}
+            {% elif desiredState.config.backfill and desiredState.config.timeTravel %}
+                BACKFILL FROM {{ backfillTableFQN }}
+                {{ desiredState.config.timeTraveltype }}
+                (
+                    {{ desiredState.config.timeTravelreference }} => 
+                    {% if desiredState.config.timeTravelreference == 'STATEMENT' %}
+                        '{{desiredState.config.timeTravelvalue}}'
+                    {% else %}
+                        {{ desiredState.config.timeTravelvalue }}
+                    {% endif %}
+                )
+            {% endif %} 
             {{ dynamicTableComment }}
             (
             {% for col in desiredState.columns %}

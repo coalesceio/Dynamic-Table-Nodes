@@ -24,13 +24,67 @@ metadata:
                        Ensure the parameter targetDynamicTableWarehouse is    added in Workspace and 
                        deployment environment  for successful creation of dynamic table.  
                        Refer documentation for more info"
-          enableIf: "{%- if parameters == {} or parameters.targetDynamicTableWarehouse == '' -%} true {%- else -%} false {%- endif -%}"
+          enableIf: "{%- if parameters == {} or parameters.targetDynamicTableWarehouse == '' or not config.advanceWarehouse -%} true {%- else -%} false {%- endif -%}"
 
         - displayName: Warehouse on which to execute Dynamic Table
           attributeName: warehouseName
           type: textBox
           default: dev_wh_xs
           isRequired: true
+          enableIf: "{% if config.advanceWarehouse %} false {% else %} true {% endif %}"
+
+        - displayName: Advanced Warehouse Selection
+          attributeName: advanceWarehouse
+          type: toggleButton
+          default: false
+          isRequired: false
+
+        - type: label
+          attributeName: note3
+          displayName: 
+                       "NOTE:
+                       \n
+                       Ensure that all the parameters required for Advance Warehouse are added in
+                       Workspace and deployment environment  for successful creation of dynamic table.  
+                       Refer documentation for more info"
+          enableIf: "{% if config.advanceWarehouse %} true {% else %} false {% endif %}"
+
+        - displayName: Refresh Warehouse Size
+          attributeName: refreshWarehouseSize
+          type: dropdownSelector
+          default: ""
+          options:
+          - ""   
+          - X-Small
+          - Small
+          - Medium
+          - Large
+          - X-Large
+          - 2X-Large
+          - 3x-Large
+          - 4x-Large
+          - 5x-Large
+          - 6x-Large
+          enableIf: "{% if config.advanceWarehouse %} true {% else %} false {% endif %}"
+
+
+        - displayName: Initialization Warehouse Size
+          attributeName: initializeWarehouseSize
+          type: dropdownSelector
+          default: ""
+          options:
+          - ""   
+          - X-Small
+          - Small
+          - Medium
+          - Large
+          - X-Large
+          - 2X-Large
+          - 3x-Large
+          - 4x-Large
+          - 5x-Large
+          - 6x-Large
+          enableIf: "{% if config.advanceWarehouse %} true {% else %} false {% endif %}"
 
         - type: toggleButton
           attributeName: downstreamOption
@@ -88,11 +142,67 @@ metadata:
 
       - groupName: Advanced Options
         items:
-        
+
         - type: toggleButton
           displayName: Copy grants
           attributeName: cpygrants
+
+        - type: toggleButton
+          displayName: Immutability Constraint
+          attributeName: immutabilityConstraint
+          default: false
+
+        - type: textBox
+          displayName: Immutable Where Expression(Eg- column_name < CURRENT_TIMESTAMP() - INTERVAL '7 days')
+          attributeName: immutableExpression
+          enableIf: "{% if config.immutabilityConstraint %} true {% else %} false {% endif %}"
+
+        - type: toggleButton
+          displayName: Enable Backfill
+          attributeName: backfill
+          default: false
+          enableIf: "{% if config.immutabilityConstraint %} true {% else %} false {% endif %}"
+
+      - groupName: Backfill Options
+        items:
+
+        - type: textBox
+          displayName: Backfill Source Schema
+          attributeName: backfillSourceSchema 
+
+        - type: textBox
+          displayName: Backfill Source Table
+          attributeName:  backfillSource
           
+        - type: toggleButton
+          displayName: Use Time Travel
+          attributeName: timeTravel
+          default: false
+
+        - type: dropdownSelector
+          displayName: Time Travel Type
+          attributeName: timeTraveltype
+          options: 
+          - AT
+          - BEFORE
+          enableIf: "{% if config.timeTravel %} true {% else %} false {% endif %}"
+
+        - type: dropdownSelector
+          displayName: Time Travel Reference
+          attributeName: timeTravelreference
+          options:
+          - OFFSET
+          - STATEMENT
+          # - TIMESTAMP - Not supported for now.
+          enableIf: "{% if config.timeTravel %} true {% else %} false {% endif %}"
+          
+        - type: textBox
+          displayName: Time Travel Value
+          attributeName: timeTravelvalue
+          enableIf: "{% if config.timeTravel %} true {% else %} false {% endif %}"
+
+        enableIf: "{% if config.backfill and config.immutabilityConstraint %} true {% else %} false {% endif %}"
+
       - groupName: Record Versioning Options
         items:
         - type: tabular

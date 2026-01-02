@@ -1,6 +1,6 @@
 fileVersion: 1
 id: "1"
-macroString: |-
+macroString: |+
   {# ----------------------------------------------------------------------
     Macro: colcict
     Purpose: Builds a dictionary (ns.column_dict) of columns for all sources
@@ -170,12 +170,49 @@ macroString: |-
       {% elif materialization in ['dynamic table','transient dynamic table'] %}
           dynamic table IF EXISTS
       {% elif materialization == 'external table' %}
-          extrenal table IF EXISTS
+          external table IF EXISTS
       {% elif materialization in ['iceberg table', 'dynamic iceberg table'] %}
-          icebrg table IF EXISTS
+          iceberg table IF EXISTS
       {% elif materialization == 'hybrid table' %}
           hybrid table IF EXISTS
       {% endif %}
   {% endmacro %}
+
+
+
+  {# ---------------------------------------------------------------------- 
+    Macro: resolveWarehouseFromSize
+    Purpose: Used to create a bridge between the selected warehouse sizes,
+              parameters and the actual warehouses
+  ---------------------------------------------------------------------- #}
+
+  {% macro resolveWarehouseFromSize(size) %}
+      {% if not size %}
+          {{ '' }}
+      {% else %}
+          {% set normalizedSize = size
+              | lower
+              | replace('-', '')
+              | replace(' ', '') %}
+
+          {% set sizeToParam = {
+              'xsmall': 'xsDynamicTableWarehouse',
+              'small': 'sDynamicTableWarehouse',
+              'medium': 'mDynamicTableWarehouse',
+              'large': 'lDynamicTableWarehouse',
+              'xlarge': 'xlDynamicTableWarehouse',
+              '2xlarge': '2xlDynamicTableWarehouse',
+              '3xlarge': '3xlDynamicTableWarehouse',
+              '4xlarge': '4xlDynamicTableWarehouse',
+              '5xlarge': '5xlDynamicTableWarehouse',
+              '6xlarge': '6xlDynamicTableWarehouse'
+          } %}
+
+          {% set paramKey = sizeToParam.get(normalizedSize) %}
+          {{ desiredState.parameters.warehouseSizesDict[paramKey] | default('') }}
+      {% endif %}
+  {% endmacro %}
+
+
 name: macro
 type: Macro
