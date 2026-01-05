@@ -40,7 +40,7 @@ The Dynamic Table Work has three configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
-| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of the refresh<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
@@ -53,8 +53,8 @@ The Dynamic Table Work has three configuration groups:
 |------------|----------------|
 | **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 | **Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
-| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br> |
-| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Refer [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
+| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br/>- SQL condition used to identify rows that are considered immutable (no longer change).<br/>- This expression must reference valid dynamic table columns and should be deterministic.<br/> |
+| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br/>- True: Displays Backfill Options group.<br/> Refer [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
 
 #### Dynamic Table Work Backfill Options
 <img width="398" height="586" alt="image" src="https://github.com/user-attachments/assets/7f618d5b-250a-4c75-bc15-bc3c040634d3" />
@@ -63,7 +63,7 @@ The Dynamic Table Work has three configuration groups:
 |------------|----------------|
 | **Backfill Source Schema**| (Optional) Schema name of the backfill table.<br/>- If provided, the backfill table is read from this schema.<br/>- If left blank, the current node’s schema is used by default. |
 | **Backfill Source Table**| Specifies a source table used to load historical data into the Dynamic Table.|
-|**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
+|**Time Travel**| Visible when Backfill option in enabled.<br/> True/False toggle to create the table with Time Travel options. |
 |**Time Travel Type**| If Time Travel parameters AT/BEFORE are specified, data from the backfill table is copied at the specified time. |
 | **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a specific Snowflake query ID to time travel the data to the moment that query was executed. |
 | **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>- **STATEMENT**: Provide a valid query ID of a completed DML from the query history that falls within the table’s time travel retention period. |
@@ -220,7 +220,7 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
-| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br />- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
@@ -255,8 +255,8 @@ The Dynamic Table Dimension has four configuration groups:
 |------------|----------------|
 | **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 | **Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
-| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br> |
-| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
+| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br/>- SQL condition used to identify rows that are considered immutable (no longer change).<br/>- This expression must reference valid dynamic table columns and should be deterministic.<br/> |
+| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br/>- True: Displays Backfill Options group.<br/> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
 
 #### Dynamic Table Dimension Backfill Options
 <img width="398" height="586" alt="image" src="https://github.com/user-attachments/assets/7f618d5b-250a-4c75-bc15-bc3c040634d3" />
@@ -266,7 +266,7 @@ The Dynamic Table Dimension has four configuration groups:
 |------------|----------------|
 | **Backfill Source Schema**| (Optional) Schema name of the backfill table.<br/>- If provided, the backfill table is read from this schema.<br/>- If left blank, the current node’s schema is used by default. |
 | **Backfill Source Table**| Specifies a source table used to load historical data into the Dynamic Table.|
-|**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
+|**Time Travel**| Visible when Backfill option in enabled.<br/> True/False toggle to create the table with Time Travel options. |
 |**Time Travel Type**| If Time Travel parameters AT/BEFORE are specified, data from the backfill table is copied at the specified time. |
 | **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a Snowflake query ID to time travel data, but is not supported for Dynamic Table Dimension backfill. |
 | **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>-  **STATEMENT**: Provide a valid query ID of a completed DML from the query history that falls within the table’s time travel retention period. |
@@ -409,7 +409,7 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
-| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br />- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
@@ -441,8 +441,8 @@ The Dynamic Table Dimension has four configuration groups:
 |------------|----------------|
 | **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 | **Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
-| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br> |
-| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
+| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br/>- SQL condition used to identify rows that are considered immutable (no longer change).<br/>- This expression must reference valid dynamic table columns and should be deterministic.<br/> |
+| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br/>- True: Displays Backfill Options group.<br/> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
 
 #### Latest Record Version Backfill Options
 <img width="398" height="586" alt="image" src="https://github.com/user-attachments/assets/7f618d5b-250a-4c75-bc15-bc3c040634d3" />
@@ -452,7 +452,7 @@ The Dynamic Table Dimension has four configuration groups:
 |------------|----------------|
 | **Backfill Source Schema**| (Optional) Schema name of the backfill table.<br/>- If provided, the backfill table is read from this schema.<br/>- If left blank, the current node’s schema is used by default. |
 | **Backfill Source Table**| Specifies a source table used to load historical data into the Dynamic Table.|
-|**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
+|**Time Travel**| Visible when Backfill option in enabled.<br/> True/False toggle to create the table with Time Travel options. |
 |**Time Travel Type**| If Time Travel parameters AT/BEFORE are specified, data from the backfill table is copied at the specified time. |
 | **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a Snowflake query ID to time travel data, but is not supported for Dynamic Table Dimension backfill. |
 | **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>-  **STATEMENT**: Provide a valid query ID of a completed DML from the query history that falls within the table’s time travel retention period. |
