@@ -39,7 +39,7 @@ The Dynamic Table Work has three configuration groups:
 
 | **Option** | **Description** |
 |------------|----------------|
-| **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
+| **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
 | **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of the refresh<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
@@ -54,7 +54,7 @@ The Dynamic Table Work has three configuration groups:
 | **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 | **Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
 | **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br> |
-| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
+| **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Refer [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
 
 #### Dynamic Table Work Backfill Options
 <img width="398" height="586" alt="image" src="https://github.com/user-attachments/assets/7f618d5b-250a-4c75-bc15-bc3c040634d3" />
@@ -66,7 +66,7 @@ The Dynamic Table Work has three configuration groups:
 |**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
 |**Time Travel Type**| If Time Travel parameters AT/BEFORE are specified, data from the backfill table is copied at the specified time. |
 | **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a specific Snowflake query ID to time travel the data to the moment that query was executed. |
-| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>- **STATEMENT**: Provide a valid Snowflake Query ID from the query history that falls within the table’s time travel retention period. |
+| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>- **STATEMENT**: Provide a valid query ID of a completed DML from the query history that falls within the table’s time travel retention period. |
 
 #### Dynamic Table Work General Options
 
@@ -133,6 +133,8 @@ The following config changes trigger ALTER statements:
 1. Warehouse name
 2. Downstream setting  
 3. Lag specification
+4. Immutability Constraint
+5. Advance Warehouse
 
 These execute the two stages:
 
@@ -143,30 +145,11 @@ These execute the two stages:
 
 Also if the location of the node, node name, column level description, and table level description results in an `ALTER` statement, whereas other column or table level changes like data type change, column name change, column addition/deletion result in a `CREATE` statement.
 
-### Changing Materialization Type From Dynamic Table to Transient Dynamic Table
+### Changing Materialization Type
 
-If the materialization type changes from dynamic table to transient dynamic table and there are changes in dynamic table config options or table level changes that result in ALTER, the following steps are executed:
+If the materialization type changes in dynamic table config options, the following steps gets executed:
 
-1. **Clone Work node**
-2. **Swap Work node**
-3. **Drop dynamic table**
-4. **Alter Dynamic Table**
-5. **Refresh Dynamic Table**
-6. **Apply Table Clustering(if cluster key option is provided)**
-7. **Resume Recluster Table(if cluster key option is provided)**
-
-If the materialization type changes from dynamic table to transient dynamic table and there are changes in dynamic table config options or table level changes that result in `CREATE`, the following steps are executed:
-
-1. **Drop dynamic table**
-2. **Create Work dynamic transient table**
-3. **Apply Table Clustering(if cluster key option is provided)**
-4. **Resume Recluster Table(if cluster key option is provided)**
-
-### Changing Materialization Type From Transient Dynamic Table to Dynamic Table
-
-If the materialization type from transient dynamic table to dynamic table and there are changes in dynamic table config options, the following steps gets executed:
-
-1. **Drop transient dynamic table**
+1. **Drop table**
 2. **Create Work dynamic table**
 3. **Apply Table Clustering(if cluster key option is provided)**
 4. **Resume Recluster Table(if cluster key option is provided)**
@@ -236,7 +219,7 @@ The Dynamic Table Dimension has four configuration groups:
 
 | **Option** | **Description** |
 |------------|----------------|
-| **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
+| **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
 | **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
@@ -272,7 +255,7 @@ The Dynamic Table Dimension has four configuration groups:
 |------------|----------------|
 | **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 | **Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
-| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br>- Only columns that are part of the table key(s) can be used in this expression. |
+| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br> |
 | **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
 
 #### Dynamic Table Dimension Backfill Options
@@ -286,7 +269,7 @@ The Dynamic Table Dimension has four configuration groups:
 |**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
 |**Time Travel Type**| If Time Travel parameters AT/BEFORE are specified, data from the backfill table is copied at the specified time. |
 | **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a Snowflake query ID to time travel data, but is not supported for Dynamic Table Dimension backfill. |
-| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>- **STATEMENT**: Not applicable for Dynamic Table Dimension, as backfill requires a DML query ID and Dynamic Tables do not generate DML statements. |
+| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>-  **STATEMENT**: Provide a valid query ID of a completed DML from the query history that falls within the table’s time travel retention period. |
 
 ### Dimension Deployment
 
@@ -340,6 +323,8 @@ The following config changes trigger ALTER statements:
 1. Warehouse name
 2. Downstream setting  
 3. Lag specification
+4. Immutability Constraint
+5. Advance Warehouse
 
 These execute the two stages:
 
@@ -350,30 +335,11 @@ These execute the two stages:
 
 Also if the location of the node, node name, column level description, and table level description results in an `ALTER` statement, whereas other column or table level changes like data type change, column name change, column addition/deletion result in a `CREATE` statement.
 
-### Changing Materialization Type From Dimension Table to Transient Dimension Table
+### Changing Materialization Type 
 
-If the materialization type changes from dynamic table to transient dynamic table and there are changes in dynamic table config options or table level changes that result in ALTER, the following steps are executed:
+If the materialization type changes in dynamic table config options, the following steps gets executed:
 
-1. **Clone Dimension node**
-2. **Swap Dimension node**
-3. **Drop Dynamic table**
-4. **Alter Dynamic Table**
-5. **Refresh Dynamic Table**
-6. **Apply Table Clustering(if cluster key option is provided)**
-7. **Resume Recluster Table(if cluster key option is provided)**
-
-If the materialization type changes from dynamic table to transient dynamic table and there are changes in dynamic table config options or table level changes that result in `CREATE`, the following steps are executed:
-
-1. **Drop dynamic table**
-2. **Create dimension dynamic transient table**
-3. **Apply Table Clustering(if cluster key option is provided)**
-4. **Resume Recluster Table(if cluster key option is provided)**
-
-### Changing Materialization Type From Transient Dynamic Dimension Table to Dynamic Table
-
-If the materialization type from transient dynamic table to dynamic table and there are changes in dynamic table config options, the following steps gets executed:
-
-1. **Drop transient dimension table**
+1. **Drop table**
 2. **Create Work dimension table**
 3. **Apply Table Clustering(if cluster key option is provided)**
 4. **Resume Recluster Table(if cluster key option is provided)**
@@ -442,7 +408,7 @@ The Dynamic Table Dimension has four configuration groups:
 
 | **Option** | **Description** |
 |------------|----------------|
-| **Warehouse** | (Required) Name of warehouse used to refresh the Dynamic Table |
+| **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
 | **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
@@ -475,7 +441,7 @@ The Dynamic Table Dimension has four configuration groups:
 |------------|----------------|
 | **Copy grants** | Specifies to retain the access privileges from the original table when a new dynamic table is created.Useful during replication.[More info on replication here](https://docs.snowflake.com/en/user-guide/account-replication-considerations#replication-and-dynamic-tables) |
 | **Immutability Constraint** |True/False toggle:<br/>- True: Applies an IMMUTABLE condition to the Dynamic Table, preventing changes to data that matches the defined rule<br/>- False: No immutability is enforced; data can be updated normally |
-| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br>- Only columns that are part of the table key(s) can be used in this expression. |
+| **Immutable Where Expression** | Visible when Immutability Constraint is enabled.<br>- SQL condition used to identify rows that are considered immutable (no longer change).<br>- This expression must reference valid dynamic table columns and should be deterministic.<br> |
 | **Enable Backfill** | - Visible only when Immutability Constraint is enabled.<br/>- True/False toggle:<br>- True: Displays Backfill Options group.<br> Review [Snowflake Dynamic Tables](https://docs.snowflake.com/en/user-guide/dynamic-tables-create) to understand how Immutability and Backfill features work.|
 
 #### Latest Record Version Backfill Options
@@ -489,7 +455,7 @@ The Dynamic Table Dimension has four configuration groups:
 |**Time Travel**| Visible when Backfill option in enabled.<br> True/False toggle to create the table with Time Travel options. |
 |**Time Travel Type**| If Time Travel parameters AT/BEFORE are specified, data from the backfill table is copied at the specified time. |
 | **Time Travel Reference** | Dropdown to specify how Snowflake should time travel the backfill source data:<br/>- **OFFSET**: Uses a relative time offset from the current time.<br/>- **STATEMENT**: Uses a Snowflake query ID to time travel data, but is not supported for Dynamic Table Dimension backfill. |
-| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>- **STATEMENT**: Not applicable for Dynamic Table Dimension, as backfill requires a DML query ID and Dynamic Tables do not generate DML statements. |
+| **Time Travel Value** | Value depends on the selected Time Travel Reference:<br/>- **OFFSET**: Provide a negative integer value (for example: -60, -120, -1440) representing time in minutes before the current time.<br/>-  **STATEMENT**: Provide a valid query ID of a completed DML from the query history that falls within the table’s time travel retention period. |
 
 
 ### DAG of Dynamic Table Latest Record Version
@@ -548,6 +514,8 @@ The following config changes trigger ALTER statements:
 1. Warehouse name
 2. Downstream setting  
 3. Lag specification
+4. Immutability Constraint
+5. Advance Ware
 
 These execute the two stages:
 
@@ -558,28 +526,9 @@ These execute the two stages:
 
 Also if the location of the node, node name, column level description, and table level description results in an `ALTER` statement, whereas other column or table level changes like data type change, column name change, column addition/deletion result in a `CREATE` statement.
 
-### Changing Materialization Type From Latest Record Version Table to Transient Dimension Table
+### Changing Materialization Type
 
-If the materialization type changes from dynamic table to transient dynamic table and there are changes in dynamic table config options or table level changes that result in ALTER, the following steps are executed:
-
-1. **Clone Work node**
-2. **Swap Work node**
-3. **Drop Dynamic table**
-4. **Alter Dynamic Table**
-5. **Refresh Dynamic Table**
-6. **Apply Table Clustering(if cluster key option is provided)**
-7. **Resume Recluster Table(if cluster key option is provided)**
-
-If the materialization type changes from dynamic table to transient dynamic table and there are changes in dynamic table config options or table level changes that result in `CREATE`, the following steps are executed:
-
-1. **Drop dynamic table**
-2. **Create Work dynamic transient table**
-3. **Apply Table Clustering(if cluster key option is provided)**
-4. **Resume Recluster Table(if cluster key option is provided)**
-
-### Changing Materialization Type From Transient Dynamic Dimension Table to Latest Record Version
-
-If the materialization type from transient dynamic table to dynamic table and there are changes in dynamic table config options, the following steps gets executed:
+If the materialization type changes in dynamic table config options, the following steps gets executed:
 
 1. **Drop transient dimension table**
 2. **Create Work dimension table**
