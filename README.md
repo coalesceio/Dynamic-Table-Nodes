@@ -39,8 +39,8 @@ The Dynamic Table Work has three configuration groups:
 
 | **Option** | **Description** |
 |------------|----------------|
-| **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
-| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
+| **Warehouse** | - (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table.|
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table. <br/>- When using Advanced Warehouse, the **`targetDynamicTableWarehouse` parameter is not required**. |
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of the refresh<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
@@ -106,6 +106,49 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
     "targetDynamicTableWarehouse": "compute_wh"
 }
 ```
+
+#### Advance Warehouse selection(Optional)
+Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+
+#### Prerequisite
+
+* Advanced Warehouse must be **enabled**.
+* The required warehouses must already exist in Snowflake.
+* Corresponding warehouse parameters must be defined in the deployment environment.
+  
+#### Example of parameter initialisation
+  ```json
+{
+    "warehouseSizesDict": {
+        "xsDynamicTableWarehouse": "dev_wh_xs",
+        "sDynamicTableWarehouse": "dev_wh_s",
+        "lDynamicTableWarehouse": "dev_wh_l"
+    },
+  "targetDynamicTableWarehouse": "DEV ENVIRONMENT",
+}
+```
+> **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
+
+### Warehouse Sizes
+
+| Size        | Environment Parameter                                   |
+| ----------- | ------------------------------------------------------- |
+| X-Small     | `xsDynamicTableWarehouse`                               |
+| Small       | `sDynamicTableWarehouse`                                |
+| Medium      | `mDynamicTableWarehouse`                                |
+| Large       | `lDynamicTableWarehouse`                                |
+| X-Large     | `xlDynamicTableWarehouse`                               |
+| 2X-Large    | `2xlDynamicTableWarehouse`                              |
+| 3X-Large    | `3xlDynamicTableWarehouse`                              |
+| 4X-Large    | `4xlDynamicTableWarehouse`                              |
+| 5X-Large    | `5xlDynamicTableWarehouse`                              |
+| 6X Large    | `6xlDynamicTableWarehouse`                              |
+
+#### Notes
+
+* These parameters are **required only when Advanced Warehouse is enabled**.
+* When using Advanced Warehouse, the **`targetDynamicTableWarehouse` parameter is not required**.
+
 > 📘 **Deployment of nodes without adding parameters**
 >
 > This results in a WARNING stage getting executed insisting to execute the node after adding parameters 
@@ -220,7 +263,7 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
-| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table. <br/>- When using Advanced Warehouse, the **`targetDynamicTableWarehouse` parameter is not required**.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br />- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
@@ -296,9 +339,52 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
     "targetDynamicTableWarehouse": "compute_wh"
 }
 ```
+
+#### Advance Warehouse selection(Optional)
+Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+
+#### Prerequisite
+
+* Advanced Warehouse must be **enabled**.
+* The required warehouses must already exist in Snowflake.
+* Corresponding warehouse parameters must be defined in the deployment environment.
+  
+#### Example of parameter initialisation
+  ```json
+{
+    "warehouseSizesDict": {
+        "xsDynamicTableWarehouse": "dev_wh_xs",
+        "sDynamicTableWarehouse": "dev_wh_s",
+        "lDynamicTableWarehouse": "dev_wh_l"
+    },
+  "targetDynamicTableWarehouse": "DEV ENVIRONMENT",
+}
+```
+> **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
+
+### Warehouse Sizes
+
+| Size        | Environment Parameter                                   |
+| ----------- | ------------------------------------------------------- |
+| X-Small     | `xsDynamicTableWarehouse`                               |
+| Small       | `sDynamicTableWarehouse`                                |
+| Medium      | `mDynamicTableWarehouse`                                |
+| Large       | `lDynamicTableWarehouse`                                |
+| X-Large     | `xlDynamicTableWarehouse`                               |
+| 2X-Large    | `2xlDynamicTableWarehouse`                              |
+| 3X-Large    | `3xlDynamicTableWarehouse`                              |
+| 4X-Large    | `4xlDynamicTableWarehouse`                              |
+| 5X-Large    | `5xlDynamicTableWarehouse`                              |
+| 6X Large    | `6xlDynamicTableWarehouse`                              |
+
+#### Notes
+
+* These parameters are **required only when Advanced Warehouse is enabled**.
+* When using Advanced Warehouse, the **`targetDynamicTableWarehouse` parameter is not required**.
+
 > 📘 **Deployment of nodes without adding parameters**
 >
-> This results in a WARNING stage getting executed insisting to execute the node after adding parameters
+> This results in a WARNING stage getting executed insisting to execute the node after adding parameters 
  
 ### Dimension Initial Deployment
 
@@ -363,7 +449,7 @@ If an entire DAG of Dynamic Tables has been deployed and changes are made to a d
 
 If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
 
-### Dimension Tables Work Undeployment
+### Dynamic Table Dimension Undeployment
 
 A table will be dropped if all of these are true:
 
@@ -409,7 +495,7 @@ The Dynamic Table Dimension has four configuration groups:
 | **Option** | **Description** |
 |------------|----------------|
 | **Warehouse** | (Required when Advance Warehouse is disabled) Name of warehouse used to refresh the Dynamic Table |
-| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table.|
+| **Advance Warehouse Selection** |A toggle that enables size-based warehouse configuration for Dynamic Tables<br/>- **Refresh Warehouse**: Selects the warehouse (by size) used for regular refresh operations.<br/>- **Initialization Warehouse**: Selects the warehouse (by size) used during the initial creation or backfill of the Dynamic Table. <br/>- When using Advanced Warehouse, the **`targetDynamicTableWarehouse` parameter is not required**.|
 | **Downstream** | (Required) True/False toggle:<br/>- **True**: Refresh on demand when dependent tables need refresh<br/>- **False**: Set Lag Specification for refresh schedule |
 | **Lag Specification** | Only if Downstream is False. Review [Snowflakes Dynamic Tables Refresh](https://docs.snowflake.com/en/user-guide/dynamic-tables-refresh) to understand how to specify the target lag. Set refresh schedule with:<br/>- **Time Value**: Frequency of refresh for a given Time Period.<br/>- **Time Period**: Seconds/Minutes/Hours/Days |
 | **Refresh Mode** | Specifies refresh type:<br/>- **BLANK('')**: If the blank option is selected, the default behavior will trigger an INCREMENTAL refresh.<br />- **AUTO**: Default incremental refresh. If the CREATE DYNAMIC TABLE statement does not support the incremental refresh mode, the dynamic table is automatically created with the full refresh mode.<br/>- **INCREMENTAL**: Force incremental refresh<br/>- **FULL**: Force full refresh |
@@ -487,9 +573,52 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
     "targetDynamicTableWarehouse": "compute_wh"
 }
 ```
+
+#### Advance Warehouse selection(Optional)
+Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+
+#### Prerequisite
+
+* Advanced Warehouse must be **enabled**.
+* The required warehouses must already exist in Snowflake.
+* Corresponding warehouse parameters must be defined in the deployment environment.
+  
+#### Example of parameter initialisation
+  ```json
+{
+    "warehouseSizesDict": {
+        "xsDynamicTableWarehouse": "dev_wh_xs",
+        "sDynamicTableWarehouse": "dev_wh_s",
+        "lDynamicTableWarehouse": "dev_wh_l"
+    },
+  "targetDynamicTableWarehouse": "DEV ENVIRONMENT",
+}
+```
+> **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
+
+### Warehouse Sizes
+
+| Size        | Environment Parameter                                   |
+| ----------- | ------------------------------------------------------- |
+| X-Small     | `xsDynamicTableWarehouse`                               |
+| Small       | `sDynamicTableWarehouse`                                |
+| Medium      | `mDynamicTableWarehouse`                                |
+| Large       | `lDynamicTableWarehouse`                                |
+| X-Large     | `xlDynamicTableWarehouse`                               |
+| 2X-Large    | `2xlDynamicTableWarehouse`                              |
+| 3X-Large    | `3xlDynamicTableWarehouse`                              |
+| 4X-Large    | `4xlDynamicTableWarehouse`                              |
+| 5X-Large    | `5xlDynamicTableWarehouse`                              |
+| 6X Large    | `6xlDynamicTableWarehouse`                              |
+
+#### Notes
+
+* These parameters are **required only when Advanced Warehouse is enabled**.
+* When using Advanced Warehouse, the **`targetDynamicTableWarehouse` parameter is not required**.
+
 > 📘 **Deployment of nodes without adding parameters**
 >
-> This results in a WARNING stage getting executed insisting to execute the node after adding parameters
+> This results in a WARNING stage getting executed insisting to execute the node after adding parameters 
  
 ### Latest Record Version Initial Deployment
 
@@ -515,7 +644,7 @@ The following config changes trigger ALTER statements:
 2. Downstream setting  
 3. Lag specification
 4. Immutability Constraint
-5. Advance Ware
+5. Advance Warehouse
 
 These execute the two stages:
 
@@ -554,11 +683,11 @@ If an entire DAG of Dynamic Tables has been deployed and changes are made to a d
 
 If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
 
-### Latest Record Version Work Undeployment
+### Latest Record Version Undeployment
 
 A table will be dropped if all of these are true:
 
-* The Dynamic Dimension Node is deleted from a Workspace.
+* The Dynamic Latest Record Version Node is deleted from a Workspace.
 * The Workspace is committed to Git.
 * The Workspace committed to Git is deployed to a higher level environment.
 
