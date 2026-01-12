@@ -129,7 +129,7 @@ Advanced Warehouse Selection allows using **separate warehouses for initializati
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse Sizes
+### Warehouse sizes supported in node config UI and corresponding parameter details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -362,7 +362,7 @@ Advanced Warehouse Selection allows using **separate warehouses for initializati
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse Sizes
+### Warehouse sizes supported in node config UI and corresponding parameter details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -596,7 +596,7 @@ Advanced Warehouse Selection allows using **separate warehouses for initializati
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse Sizes
+### Warehouse sizes supported in node config UI and corresponding parameter details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
