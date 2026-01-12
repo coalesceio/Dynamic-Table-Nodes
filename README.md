@@ -108,7 +108,8 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 
 #### Advance Warehouse selection(Optional)
-Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+* Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+* Users can select different sizes for refresh vs initialization to optimize cost/performance
 
 #### Prerequisite
 
@@ -341,7 +342,8 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 
 #### Advance Warehouse selection(Optional)
-Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+* Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+* Corresponding warehouse parameters must be defined in the deployment environment.
 
 #### Prerequisite
 
@@ -575,7 +577,8 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 
 #### Advance Warehouse selection(Optional)
-Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+* Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
+* Corresponding warehouse parameters must be defined in the deployment environment.
 
 #### Prerequisite
 
