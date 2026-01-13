@@ -117,7 +117,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialisation
+#### Example of parameter initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -351,7 +351,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialisation
+#### Example of parameter initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -586,7 +586,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialisation
+#### Example of parameter initialization
   ```json
 {
     "warehouseSizesDict": {
