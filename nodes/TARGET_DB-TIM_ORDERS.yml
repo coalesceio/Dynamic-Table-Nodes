@@ -3,46 +3,46 @@ id: bdabd8b4-560f-41a0-8c15-e20b442e6add
 name: TIM_ORDERS
 operation:
   config:
-    clusterKey: false
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: b4c299ed-b80b-401b-a51b-f7c03f34dcae
+            stepCounter: bdabd8b4-560f-41a0-8c15-e20b442e6add
     clusterKeyConfigExpressions:
       items:
         - {}
     clusterKeyExpressions: false
-    devMode: false
-    flagSrcStream: true
+    cpygrants: false
+    downstreamOption: false
     groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
     insertStrategy: UNION
-    loadType: Insert
-    mergeOrderBy:
+    lagSpecification:
       items:
-        - {}
-    multiStreamBehavior: AND
-    orderby: false
-    orderbycolumn:
-      items:
-        - {}
-    partitionBy:
-      items:
-        - {}
-    predTask: DATA_TRANSFORMATION_ROOT_TASK
-    rootTask: DATA_TRANSFORMATION_ROOT_TASK
-    scheduleCRON: 5 0-23 * * * America/Los_Angeles
-    schedulePeriod: "60"
-    schedulePeriodOption: Minutes
-    schedulingMode: Warehouse Task
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
     selectDistinct: true
-    serverlessSize: MEDIUM
-    truncateBefore: true
-    whName: COMPUTE_WH
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -102,40 +102,6 @@ operation:
               - columnCounter: f5fb5f1c-0124-42cc-9940-8fa9649ceb55
                 stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
             transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: b944cbbe-0846-444e-a208-ffa05f56c015
-          stepCounter: bdabd8b4-560f-41a0-8c15-e20b442e6add
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemCreateDate: true
-        name: SYSTEM_CREATE_DATE
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 64609bbe-9793-4789-8ec7-4da0ecae1659
-          stepCounter: bdabd8b4-560f-41a0-8c15-e20b442e6add
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemUpdateDate: true
-        name: SYSTEM_UPDATE_DATE
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -153,7 +119,7 @@ operation:
   name: TIM_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: streams-and-tasks:::567
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

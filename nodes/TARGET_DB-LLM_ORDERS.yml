@@ -3,35 +3,46 @@ id: 2bc1821e-3296-483b-b73e-32d81db08498
 name: LLM_ORDERS
 operation:
   config:
-    exby:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
+    clusterKeyConfig:
       items:
-        - {}
-    extractfunction: false
-    insertStrategy: INSERT
-    pby:
-      items:
-        - partColName:
-            columnCounter: 4551b2d2-918f-4fd8-bddd-56b98b28a812
+        - columnName:
+            columnCounter: 9bf88a8e-f985-431d-a3b9-8630e286fd16
             stepCounter: 2bc1821e-3296-483b-b73e-32d81db08498
-    postSQL: ""
-    preSQL: ""
-    sby:
+    clusterKeyConfigExpressions:
       items:
         - {}
-    sentimentfunction: false
-    summarizefunction: true
-    tby:
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    insertStrategy: UNION ALL
+    lagSpecification:
       items:
-        - {}
-    testsEnabled: true
-    translatefunction: false
-    truncateBefore: true
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    selectDistinct: false
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -108,7 +119,7 @@ operation:
   name: LLM_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: cortex:::271
+  sqlType: "347"
   type: sql
   version: 1
 type: Node
