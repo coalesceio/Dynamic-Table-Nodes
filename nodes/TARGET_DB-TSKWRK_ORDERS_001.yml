@@ -3,39 +3,46 @@ id: 77377470-70d4-4753-bc17-33439c21ece8
 name: TSKWRK_ORDERS_001
 operation:
   config:
-    clusterKey: false
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: 69aee0fc-a1c1-462b-96e1-521cd42425ae
+            stepCounter: 77377470-70d4-4753-bc17-33439c21ece8
     clusterKeyConfigExpressions:
       items:
         - {}
     clusterKeyExpressions: false
-    devMode: false
-    flagSrcStream: true
+    cpygrants: false
+    downstreamOption: false
     groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
     insertStrategy: UNION
-    multiStreamBehavior: AND
-    orderby: false
-    orderbycolumn:
+    lagSpecification:
       items:
-        - {}
-    predTask: DATA_TRANSFORMATION_ROOT_TASK
-    rootTask: DATA_TRANSFORMATION_ROOT_TASK
-    scheduleCRON: 5 0-23 * * * America/Los_Angeles
-    schedulePeriod: "60"
-    schedulePeriodOption: Minutes
-    schedulingMode: Warehouse Task
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
     selectDistinct: true
-    serverlessSize: MEDIUM
-    truncateBefore: true
-    whName: COMPUTE_WH
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: task
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -112,7 +119,7 @@ operation:
   name: TSKWRK_ORDERS_001
   overrideSQL: false
   schema: ""
-  sqlType: streams-and-tasks:::151
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

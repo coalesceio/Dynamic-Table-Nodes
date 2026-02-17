@@ -3,46 +3,49 @@ id: b22416ad-7f50-4527-a91a-dc4460a97748
 name: PSTG_ORDERS_001
 operation:
   config:
-    groupByAll: false
-    insertStrategy: UNION ALL
-    lastModifiedComparison: false
-    orderby: false
-    orderbycolumn:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 0e913b3f-9385-4f62-a75b-b1f1c8dd8a8b
+            stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
+    clusterKeyConfigExpressions:
       items:
         - {}
-    postSQL: ""
-    preSQL: ""
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
     selectDistinct: true
-    testsEnabled: true
-    treatNullAsCurrentTimestamp: false
-    truncateBefore: false
-    type2Dimension: false
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 164eab70-116d-414e-8570-61c061f41ac1
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: NUMBER
-        defaultValue: ""
-        description: ""
-        isSurrogateKey: true
-        name: PSTG_ORDERS_KEY
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: ""
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 0e913b3f-9385-4f62-a75b-b1f1c8dd8a8b
@@ -100,108 +103,6 @@ operation:
               - columnCounter: f5fb5f1c-0124-42cc-9940-8fa9649ceb55
                 stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
             transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 96b3ab1b-b346-41b0-8e37-af11beb71c3c
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: NUMBER
-        defaultValue: ""
-        description: ""
-        isSystemVersion: true
-        name: SYSTEM_VERSION
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: c486e888-b54c-4933-925e-cb2cbb0dcce5
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: VARCHAR
-        defaultValue: ""
-        description: ""
-        isSystemCurrentFlag: true
-        name: SYSTEM_CURRENT_FLAG
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 3bfc776e-bc48-4f46-9480-63abe7598b15
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemStartDate: true
-        name: SYSTEM_START_DATE
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: e2d1ab00-c95c-47e6-86b3-cf713f0476e6
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemEndDate: true
-        name: SYSTEM_END_DATE
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CAST('2999-12-31 00:00:00' AS TIMESTAMP)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 9d1077cc-e1e9-4876-b1b1-3b04c792e01c
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemCreateDate: true
-        name: SYSTEM_CREATE_DATE
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: f7b5451f-fb09-4a4b-9d29-078860a48a6e
-          stepCounter: b22416ad-7f50-4527-a91a-dc4460a97748
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemUpdateDate: true
-        name: SYSTEM_UPDATE_DATE
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -219,7 +120,7 @@ operation:
   name: PSTG_ORDERS_001
   overrideSQL: false
   schema: ""
-  sqlType: base-node-types:::173
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

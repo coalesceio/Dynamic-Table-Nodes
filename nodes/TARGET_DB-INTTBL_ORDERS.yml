@@ -3,7 +3,10 @@ id: 46655bf7-de7f-4081-9ead-00e3c1d082e8
 name: INTTBL_ORDERS
 operation:
   config:
-    autoRefresh: false
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
     clusterKey: true
     clusterKeyConfig:
       items:
@@ -14,20 +17,32 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
     groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
     selectDistinct: true
-    testsEnabled: false
-    warehouseName: dev_wh_xs
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: interactive table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -104,7 +119,7 @@ operation:
   name: INTTBL_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: interactive-table:::602
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

@@ -3,51 +3,46 @@ id: 45a10c5e-170d-4958-9fbf-134711a6c2e0
 name: CSS_ORDERS
 operation:
   config:
-    allcol: false
-    attrcol:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
+    clusterKeyConfig:
       items:
-        - acolname:
-            columnCounter: 0bdd1ae4-3843-4a79-b437-55854f399ee4
+        - columnName:
+            columnCounter: e0da2629-f5f3-4762-86ff-23484a0d1155
             stepCounter: 45a10c5e-170d-4958-9fbf-134711a6c2e0
-    colpreview:
+    clusterKeyConfigExpressions:
       items:
         - {}
-    createcortex: true
-    embmodel: ""
-    excss: false
-    filcrit:
-      items:
-        - {}
-    filtoggle: false
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
     initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
-    locCSS: ""
-    lopt: and
-    mulfilcon: false
-    namCSS: ""
-    numboost: false
-    numericboost:
-      items:
-        - {}
-    query1: ""
-    querycortex: false
-    searchcol:
-      columnCounter: c14543bb-9efd-4252-bcc6-d0959f09f6dd
-      stepCounter: 45a10c5e-170d-4958-9fbf-134711a6c2e0
-    timdec: false
-    timedecay:
-      items:
-        - {}
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    selectDistinct: false
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
     warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: cortex search service
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -124,7 +119,7 @@ operation:
   name: CSS_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: cortex:::499
+  sqlType: "347"
   type: sql
   version: 1
 type: Node
