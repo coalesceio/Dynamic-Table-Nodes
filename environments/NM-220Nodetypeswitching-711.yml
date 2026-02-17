@@ -1,5 +1,5 @@
 fileVersion: 1
-id: "661"
+id: "711"
 mappingDefinitions:
   SOURCE_DATA:
     database: SNOWFLAKE_SAMPLE_DATA
@@ -10,5 +10,5 @@ mappingDefinitions:
   TARGET_DB_TEST:
     database: PRANJAL_DEV
     schema: TARGET_DB
-name: NM211-View->Dynamic
+name: NM-220 Node type switching
 type: Environment

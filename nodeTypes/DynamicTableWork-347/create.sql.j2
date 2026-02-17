@@ -21,6 +21,17 @@ does not permit copying or modification for any other purpose.
 {%endif%}
 
 {% if desiredState  %}
+    {%- if currentState != undefined and currentState.node.nodeType != desiredState.node.nodeType %}
+        {%- set warningMsg = getNodeTypeSwitchWarning() | default('') %}
+
+        {# Warning display - Node type changes can impact related tasks, streams, or services. #}
+        {%- if warningMsg | trim | length > 0 -%}
+            {{ stage('Warning! Node Type Switching Detected', false) }}
+            {{ warningMsg }}
+            select 1=0
+        {%- endif -%}
+    {%- endif -%}
+
    {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
         {# Materialization type#}
         {%if  desiredState.node.materializationType == 'transient dynamic table' %}
@@ -112,12 +123,12 @@ does not permit copying or modification for any other purpose.
             {% endif %}
 
             {# Config #}
-            {% set insertStrategyTest = currentState.config.insertStrategy == desiredState.config.insertStrategy %}
-            {% set groupByAllTest = currentState.config.groupByAll == desiredState.config.groupByAll %}
-            {% set selectDistinctTest = currentState.config.selectDistinct == desiredState.config.selectDistinct %}
+            {% set insertStrategyTest = currentState.config.insertStrategy | default('UNION ALL') == desiredState.config.insertStrategy %}
+            {% set groupByAllTest = currentState.config.groupByAll | default(false)  == desiredState.config.groupByAll %}
+            {% set selectDistinctTest = currentState.config.selectDistinct | default(false)  == desiredState.config.selectDistinct %}
 
             {# grant config change#}
-            {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
+            {% set granttest = currentState.config.cpygrants | default(false)  == desiredState.config.cpygrants%}
 
             {# Node#}
             {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
@@ -125,23 +136,23 @@ does not permit copying or modification for any other purpose.
             {% set nodeIsMultisource = currentState.node.isMultisource == desiredState.node.isMultisource %}
 
             {# Refresh_mode test#}
-            {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
+            {% set refreshTest = currentState.config.refresh_mode | default('AUTO') == desiredState.config.refresh_mode %}
 
             {#Initialize test#}
-            {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
+            {% set initializeTest = currentState.config.initialize | default('ON_CREATE') == desiredState.config.initialize %}
 
             {# Immutability test#}
-            {% set immutabilityTest = currentState.config.immutableExpression == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint == desiredState.config.immutabilityConstraint %}
+            {% set immutabilityTest = currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint | default(false)  == desiredState.config.immutabilityConstraint %}
 
             {# BackFill Test#}
             {% set backfilltest =
-            currentState.config.backfill == desiredState.config.backfill
-            and currentState.config.backfillSource == desiredState.config.backfillSource
-            and currentState.config.backfillSourceSchema == desiredState.config.backfillSourceSchema
-            and  currentState.config.timeTravel == desiredState.config.timeTravel
-            and currentState.config.timeTraveltype == desiredState.config.timeTraveltype
-            and currentState.config.timeTravelreference == desiredState.config.timeTravelreference
-            and currentState.config.timeTravelvalue == desiredState.config.timeTravelvalue %}
+            currentState.config.backfill | default(false)  == desiredState.config.backfill
+            and currentState.config.backfillSource | default('') == desiredState.config.backfillSource
+            and currentState.config.backfillSourceSchema | default('') == desiredState.config.backfillSourceSchema
+            and  currentState.config.timeTravel | default(false)  == desiredState.config.timeTravel
+            and currentState.config.timeTraveltype | default('') == desiredState.config.timeTraveltype
+            and currentState.config.timeTravelreference | default('') == desiredState.config.timeTravelreference
+            and currentState.config.timeTravelvalue | default('') == desiredState.config.timeTravelvalue %}
        
             {# Column description changes and other column level changes #}
             {% for alterCurCol in currentState.columns %}        
@@ -206,24 +217,24 @@ does not permit copying or modification for any other purpose.
         {# Identify config changes that would only result in ALTER #}
         {% if createTest == false %}
             {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-                {% set warehouseTest = currentState.config.warehouseName == desiredState.config.warehouseName %}
+                {% set warehouseTest = currentState.config.warehouseName | default('dev_wh_xs') == desiredState.config.warehouseName %}
             {% else %}
                 {% set warehouseTest = currentState.parameters.targetDynamicTableWarehouse == desiredState.parameters.targetDynamicTableWarehouse %}
             {% endif %}
             {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
-            {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
+            {% set downstreamOptionTest = currentState.config.downstreamOption | default(false)  == desiredState.config.downstreamOption %}
             {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
 
             {# Advance Warehouse Test #}
-            {%set advanceWarehouseTest = currentState.config.advanceWarehouse == desiredState.config.advanceWarehouse%}
-            {%set refreshWarehouseTest = currentState.config.refreshWarehouseSize == desiredState.config.refreshWarehouseSize %}
-            {% set initializeWarehouseTest = currentState.config.initializeWarehouseSize == desiredState.config.initializeWarehouseSize %}
+            {%set advanceWarehouseTest = currentState.config.advanceWarehouse | default(false)  == desiredState.config.advanceWarehouse%}
+            {%set refreshWarehouseTest = currentState.config.refreshWarehouseSize | default('') == desiredState.config.refreshWarehouseSize %}
+            {% set initializeWarehouseTest = currentState.config.initializeWarehouseSize | default('') == desiredState.config.initializeWarehouseSize %}
 
             {# Clustering Test #}
-            {% set clusterKeyTest = currentState.config.clusterKey == desiredState.config.clusterKey %}
-            {% set clusterKeyExpressionsTest = currentState.config.clusterKeyExpressions == desiredState.config.clusterKeyExpressions %}
-            {% set clusterKeyConfigTest = currentState.config.clusterKeyConfig == desiredState.config.clusterKeyConfig %}
-            {% set clusterKeyConfigExpressionsTest = currentState.config.clusterKeyConfigExpressions == desiredState.config.clusterKeyConfigExpressions %}
+            {% set clusterKeyTest = currentState.config.clusterKey | default(false)  == desiredState.config.clusterKey %}
+            {% set clusterKeyExpressionsTest = currentState.config.clusterKeyExpressions | default(false)  == desiredState.config.clusterKeyExpressions %}
+            {% set clusterKeyConfigTest = currentState.config.clusterKeyConfig | default({'items': [{}]}) == desiredState.config.clusterKeyConfig %}
+            {% set clusterKeyConfigExpressionsTest = currentState.config.clusterKeyConfigExpressions | default({'items': [{}]}) == desiredState.config.clusterKeyConfigExpressions %}
 
             {% if 
                 clusterKeyTest == false or
@@ -343,19 +354,14 @@ does not permit copying or modification for any other purpose.
             {%- if desiredState.node.description | length > 0 %} 
                 {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description |escape + "'" %}
             {% endif %}
-        
-            {% if nsVariables.storageLocationTest == false or 
-             nodeNameTest == false  %}
-             
-                {# Current Dynamic Table Name #}
+            
+            {% if createTest == true and  currentState.node.materializationType != desiredState.node.materializationType %}
+                {# Change in materialization type #}
+                {{ stage('Drop ' + ref_no_link(currentState.node.location.name, currentState.node.name)) }}
+                {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
+                DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-                {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-                {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
-
-                {{ stage('Drop Dynamic Table at old location/name', true, "sql", "drop") }}
-                  DROP DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
-            {%endif%}
+            {% endif %}
             
             {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
             CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
@@ -456,13 +462,13 @@ does not permit copying or modification for any other purpose.
 
             {# Current Warehouse#}
             {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-                {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
+                {% set currentDynamicTableWarehouse = currentState.config.warehouseName | default('dev_wh_xs') %}
             {% else %}
                 {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
             {% endif %}
 
             {# Current Downstream Option or Lag Specification#}
-            {% if currentState.config.downstreamOption == true %}
+            {% if currentState.config.downstreamOption | default(false)  == true %}
                 {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
             {% else %}
                 {% set currentDynamicTableLagValue = currentState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}

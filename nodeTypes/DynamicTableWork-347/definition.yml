@@ -147,6 +147,7 @@ metadata:
         - type: toggleButton
           displayName: Copy grants
           attributeName: cpygrants
+          default: false
 
         - type: toggleButton
           displayName: Immutability Constraint
@@ -156,6 +157,7 @@ metadata:
         - type: textBox
           displayName: Immutable Where Expression(Eg- column_name < CURRENT_TIMESTAMP() - INTERVAL '7 days')
           attributeName: immutableExpression
+          default: ""
           enableIf: "{% if config.immutabilityConstraint %} true {% else %} false {% endif %}"
 
         - type: toggleButton
@@ -170,10 +172,12 @@ metadata:
         - type: textBox
           displayName: Backfill Source Schema
           attributeName: backfillSourceSchema 
+          default: ""
 
         - type: textBox
           displayName: Backfill Source Table
           attributeName:  backfillSource
+          default: ""
           
         - type: toggleButton
           displayName: Use Time Travel
@@ -183,6 +187,7 @@ metadata:
         - type: dropdownSelector
           displayName: Time Travel Type
           attributeName: timeTraveltype
+          default: ""
           options: 
           - AT
           - BEFORE
@@ -191,6 +196,7 @@ metadata:
         - type: dropdownSelector
           displayName: Time Travel Reference
           attributeName: timeTravelreference
+          default: ""
           options:
           - OFFSET
           - STATEMENT
@@ -200,6 +206,7 @@ metadata:
         - type: textBox
           displayName: Time Travel Value
           attributeName: timeTravelvalue
+          default: ""
           enableIf: "{% if config.timeTravel %} true {% else %} false {% endif %}"
 
         enableIf: "{% if config.backfill and config.immutabilityConstraint %} true {% else %} false {% endif %}"

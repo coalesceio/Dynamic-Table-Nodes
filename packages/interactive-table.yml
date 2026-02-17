@@ -1,0 +1,13 @@
+config:
+  entities:
+    nodeTypes:
+      "602":
+        defaultStorageLocation: null
+        isDisabled: false
+  packageVariables: ""
+fileVersion: 1
+id: "@coalesce/snowflake/interactive-table"
+name: interactive-table
+packageID: "@coalesce/snowflake/interactive-table"
+releaseID: 696471c9-e29b-44ae-bf66-3bc76578fc41
+type: Package

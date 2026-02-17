@@ -20,8 +20,6 @@ does not permit copying or modification for any other purpose.
       {%endif%}
 {%endif%}
 
-{% if desiredState  %}
-
  {# Materialization type transient dynamic table or dynamic table #}
  {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
 
@@ -120,7 +118,7 @@ does not permit copying or modification for any other purpose.
         {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}
 
         {# grant config change#}
-        {% set granttest = currentState.config.cpygrants == desiredState.config.cpygrants%}
+        {% set granttest = currentState.config.cpygrants | default(false) == desiredState.config.cpygrants%}
 																						
         {# Node #}
         {% set nodeNameTest = currentState.node.name == desiredState.node.name %}
@@ -128,22 +126,22 @@ does not permit copying or modification for any other purpose.
         
 
         {# Refresh_mode test #}
-        {% set refreshTest = currentState.config.refresh_mode == desiredState.config.refresh_mode %}
+        {% set refreshTest = currentState.config.refresh_mode  | default('AUTO') == desiredState.config.refresh_mode %}
 
         {# Initialize test #}
-        {% set initializeTest = currentState.config.initialize == desiredState.config.initialize %}
+        {% set initializeTest = currentState.config.initialize | default('ON_CREATE') == desiredState.config.initialize %}
 
         {# Immutability test#}
-        {% set immutabilityTest = currentState.config.immutableExpression == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint == desiredState.config.immutabilityConstraint %}
+        {% set immutabilityTest = currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint | default(false) == desiredState.config.immutabilityConstraint %}
 
         {# BackFill Test#}
-        {% set backfilltest = currentState.config.backfill == desiredState.config.backfill
-        and currentState.config.backfillSource == desiredState.config.backfillSource
-        and currentState.config.backfillSourceSchema == desiredState.config.backfillSourceSchema
-        and  currentState.config.timeTravel == desiredState.config.timeTravel
-        and currentState.config.timeTraveltype == desiredState.config.timeTraveltype
-        and currentState.config.timeTravelreference == desiredState.config.timeTravelreference
-        and currentState.config.timeTravelvalue == desiredState.config.timeTravelvalue %}
+        {% set backfilltest = currentState.config.backfill | default(false) == desiredState.config.backfill
+        and currentState.config.backfillSource | default('') == desiredState.config.backfillSource
+        and currentState.config.backfillSourceSchema | default('') == desiredState.config.backfillSourceSchema
+        and  currentState.config.timeTravel | default(false) == desiredState.config.timeTravel
+        and currentState.config.timeTraveltype | default('') == desiredState.config.timeTraveltype
+        and currentState.config.timeTravelreference | default('') == desiredState.config.timeTravelreference
+        and currentState.config.timeTravelvalue | default('') == desiredState.config.timeTravelvalue %}
 
        
         {# Column description changes and other column level changes #}
@@ -210,24 +208,24 @@ does not permit copying or modification for any other purpose.
     {# Identify config changes that would only result in ALTER #}
     {% if createTest == false %}
         {% if desiredState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set warehouseTest = currentState.config.warehouseName == desiredState.config.warehouseName %}
+            {% set warehouseTest = currentState.config.warehouseName | default('') == desiredState.config.warehouseName %}
         {% else %}
             {% set warehouseTest = currentState.parameters.targetDynamicTableWarehouse == desiredState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
         {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
-        {% set downstreamOptionTest = currentState.config.downstreamOption == desiredState.config.downstreamOption %}
+        {% set downstreamOptionTest = currentState.config.downstreamOption | default(false) == desiredState.config.downstreamOption %}
         {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
 
         {# Advance Warehouse Test #}
-        {%set advanceWarehouseTest = currentState.config.advanceWarehouse == desiredState.config.advanceWarehouse%}
-        {%set refreshWarehouseTest = currentState.config.refreshWarehouseSize == desiredState.config.refreshWarehouseSize %}
-        {% set initializeWarehouseTest = currentState.config.initializeWarehouseSize == desiredState.config.initializeWarehouseSize %}
+        {%set advanceWarehouseTest = currentState.config.advanceWarehouse | default(false) == desiredState.config.advanceWarehouse%}
+        {%set refreshWarehouseTest = currentState.config.refreshWarehouseSize | default('') == desiredState.config.refreshWarehouseSize %}
+        {% set initializeWarehouseTest = currentState.config.initializeWarehouseSize | default('') == desiredState.config.initializeWarehouseSize %}
 
             {# Clustering Test #}
-            {% set clusterKeyTest = currentState.config.clusterKey == desiredState.config.clusterKey %}
-            {% set clusterKeyExpressionsTest = currentState.config.clusterKeyExpressions == desiredState.config.clusterKeyExpressions %}
-            {% set clusterKeyConfigTest = currentState.config.clusterKeyConfig == desiredState.config.clusterKeyConfig %}
-            {% set clusterKeyConfigExpressionsTest = currentState.config.clusterKeyConfigExpressions == desiredState.config.clusterKeyConfigExpressions %}
+            {% set clusterKeyTest = currentState.config.clusterKey | default(false) == desiredState.config.clusterKey %}
+            {% set clusterKeyExpressionsTest = currentState.config.clusterKeyExpressions | default(false) == desiredState.config.clusterKeyExpressions %}
+            {% set clusterKeyConfigTest = currentState.config.clusterKeyConfig | default({'items': [{}]}) == desiredState.config.clusterKeyConfig %}
+            {% set clusterKeyConfigExpressionsTest = currentState.config.clusterKeyConfigExpressions | default({'items': [{}]}) == desiredState.config.clusterKeyConfigExpressions %}
 
             {% if 
                 clusterKeyTest == false or
@@ -452,10 +450,9 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
 
-
         {# Current Warehouse #}
         {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-            {% set currentDynamicTableWarehouse = currentState.config.warehouseName %}
+            {% set currentDynamicTableWarehouse = currentState.config.warehouseName | default('') %}
         {% else %}
             {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
