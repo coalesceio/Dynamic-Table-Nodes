@@ -1,0 +1,118 @@
+fileVersion: 1
+id: 77377470-70d4-4753-bc17-33439c21ece8
+name: TSKWRK_ORDERS_001
+operation:
+  config:
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    devMode: false
+    flagSrcStream: true
+    groupByAll: false
+    insertStrategy: UNION
+    multiStreamBehavior: AND
+    orderby: false
+    orderbycolumn:
+      items:
+        - {}
+    predTask: DATA_TRANSFORMATION_ROOT_TASK
+    rootTask: DATA_TRANSFORMATION_ROOT_TASK
+    scheduleCRON: 5 0-23 * * * America/Los_Angeles
+    schedulePeriod: "60"
+    schedulePeriodOption: Minutes
+    schedulingMode: Warehouse Task
+    selectDistinct: true
+    serverlessSize: MEDIUM
+    truncateBefore: true
+    whName: COMPUTE_WH
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: task
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 69aee0fc-a1c1-462b-96e1-521cd42425ae
+          stepCounter: 77377470-70d4-4753-bc17-33439c21ece8
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: O_ORDERKEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 6e1aae34-7a48-4450-8779-cbdaec776eb2
+                stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5afe1c8c-0f22-431f-8eb2-890c95a17a57
+          stepCounter: 77377470-70d4-4753-bc17-33439c21ece8
+        config: {}
+        dataType: VARCHAR(25)
+        description: ""
+        name: O_ORDERNAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: f9374e4a-b902-4ed1-b706-057c85829337
+                stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: b39c3ba0-4fc4-4e43-af89-c6a93146aa3a
+          stepCounter: 77377470-70d4-4753-bc17-33439c21ece8
+        config: {}
+        dataType: DATE
+        description: ""
+        name: O_ORDERDATE
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 96721b79-5668-4a36-b964-8931bb84b2a7
+                stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 77afa89c-15a9-4859-9c06-1fb991215994
+          stepCounter: 77377470-70d4-4753-bc17-33439c21ece8
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: CREATED_AT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: f5fb5f1c-0124-42cc-9940-8fa9649ceb55
+                stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          ORDERS: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: ORDERS
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'ORDERS') }} "ORDERS"
+        name: TSKWRK_ORDERS_001
+        noLinkRefs: []
+  name: TSKWRK_ORDERS_001
+  overrideSQL: false
+  schema: ""
+  sqlType: streams-and-tasks:::151
+  type: sql
+  version: 1
+type: Node
