@@ -3,6 +3,10 @@ id: 58627503-085d-49a4-8a15-1e81b1beeea3
 name: FCT_ORDERS_002
 operation:
   config:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
     clusterKey: true
     clusterKeyConfig:
       items:
@@ -13,40 +17,65 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
-    deleteStrategy: NO DELETE
-    excludeMergeList:
+    cpygrants: false
+    downstreamOption: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: fd3008b7-54d9-4e4f-8721-830d347e170e
+            stepCounter: 58627503-085d-49a4-8a15-1e81b1beeea3
+    orderByDateTime:
       items:
         - {}
-    excludeMergeToggle: false
-    groupByAll: false
-    insertStrategy: UNION ALL
-    lastModifiedComparison: false
-    orderby: false
-    orderbycolumn:
+    orderseq:
       items:
         - {}
-    postSQL: ""
-    preSQL: ""
-    primary: true
-    primaryKeyCol:
+    partitionBy:
       items:
-        - primaryKey:
+        - partColName:
             columnCounter: 074b693a-e381-48b0-8493-efb915cf3fe8
             stepCounter: 58627503-085d-49a4-8a15-1e81b1beeea3
-    primaryKeyName: ""
-    selectDistinct: false
-    testsEnabled: false
-    treatNullAsCurrentTimestamp: false
-    truncateBefore: false
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - {}
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: e63f4441-e07e-4e83-8d01-9bb2978a9c9b
+          stepCounter: 58627503-085d-49a4-8a15-1e81b1beeea3
+        config: {}
+        dataType: STRING
+        description: ""
+        isSurrogateKey: true
+        name: FCT_ORDERS_002_KEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 074b693a-e381-48b0-8493-efb915cf3fe8
@@ -103,40 +132,32 @@ operation:
               - columnCounter: f5fb5f1c-0124-42cc-9940-8fa9649ceb55
                 stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
             transform: ""
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
+      - appliedColumnTests: {}
         columnReference:
-          columnCounter: 8daa5685-5919-430b-a44f-cf8662dd9040
+          columnCounter: 5eadbbf7-a44d-413b-9ff5-754e54d3522a
           stepCounter: 58627503-085d-49a4-8a15-1e81b1beeea3
         config: {}
         dataType: TIMESTAMP
-        defaultValue: ""
         description: ""
-        isSystemCreateDate: true
-        name: SYSTEM_CREATE_DATE
+        isSystemStartDate: true
+        name: RECORD_START_TIME
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
+            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}"
+      - appliedColumnTests: {}
         columnReference:
-          columnCounter: 1977bc44-635f-4077-b03e-d8991e5d47a0
+          columnCounter: 39de5fbb-ad0e-46bf-8b76-936e3f21d2a2
           stepCounter: 58627503-085d-49a4-8a15-1e81b1beeea3
         config: {}
         dataType: TIMESTAMP
-        defaultValue: ""
         description: ""
-        isSystemUpdateDate: true
-        name: SYSTEM_UPDATE_DATE
+        isSystemEndDate: true
+        name: RECORD_END_TIME
         nullable: true
         sourceColumnReferences:
           - columnReferences: []
-            transform: CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
+            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -154,7 +175,7 @@ operation:
   name: FCT_ORDERS_002
   overrideSQL: false
   schema: ""
-  sqlType: base-node-types-advanced-deploy:::389
+  sqlType: "350"
   type: sql
   version: 1
 type: Node
