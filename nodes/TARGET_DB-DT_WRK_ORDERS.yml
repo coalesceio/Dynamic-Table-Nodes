@@ -19,22 +19,39 @@ operation:
     clusterKeyExpressions: false
     cpygrants: false
     downstreamOption: false
-    groupByAll: false
     immutabilityConstraint: false
     immutableExpression: ""
     initialize: ON_CREATE
     initializeWarehouseSize: ""
-    insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: 013d428c-e03b-4f0f-8104-8a1442fbe1dd
+            stepCounter: c207fb99-6c9d-4e91-9df1-02205b925c78
+    orderByDateTime:
+      items:
+        - {}
+    orderseq:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 8d1bee1b-7dbd-4d66-998a-0cb9a836fcbf
+            stepCounter: c207fb99-6c9d-4e91-9df1-02205b925c78
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - {}
     refreshWarehouseSize: ""
     refresh_mode: AUTO
-    selectDistinct: false
     timeTravel: false
-    timeTravelreference: ""
-    timeTraveltype: ""
+    timeTravelreference: OFFSET
+    timeTraveltype: AT
     timeTravelvalue: ""
     warehouseName: COMPUTE_WH
   database: ""
@@ -46,6 +63,19 @@ operation:
   metadata:
     appliedNodeTests: []
     columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 097a1513-7c1a-40b9-8e05-b08c9e34aa8c
+          stepCounter: c207fb99-6c9d-4e91-9df1-02205b925c78
+        config: {}
+        dataType: STRING
+        description: ""
+        isSurrogateKey: true
+        name: DT_WRK_ORDERS_KEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: "{{ dimensionHistoryPk() }}"
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 8d1bee1b-7dbd-4d66-998a-0cb9a836fcbf
@@ -102,6 +132,32 @@ operation:
               - columnCounter: f5fb5f1c-0124-42cc-9940-8fa9649ceb55
                 stepCounter: 9a745f51-d32a-4a17-8b40-1347cd3a4b83
             transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3c7ac788-adf4-451f-99f8-faf1542526de
+          stepCounter: c207fb99-6c9d-4e91-9df1-02205b925c78
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        isSystemStartDate: true
+        name: RECORD_START_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}"
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: d10f00c3-a5e2-4f71-9b6f-b7846b1680b0
+          stepCounter: c207fb99-6c9d-4e91-9df1-02205b925c78
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        isSystemEndDate: true
+        name: RECORD_END_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -119,7 +175,7 @@ operation:
   name: DT_WRK_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: "347"
+  sqlType: "350"
   type: sql
   version: 1
 type: Node

@@ -19,6 +19,18 @@ does not permit copying or modification for any other purpose.
 
       {%endif%}
 {%endif%}
+{% if desiredState  %}
+
+    {%- if currentState != undefined and currentState.node.nodeType != desiredState.node.nodeType %}
+        {%- set warningMsg = getNodeTypeSwitchWarning() | default('') %}
+
+        {# Warning display - Node type changes can impact related tasks, streams, or services. #}
+        {%- if warningMsg | trim | length > 0 -%}
+            {{ stage('Warning! Node Type Switching Detected', false) }}
+            {{ warningMsg }}
+            select 1=0
+        {%- endif -%}
+    {%- endif -%}
 
  {# Materialization type transient dynamic table or dynamic table #}
  {%if  desiredState.node.materializationType == 'transient dynamic table' or  desiredState.node.materializationType == 'dynamic table' %}
@@ -344,19 +356,14 @@ does not permit copying or modification for any other purpose.
         {%- if desiredState.node.description | length > 0 %} 
             {% set dynamicTableComment = "COMMENT = " + "'" + desiredState.node.description | escape + "'" %}
         {% endif %}
-        
-        {% if nsVariables.storageLocationTest == false or 
-             nodeNameTest == false  %}
-             
-             {# Current Dynamic Table Name #}
 
-           {% set currentTargetDynamicTableDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
-           {% set currentTargetDynamicTableSchema = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[1] %} 
-           {% set currentFullyQualifiedTargetDynamicTableName = ref_no_link(currentState.node.location.name, currentState.node.name) %}
+            {% if createTest == true and  currentState.node.materializationType != desiredState.node.materializationType %}
+                {# Change in materialization type #}
+                {{ stage('Drop ' + ref_no_link(currentState.node.location.name, currentState.node.name)) }}
+                {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
+                DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
-                {{ stage('Drop Dynamic Table at old location/name', true, "sql", "drop") }}
-                  DROP DYNAMIC TABLE IF EXISTS {{currentFullyQualifiedTargetDynamicTableName}}
-        {%endif%}
+            {% endif %}
 
         {{ stage('Create Dimension '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
         CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
@@ -722,7 +729,7 @@ does not permit copying or modification for any other purpose.
             {%endif%}
         {% endif %}
     {% endif %}
-{%elif  currentState != undefined and desiredState == undefined%}
+{% elif  currentState != undefined and desiredState == undefined%}
 
     {# Table or View Name #}
     {% set targetObjectDatabase = ref_no_link(currentState.node.location.name, currentState.node.name).split('.')[0] %} 
