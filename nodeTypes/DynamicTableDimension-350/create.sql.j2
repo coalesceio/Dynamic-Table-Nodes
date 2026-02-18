@@ -224,7 +224,7 @@ does not permit copying or modification for any other purpose.
         {% else %}
             {% set warehouseTest = currentState.parameters.targetDynamicTableWarehouse == desiredState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
-        {% set lagSpecificationTest = currentState.config.lagSpecification | default({'items': [{}]}) == desiredState.config.lagSpecification %}
+        {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
         {% set downstreamOptionTest = currentState.config.downstreamOption | default(false) == desiredState.config.downstreamOption %}
         {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
 
