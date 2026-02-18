@@ -50,8 +50,8 @@ operation:
     refreshWarehouseSize: ""
     refresh_mode: AUTO
     timeTravel: false
-    timeTravelreference: ""
-    timeTraveltype: ""
+    timeTravelreference: OFFSET
+    timeTraveltype: AT
     timeTravelvalue: ""
     warehouseName: COMPUTE_WH
   database: ""
@@ -63,16 +63,12 @@ operation:
   metadata:
     appliedNodeTests: []
     columns:
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
+      - appliedColumnTests: {}
         columnReference:
-          columnCounter: fcb53053-6dd3-42eb-8363-cf62d21d9f96
+          columnCounter: 65eee6f9-d965-47bd-88c1-415804504f3d
           stepCounter: 04f7a889-783d-4136-b02c-d2bbbf385084
         config: {}
         dataType: STRING
-        defaultValue: ""
         description: ""
         isSurrogateKey: true
         name: DT_DIM_ORDERS_KEY
@@ -141,40 +137,6 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: c32a6316-2ae6-423d-9576-c984f82d07fb
-          stepCounter: 04f7a889-783d-4136-b02c-d2bbbf385084
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemStartDate: true
-        name: RECORD_START_TIME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}"
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: 89b23639-302e-415d-98a2-3399c44144d0
-          stepCounter: 04f7a889-783d-4136-b02c-d2bbbf385084
-        config: {}
-        dataType: TIMESTAMP
-        defaultValue: ""
-        description: ""
-        isSystemEndDate: true
-        name: RECORD_END_TIME
-        nullable: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
           columnCounter: de89e0a0-c2d5-4162-982c-16dfece684d5
           stepCounter: 04f7a889-783d-4136-b02c-d2bbbf385084
         config: {}
@@ -204,6 +166,32 @@ operation:
         sourceColumnReferences:
           - columnReferences: []
             transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 3f027c62-298d-4879-9047-1af7cd0e7246
+          stepCounter: 04f7a889-783d-4136-b02c-d2bbbf385084
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        isSystemStartDate: true
+        name: RECORD_START_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}"
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: ce074561-9f7c-446a-b047-899bc5864e2e
+          stepCounter: 04f7a889-783d-4136-b02c-d2bbbf385084
+        config: {}
+        dataType: TIMESTAMP
+        description: ""
+        isSystemEndDate: true
+        name: RECORD_END_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
