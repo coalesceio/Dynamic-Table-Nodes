@@ -112,10 +112,10 @@ does not permit copying or modification for any other purpose.
              {% endif %}
 
         {# Config #}
-        {% set partitionByTest = currentState.config.partitionBy == desiredState.config.partitionBy %}
-        {% set orderByTest = currentState.config.orderBy == desiredState.config.orderBy %}
-        {% set orderByDateTimeTest = currentState.config.orderByDateTime == desiredState.config.orderByDateTime %}
-        {% set recordVersioningTest = currentState.config.recordVersioning == desiredState.config.recordVersioning %}
+        {% set partitionByTest = currentState.config.partitionBy | default({'items': [{}]}) == desiredState.config.partitionBy %}
+        {% set orderByTest = currentState.config.orderBy | default({'items': [{}]}) == desiredState.config.orderBy %}
+        {% set orderByDateTimeTest = currentState.config.orderByDateTime | default({'items': [{}]}) == desiredState.config.orderByDateTime %}
+        {% set recordVersioningTest = currentState.config.recordVersioning | default({'items': [{}]}) == desiredState.config.recordVersioning %}
 
         {# grant config change#}
         {% set granttest = currentState.config.cpygrants | default(false) == desiredState.config.cpygrants%}
@@ -126,10 +126,10 @@ does not permit copying or modification for any other purpose.
         
 
         {# Refresh_mode test #}
-        {% set refreshTest = currentState.config.refresh_mode  | default('AUTO') == desiredState.config.refresh_mode %}
+        {% set refreshTest = currentState.config.refresh_mode  | default('') == desiredState.config.refresh_mode %}
 
         {# Initialize test #}
-        {% set initializeTest = currentState.config.initialize | default('ON_CREATE') == desiredState.config.initialize %}
+        {% set initializeTest = currentState.config.initialize | default('') == desiredState.config.initialize %}
 
         {# Immutability test#}
         {% set immutabilityTest = currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint | default(false) == desiredState.config.immutabilityConstraint %}
@@ -212,7 +212,7 @@ does not permit copying or modification for any other purpose.
         {% else %}
             {% set warehouseTest = currentState.parameters.targetDynamicTableWarehouse == desiredState.parameters.targetDynamicTableWarehouse %}
         {% endif %}
-        {% set lagSpecificationTest = currentState.config.lagSpecification == desiredState.config.lagSpecification %}
+        {% set lagSpecificationTest = currentState.config.lagSpecification | default({'items': [{}]}) == desiredState.config.lagSpecification %}
         {% set downstreamOptionTest = currentState.config.downstreamOption | default(false) == desiredState.config.downstreamOption %}
         {% set nodeCommentTest = currentState.node.description == desiredState.node.description %}
 
@@ -458,7 +458,7 @@ does not permit copying or modification for any other purpose.
         {% endif %}
 
         {# Current Downstream Option or Lag Specification#}
-        {% if currentState.config.downstreamOption == true %}
+        {% if currentState.config.downstreamOption | default(false) == true %}
             {% set currentDynamicTableLagSpecification = 'DOWNSTREAM' %}
         {% else %}
             {% set currentDynamicTableLagValue = currentState.config.lagSpecification.get('items') | map(attribute='lagValue') | first %}

@@ -136,10 +136,10 @@ does not permit copying or modification for any other purpose.
             {% set nodeIsMultisource = currentState.node.isMultisource == desiredState.node.isMultisource %}
 
             {# Refresh_mode test#}
-            {% set refreshTest = currentState.config.refresh_mode | default('AUTO') == desiredState.config.refresh_mode %}
+            {% set refreshTest = currentState.config.refresh_mode | default('') == desiredState.config.refresh_mode %}
 
             {#Initialize test#}
-            {% set initializeTest = currentState.config.initialize | default('ON_CREATE') == desiredState.config.initialize %}
+            {% set initializeTest = currentState.config.initialize | default('') == desiredState.config.initialize %}
 
             {# Immutability test#}
             {% set immutabilityTest = currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint | default(false)  == desiredState.config.immutabilityConstraint %}
@@ -462,7 +462,7 @@ does not permit copying or modification for any other purpose.
 
             {# Current Warehouse#}
             {% if currentState.parameters.targetDynamicTableWarehouse == 'DEV ENVIRONMENT' %}
-                {% set currentDynamicTableWarehouse = currentState.config.warehouseName | default('dev_wh_xs') %}
+                {% set currentDynamicTableWarehouse = currentState.config.warehouseName | default('') %}
             {% else %}
                 {% set currentDynamicTableWarehouse = currentState.parameters.targetDynamicTableWarehouse %}
             {% endif %}
