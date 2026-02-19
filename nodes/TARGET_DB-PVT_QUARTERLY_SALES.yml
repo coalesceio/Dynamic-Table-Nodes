@@ -1,0 +1,102 @@
+fileVersion: 1
+id: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+name: PVT_QUARTERLY_SALES
+operation:
+  config:
+    Colvol1: ""
+    aggfunc:
+      items:
+        - {}
+    aggfunc1:
+      items:
+        - funcname1: SUM
+    defaultval: ""
+    defvalue: false
+    excolval: false
+    exlcol:
+      items:
+        - {}
+    inferPivot: false
+    samKeyColval: false
+    sincol: true
+    subqueryval1: ""
+    tabKeyColumn:
+      items:
+        - keyColTextBox: AMOUNT
+    tabValueColumn:
+      items:
+        - valColTextBox: QUARTER
+    testsEnabled: false
+    trunc: false
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 8ba4f4a9-9469-4817-bec5-9ee7f7483061
+          stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: EMPID
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: df93e0e4-350e-4b87-be71-850513047b91
+                stepCounter: b2589527-e8f1-4858-98c7-fba54ee0c344
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 6aedffec-9580-40f0-9c1c-0d84965c58d4
+          stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: AMOUNT
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: cd9a1ce7-5e10-4f66-bf26-250a618783d1
+                stepCounter: b2589527-e8f1-4858-98c7-fba54ee0c344
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: d404b893-9db0-42cf-b294-500224004a71
+          stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: QUARTER
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: b8504386-74b0-4238-b4a8-946b1a4fe391
+                stepCounter: b2589527-e8f1-4858-98c7-fba54ee0c344
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          QUARTERLY_SALES: b2589527-e8f1-4858-98c7-fba54ee0c344
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: QUARTERLY_SALES
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'QUARTERLY_SALES') }} "QUARTERLY_SALES"
+        name: PVT_QUARTERLY_SALES
+        noLinkRefs: []
+  name: PVT_QUARTERLY_SALES
+  overrideSQL: false
+  schema: ""
+  sqlType: functional-node-types:::409
+  type: sql
+  version: 1
+type: Node
