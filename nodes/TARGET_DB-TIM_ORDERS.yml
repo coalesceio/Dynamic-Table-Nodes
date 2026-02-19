@@ -20,7 +20,10 @@ operation:
     loadType: Merge
     mergeOrderBy:
       items:
-        - {}
+        - colName:
+            columnCounter: 16518684-1bce-454f-bec2-fd2f39834b18
+            stepCounter: 0b477eb2-eb0e-435a-a9e0-51f1a4ac3a20
+          sortOrd: desc
     multiStreamBehavior: AND
     orderby: false
     orderbycolumn:
@@ -28,7 +31,9 @@ operation:
         - {}
     partitionBy:
       items:
-        - {}
+        - partColName:
+            columnCounter: db559282-0287-4aef-83dd-99be3c75579f
+            stepCounter: 0b477eb2-eb0e-435a-a9e0-51f1a4ac3a20
     predTask: DATA_TRANSFORMATION_ROOT_TASK
     rootTask: DATA_TRANSFORMATION_ROOT_TASK
     scheduleCRON: 5 0-23 * * * America/Los_Angeles

@@ -16,16 +16,22 @@ operation:
     exlcol:
       items:
         - {}
-    inferPivot: false
+    inferPivot: true
     samKeyColval: false
     sincol: true
-    subqueryval1: ""
+    subqueryval1: ANY ORDER BY quarter
     tabKeyColumn:
       items:
-        - keyColTextBox: AMOUNT
+        - keyColDropdown:
+            columnCounter: d404b893-9db0-42cf-b294-500224004a71
+            stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+          keyColTextBox: QUARTER
     tabValueColumn:
       items:
-        - valColTextBox: QUARTER
+        - valColDropdown:
+            columnCounter: 6aedffec-9580-40f0-9c1c-0d84965c58d4
+            stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+          valColTextBox: TOTAL
     testsEnabled: false
     trunc: false
   database: ""
