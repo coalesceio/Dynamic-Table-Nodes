@@ -3,21 +3,63 @@ id: f39e35f6-0000-4375-8d56-38d0e6eb0b91
 name: TGCR_ORDERS
 operation:
   config:
-    mflagSrcStream: false
-    multiStreamBehavior: AND
-    scheduleCRON: 5 0-23 * * * America/Los_Angeles
-    schedulePeriod: "60"
-    schedulePeriodOption: Minutes
-    schedulingMode: Warehouse Task
-    serverlessSize: MEDIUM
-    tskSql: select current_timestamp()
-    whName: COMPUTE_WH
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 104779ac-8c2b-4d65-86cf-3cec9e71085e
+            stepCounter: f39e35f6-0000-4375-8d56-38d0e6eb0b91
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: fdbff71f-9140-4ffc-8e48-d59c176c71ac
+            stepCounter: f39e35f6-0000-4375-8d56-38d0e6eb0b91
+    orderByDateTime:
+      items:
+        - {}
+    orderseq:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: 104779ac-8c2b-4d65-86cf-3cec9e71085e
+            stepCounter: f39e35f6-0000-4375-8d56-38d0e6eb0b91
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - {}
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: task
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -94,7 +136,7 @@ operation:
   name: TGCR_ORDERS
   overrideSQL: false
   schema: ""
-  sqlType: streams-and-tasks:::154
+  sqlType: "351"
   type: sql
   version: 1
 type: Node

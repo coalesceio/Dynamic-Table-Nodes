@@ -3,43 +3,63 @@ id: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
 name: PVT_QUARTERLY_SALES
 operation:
   config:
-    Colvol1: ""
-    aggfunc:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
+    clusterKeyConfig:
+      items:
+        - columnName:
+            columnCounter: 8ba4f4a9-9469-4817-bec5-9ee7f7483061
+            stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+    clusterKeyConfigExpressions:
       items:
         - {}
-    aggfunc1:
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    lagSpecification:
       items:
-        - funcname1: SUM
-    defaultval: ""
-    defvalue: false
-    excolval: false
-    exlcol:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: ae798c17-033c-4ce3-b742-229b24b96f43
+            stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+    orderByDateTime:
       items:
         - {}
-    inferPivot: true
-    samKeyColval: false
-    sincol: true
-    subqueryval1: ANY ORDER BY quarter
-    tabKeyColumn:
+    orderseq:
       items:
-        - keyColDropdown:
-            columnCounter: d404b893-9db0-42cf-b294-500224004a71
-            stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
-          keyColTextBox: QUARTER
-    tabValueColumn:
+        - {}
+    partitionBy:
       items:
-        - valColDropdown:
-            columnCounter: 6aedffec-9580-40f0-9c1c-0d84965c58d4
+        - partColName:
+            columnCounter: 8ba4f4a9-9469-4817-bec5-9ee7f7483061
             stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
-          valColTextBox: TOTAL
-    testsEnabled: false
-    trunc: false
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - {}
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
@@ -85,6 +105,26 @@ operation:
               - columnCounter: b8504386-74b0-4238-b4a8-946b1a4fe391
                 stepCounter: b2589527-e8f1-4858-98c7-fba54ee0c344
             transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: ae798c17-033c-4ce3-b742-229b24b96f43
+          stepCounter: 22cb6892-b775-4f5d-8ef2-1fc2c1663ac9
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: DATE_COL
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: ""
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -102,7 +142,7 @@ operation:
   name: PVT_QUARTERLY_SALES
   overrideSQL: false
   schema: ""
-  sqlType: functional-node-types:::409
+  sqlType: "351"
   type: sql
   version: 1
 type: Node
