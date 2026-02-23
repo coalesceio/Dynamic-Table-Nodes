@@ -6,6 +6,7 @@ operation:
     advanceWarehouse: false
     backfill: true
     backfillSource: DT_DIM_SRC_DIM_CUSTOMER_HIST
+    backfillSourceSchema: ""
     clusterKey: false
     clusterKeyConfig:
       items:

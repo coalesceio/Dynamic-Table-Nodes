@@ -4,8 +4,9 @@ name: DT_WRK_SRC_DIM_CUSTOMER
 operation:
   config:
     advanceWarehouse: false
-    backfill: true
+    backfill: false
     backfillSource: STG_SRC_DIM_CUSTOMER
+    backfillSourceSchema: ""
     clusterKey: false
     clusterKeyConfig:
       items:
@@ -17,8 +18,8 @@ operation:
     cpygrants: false
     downstreamOption: false
     groupByAll: false
-    immutabilityConstraint: true
-    immutableExpression: DATA_LOAD_TIMESTAMP < CURRENT_TIMESTAMP() - INTERVAL '7 days'
+    immutabilityConstraint: false
+    immutableExpression: ""
     initialize: ON_CREATE
     initializeWarehouseSize: Small
     insertStrategy: UNION ALL
@@ -29,7 +30,7 @@ operation:
     refreshWarehouseSize: X-Small
     refresh_mode: AUTO
     selectDistinct: false
-    timeTravel: true
+    timeTravel: false
     timeTravelreference: STATEMENT
     timeTraveltype: AT
     timeTravelvalue: 01c16a8d-0307-627a-001a-8bfb0006cb86
