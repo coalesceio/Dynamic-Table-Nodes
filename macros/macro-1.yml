@@ -260,6 +260,11 @@ macroString: |+
           {# Current Node Type: Cortex Nodes #} 
 
           -- ⚠️ Warning: Cortex search service is attached to this node. Changing its type may cause service failures, inconsistencies, or data loss. Any required updates/drops must be handled manually. 
+      {%- elif currentState.node.nodeType.split(':::')[-1] in ['416', '448'] -%}
+
+          {# Current Node Type: Data Quality related statis table/view #}
+
+          -- ⚠️ Warning: This node is used for data quality checks and may not represent the final static schema. Deployment or execution could fail or interrupt email notifications.
 
       {%- endif %} 
 
