@@ -1,3 +1,47 @@
+## Snowflake - Dynamic Tables - Brief Summary
+
+- **Dynamic Table Work**
+Serve as intermediate processing layers within a data pipeline. These nodes handle complex transformations, data cleaning, and filtering before data reaches final consumption. They optimize performance by breaking down logic into manageable, automated steps.
+
+- **Dynamic Table Dimension**
+Provide essential business context, such as attributes for customers, products, or locations. These nodes use declarative logic to ensure descriptive data is automatically synchronized with source changes, allowing for seamless slicing and dicing of metrics in reports.
+
+- **Dynamic Table Latest Record version**
+Ensure data integrity by automatically surfacing the most recent state of a record. By handling deduplication and versioning natively, these nodes provide a "single source of truth" for the current status of business entities, eliminating the need for complex manual cleanup queries.
+
+**Summary:**
+Together, these node types leverage Snowflake’s declarative orchestration to provide a low-maintenance, automated framework for real-time data modeling. They ensure that business insights are built on fresh, accurate, and high-performance data structures.
+
+----
+
+## Nodetypes Config Matrix
+
+| Category | Feature | DT Work | DT Dimension | DT Latest Record |
+| :--- | :--- | :---: | :---: | :---: |
+| **Create** | Create As Dynamic Table | ✅ | ✅ | ✅ |
+ **Create** | Create As Dynamic Transient Table | ✅ | ✅ | ✅ |
+| **Create** | Warehouse | ✅ | ✅ | ✅ |
+| **Create** | Advanced Warehouse Selection | ✅ | ✅ | ✅ |
+| **Create** |  Initialization Warehouse Size | ✅ | ✅ | ✅ |
+| **Create** | Initialize | ✅ | ✅ | ✅ |
+| **Create** | Cluster Key | ✅ | ✅ | ✅ | 
+| **Refresh** | Refresh Warehouse size | ✅ | ✅ | ✅ |
+| **Refresh** | Lag Specification (Time/Period) | ✅ | ✅ | ✅ |
+| **Refresh** | Downstream Lag | ✅ | ✅ | ✅ |
+| **Refresh** | Refresh Mode | ✅ | ✅ | ✅ |
+| **Refresh** | Backfill Options | ✅ | ✅ | ✅ |
+| **Logic** | Distinct / Group By All | ✅ | ⬜ | ⬜ |
+| **Logic** | Table Key(s) / Business Key | ⬜ | ✅ | ✅ |
+| **Logic** | Record Versioning Logic | ⬜ | ✅ | ✅ |
+| **Logic** | Sequence / Ordering Column | ⬜ | ✅ | ✅ |
+| **Logic** | Timestamp-track Data Load | ⬜ | ✅ | ✅ |
+| **Options** | Copy Grants | ✅ | ✅ | ✅ |
+| **Options** | Immutability Constraint | ✅ | ✅ | ✅ |
+| **Others** | Enable Tests | ✅ | ✅ | ✅ |
+| **Others** | Pre-SQL / Post-SQL | ✅ | ✅ | ✅ |
+
+---
+
 # Dynamic Tables Package
 
 Package includes:
@@ -216,6 +260,14 @@ If an entire DAG of Dynamic Tables has been deployed and changes are made to a d
 ### Redeployment with no changes 
 
 If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+
+#### Node Type Switching
+
+Node Type switching is supported starting from Coalesce version **7.29+**.
+
+From this version onward, a node’s materialization type can be switched from one supported type to another, subject to certain limitations.
+
+For more info click here - [Node Type Switching Logic and Limitations](#node-type-switching-logic)
 
 ### Dynamic Tables Work Undeployment
 
@@ -450,6 +502,14 @@ If an entire DAG of Dynamic Tables has been deployed and changes are made to a d
 ### Redeployment with no changes 
 
 If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+
+#### Node Type Switching
+
+Node Type switching is supported starting from Coalesce version **7.29+**.
+
+From this version onward, a node’s materialization type can be switched from one supported type to another, subject to certain limitations.
+
+For more info click here - [Node Type Switching Logic and Limitations](#node-type-switching-logic)
 
 ### Dynamic Table Dimension Undeployment
 
@@ -686,6 +746,14 @@ If an entire DAG of Dynamic Tables has been deployed and changes are made to a d
 
 If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
 
+#### Node Type Switching
+
+Node Type switching is supported starting from Coalesce version **7.29+**.
+
+From this version onward, a node’s materialization type can be switched from one supported type to another, subject to certain limitations.
+
+For more info click here - [Node Type Switching Logic and Limitations](#node-type-switching-logic)
+
 ### Latest Record Version Undeployment
 
 A table will be dropped if all of these are true:
@@ -698,7 +766,35 @@ A table will be dropped if all of these are true:
 |-----------|----------------|
 | **Drop Dynamic Table** | Removes table from target environment |
 
----
+-----------------
+
+#### Node Type Switching Logic
+| Current MaterializationType | Desired MaterializationType | Stage |
+|------------|--------|-------|
+| Table | Table | 1. Warning (if applicable)<br/>2. Metadata Update(if applicable)<br/>3. Alter |
+| Transient Table | TransientTable | 1. Warning (if applicable)<br/>2. Metadata Update(if applicable)<br/>3. Alter |
+| View | View | 1. Warning (if applicable)<br/>2. Create |
+| Any Other | Table | 1. Warning (if applicable)<br/>2. Drop <br/> 3. Create |
+| Any Other | View | 1. Warning (if applicable)<br/>2. Drop <br/> 3. Create |
+| Any Other | Transient Table | 1. Warning (if applicable)<br/>2. Drop <br/> 3. Create |
+
+Please review the documented limitations before performing a node type switch to ensure compatibility and avoid unintended deployment issues.
+
+#### ⚠ Limitations of Node Type Switching (Current)
+
+| # | Current Materialization | Desired Materialization | Limitation |
+|---|--------------------------|--------------------------|------------|
+| 1 | Older Version Iceberg Table | Table | Results in `ALTER` failure. Iceberg tables require `ALTER ICEBERG TABLE`. Works only if latest package (with switching support) is already used. |
+| 2 | Older Version<br/>Create or Alter-View<br/>Data Quality-DMF | Any(except View) | Switch fails unless current node uses latest package supporting node type switching. |
+| 3 | First Node in Pipeline | Any | Not supported. First node is foundational and switching may disrupt the pipeline. |
+| 4 | External Packages | Any | Not supported as they typically act as first nodes in the pipeline. |
+| 5 | Functional Packages | Any | Not supported due to column re-sync behavior which may cause schema inconsistencies. |
+| 6 | Dynamic Dimension / LRV | Any | System columns must be manually dropped before redeployment. |
+| 7 | Any | Any Other | After performing node switching, the `Create/Run` in Workspace browser may not work as expected due to changes in the node’s materialization type. |
+| 8 | Table(Data Profiling) | Table | This may result in ALTER failure unless latest package is used(with system column removal support) |
+
+--------------
+
 
 ## Code
 
