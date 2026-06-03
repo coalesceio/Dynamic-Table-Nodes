@@ -151,7 +151,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 }
 ```
 
-#### Advance Warehouse selection(Optional)
+#### Advance Warehouse Selection(optional)
 * Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
 * Users can select different sizes for refresh vs initialization to optimize cost/performance
 
@@ -161,7 +161,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialization
+#### Example of Parameter Initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -174,7 +174,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse sizes supported in node config UI and corresponding parameter details
+### Warehouse Sizes SuppORted in Node Config UI AND CORresponding Parameter Details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -257,7 +257,7 @@ If the changes in node results in recreating the Dynamic table, then following s
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-### Redeployment with no changes 
+### Redeployment With No Changes 
 
 If the nodes are redeployed with no changes compared to previous deployment, then no stages are executed
 
@@ -393,7 +393,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 }
 ```
 
-#### Advance Warehouse selection(Optional)
+#### Advance Warehouse Selection(optional)
 * Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
 * Corresponding warehouse parameters must be defined in the deployment environment.
 
@@ -403,7 +403,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialization
+#### Example of Parameter Initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -416,7 +416,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse sizes supported in node config UI and corresponding parameter details
+### Warehouse Sizes SuppORted in Node Config UI AND CORresponding Parameter Details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -499,7 +499,7 @@ If the changes in node results in recreating the Dynamic table, then following s
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-### Redeployment with no changes 
+### Redeployment With No Changes 
 
 If the nodes are redeployed with no changes compared to previous deployment, then no stages are executed
 
@@ -636,7 +636,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 }
 ```
 
-#### Advance Warehouse selection(Optional)
+#### Advance Warehouse Selection(optional)
 * Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
 * Corresponding warehouse parameters must be defined in the deployment environment.
 
@@ -646,7 +646,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialization
+#### Example of Parameter Initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -659,7 +659,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse sizes supported in node config UI and corresponding parameter details
+### Warehouse Sizes SuppORted in Node Config UI AND CORresponding Parameter Details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -742,7 +742,7 @@ If the changes in node results in recreating the Dynamic table, then following s
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-### Redeployment with no changes 
+### Redeployment With No Changes 
 
 If the nodes are redeployed with no changes compared to previous deployment, then no stages are executed
 
