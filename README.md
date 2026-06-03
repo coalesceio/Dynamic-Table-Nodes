@@ -31,7 +31,7 @@ Together, these node types leverage Snowflake’s declarative orchestration to p
 | **Refresh** | Refresh Mode | ✅ | ✅ | ✅ |
 | **Refresh** | Backfill Options | ✅ | ✅ | ✅ |
 | **Logic** | Distinct / Group By All | ✅ | ⬜ | ⬜ |
-| **Logic** | Table Key(s) / Business Key | ⬜ | ✅ | ✅ |
+| **Logic** | Table Keys / Business Key | ⬜ | ✅ | ✅ |
 | **Logic** | Record Versioning Logic | ⬜ | ✅ | ✅ |
 | **Logic** | Sequence / Ordering Column | ⬜ | ✅ | ✅ |
 | **Logic** | Timestamp-track Data Load | ⬜ | ✅ | ✅ |
@@ -73,8 +73,8 @@ The Dynamic Table Work has three configuration groups:
 |-------------|-----------------|
 | **Storage Location** | (Required) Storage Location where the Dynamic Table will be created |
 | **Node Type** | (Required) Name of template used to create node objects |
-| **Description** | A description of the node's purpose |
-| **Deploy Enabled** | If TRUE the node will be deployed/redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
+| **Description** | A description of the Node's purpose |
+| **Deploy Enabled** | If TRUE the node will be deployed or redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
 
 #### Dynamic Table Work Options
 
@@ -151,7 +151,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 }
 ```
 
-#### Advance Warehouse selection(Optional)
+#### Advance Warehouse Selection(optional)
 * Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
 * Users can select different sizes for refresh vs initialization to optimize cost/performance
 
@@ -161,7 +161,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialization
+#### Example of Parameter Initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -174,7 +174,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse sizes supported in node config UI and corresponding parameter details
+### Warehouse Sizes SuppORted in Node Config UI AND CORresponding Parameter Details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -246,7 +246,7 @@ If the materialization type changes in dynamic table config options, the followi
 
 If anything changes other than the configuration options specified in [Altering the Dynamic Table](#altering-the-dynamic-table) then the Dynamic Table will be recreated by running a `CREATE OR REPLACE `statement.
 
-If the changes in node results in recreating the Dynamic table,then following stages are executed:
+If the changes in node results in recreating the Dynamic table, then following stages are executed:
 
 | **Stage** | **Description** |
 |-----------|----------------|
@@ -257,9 +257,9 @@ If the changes in node results in recreating the Dynamic table,then following st
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-### Redeployment with no changes 
+### Redeployment With No Changes 
 
-If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+If the nodes are redeployed with no changes compared to previous deployment, then no stages are executed
 
 #### Node Type Switching
 
@@ -267,7 +267,7 @@ Node Type switching is supported starting from Coalesce version **7.28+**.
 
 From this version onward, a node’s materialization type can be switched from one supported type to another, subject to certain limitations.
 
-For more info click here - [Node Type Switching Logic and Limitations](#node-type-switching-logic)
+For more information, see [Node Type Switching Logic and Limitations](#node-type-switching-logic)
 
 ### Dynamic Tables Work Undeployment
 
@@ -305,8 +305,8 @@ The Dynamic Table Dimension has four configuration groups:
 |-------------|-----------------|
 | **Storage Location** | Storage Location where table will be created |
 | **Node Type** | Name of template used to create node objects |
-| **Description** | A description of the node's purpose |
-| **Deploy Enabled** | If TRUE the node will be deployed/redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
+| **Description** | A description of the Node's purpose |
+| **Deploy Enabled** | If TRUE the node will be deployed or redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
 
 #### Dimension Table Options
 
@@ -393,7 +393,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 }
 ```
 
-#### Advance Warehouse selection(Optional)
+#### Advance Warehouse Selection(optional)
 * Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
 * Corresponding warehouse parameters must be defined in the deployment environment.
 
@@ -403,7 +403,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialization
+#### Example of Parameter Initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -416,7 +416,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse sizes supported in node config UI and corresponding parameter details
+### Warehouse Sizes SuppORted in Node Config UI AND CORresponding Parameter Details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -499,9 +499,9 @@ If the changes in node results in recreating the Dynamic table, then following s
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-### Redeployment with no changes 
+### Redeployment With No Changes 
 
-If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+If the nodes are redeployed with no changes compared to previous deployment, then no stages are executed
 
 #### Node Type Switching
 
@@ -509,7 +509,7 @@ Node Type switching is supported starting from Coalesce version **7.28+**.
 
 From this version onward, a node’s materialization type can be switched from one supported type to another, subject to certain limitations.
 
-For more info click here - [Node Type Switching Logic and Limitations](#node-type-switching-logic)
+For more information, see [Node Type Switching Logic and Limitations](#node-type-switching-logic)
 
 ### Dynamic Table Dimension Undeployment
 
@@ -547,8 +547,8 @@ The Dynamic Table Dimension has four configuration groups:
 |-------------|-----------------|
 | **Storage Location** | Storage Location where table will be created |
 | **Node Type** | Name of template used to create node objects |
-| **Description** | A description of the node's purpose |
-| **Deploy Enabled** | If TRUE the node will be deployed/redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
+| **Description** | A description of the Node's purpose |
+| **Deploy Enabled** | If TRUE the node will be deployed or redeployed when changes are detected<br/>If FALSE the node will not be deployed or will be dropped during redeployment |
 
 #### Latest Record Verion Table Options
 
@@ -636,7 +636,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 }
 ```
 
-#### Advance Warehouse selection(Optional)
+#### Advance Warehouse Selection(optional)
 * Advanced Warehouse Selection allows using **separate warehouses for initialization and refresh** based on workload size.
 * Corresponding warehouse parameters must be defined in the deployment environment.
 
@@ -646,7 +646,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 * The required warehouses must already exist in Snowflake.
 * Corresponding warehouse parameters must be defined in the deployment environment.
   
-#### Example of parameter initialization
+#### Example of Parameter Initialization
   ```json
 {
     "warehouseSizesDict": {
@@ -659,7 +659,7 @@ For example, the Dynamic Table will refresh using a warehouse named `compute_wh`
 ```
 > **Note:** `dev_wh_xs`, `dev_wh_s`, and `dev_wh_l` are example warehouse names. Users must replace these values with the names of the Snowflake warehouses they have already created and want to use in their environment.
 
-### Warehouse sizes supported in node config UI and corresponding parameter details
+### Warehouse Sizes SuppORted in Node Config UI AND CORresponding Parameter Details
 
 | Size        | Environment Parameter                                   |
 | ----------- | ------------------------------------------------------- |
@@ -742,9 +742,9 @@ If the changes in node results in recreating the Dynamic table, then following s
 
 If an entire DAG of Dynamic Tables has been deployed and changes are made to a deployed Dynamic Table Coalesce will only redeploy Dynamic Tables that have changed metadata.
 
-### Redeployment with no changes 
+### Redeployment With No Changes 
 
-If the nodes are redeployed with no changes compared to previous deployment,then no stages are executed
+If the nodes are redeployed with no changes compared to previous deployment, then no stages are executed
 
 #### Node Type Switching
 
@@ -752,7 +752,7 @@ Node Type switching is supported starting from Coalesce version **7.28+**.
 
 From this version onward, a node’s materialization type can be switched from one supported type to another, subject to certain limitations.
 
-For more info click here - [Node Type Switching Logic and Limitations](#node-type-switching-logic)
+For more information, see [Node Type Switching Logic and Limitations](#node-type-switching-logic)
 
 ### Latest Record Version Undeployment
 
@@ -776,7 +776,7 @@ A table will be dropped if all of these are true:
 | Any Other | Dynamic Table | 1. Warning (if applicable)<br/>2. Drop <br/> 3. Create |
 | Any Other | Dynamic Transient Table | 1. Warning (if applicable)<br/>2. Drop <br/> 3. Create |
 
-Please review the documented limitations before performing a node type switch to ensure compatibility and avoid unintended deployment issues.
+Review the documented limitations before performing a node type switch to ensure compatibility and avoid unintended deployment issues.
 
 #### ⚠ Limitations of Node Type Switching (Current)
 
