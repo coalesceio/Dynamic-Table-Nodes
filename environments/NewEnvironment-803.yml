@@ -7,5 +7,8 @@ mappingDefinitions:
   TARGET_DB:
     database: VINITHA_DEV
     schema: DEP_DEV
+  TARGET_DB_TEST:
+    database: VINITHA_DEV
+    schema: TGT_DEV
 name: New Environment
 type: Environment
