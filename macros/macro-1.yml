@@ -41,6 +41,12 @@ macroString: |+
       {# Populate column dictionary #}
       {{ colcict(ns) }}
 
+      {% else %}
+      {# For validate select - no failure #}
+      {% set ns = namespace(column_dict = {}) %}
+      {# Populate column dictionary #}
+      {{ colcict(ns) }}
+
   {% endif %}
     
 

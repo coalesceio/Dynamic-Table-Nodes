@@ -1,0 +1,239 @@
+fileVersion: 1
+id: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+name: DT_DIM_CLIENTS_1
+operation:
+  config:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    immutabilityConstraint: false
+    immutableExpression: ""
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    orderBy:
+      items:
+        - colName:
+            columnCounter: c468a773-d764-47d1-8229-8d3259867c04
+            stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+    orderByDateTime:
+      items:
+        - {}
+    orderseq:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - partColName:
+            columnCounter: d1f76c1f-6e0f-41eb-9811-ca17ad207494
+            stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - {}
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: COMPUTE_WH
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: SOURCE_DATA
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: f46fa216-0670-428e-b14d-ff7962a1ad83
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: STRING
+        defaultValue: ""
+        description: ""
+        isSurrogateKey: true
+        name: DT_DIM_CLIENTS_1_KEY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: "{{ dimensionHistoryPk() }}"
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: d1f76c1f-6e0f-41eb-9811-ca17ad207494
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: CLIENT_ID
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 2d7d200f-7aec-446b-ac81-692cdda3eeef
+                stepCounter: f471ef61-aa59-4e11-b189-778c466be2dd
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: e6aa3dca-1b13-43da-89cd-f28ce4cbe15a
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: CLIENT_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 4b565a75-c72a-4636-9dac-e0b78ddb3df7
+                stepCounter: f471ef61-aa59-4e11-b189-778c466be2dd
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 843e8235-091b-48a6-9ac1-cbb10af66698
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: EMAIL
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: eb48e3f1-b95a-4bb2-a154-a6bbec775dc6
+                stepCounter: f471ef61-aa59-4e11-b189-778c466be2dd
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 20ec90f3-a8de-4aa0-a531-a8afd55bffb8
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: REGION
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: fb091249-ad1a-4a7a-acba-9328c19d2012
+                stepCounter: f471ef61-aa59-4e11-b189-778c466be2dd
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c468a773-d764-47d1-8229-8d3259867c04
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: UPDATE_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: d12dff41-b13d-4a1c-acfe-59ed96d2f881
+                stepCounter: f471ef61-aa59-4e11-b189-778c466be2dd
+            transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 51a5edf4-6762-4760-8700-3106fd81b465
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        isSystemStartDate: true
+        name: RECORD_START_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: "{%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}"
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: cf854de7-608a-4ab8-a15b-1bab642974ba
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        isSystemEndDate: true
+        name: RECORD_END_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 9e43f1a3-a845-40e0-935d-e04bdac50b45
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: NUMERIC
+        defaultValue: ""
+        description: ""
+        isRecordCurrent: true
+        name: RECORD_CURRENT_FLAG
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: CASE WHEN (LEAD({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%}{{order_by_col_int()}} {%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)) IS NULL THEN 1 ELSE 0 END
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 5dfe63e8-067e-4a0d-b4d0-548a3bc5354f
+          stepCounter: 07e49b13-bab5-452e-afa9-aad4df0fd68c
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          CLIENTS_1: f471ef61-aa59-4e11-b189-778c466be2dd
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: CLIENTS_1
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'CLIENTS_1') }} "CLIENTS_1"
+        name: DT_DIM_CLIENTS_1
+        noLinkRefs: []
+  name: DT_DIM_CLIENTS_1
+  overrideSQL: false
+  schema: ""
+  sqlType: "350"
+  type: sql
+  version: 1
+type: Node
