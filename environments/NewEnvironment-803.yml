@@ -1,0 +1,11 @@
+fileVersion: 1
+id: "803"
+mappingDefinitions:
+  SOURCE_DATA:
+    database: VINITHA_DEV
+    schema: SRC_DEV
+  TARGET_DB:
+    database: VINITHA_DEV
+    schema: DEP_DEV
+name: New Environment
+type: Environment
