@@ -6,8 +6,8 @@ macroString: |+
     Purpose: Builds a dictionary (ns.column_dict) of columns for all sources
   ---------------------------------------------------------------------- #}
   {% macro colcict(ns) %}
-    {% if sources %}
-      {% for source_idx in range(sources | length) %}
+    {% if sources is defined %}
+      {% for source_idx in range((sources or [])| length) %}
         {% set source = sources[source_idx] %}
 
         {# Initialize the source entry if missing #}
@@ -39,8 +39,9 @@ macroString: |+
       {{ colcict(ns) }}
 
   {% else %}
-      {# For validate select #}
+      {# For validate select - no failure #}
       {% set ns = namespace(column_dict = {}) %}
+      {# Populate column dictionary #}
       {{ colcict(ns) }}
 
   {% endif %}
