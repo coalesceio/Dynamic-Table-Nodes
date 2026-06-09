@@ -6,7 +6,7 @@ macroString: |+
     Purpose: Builds a dictionary (ns.column_dict) of columns for all sources
   ---------------------------------------------------------------------- #}
   {% macro colcict(ns) %}
-    {% if sources is defined %}
+    {% if sources %}
       {% for source_idx in range(sources | length) %}
         {% set source = sources[source_idx] %}
 
@@ -22,8 +22,6 @@ macroString: |+
       {% endfor %}
     {% endif %}
   {% endmacro %}
-
-
   {#--------------------------------------------------------
     Initialize variables for node types that use the 
     advanced deployment strategy
@@ -38,13 +36,11 @@ macroString: |+
       {% set parameters = desiredState.parameters %}
 
       {% set ns = namespace(column_dict = {}) %}
-      {# Populate column dictionary #}
       {{ colcict(ns) }}
 
-      {% else %}
-      {# For validate select - no failure #}
+  {% else %}
+      {# For validate select #}
       {% set ns = namespace(column_dict = {}) %}
-      {# Populate column dictionary #}
       {{ colcict(ns) }}
 
   {% endif %}
