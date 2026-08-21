@@ -1,0 +1,211 @@
+fileVersion: 2
+id: "185"
+isDisabled: false
+metadata:
+  defaultStorageLocation: null
+  error: null
+  nodeMetadataSpec: |-
+    capitalized: SQL Dynamic Table Work
+    short: DT_WRK
+    tagColor: "#F6FF3C"
+    plural: Dynamic Tables
+
+    deployStrategy: advanced
+
+    annotations:
+      node:
+
+      - name: materializationType
+        description: Materialization selector
+        isRequired: false
+        parameters:
+          - name: type
+            type: string
+            description: Object type to create
+            isRequired: true
+            default: dynamic table
+            options:
+            - dynamic table
+
+      - name: clusterEnabled
+        type: boolean
+        description: Determines whether clustering is applied to the table.
+        isRequired: false      
+        default: true
+
+      - name: warehouse
+        description: Warehouse on which to execute dynamic table. Ensure the parameter targetDynamicTableWarehouse is added in Workspace. Appplicable only when 𝗮𝗱𝘃𝗮𝗻𝗰𝗲𝗪𝗮𝗿𝗲𝗵𝗼𝘂𝘀𝗲 is disabled.
+        parameters:
+          - name: warehouseName
+            type: string
+            description: warehouse name
+            isRequired: true
+            example: 'dev_wh_xs'
+
+      - name: advanceWarehouse
+        description: Advanced Warehouse Selection
+        isRequired: false
+        parameters:
+          - name: initializeWarehouseSize
+            type: string
+            description: Initialization Warehouse Size.
+            isRequired: false
+            default: X-Small
+            options:   
+              - X-Small
+              - Small
+              - Medium
+              - Large
+              - X-Large
+              - 2X-Large
+              - 3x-Large
+              - 4x-Large
+              - 5x-Large
+              - 6x-Large
+
+          - name: refreshWarehouseSize
+            type: string
+            description: Refresh Warehouse Size.
+            isRequired: false
+            default: X-Small
+            options:  
+              - X-Small
+              - Small
+              - Medium
+              - Large
+              - X-Large
+              - 2X-Large
+              - 3x-Large
+              - 4x-Large
+              - 5x-Large
+              - 6x-Large
+
+      - name: targetLagDownstream
+        type: boolean
+        description: Downstream
+        isRequired: false      
+        default: true
+
+      - name: targetLagDuration
+        description: Lag Specification. Available only when 𝗧𝗮𝗿𝗴𝗲𝘁𝗟𝗮𝗴𝗗𝗼𝘄𝗻𝘀𝘁𝗿𝗲𝗮𝗺 is disabled.
+        parameters:
+          - name: lagNum
+            type: number
+            description: Time unit
+            isRequired: true
+            example: 60
+
+          - name: lagPeriod
+            type: string
+            description: Time period
+            isRequired: false
+            default: Minutes
+            options:
+              - Seconds
+              - Minutes
+              - Hours
+              - Days
+      
+      - name: refreshMode
+        description: Refresh Mode
+        parameters:
+          - name: mode
+            type: string
+            description: Refresh Mode
+            isRequired: false
+            default: AUTO
+            options:
+            - AUTO
+            - INCREMENTAL
+            - FULL
+
+      - name: initialize
+        description: initialize
+        parameters:
+          - name: initialize
+            type: string
+            description: initialize
+            isRequired: false
+            default: ON_CREATE
+            options:
+              - ON_CREATE
+              - ON_SCHEDULE
+
+      - name: copyGrants
+        type: boolean
+        description: Copy grants
+        isRequired: false      
+        default: true
+
+      - name: frozenWhere
+        description: Frozen Where Expression
+        parameters:
+          - name: expression
+            type: string
+            description: warehouse name
+            isRequired: true
+            example: columnName < CURRENT_TIMESTAMP() - INTERVAL '7 days'
+
+      - name: backfillFrom
+        description: Backfill Source Schema/Table. Available only when 𝗳𝗿𝗼𝘇𝗲𝗻𝗪𝗵𝗲𝗿𝗲 applied. Choose one of the following - 𝗦𝘁𝗮𝗿𝘁𝗔𝘁𝗦𝘁𝗿𝗲𝗮𝗺, 𝗦𝘁𝗮𝗿𝘁𝗔𝘁𝗧𝗶𝗺𝗲𝘀𝘁𝗮𝗺𝗽, 𝗦𝘁𝗮𝗿𝘁𝗔𝘁𝗦𝘁𝗮𝘁𝗲𝗺𝗲𝗻𝘁, 𝗦𝘁𝗮𝗿𝘁𝗔𝘁𝗢𝗳𝗳𝘀𝗲𝘁
+        parameters:
+          - name: schema
+            type: string
+            description: Backfill Schema Name
+            isRequired: true
+
+          - name: table
+            type: string
+            description: Backfill Source Table
+            isRequired: true
+
+      - name: startAtStream
+        description: Stream. Available only when 𝗳𝗿𝗼𝘇𝗲𝗻𝗪𝗵𝗲𝗿𝗲 and 𝗯𝗮𝗰𝗸𝗳𝗶𝗹𝗹𝗙𝗿𝗼𝗺 applied.
+        parameters:
+          - name: streamName
+            type: string
+            description: Stream Name
+            isRequired: true
+
+      - name: startAtTimestamp
+        description: Timestamp. Available only when 𝗳𝗿𝗼𝘇𝗲𝗻𝗪𝗵𝗲𝗿𝗲 and 𝗯𝗮𝗰𝗸𝗳𝗶𝗹𝗹𝗙𝗿𝗼𝗺 applied.
+        parameters:
+          - name: timestamp
+            type: string
+            description: Timestamp
+            isRequired: true
+
+      - name: startAtStatement
+        description: Statement. Available only when 𝗳𝗿𝗼𝘇𝗲𝗻𝗪𝗵𝗲𝗿𝗲 and 𝗯𝗮𝗰𝗸𝗳𝗶𝗹𝗹𝗙𝗿𝗼𝗺 applied.
+        parameters:
+          - name: queryId
+            type: string
+            description: statement
+            isRequired: true
+
+      - name: startAtOffset
+        description: Offeset. Available only when 𝗳𝗿𝗼𝘇𝗲𝗻𝗪𝗵𝗲𝗿𝗲 and 𝗯𝗮𝗰𝗸𝗳𝗶𝗹𝗹𝗙𝗿𝗼𝗺 applied.
+        parameters:
+          - name: seconds
+            type: number
+            description: Timestamp
+            isRequired: true
+
+      column:
+      - name: isClusterKey
+        description: Determines whether column is part of table cluster. Applicable only when @𝐜𝐥𝐮𝐬𝐭𝐞𝐫𝐄𝐧𝐚𝐛𝐥𝐞𝐝 is applied.
+        allowsMultiple: true
+        parameters:
+          - name: clusterOrder
+            isRequired: true
+            type: number
+            description: Order of the cluster used while clustering.
+            example: 1
+
+          - name: clusterExpression
+            isRequired: false
+            type: string
+            description: Expression used while clustering. If the expression is omitted, the 𝐂𝐨𝐥𝐮𝐦𝐧 𝐍𝐚𝐦𝐞 is used as the clustering expression by default.
+            example: trunc(columnName, -5)
+name: SQL Dynamic Table Work
+type: NodeType
