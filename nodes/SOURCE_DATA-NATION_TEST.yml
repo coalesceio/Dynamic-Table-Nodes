@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 18954115-ae5d-4b8f-befc-15de5dc212e2
-name: PRODUCT_INVENTORY_DANDT
+id: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
+name: NATION_TEST
 operation:
   database: ""
   deployEnabled: true
@@ -13,33 +13,14 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: 69a8f0a7-9453-4478-9e70-88bf6becce4c
-          stepCounter: 18954115-ae5d-4b8f-befc-15de5dc212e2
+          columnCounter: 3fca1bf1-615c-4e88-98e2-1ad4508e774f
+          stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
         config: {}
         dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: PRODUCT_ID
-        nullable: false
-        primaryKey: true
-        sourceColumnReferences:
-          - columnReferences: []
-            transform: ""
-        transform: ""
-        uniqueKey: false
-      - acceptedValues:
-          strictMatch: true
-          values: []
-        appliedColumnTests: {}
-        columnReference:
-          columnCounter: bab19c93-8e8e-4993-8881-bfde4d7468c9
-          stepCounter: 18954115-ae5d-4b8f-befc-15de5dc212e2
-        config: {}
-        dataType: VARCHAR(100)
-        defaultValue: ""
-        description: ""
-        name: PRODUCT_NAME
-        nullable: false
+        name: N_NATIONKEY
+        nullable: true
         primaryKey: false
         sourceColumnReferences:
           - columnReferences: []
@@ -51,14 +32,14 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: f7b17e8d-d0cd-498f-937a-eb3fe14f5b4f
-          stepCounter: 18954115-ae5d-4b8f-befc-15de5dc212e2
+          columnCounter: 8533fa5d-0fee-4f82-9a55-afbd0691b482
+          stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
         config: {}
-        dataType: DATE
+        dataType: VARCHAR(25)
         defaultValue: ""
         description: ""
-        name: LAST_UPDATED_DATE
-        nullable: false
+        name: N_NAME
+        nullable: true
         primaryKey: false
         sourceColumnReferences:
           - columnReferences: []
@@ -70,21 +51,59 @@ operation:
           values: []
         appliedColumnTests: {}
         columnReference:
-          columnCounter: e8157f46-3a5a-4917-b0b1-7dd2fc86291e
-          stepCounter: 18954115-ae5d-4b8f-befc-15de5dc212e2
+          columnCounter: aec20e7a-1792-4620-9bfe-9512d1ed148b
+          stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
         config: {}
-        dataType: TIME(9)
+        dataType: NUMBER(38,0)
         defaultValue: ""
         description: ""
-        name: LAST_UPDATED_TIME
-        nullable: false
+        name: N_REGIONKEY
+        nullable: true
         primaryKey: false
         sourceColumnReferences:
           - columnReferences: []
             transform: ""
         transform: ""
         uniqueKey: false
-  name: PRODUCT_INVENTORY_DANDT
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: d5f09b9c-13f6-4973-82ad-97df99f8d63d
+          stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
+        config: {}
+        dataType: VARCHAR(152)
+        defaultValue: ""
+        description: ""
+        name: N_COMMENT
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: de7e4ff0-575d-44a6-ad89-166ca94251a5
+          stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
+        config: {}
+        dataType: TIMESTAMP_LTZ(9)
+        defaultValue: ""
+        description: ""
+        name: N_LOAD_TIMESTAMP
+        nullable: true
+        primaryKey: false
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: ""
+        transform: ""
+        uniqueKey: false
+  name: NATION_TEST
   schema: ""
   sqlType: Source
   type: sourceInput

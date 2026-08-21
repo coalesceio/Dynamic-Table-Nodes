@@ -1,38 +1,39 @@
 fileVersion: 1
-id: 77ae58fe-0559-42c7-b3a5-b11dd1d6bbf3
-name: DT_WRK_NATION_NEW
+id: c24b8b41-a368-4ce6-b41b-79f06b1fe12e
+name: DT_WRK_NATION_TEST_V1
 operation:
   config:
-    advanceWarehouse: false
+    advanceWarehouse: true
     backfill: true
-    backfillSource: "\"TANVI_DEV\".\"SOURCE\".nation_history"
-    clusterKey: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName: null
     clusterKeyConfigExpressions:
       items:
         - {}
     clusterKeyExpressions: false
-    cpygrants: false
-    downstreamOption: false
+    cpygrants: true
+    downstreamOption: true
     groupByAll: false
     immutabilityConstraint: true
-    immutableExpression: N_LOAD_TIMESTAMP < CURRENT_TIMESTAMP() - INTERVAL '7 days'
+    immutableExpression: ""
     initialize: ON_CREATE
-    initializeWarehouseSize: Large
+    initializeWarehouseSize: ""
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
-    refreshWarehouseSize: Small
+    refreshWarehouseSize: ""
     refresh_mode: AUTO
     selectDistinct: false
-    timeTravel: true
-    timeTravelreference: OFFSET
-    timeTraveltype: BEFORE
-    timeTravelvalue: "-1"
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
@@ -45,8 +46,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 6d1b5170-716b-4bf0-ad69-7a9763ad0301
-          stepCounter: 77ae58fe-0559-42c7-b3a5-b11dd1d6bbf3
+          columnCounter: db5d8827-17c9-4798-8154-cb7426f16085
+          stepCounter: c24b8b41-a368-4ce6-b41b-79f06b1fe12e
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -54,13 +55,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 6f6079db-e0e3-43f2-9e9c-ff35b3095904
-                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+              - columnCounter: 3fca1bf1-615c-4e88-98e2-1ad4508e774f
+                stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 10023bf8-f2ea-46c1-9bb0-95404454b628
-          stepCounter: 77ae58fe-0559-42c7-b3a5-b11dd1d6bbf3
+          columnCounter: f3bf7515-4752-46ed-a57c-cf102684bb1c
+          stepCounter: c24b8b41-a368-4ce6-b41b-79f06b1fe12e
         config: {}
         dataType: VARCHAR(25)
         description: ""
@@ -68,13 +69,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: ebd7dfde-25db-4e7f-8943-2e99fae764d4
-                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+              - columnCounter: 8533fa5d-0fee-4f82-9a55-afbd0691b482
+                stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 44b570d6-9be5-4ed3-a620-4de4f89e33f9
-          stepCounter: 77ae58fe-0559-42c7-b3a5-b11dd1d6bbf3
+          columnCounter: 2ee881d1-575e-4ca9-9ccf-f9da5040ac57
+          stepCounter: c24b8b41-a368-4ce6-b41b-79f06b1fe12e
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -82,13 +83,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 2b6747c4-cfa6-4c6d-8041-6068a8f4fc03
-                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+              - columnCounter: aec20e7a-1792-4620-9bfe-9512d1ed148b
+                stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 6fef9d38-56bd-48ba-8002-bd18806a5d27
-          stepCounter: 77ae58fe-0559-42c7-b3a5-b11dd1d6bbf3
+          columnCounter: 9f1a1733-5a74-4fe3-ad2c-31134e8d2a89
+          stepCounter: c24b8b41-a368-4ce6-b41b-79f06b1fe12e
         config: {}
         dataType: VARCHAR(152)
         description: ""
@@ -96,13 +97,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 6af385f1-946a-4c88-a99b-d33cd9887e8d
-                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+              - columnCounter: d5f09b9c-13f6-4973-82ad-97df99f8d63d
+                stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 7ddfed03-6ec9-49fc-98ea-fabeb543b44b
-          stepCounter: 77ae58fe-0559-42c7-b3a5-b11dd1d6bbf3
+          columnCounter: 6a6fe9a8-f4f4-4cf8-ba16-2721efeebbf6
+          stepCounter: c24b8b41-a368-4ce6-b41b-79f06b1fe12e
         config: {}
         dataType: TIMESTAMP_LTZ(9)
         description: ""
@@ -110,24 +111,24 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 10f17aad-7b73-46b1-9713-cf959861c2ca
-                stepCounter: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+              - columnCounter: de7e4ff0-575d-44a6-ad89-166ca94251a5
+                stepCounter: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
             transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          NATION: 457e2712-1910-4b3e-b1ba-8f58a8ee89c1
+          NATION_TEST: 08cc61da-c4d4-4ef0-abd5-91f294b8bb0e
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: SOURCE_DATA
-            nodeName: NATION
+            nodeName: NATION_TEST
         join:
-          joinCondition: FROM {{ ref('SOURCE_DATA', 'NATION') }} "NATION"
-        name: DT_WRK_NATION_NEW
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'NATION_TEST') }} "NATION_TEST"
+        name: DT_WRK_NATION_TEST_V1
         noLinkRefs: []
-  name: DT_WRK_NATION_NEW
+  name: DT_WRK_NATION_TEST_V1
   overrideSQL: false
   schema: ""
   sqlType: "347"
