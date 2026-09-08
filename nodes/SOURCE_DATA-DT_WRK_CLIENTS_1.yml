@@ -64,8 +64,8 @@ operation:
           stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
         config: {}
         dataType: VARCHAR(16777216)
-        description: ""
-        name: CLIENT_NAME
+        description: Commect added to test
+        name: CLient_Name
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -78,7 +78,7 @@ operation:
           stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
         config: {}
         dataType: VARCHAR(16777216)
-        description: hhghgygiygiugiuluuo
+        description: ""
         name: EMAIL
         nullable: true
         sourceColumnReferences:
@@ -92,8 +92,8 @@ operation:
           stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
         config: {}
         dataType: VARCHAR(16777216)
-        description: kejheurhuehrkwheliurh3wuoh
-        name: ReGion
+        description: ""
+        name: REGION
         nullable: true
         sourceColumnReferences:
           - columnReferences:
