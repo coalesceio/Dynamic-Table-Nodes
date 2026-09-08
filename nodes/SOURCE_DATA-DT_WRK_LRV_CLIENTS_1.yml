@@ -97,8 +97,8 @@ operation:
           stepCounter: 416fefb9-3f4b-4138-8123-7f16bc96344b
         config: {}
         dataType: VARCHAR(16777216)
-        description: gfdtuyjfygku,kukggh
-        name: EMail
+        description: ""
+        name: EMAIL
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -111,8 +111,8 @@ operation:
           stepCounter: 416fefb9-3f4b-4138-8123-7f16bc96344b
         config: {}
         dataType: VARCHAR(16777216)
-        description: huyyutr46w45iuti8o8u09u
-        name: REGion
+        description: ""
+        name: REGION
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -125,8 +125,8 @@ operation:
           stepCounter: 416fefb9-3f4b-4138-8123-7f16bc96344b
         config: {}
         dataType: TIMESTAMP_NTZ(9)
-        description: ""
-        name: UPDATE_TIME
+        description: gugyyyftt
+        name: UPDAte_TIMe
         nullable: true
         sourceColumnReferences:
           - columnReferences:
