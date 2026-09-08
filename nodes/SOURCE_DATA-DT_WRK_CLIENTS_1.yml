@@ -64,7 +64,7 @@ operation:
           stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
         config: {}
         dataType: VARCHAR(16777216)
-        description: ""
+        description: jdkjfiojeif
         name: CLient_Name
         nullable: true
         sourceColumnReferences:
@@ -78,7 +78,7 @@ operation:
           stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
         config: {}
         dataType: VARCHAR(16777216)
-        description: ""
+        description: kfralwkro4r
         name: EMAil
         nullable: true
         sourceColumnReferences:
