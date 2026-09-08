@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 673ef145-ba07-43aa-92f9-97959a3bf31f
-name: DT_WRK_CLIENTS_1
+id: 0bb0cd9a-e783-4a96-a108-8d4ed769597c
+name: DT_WRK_CLIENTS_2
 operation:
   config:
     advanceWarehouse: false
@@ -46,8 +46,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 37e70ea2-8371-4650-886e-8f2662123f87
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: 97b95c82-dee7-48d9-aedf-545133b2082c
+          stepCounter: 0bb0cd9a-e783-4a96-a108-8d4ed769597c
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -60,12 +60,12 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 5d3efb61-f46a-4b10-b42b-a02e9107edb2
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: aae51220-3116-4b84-87f8-30afffb61ba0
+          stepCounter: 0bb0cd9a-e783-4a96-a108-8d4ed769597c
         config: {}
         dataType: VARCHAR(16777216)
         description: ""
-        name: CLient_Name
+        name: CLIENT_NAME
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -74,12 +74,12 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: dff537c5-405b-4f5d-ae22-c4aa7eb2177d
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: 17198932-d5b7-4891-a5ca-8cc549181863
+          stepCounter: 0bb0cd9a-e783-4a96-a108-8d4ed769597c
         config: {}
         dataType: VARCHAR(16777216)
         description: ""
-        name: EMAil
+        name: EMAIL
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -88,8 +88,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: dead8c02-eff4-4bed-bfb0-8f23255548ab
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: 849246eb-2029-4da4-8955-e71159a8118d
+          stepCounter: 0bb0cd9a-e783-4a96-a108-8d4ed769597c
         config: {}
         dataType: VARCHAR(16777216)
         description: ""
@@ -102,8 +102,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 951285a2-cee6-4db4-b35c-a2dc78b6ea29
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: f6b3a45d-1ff8-4c95-9c91-1148adb5333f
+          stepCounter: 0bb0cd9a-e783-4a96-a108-8d4ed769597c
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         description: ""
@@ -126,9 +126,9 @@ operation:
             nodeName: CLIENTS_1
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'CLIENTS_1') }} "CLIENTS_1"
-        name: DT_WRK_CLIENTS_1
+        name: DT_WRK_CLIENTS_2
         noLinkRefs: []
-  name: DT_WRK_CLIENTS_1
+  name: DT_WRK_CLIENTS_2
   overrideSQL: false
   schema: ""
   sqlType: "347"
