@@ -1,6 +1,6 @@
 fileVersion: 1
-id: 673ef145-ba07-43aa-92f9-97959a3bf31f
-name: DT_WRK_CLIENTS_1
+id: 6fa13fbe-493b-443c-9995-b5226dbde128
+name: DT_WRK_LRV_CLIENTS_2
 operation:
   config:
     advanceWarehouse: false
@@ -17,24 +17,36 @@ operation:
     clusterKeyExpressions: false
     cpygrants: false
     downstreamOption: false
-    groupByAll: false
     immutabilityConstraint: false
     immutableExpression: ""
     initialize: ON_CREATE
     initializeWarehouseSize: ""
-    insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - lagPeriod: Minutes
-          lagValue: "60"
+        - {}
+    orderBy:
+      items:
+        - {}
+    orderByDateTime:
+      items:
+        - {}
+    orderseq:
+      items:
+        - {}
+    partitionBy:
+      items:
+        - {}
+    recordVersioning: Datetime Column
+    recordorderBy:
+      items:
+        - {}
     refreshWarehouseSize: ""
     refresh_mode: AUTO
-    selectDistinct: false
     timeTravel: false
     timeTravelreference: ""
     timeTraveltype: ""
     timeTravelvalue: ""
-    warehouseName: compute_wh
+    warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
@@ -46,8 +58,8 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 37e70ea2-8371-4650-886e-8f2662123f87
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: 652490d0-7912-47c2-8ec2-8f4a31fb6721
+          stepCounter: 6fa13fbe-493b-443c-9995-b5226dbde128
         config: {}
         dataType: NUMBER(38,0)
         description: ""
@@ -60,12 +72,12 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 5d3efb61-f46a-4b10-b42b-a02e9107edb2
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: 8200741d-95bd-4b37-8c19-4d09bd29e92c
+          stepCounter: 6fa13fbe-493b-443c-9995-b5226dbde128
         config: {}
         dataType: VARCHAR(16777216)
-        description: jdkjfiojeif
-        name: CLient_Name
+        description: ""
+        name: CLIENT_NAME
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -74,12 +86,12 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: dff537c5-405b-4f5d-ae22-c4aa7eb2177d
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: ba0a8c27-af82-4f1c-8075-6ef8ac11f01a
+          stepCounter: 6fa13fbe-493b-443c-9995-b5226dbde128
         config: {}
         dataType: VARCHAR(16777216)
-        description: kfralwkro4r
-        name: EMAil
+        description: ""
+        name: EMAIL
         nullable: true
         sourceColumnReferences:
           - columnReferences:
@@ -88,8 +100,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: dead8c02-eff4-4bed-bfb0-8f23255548ab
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: 7580df37-0580-42f4-b5b3-fd84788227db
+          stepCounter: 6fa13fbe-493b-443c-9995-b5226dbde128
         config: {}
         dataType: VARCHAR(16777216)
         description: ""
@@ -102,8 +114,8 @@ operation:
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 951285a2-cee6-4db4-b35c-a2dc78b6ea29
-          stepCounter: 673ef145-ba07-43aa-92f9-97959a3bf31f
+          columnCounter: a2b9925a-dd5f-4105-9fde-83fe2ee989d0
+          stepCounter: 6fa13fbe-493b-443c-9995-b5226dbde128
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         description: ""
@@ -114,6 +126,23 @@ operation:
               - columnCounter: d12dff41-b13d-4a1c-acfe-59ed96d2f881
                 stepCounter: f471ef61-aa59-4e11-b189-778c466be2dd
             transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: 77be3c02-3eed-45b4-959a-72f8816540c7
+          stepCounter: 6fa13fbe-493b-443c-9995-b5226dbde128
+        config: {}
+        dataType: TIMESTAMP
+        defaultValue: ""
+        description: ""
+        name: RECORD_CREATED_DATE
+        nullable: true
+        recordCreated: true
+        sourceColumnReferences:
+          - columnReferences: []
+            transform: FIRST_VALUE({%if config.recordVersioning not in ('Integer Column')%}{{order_by_col()}}{%else%} {{order_by_col_int()}}{%endif%}) OVER (PARTITION BY {{ partition_by() }} ORDER BY {{ order_by_col() }} asc)
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
@@ -126,12 +155,12 @@ operation:
             nodeName: CLIENTS_1
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'CLIENTS_1') }} "CLIENTS_1"
-        name: DT_WRK_CLIENTS_1
+        name: DT_WRK_LRV_CLIENTS_2
         noLinkRefs: []
-  name: DT_WRK_CLIENTS_1
+  name: DT_WRK_LRV_CLIENTS_2
   overrideSQL: false
   schema: ""
-  sqlType: "347"
+  sqlType: "351"
   type: sql
   version: 1
 type: Node
