@@ -29,7 +29,6 @@ operation:
       items:
         - colName:
             columnCounter: 27190e8f-9e44-4733-97c8-e6fb0f4e5d5c
-            name: UPDATE_TIME
             stepCounter: ed53c11b-d3ba-42ce-9275-40f74d86cb0f
     orderByDateTime:
       items:
@@ -41,7 +40,6 @@ operation:
       items:
         - partColName:
             columnCounter: e499e897-c31d-4bd5-b037-7e100851c266
-            name: CLIENT_ID
             stepCounter: ed53c11b-d3ba-42ce-9275-40f74d86cb0f
     recordVersioning: Datetime Column
     recordorderBy:
