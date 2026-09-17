@@ -118,7 +118,7 @@ operation:
           - columnReferences:
               - columnCounter: "0"
                 stepCounter: "0"
-            transform: "\"Text\""
+            transform: "'Text'"
         systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
