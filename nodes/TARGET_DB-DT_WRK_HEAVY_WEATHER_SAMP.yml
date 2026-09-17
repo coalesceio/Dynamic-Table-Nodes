@@ -1,9 +1,12 @@
 fileVersion: 1
-id: 832bda7c-5689-499c-92e4-96b57e77ad89
-name: DT_WRK_HEAVY_WEATHERVW
+id: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
+name: DT_WRK_HEAVY_WEATHER_SAMP
 operation:
   config:
-    baseLocation: ""
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
     clusterKey: false
     clusterKeyConfig:
       items:
@@ -12,32 +15,39 @@ operation:
       items:
         - {}
     clusterKeyExpressions: false
-    cpygrants: true
+    cpygrants: false
     downstreamOption: false
-    externalVolume: ""
     groupByAll: false
+    immutabilityConstraint: false
+    immutableExpression: ""
     initialize: ON_CREATE
+    initializeWarehouseSize: ""
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "6000"
+          lagValue: "60"
+    refreshWarehouseSize: ""
     refresh_mode: AUTO
     selectDistinct: false
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
   description: ""
   isMultisource: false
   locationName: TARGET_DB
-  materializationType: transient dynamic table
+  materializationType: dynamic table
   metadata:
     appliedNodeTests: []
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: ca5f2ec8-f845-40f7-b7ba-2119da31f3c9
-          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+          columnCounter: a5413145-aab7-44bb-8e54-d2db54011866
+          stepCounter: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
         config: {}
         dataType: TIMESTAMP_NTZ(9)
         description: ""
@@ -45,13 +55,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: d4a408fd-8c62-4539-94ee-00c171fbb8e1
-                stepCounter: 7131751a-0eea-47eb-b0c6-045a3c6659a9
+              - columnCounter: 3746e5a2-ccad-4c93-b0b1-664a129834ec
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 274c031c-e54d-4bb5-b143-7bde601dd8c6
-          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+          columnCounter: 01eae11e-6fda-4a4a-90de-aaa296ec2ceb
+          stepCounter: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
         config: {}
         dataType: NUMBER(3,2)
         description: ""
@@ -59,13 +69,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 2cd76c37-50e2-4fea-92cc-7b538fcc9f7f
-                stepCounter: 7131751a-0eea-47eb-b0c6-045a3c6659a9
+              - columnCounter: 2245b44b-e0b3-479a-9435-19b55827c3a6
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 6f4418bb-e884-4179-9629-771d7009d05b
-          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+          columnCounter: e2de3904-56f0-43b9-aec6-4ca3e6b9b2b9
+          stepCounter: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
         config: {}
         dataType: VARCHAR(20)
         description: ""
@@ -73,13 +83,13 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 453ffa6f-3db4-455b-9f78-d94951e07c27
-                stepCounter: 7131751a-0eea-47eb-b0c6-045a3c6659a9
+              - columnCounter: aefcb4f6-b203-4c3f-a561-98b1c6e36793
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: cb63956f-82d4-4dee-b5bd-e80c5b7e8d3c
-          stepCounter: 832bda7c-5689-499c-92e4-96b57e77ad89
+          columnCounter: 2141f6ed-f543-440d-97b7-6f2c8355d5bb
+          stepCounter: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
         config: {}
         dataType: VARCHAR(20)
         description: ""
@@ -87,24 +97,24 @@ operation:
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 66ce6275-68c8-484f-ab24-336738ec8864
-                stepCounter: 7131751a-0eea-47eb-b0c6-045a3c6659a9
+              - columnCounter: 22775c47-2b73-4078-b7df-ec857a7f3214
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          STG_HEAVY_WEATHERVW12: e3b98156-ee5f-4f4a-afda-add1ccbeb2a3
+          HEAVY_WEATHER: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: TARGET_DB
-            nodeName: STG_HEAVY_WEATHERVW12
+          - locationName: SOURCE_DATA
+            nodeName: HEAVY_WEATHER
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'STG_HEAVY_WEATHERVW12') }} "STG_HEAVY_WEATHERVW12"
-        name: DT_WRK_HEAVY_WEATHERVW
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'HEAVY_WEATHER') }} "HEAVY_WEATHER"
+        name: DT_WRK_HEAVY_WEATHER_SAMP
         noLinkRefs: []
-  name: DT_WRK_HEAVY_WEATHERVW
+  name: DT_WRK_HEAVY_WEATHER_SAMP
   overrideSQL: false
   schema: ""
   sqlType: "347"

@@ -1,0 +1,14 @@
+fileVersion: 1
+id: "912"
+mappingDefinitions:
+  SOURCE_DATA:
+    database: ANANDHIS_DEV
+    schema: SOURCE_DATA
+  TARGET_DB:
+    database: ANANDHIS_DEV
+    schema: ACC_QA
+  TARGET_DB_TEST:
+    database: ANANDHIS_DEV
+    schema: TARGET_ACC
+name: DEV_QA
+type: Environment
