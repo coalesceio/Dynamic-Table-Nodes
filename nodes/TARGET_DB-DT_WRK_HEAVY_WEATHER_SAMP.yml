@@ -100,6 +100,26 @@ operation:
               - columnCounter: 22775c47-2b73-4078-b7df-ec857a7f3214
                 stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
+      - acceptedValues:
+          strictMatch: true
+          values: []
+        appliedColumnTests: {}
+        columnReference:
+          columnCounter: a257003e-830c-4079-b577-d926b4137062
+          stepCounter: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
+        config: {}
+        dataType: VARCHAR(400)
+        defaultValue: ""
+        description: ""
+        keyColumnType: None
+        name: New_columnS
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: "0"
+                stepCounter: "0"
+            transform: "\"Text\""
+        systemColumnType: None
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:

@@ -128,7 +128,7 @@ operation:
           stepCounter: d8cf55fb-aec7-4ddd-b130-626fc981de7e
         config: {}
         dataType: VARCHAR(20)
-        description: ""
+        description: Name of the county where the heavy weather event took place. This column is directly sourced from the upstream table's `COUNTY` column. It offers a broader geographical context than the city, supporting administrative boundary-based analysis, emergency management, and regional statistical reporting. This column can be used to join with a geographical dimension table. It provides a higher-level geographical aggregation for weather data.
         name: COUNTY
         nullable: true
         sourceColumnReferences:
