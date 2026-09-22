@@ -379,7 +379,7 @@ does not permit copying or modification for any other purpose.
             INITIALIZE = {{dynamicTableinitialize}}
             {% if desiredState.config.immutabilityConstraint
                 and desiredState.config.immutableExpression != '' %}
-                IMMUTABLE WHERE ({{ desiredState.config.immutableExpression }})
+                FROZEN WHERE ({{ desiredState.config.immutableExpression }})
             {% endif %} 
             {% if desiredState.config.backfill and not desiredState.config.timeTravel %}
                 BACKFILL FROM {{ backfillTableFQN }}
@@ -583,6 +583,8 @@ does not permit copying or modification for any other purpose.
                 {%endif%}
                 {% if  immutabilityTest == false %}   
                     {% if desiredState.config.immutabilityConstraint %}
+                    {{ stage('Alter Dynamic Table') }}
+                     ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
                         FROZEN WHERE ( {{desiredState.config.immutableExpression}} )
                     {%endif%}
                 {%endif%}
