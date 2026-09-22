@@ -583,7 +583,7 @@ does not permit copying or modification for any other purpose.
                 {%endif%}
                 {% if  immutabilityTest == false %}   
                     {% if desiredState.config.immutabilityConstraint %}
-                        IMMUTABLE WHERE ( {{desiredState.config.immutableExpression}} )
+                        FROZEN WHERE ( {{desiredState.config.immutableExpression}} )
                     {%endif%}
                 {%endif%}
             {%endif%}

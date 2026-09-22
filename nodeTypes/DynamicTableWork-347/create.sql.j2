@@ -595,7 +595,7 @@ does not permit copying or modification for any other purpose.
                     {%- if desiredState.config.immutabilityConstraint %}
                         {%- if ns.cntests >0  -%},
                         {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
-                        IMMUTABLE WHERE ( {{desiredState.config.immutableExpression}} )
+                        FROZEN WHERE ( {{desiredState.config.immutableExpression}} )
                     {%- endif%}
                 {%- endif%}
             {%endif%}
