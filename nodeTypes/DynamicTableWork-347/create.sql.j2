@@ -746,13 +746,10 @@ does not permit copying or modification for any other purpose.
     {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
     DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}	
 
-{% else %}
+{% elif currentState != desiredState  %}
             {# =========================================================
                Handle undetected metadata changes / default fallback
                ========================================================= #}
-            {% if currentState != desiredState %}
                 {{ stage('Metadata Update-Default') }}
                 select 1=0
-            {% endif %}
-        {% endif %}	  
 {% endif %}
