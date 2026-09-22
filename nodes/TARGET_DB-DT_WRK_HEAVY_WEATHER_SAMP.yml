@@ -19,15 +19,15 @@ operation:
     downstreamOption: false
     groupByAll: false
     immutabilityConstraint: true
-    immutableExpression: "\"COUNTY\" = 'Siskiyou'"
+    immutableExpression: "\"COUNTY\"  IN ( 'Siskiyou' ,'El Dorado')"
     initialize: ON_CREATE
-    initializeWarehouseSize: Large
+    initializeWarehouseSize: X-Small
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
-    refreshWarehouseSize: Small
+    refreshWarehouseSize: Medium
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
