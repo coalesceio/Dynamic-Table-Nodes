@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
-name: DT_WRK_HEAVY_WEATHER_SAMP
+name: DT_WRK_HEAVY_WEATHER_SAMP_1
 operation:
   config:
     advanceWarehouse: true
@@ -22,15 +22,15 @@ operation:
     downstreamOption: false
     groupByAll: false
     immutabilityConstraint: true
-    immutableExpression: "\"COUNTY\"  IN ( 'Siskiyou' ,'El Dorado')"
+    immutableExpression: "\"COUNTY\"  IN ( 'Siskiyou' )"
     initialize: ON_CREATE
-    initializeWarehouseSize: X-Small
+    initializeWarehouseSize: Large
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "6000"
-    refreshWarehouseSize: Large
+          lagValue: "600000"
+    refreshWarehouseSize: Medium
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
@@ -40,7 +40,7 @@ operation:
     warehouseName: dev_wh_xs
   database: ""
   deployEnabled: true
-  description: ""
+  description: This node has no CREATE SQL or RUN SQL statements defined, indicating an empty or unconfigured node.
   isMultisource: false
   locationName: TARGET_DB
   materializationType: dynamic table
@@ -113,7 +113,7 @@ operation:
         config: {}
         dataType: VARCHAR(400)
         defaultValue: ""
-        description: COmment-added///text
+        description: COmment-added///text123
         keyColumnType: None
         name: New_columnS
         nullable: true
@@ -135,9 +135,9 @@ operation:
             nodeName: HEAVY_WEATHER
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'HEAVY_WEATHER') }} "HEAVY_WEATHER"
-        name: DT_WRK_HEAVY_WEATHER_SAMP
+        name: DT_WRK_HEAVY_WEATHER_SAMP_1
         noLinkRefs: []
-  name: DT_WRK_HEAVY_WEATHER_SAMP
+  name: DT_WRK_HEAVY_WEATHER_SAMP_1
   overrideSQL: false
   schema: ""
   sqlType: "347"
