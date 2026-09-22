@@ -17,14 +17,14 @@ operation:
     clusterKeyExpressions: false
     cpygrants: false
     downstreamOption: false
-    immutabilityConstraint: false
-    immutableExpression: ""
+    immutabilityConstraint: true
+    immutableExpression: "\"COUNTY\"  IN ( 'Siskiyou' ,'El Dorado')"
     initialize: ON_CREATE
     initializeWarehouseSize: ""
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "60"
+          lagValue: "6000"
     orderBy:
       items:
         - colName:
@@ -53,7 +53,7 @@ operation:
     timeTravelreference: ""
     timeTraveltype: ""
     timeTravelvalue: ""
-    warehouseName: COMPUTE_WH
+    warehouseName: dev_wh_xs1
   database: ""
   deployEnabled: true
   description: ""
