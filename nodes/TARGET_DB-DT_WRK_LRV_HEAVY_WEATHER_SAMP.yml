@@ -24,7 +24,7 @@ operation:
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "600"
+          lagValue: "6000"
     orderBy:
       items:
         - colName:
@@ -53,7 +53,7 @@ operation:
     timeTravelreference: ""
     timeTraveltype: ""
     timeTravelvalue: ""
-    warehouseName: dev_wh_xs
+    warehouseName: dev_wh_xs1
   database: ""
   deployEnabled: true
   description: ""
