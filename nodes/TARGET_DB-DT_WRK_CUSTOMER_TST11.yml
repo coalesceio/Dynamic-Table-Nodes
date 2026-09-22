@@ -1,9 +1,9 @@
 fileVersion: 1
 id: 0932681e-2cce-4412-a882-e01905482f90
-name: DT_WRK_CUSTOMER_TST1
+name: DT_WRK_CUSTOMER_TST11
 operation:
   config:
-    advanceWarehouse: false
+    advanceWarehouse: true
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
@@ -16,18 +16,18 @@ operation:
         - {}
     clusterKeyExpressions: false
     cpygrants: false
-    downstreamOption: false
+    downstreamOption: true
     groupByAll: false
-    immutabilityConstraint: false
-    immutableExpression: ""
+    immutabilityConstraint: true
+    immutableExpression: "\"C_MKTSEGMENT\" IN ('AUTOMOBILE','BUILDING')"
     initialize: ON_CREATE
-    initializeWarehouseSize: ""
+    initializeWarehouseSize: Medium
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "6000"
-    refreshWarehouseSize: ""
+    refreshWarehouseSize: Small
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
@@ -182,9 +182,9 @@ operation:
             nodeName: CUSTOMER
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'CUSTOMER') }} "CUSTOMER"
-        name: DT_WRK_CUSTOMER_TST1
+        name: DT_WRK_CUSTOMER_TST11
         noLinkRefs: []
-  name: DT_WRK_CUSTOMER_TST1
+  name: DT_WRK_CUSTOMER_TST11
   overrideSQL: false
   schema: ""
   sqlType: "347"

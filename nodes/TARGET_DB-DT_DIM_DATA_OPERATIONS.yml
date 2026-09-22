@@ -3,7 +3,7 @@ id: c366ad6e-9301-4cf5-9a64-6006289e0af7
 name: DT_DIM_DATA_OPERATIONS
 operation:
   config:
-    advanceWarehouse: false
+    advanceWarehouse: true
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
@@ -17,14 +17,14 @@ operation:
     clusterKeyExpressions: false
     cpygrants: false
     downstreamOption: false
-    immutabilityConstraint: false
-    immutableExpression: ""
+    immutabilityConstraint: true
+    immutableExpression: "\"RECORD_ID\"  > 10"
     initialize: ON_CREATE
-    initializeWarehouseSize: ""
+    initializeWarehouseSize: Large
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "60"
+          lagValue: "6000"
     orderBy:
       items:
         - colName:
@@ -47,7 +47,7 @@ operation:
     recordorderBy:
       items:
         - {}
-    refreshWarehouseSize: ""
+    refreshWarehouseSize: X-Small
     refresh_mode: AUTO
     timeTravel: false
     timeTravelreference: ""
