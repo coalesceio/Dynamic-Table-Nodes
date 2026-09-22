@@ -27,7 +27,10 @@ operation:
           lagValue: "600"
     orderBy:
       items:
-        - {}
+        - colName:
+            columnCounter: 68f4f2db-efef-44d7-bcc8-5b889b21bc23
+            name: UPDATE_TIME
+            stepCounter: 5a71b5a0-8546-4562-a8be-3e9fc33e2f96
     orderByDateTime:
       items:
         - {}
@@ -36,7 +39,10 @@ operation:
         - {}
     partitionBy:
       items:
-        - {}
+        - partColName:
+            columnCounter: 32fd7d4e-ec4e-4d20-a7e8-3890305417e6
+            name: N_NATIONKEY
+            stepCounter: 5a71b5a0-8546-4562-a8be-3e9fc33e2f96
     recordVersioning: Datetime Column
     recordorderBy:
       items:

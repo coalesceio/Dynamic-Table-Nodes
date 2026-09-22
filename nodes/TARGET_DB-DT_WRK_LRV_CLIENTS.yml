@@ -17,7 +17,7 @@ operation:
     clusterKeyExpressions: false
     cpygrants: false
     downstreamOption: false
-    immutabilityConstraint: true
+    immutabilityConstraint: false
     immutableExpression: "\"REGION\" = 'Torronto'"
     initialize: ON_CREATE
     initializeWarehouseSize: ""
