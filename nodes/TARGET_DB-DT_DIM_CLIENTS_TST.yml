@@ -3,7 +3,7 @@ id: b8f46316-999e-4192-a525-18da15ecc9f5
 name: DT_DIM_CLIENTS_TST
 operation:
   config:
-    advanceWarehouse: false
+    advanceWarehouse: true
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
@@ -20,11 +20,11 @@ operation:
     immutabilityConstraint: false
     immutableExpression: ""
     initialize: ON_CREATE
-    initializeWarehouseSize: ""
+    initializeWarehouseSize: Medium
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "360"
+          lagValue: "3600"
     orderBy:
       items:
         - colName:
@@ -47,7 +47,7 @@ operation:
     recordorderBy:
       items:
         - {}
-    refreshWarehouseSize: ""
+    refreshWarehouseSize: X-Small
     refresh_mode: AUTO
     timeTravel: false
     timeTravelreference: ""

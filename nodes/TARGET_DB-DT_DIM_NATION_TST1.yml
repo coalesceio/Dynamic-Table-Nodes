@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 5a71b5a0-8546-4562-a8be-3e9fc33e2f96
-name: DT_DIM_NATION_TST
+name: DT_DIM_NATION_TST1
 operation:
   config:
     advanceWarehouse: false
@@ -24,7 +24,7 @@ operation:
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "600"
+          lagValue: "6000"
     orderBy:
       items:
         - colName:
@@ -53,7 +53,7 @@ operation:
     timeTravelreference: ""
     timeTraveltype: ""
     timeTravelvalue: ""
-    warehouseName: dev_wh_xs
+    warehouseName: dev_wh_xs1
   database: ""
   deployEnabled: true
   description: ""
@@ -128,7 +128,7 @@ operation:
           stepCounter: 5a71b5a0-8546-4562-a8be-3e9fc33e2f96
         config: {}
         dataType: VARCHAR(152)
-        description: ""
+        description: Comment-added\new
         name: N_COMMENT
         nullable: true
         sourceColumnReferences:
@@ -244,9 +244,9 @@ operation:
             nodeName: NATION
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'NATION') }} "NATION"
-        name: DT_DIM_NATION_TST
+        name: DT_DIM_NATION_TST1
         noLinkRefs: []
-  name: DT_DIM_NATION_TST
+  name: DT_DIM_NATION_TST1
   overrideSQL: false
   schema: ""
   sqlType: "350"

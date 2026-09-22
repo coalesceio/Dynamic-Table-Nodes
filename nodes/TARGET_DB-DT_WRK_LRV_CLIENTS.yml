@@ -7,10 +7,13 @@ operation:
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: bb4c3f72-a48d-456f-b839-75bfdd9e3185
+            name: CLIENT_NAME
+            stepCounter: 7cd1c5a3-eb64-4fe3-82ab-697766826483
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -24,7 +27,7 @@ operation:
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "300"
+          lagValue: "3000"
     orderBy:
       items:
         - colName:
@@ -53,7 +56,7 @@ operation:
     timeTravelreference: ""
     timeTraveltype: ""
     timeTravelvalue: ""
-    warehouseName: dev_wh_xs
+    warehouseName: dev_wh_xs1
   database: ""
   deployEnabled: true
   description: ""
