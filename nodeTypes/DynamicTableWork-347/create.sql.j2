@@ -574,27 +574,27 @@ does not permit copying or modification for any other purpose.
                     {%- if desiredState.config.advanceWarehouse %}
                         WAREHOUSE = {{ refreshWarehouse }}
                         ,INITIALIZATION_WAREHOUSE = {{ initializeWarehouse }}
-                        {%ns.cnttests = ns.cnttests + 1%}
+                        {%- set ns.cntests = ns.cntests + 1 -%}
                     {%- else %}
-                        {%- if ns.cnttests >0  -%},
-                        {%-ns.cnttests = ns.cnttests + 1 -%} {%- endif-%}
+                        {%- if ns.cntests >0  -%},
+                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                         WAREHOUSE = {{ dynamicTableWarehouse }}
                     {%- endif %}
                 {%- endif %}
                 {%- if lagSpecificationTest == false or downstreamOptionTest == false%}
-                     {%- if ns.cnttests >0  -%},
-                        {%-ns.cnttests = ns.cnttests + 1 -%} {%- endif-%}
+                     {%- if ns.cntests >0  -%},
+                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                     {{ dynamicTableLagSpecification }}
                 {%- endif %}
                 {%- if nodeCommentTest == false %}
-                   {%- if ns.cnttests >0  -%},
-                        {%-ns.cnttests = ns.cnttests + 1 -%} {%- endif-%}
+                   {%- if ns.cntests >0  -%},
+                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                     {{ dynamicTableComment }}   
                 {%- endif%}
                 {%- if  immutabilityTest == false %}   
                     {%- if desiredState.config.immutabilityConstraint %}
-                        {%- if ns.cnttests >0  -%},
-                        {%-ns.cnttests = ns.cnttests + 1 -%} {%- endif-%}
+                        {%- if ns.cntests >0  -%},
+                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                         IMMUTABLE WHERE ( {{desiredState.config.immutableExpression}} )
                     {%- endif%}
                 {%- endif%}
