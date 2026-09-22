@@ -7,10 +7,13 @@ operation:
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
-    clusterKey: false
+    clusterKey: true
     clusterKeyConfig:
       items:
-        - {}
+        - columnName:
+            columnCounter: e2de3904-56f0-43b9-aec6-4ca3e6b9b2b9
+            name: CITY
+            stepCounter: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
     clusterKeyConfigExpressions:
       items:
         - {}
@@ -26,8 +29,8 @@ operation:
     lagSpecification:
       items:
         - lagPeriod: Minutes
-          lagValue: "60"
-    refreshWarehouseSize: Medium
+          lagValue: "6000"
+    refreshWarehouseSize: Large
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
@@ -110,7 +113,7 @@ operation:
         config: {}
         dataType: VARCHAR(400)
         defaultValue: ""
-        description: ""
+        description: COmment-added///text
         keyColumnType: None
         name: New_columnS
         nullable: true
