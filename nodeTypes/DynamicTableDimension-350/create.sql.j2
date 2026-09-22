@@ -561,7 +561,7 @@ does not permit copying or modification for any other purpose.
             {% if desiredState.config.immutabilityConstraint == false %}
                 {{ stage('Alter Dynamic Table - Drop Immutability Constraint') }}
                 ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
-                UNSET IMMUTABLE WHERE
+                UNSET FROZEN WHERE
             {% endif %}
 
             {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false or  (immutabilityTest == false and desiredState.config.immutabilityConstraint == true) or refreshWarehouseTest ==  false or initializeWarehouseTest == false or advanceWarehouseTest == false %}
@@ -686,7 +686,7 @@ does not permit copying or modification for any other purpose.
             INITIALIZE = {{dynamicTableinitialize}}
             {% if desiredState.config.immutabilityConstraint
                 and desiredState.config.immutableExpression != '' %}
-                IMMUTABLE WHERE ({{ desiredState.config.immutableExpression }})
+                FROZEN WHERE ({{ desiredState.config.immutableExpression }})
             {% endif %} 
             {% if desiredState.config.backfill and not desiredState.config.timeTravel %}
                 BACKFILL FROM {{ backfillTableFQN }}
@@ -741,5 +741,13 @@ does not permit copying or modification for any other purpose.
     {{ stage('Drop ' + ref_no_link(currentState.node.location.name, currentState.node.name)) }}
     {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
     DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
+
+{% elif currentState != undefined and desiredState != undefined  and currentState != desiredState %}
+
+            {# =========================================================
+               Handle undetected metadata changes / default fallback
+               ========================================================= #}
+                {{ stage('Metadata Update-Default') }}
+                select 1=0
 
 {% endif %}
