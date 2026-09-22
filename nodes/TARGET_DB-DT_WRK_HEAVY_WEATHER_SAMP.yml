@@ -3,7 +3,7 @@ id: 58e9d9c7-713d-456c-8836-d7c02aa42bb9
 name: DT_WRK_HEAVY_WEATHER_SAMP
 operation:
   config:
-    advanceWarehouse: false
+    advanceWarehouse: true
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
@@ -18,16 +18,16 @@ operation:
     cpygrants: false
     downstreamOption: false
     groupByAll: false
-    immutabilityConstraint: false
-    immutableExpression: ""
+    immutabilityConstraint: true
+    immutableExpression: "\"COUNTY\" = 'Siskiyou'"
     initialize: ON_CREATE
-    initializeWarehouseSize: ""
+    initializeWarehouseSize: Large
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
-    refreshWarehouseSize: ""
+    refreshWarehouseSize: Small
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
