@@ -78,7 +78,7 @@ does not permit copying or modification for any other purpose.
             nsDesiredUsedStorageLocations="",
             storageLocationTest= true,
             descolchanges = 0,
-            othercolchanges = 0, joinTest = True ) %}
+            othercolchanges = 0, joinTest = True,metaDataChanged = false ) %}
 		
             {%if sourcesTest == true%}
                 {% for src in desiredState.sources %}
@@ -744,6 +744,15 @@ does not permit copying or modification for any other purpose.
 
     {{ stage('Drop ' + ref_no_link(currentState.node.location.name, currentState.node.name)) }}
     {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
-    DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}		  
+    DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}	
 
+{% else %}
+            {# =========================================================
+               Handle undetected metadata changes / default fallback
+               ========================================================= #}
+            {% if currentState != desiredState %}
+                {{ stage('Metadata Update-Default') }}
+                select 1=0
+            {% endif %}
+        {% endif %}	  
 {% endif %}
