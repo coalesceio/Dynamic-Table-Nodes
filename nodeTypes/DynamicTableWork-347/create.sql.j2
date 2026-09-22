@@ -566,35 +566,27 @@ does not permit copying or modification for any other purpose.
                 UNSET IMMUTABLE WHERE
             {% endif %}
             
-            {%set ns = namespace(cntests = 0) %}
             {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false or (immutabilityTest == false and desiredState.config.immutabilityConstraint == true) or refreshWarehouseTest ==  false or initializeWarehouseTest == false or advanceWarehouseTest == false %}
                 {{ stage('Alter Dynamic Table') }}
                 ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
                 {% if warehouseTest == false or advanceWarehouseTest == false or refreshWarehouseTest ==  false or initializeWarehouseTest == false %}
                     {%- if desiredState.config.advanceWarehouse %}
                         WAREHOUSE = {{ refreshWarehouse }}
-                        ,INITIALIZATION_WAREHOUSE = {{ initializeWarehouse }}
-                        {%- set ns.cntests = ns.cntests + 1 -%}
+                        INITIALIZATION_WAREHOUSE = {{ initializeWarehouse }}
                     {%- else %}
-                        {%- if ns.cntests >0  -%},
-                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                         WAREHOUSE = {{ dynamicTableWarehouse }}
                     {%- endif %}
                 {%- endif %}
                 {%- if lagSpecificationTest == false or downstreamOptionTest == false%}
-                     {%- if ns.cntests >0  -%},
-                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                     {{ dynamicTableLagSpecification }}
                 {%- endif %}
                 {%- if nodeCommentTest == false %}
-                   {%- if ns.cntests >0  -%},
-                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
                     {{ dynamicTableComment }}   
                 {%- endif%}
                 {%- if  immutabilityTest == false %}   
                     {%- if desiredState.config.immutabilityConstraint %}
-                        {%- if ns.cntests >0  -%},
-                        {%- set ns.cntests = ns.cntests + 1 -%} {%- endif-%}
+                     {{ stage('Alter Dynamic Table-Add Immutability constraint') }}
+                      ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
                         FROZEN WHERE ( {{desiredState.config.immutableExpression}} )
                     {%- endif%}
                 {%- endif%}
