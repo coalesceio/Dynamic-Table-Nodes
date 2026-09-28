@@ -31,8 +31,8 @@ operation:
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
-    timeTravelreference: ""
-    timeTraveltype: ""
+    timeTravelreference: OFFSET
+    timeTraveltype: AT
     timeTravelvalue: ""
     warehouseName: dev_wh_xs
   database: ""
@@ -117,7 +117,7 @@ operation:
   name: DT_WRK_PRODUCTS_SAMP1
   overrideSQL: false
   schema: ""
-  sqlType: "347"
+  sqlType: DT:::347
   type: sql
   version: 1
 type: Node
