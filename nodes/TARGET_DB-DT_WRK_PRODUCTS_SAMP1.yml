@@ -31,8 +31,8 @@ operation:
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
-    timeTravelreference: OFFSET
-    timeTraveltype: AT
+    timeTravelreference: ""
+    timeTraveltype: ""
     timeTravelvalue: ""
     warehouseName: dev_wh_xs
   database: ""
