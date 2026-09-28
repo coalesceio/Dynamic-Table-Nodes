@@ -18,16 +18,16 @@ operation:
     cpygrants: false
     downstreamOption: false
     groupByAll: false
-    immutabilityConstraint: false
-    immutableExpression: ""
+    immutabilityConstraint: true
+    immutableExpression: "\"BRAND\"  IN ('Sony',' HP')"
     initialize: ON_CREATE
-    initializeWarehouseSize: Large
+    initializeWarehouseSize: Medium
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
-    refreshWarehouseSize: X-Small
+    refreshWarehouseSize: Small
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
