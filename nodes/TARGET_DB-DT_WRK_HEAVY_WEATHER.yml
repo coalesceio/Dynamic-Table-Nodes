@@ -1,9 +1,9 @@
 fileVersion: 1
-id: 88f93ba5-33b5-4d3d-a64d-c5e5ba7513c4
-name: DT_WRK_PRODUCTS_SAMP1
+id: 600e9465-ca96-4beb-b9e3-3ee0ac78dd54
+name: DT_WRK_HEAVY_WEATHER
 operation:
   config:
-    advanceWarehouse: true
+    advanceWarehouse: false
     backfill: false
     backfillSource: ""
     backfillSourceSchema: ""
@@ -18,21 +18,21 @@ operation:
     cpygrants: false
     downstreamOption: false
     groupByAll: false
-    immutabilityConstraint: true
-    immutableExpression: "\"BRAND\"  IN ('Sony',' HP')"
+    immutabilityConstraint: false
+    immutableExpression: ""
     initialize: ON_CREATE
-    initializeWarehouseSize: Medium
+    initializeWarehouseSize: ""
     insertStrategy: UNION ALL
     lagSpecification:
       items:
         - lagPeriod: Minutes
           lagValue: "60"
-    refreshWarehouseSize: Small
+    refreshWarehouseSize: ""
     refresh_mode: AUTO
     selectDistinct: false
     timeTravel: false
-    timeTravelreference: OFFSET
-    timeTraveltype: AT
+    timeTravelreference: ""
+    timeTraveltype: ""
     timeTravelvalue: ""
     warehouseName: dev_wh_xs
   database: ""
@@ -46,78 +46,78 @@ operation:
     columns:
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 621795b3-63bb-4860-a7d7-f857371eb90d
-          stepCounter: 88f93ba5-33b5-4d3d-a64d-c5e5ba7513c4
+          columnCounter: 26108c71-6b2f-4391-9357-cc9f02da163c
+          stepCounter: 600e9465-ca96-4beb-b9e3-3ee0ac78dd54
         config: {}
-        dataType: NUMBER(38,0)
+        dataType: TIMESTAMP_NTZ(9)
         description: ""
-        name: PRODUCT_ID
-        nullable: false
-        sourceColumnReferences:
-          - columnReferences:
-              - columnCounter: ea4df73e-bb72-4d33-8711-837cf9bbb701
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
-            transform: ""
-      - appliedColumnTests: {}
-        columnReference:
-          columnCounter: ffca0abe-f38e-40b5-ae9f-9eb331df9d89
-          stepCounter: 88f93ba5-33b5-4d3d-a64d-c5e5ba7513c4
-        config: {}
-        dataType: VARCHAR(255)
-        description: ""
-        name: PRODUCT_NAME
+        name: START_TIME
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 93adc20b-9e7d-40ff-a3c4-cdf80ffcf325
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
+              - columnCounter: 3746e5a2-ccad-4c93-b0b1-664a129834ec
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: 13e04361-7c54-481d-b9da-297f3bcc99f4
-          stepCounter: 88f93ba5-33b5-4d3d-a64d-c5e5ba7513c4
+          columnCounter: ec6b785a-4ccc-4453-a471-902f71b6e9dc
+          stepCounter: 600e9465-ca96-4beb-b9e3-3ee0ac78dd54
         config: {}
-        dataType: VARCHAR(100)
+        dataType: NUMBER(3,2)
         description: ""
-        name: BRAND
+        name: PRECIP
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: c2ed942d-1193-439d-8c03-eb0c49d79d28
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
+              - columnCounter: 2245b44b-e0b3-479a-9435-19b55827c3a6
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
       - appliedColumnTests: {}
         columnReference:
-          columnCounter: d38e93b4-f564-4e2f-bc01-fcdca7dabd72
-          stepCounter: 88f93ba5-33b5-4d3d-a64d-c5e5ba7513c4
+          columnCounter: 3c5282fa-abd9-48d3-afb5-edbb8b54841e
+          stepCounter: 600e9465-ca96-4beb-b9e3-3ee0ac78dd54
         config: {}
-        dataType: VARCHAR(50)
+        dataType: VARCHAR(20)
         description: ""
-        name: COLOUR
+        name: CITY
         nullable: true
         sourceColumnReferences:
           - columnReferences:
-              - columnCounter: 236bca9b-c83e-4411-88ec-a53db124c154
-                stepCounter: d8023274-54ca-4a34-9f39-ef45fe21e441
+              - columnCounter: aefcb4f6-b203-4c3f-a561-98b1c6e36793
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: b11c56a2-2a87-43ae-938c-daaab98dc244
+          stepCounter: 600e9465-ca96-4beb-b9e3-3ee0ac78dd54
+        config: {}
+        dataType: VARCHAR(20)
+        description: ""
+        name: COUNTY
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 22775c47-2b73-4078-b7df-ec857a7f3214
+                stepCounter: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
             transform: ""
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          PRODUCTS: d8023274-54ca-4a34-9f39-ef45fe21e441
+          HEAVY_WEATHER: d15295c2-73b2-4be4-bb7e-60d7ad0f341f
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: SOURCE_DATA
-            nodeName: PRODUCTS
+            nodeName: HEAVY_WEATHER
         join:
-          joinCondition: FROM {{ ref('SOURCE_DATA', 'PRODUCTS') }} "PRODUCTS"
-        name: DT_WRK_PRODUCTS_SAMP1
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'HEAVY_WEATHER') }} "HEAVY_WEATHER"
+        name: DT_WRK_HEAVY_WEATHER
         noLinkRefs: []
-  name: DT_WRK_PRODUCTS_SAMP1
+  name: DT_WRK_HEAVY_WEATHER
   overrideSQL: false
   schema: ""
-  sqlType: DT:::347
+  sqlType: "347"
   type: sql
   version: 1
 type: Node

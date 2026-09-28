@@ -1,0 +1,137 @@
+fileVersion: 1
+id: 4f621227-4fa0-4a47-9ae7-f1693a5b8d6f
+name: DT_WRK_CLIENTS
+operation:
+  config:
+    advanceWarehouse: false
+    backfill: false
+    backfillSource: ""
+    backfillSourceSchema: ""
+    clusterKey: false
+    clusterKeyConfig:
+      items:
+        - {}
+    clusterKeyConfigExpressions:
+      items:
+        - {}
+    clusterKeyExpressions: false
+    cpygrants: false
+    downstreamOption: false
+    groupByAll: false
+    immutabilityConstraint: true
+    immutableExpression: "\"REGION\" LIKE 'ABC'"
+    initialize: ON_CREATE
+    initializeWarehouseSize: ""
+    insertStrategy: UNION ALL
+    lagSpecification:
+      items:
+        - lagPeriod: Minutes
+          lagValue: "60"
+    refreshWarehouseSize: ""
+    refresh_mode: AUTO
+    selectDistinct: false
+    timeTravel: false
+    timeTravelreference: ""
+    timeTraveltype: ""
+    timeTravelvalue: ""
+    warehouseName: dev_wh_xs
+  database: ""
+  deployEnabled: true
+  description: ""
+  isMultisource: false
+  locationName: TARGET_DB
+  materializationType: dynamic table
+  metadata:
+    appliedNodeTests: []
+    columns:
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: be7f5a50-135e-43eb-9d49-30249033e7a4
+          stepCounter: 4f621227-4fa0-4a47-9ae7-f1693a5b8d6f
+        config: {}
+        dataType: NUMBER(38,0)
+        description: ""
+        name: CLIENT_ID
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: ba1e125e-9cb8-401b-9702-012bb8d418b8
+                stepCounter: 4ba5aa29-3ca2-4458-89f6-31be6a085861
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: c51d046a-30fd-427a-aced-de2e5b21b80a
+          stepCounter: 4f621227-4fa0-4a47-9ae7-f1693a5b8d6f
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: CLIENT_NAME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 80a33676-5ca2-4213-a743-4152c5f5f33c
+                stepCounter: 4ba5aa29-3ca2-4458-89f6-31be6a085861
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 2c739c78-4d00-4922-afc6-054ef629ce7f
+          stepCounter: 4f621227-4fa0-4a47-9ae7-f1693a5b8d6f
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: EMAIL
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 92936fe9-1e68-4dc1-9bef-4f2baf7ccbb2
+                stepCounter: 4ba5aa29-3ca2-4458-89f6-31be6a085861
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 1d6df01b-988b-43a7-a437-3f325ecfe7ac
+          stepCounter: 4f621227-4fa0-4a47-9ae7-f1693a5b8d6f
+        config: {}
+        dataType: VARCHAR(16777216)
+        description: ""
+        name: REGION
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: 54597812-4b44-4824-b280-77fee5f997d8
+                stepCounter: 4ba5aa29-3ca2-4458-89f6-31be6a085861
+            transform: ""
+      - appliedColumnTests: {}
+        columnReference:
+          columnCounter: 16d39c5a-9261-4a5f-a80e-c1704e105d68
+          stepCounter: 4f621227-4fa0-4a47-9ae7-f1693a5b8d6f
+        config: {}
+        dataType: TIMESTAMP_NTZ(9)
+        description: ""
+        name: UPDATE_TIME
+        nullable: true
+        sourceColumnReferences:
+          - columnReferences:
+              - columnCounter: df0555d7-1183-4c9b-bc96-50bb9b2fa55c
+                stepCounter: 4ba5aa29-3ca2-4458-89f6-31be6a085861
+            transform: ""
+    cteString: ""
+    enabledColumnTestIDs: []
+    sourceMapping:
+      - aliases:
+          CLIENTS: 4ba5aa29-3ca2-4458-89f6-31be6a085861
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: SOURCE_DATA
+            nodeName: CLIENTS
+        join:
+          joinCondition: FROM {{ ref('SOURCE_DATA', 'CLIENTS') }} "CLIENTS"
+        name: DT_WRK_CLIENTS
+        noLinkRefs: []
+  name: DT_WRK_CLIENTS
+  overrideSQL: false
+  schema: ""
+  sqlType: "347"
+  type: sql
+  version: 1
+type: Node
