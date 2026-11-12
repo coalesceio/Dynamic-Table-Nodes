@@ -1,0 +1,14 @@
+fileVersion: 1
+id: "977"
+mappingDefinitions:
+  SOURCE_DATA:
+    database: SOURCE
+    schema: SRC
+  TARGET_DB:
+    database: TARGET
+    schema: TARGET
+  TARGET_DB_TEST:
+    database: TARGET
+    schema: TARGET_NEW
+name: QA_TEST
+type: Environment
