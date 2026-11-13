@@ -25,7 +25,8 @@ operation:
     insertStrategy: UNION ALL
     lagSpecification:
       items:
-        - {}
+        - lagPeriod: Minutes
+          lagValue: "60"
     refreshWarehouseSize: ""
     refresh_mode: AUTO
     selectDistinct: false
@@ -33,7 +34,7 @@ operation:
     timeTravelreference: ""
     timeTraveltype: ""
     timeTravelvalue: ""
-    warehouseName: dev_wh_xs
+    warehouseName: COMPUTE_WH
   database: ""
   deployEnabled: true
   description: ""
