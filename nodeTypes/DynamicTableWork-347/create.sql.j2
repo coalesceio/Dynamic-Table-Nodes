@@ -89,14 +89,21 @@ does not permit copying or modification for any other purpose.
             {%endif%}
      
             {# Test to see if the transform in a column has changed #}
-            {# Desired Namespace Variables Transform #}
-            {% set desiredTransformArray = desiredState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
+            {% set ns = namespace(transformTest = true) %}
 
-            {# Test to see if the transform in a column has changed #}
-            {# Current Namespace Variables Transform #}
-            {% set currentTransformArray = currentState.sources | map(attribute='columns') | first | map(attribute='transform') | list -%}
+            {% for src in desiredState.sources %}
+               {% set matchingSource = currentState.sources | selectattr('name', 'equalto', src.name) | first %}
 
-            {% set columnsTransformTest = currentTransformArray == desiredTransformArray %}
+               {% if matchingSource %}
+                  {% if (src.columns | map(attribute='transform') | list) != (matchingSource.columns | map(attribute='transform') | list) %}
+                  {% set ns.transformTest = false %}
+                  {% endif %}
+              {% else %}
+                  {% set ns.transformTest = false %}
+              {% endif %}
+            {% endfor %}
+
+            {% set columnsTransformTest = ns.transformTest %}
 
             {# Change Node Name or Change Storage Location #}
             {# Storage Location Tests #}

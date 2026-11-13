@@ -79,7 +79,7 @@ operation:
           - columnReferences:
               - columnCounter: 88fb7774-6640-4289-814e-60cfbbf4c2de
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
-            transform: LOWER("DT_WRK_CUSTOMER1"."C_NAME")
+            transform: UPPER("DT_WRK_CUSTOMER1"."C_NAME")
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 1937383f-27bd-461d-95d0-1f61864ea225
