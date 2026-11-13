@@ -155,7 +155,7 @@ operation:
           - columnReferences:
               - columnCounter: 9f7f8189-db66-48e3-8865-6b084b3baf9e
                 stepCounter: ced8edad-711c-4a79-96fc-48f2af34564e
-            transform: ""
+            transform: "NULL"
     cteString: ""
     enabledColumnTestIDs: []
     sourceMapping:
