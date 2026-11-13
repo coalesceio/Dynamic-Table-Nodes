@@ -62,6 +62,10 @@ operation:
               - columnCounter: 008c010f-62e5-4f63-9551-12fb51f4dc9a
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
             transform: ""
+          - columnReferences:
+              - columnCounter: 3f67a7db-0a8b-4a26-9f26-250f8f785a84
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+            transform: ""
       - appliedColumnTests: {}
         columnReference:
           columnCounter: a6ff30d6-e01a-4d51-8597-26cb6930c62d
@@ -80,6 +84,10 @@ operation:
               - columnCounter: 88fb7774-6640-4289-814e-60cfbbf4c2de
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
             transform: UPPER("DT_WRK_CUSTOMER1"."C_NAME")
+          - columnReferences:
+              - columnCounter: 7d6ceabb-9480-40e4-89ca-41a70ad43250
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+            transform: ""
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 1937383f-27bd-461d-95d0-1f61864ea225
@@ -97,6 +105,10 @@ operation:
           - columnReferences:
               - columnCounter: 2620928a-f67c-4cdf-a01b-5c01a6f4889b
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
+            transform: ""
+          - columnReferences:
+              - columnCounter: 8c546637-251c-4ef0-8b17-0f3b1ea5b65a
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
             transform: ""
       - appliedColumnTests: {}
         columnReference:
@@ -116,6 +128,10 @@ operation:
               - columnCounter: f6ae3f91-46af-4acc-885f-1dc84e8100d4
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
             transform: ""
+          - columnReferences:
+              - columnCounter: 0cebc5ab-c941-4bb0-9467-4712db2981fb
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+            transform: ""
       - appliedColumnTests: {}
         columnReference:
           columnCounter: b5e33fe4-d149-440f-a3f0-e90d070c1429
@@ -133,6 +149,10 @@ operation:
           - columnReferences:
               - columnCounter: 69899bc6-a9d3-47d7-9500-5f8c7a302245
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
+            transform: ""
+          - columnReferences:
+              - columnCounter: 5b6800ba-2efa-4b43-b283-5225fcec9513
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
             transform: ""
       - appliedColumnTests: {}
         columnReference:
@@ -152,6 +172,10 @@ operation:
               - columnCounter: fefde8aa-52e1-46aa-b8d1-fabcfe50b35c
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
             transform: ""
+          - columnReferences:
+              - columnCounter: ab0c44ca-fb1a-4b8f-ae2c-47eaa9a43ad2
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+            transform: ""
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 1c1ac473-5bdd-49ac-a90d-46165a141ee4
@@ -169,6 +193,10 @@ operation:
           - columnReferences:
               - columnCounter: 82061c7d-66af-4177-a802-960d074ad3ff
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
+            transform: ""
+          - columnReferences:
+              - columnCounter: ff515ce9-66a7-4a37-8c5e-a6e2f84b47b2
+                stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
             transform: ""
     cteString: ""
     enabledColumnTestIDs: []
@@ -193,6 +221,17 @@ operation:
             nodeName: DT_WRK_CUSTOMER1
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
+        name: NEW_SOURCE
+        noLinkRefs: []
+      - aliases:
+          DT_WRK_CUSTOMER2: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+        customSQL:
+          customSQL: ""
+        dependencies:
+          - locationName: TARGET_DB
+            nodeName: DT_WRK_CUSTOMER2
+        join:
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER2') }} "DT_WRK_CUSTOMER2"
         name: NEW_SOURCE
         noLinkRefs: []
   name: DT_WRK_CUSTOMER_muiltisource
