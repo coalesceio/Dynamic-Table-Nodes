@@ -75,7 +75,7 @@ operation:
           - columnReferences:
               - columnCounter: 6f55245d-8e22-4667-8895-94ae5b5f652e
                 stepCounter: b181edf8-c2ca-48d4-bbf0-7223bced4972
-            transform: ""
+            transform: LOWER("DT_WRK_CUSTOMER1"."C_NAME")
           - columnReferences:
               - columnCounter: 88fb7774-6640-4289-814e-60cfbbf4c2de
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
