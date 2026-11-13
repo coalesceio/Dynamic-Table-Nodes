@@ -157,7 +157,7 @@ operation:
           columnCounter: 1c1ac473-5bdd-49ac-a90d-46165a141ee4
           stepCounter: 59b69ac4-bf53-4787-9c6b-f5fcc85de18a
         config: {}
-        dataType: VARCHAR(10)
+        dataType: VARCHAR(20)
         description: ""
         name: C_MKTSEGMENT
         nullable: true
