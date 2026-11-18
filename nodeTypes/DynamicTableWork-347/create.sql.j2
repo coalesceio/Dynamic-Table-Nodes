@@ -80,28 +80,47 @@ does not permit copying or modification for any other purpose.
             descolchanges = 0,
             othercolchanges = 0, joinTest = True,metaDataChanged = false ) %}
 		
-            {%if sourcesTest == true%}
-                {% for src in desiredState.sources %}
-                    {% if  currentState.sources[loop.index0].join != src.join %}
-                        {% set nsVariables.joinTest = false %}  {# Set joinTest to false if changes are detected #}
-                    {% endif %}
-                {% endfor %}
-            {%endif%}
-     
-            {# Test to see if the transform in a column has changed #}
+            {#
+                Test whether the generated SELECT of any source has changed.
+                Sources and their columns are compared by POSITION (not by name), because:
+                  - source names are not unique in a multi-source node, so a name lookup can
+                    pair a source with the wrong one;
+                  - UNION / UNION ALL matches columns by position, so a reordering matters;
+                  - a change in the number of sources is already caught by sourcesTest.
+                For every source we compare the JOIN/FROM clause, and for every column the
+                attributes that feed get_source_transform(col) AS "name":
+                  - name               : column alias in the SELECT
+                  - transform          : explicit transform
+                  - source column refs : the mapped upstream column, used when transform is empty
+                                         (catches re-mapping / un-mapping with no transform)
+            #}
             {% set ns = namespace(transformTest = true) %}
 
-            {% for src in desiredState.sources %}
-               {% set matchingSource = currentState.sources | selectattr('name', 'equalto', src.name) | first %}
+            {% if sourcesTest == true %}
+                {% for src in desiredState.sources %}
+                    {% set curSrc = currentState.sources[loop.index0] %}
 
-               {% if matchingSource %}
-                  {% if (src.columns | map(attribute='transform') | list) != (matchingSource.columns | map(attribute='transform') | list) %}
-                  {% set ns.transformTest = false %}
-                  {% endif %}
-              {% else %}
-                  {% set ns.transformTest = false %}
-              {% endif %}
-            {% endfor %}
+                    {# JOIN / FROM / WHERE clause #}
+                    {% if curSrc.join != src.join %}
+                        {% set nsVariables.joinTest = false %}
+                    {% endif %}
+
+                    {# Column mapping of this source #}
+                    {% if (src.columns | length) != (curSrc.columns | length) %}
+                        {% set ns.transformTest = false %}
+                    {% else %}
+                        {% for col in src.columns %}
+                            {% set curCol = curSrc.columns[loop.index0] %}
+                            {% if col.name != curCol.name
+                                or (col.transform | default('', true)) != (curCol.transform | default('', true))
+                                or (col.sourceColumns | default([], true)) != (curCol.sourceColumns | default([], true))
+                                or (col.sourceColumnReferences | default([], true)) != (curCol.sourceColumnReferences | default([], true)) %}
+                                {% set ns.transformTest = false %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
 
             {% set columnsTransformTest = ns.transformTest %}
 
