@@ -148,6 +148,51 @@ does not permit copying or modification for any other purpose.
                 {% set nsVariables.storageLocationTest = false %}
             {% endif %}
 
+            {#
+                Upstream storage location test.
+                The SELECT of every source reads its upstream nodes through ref('<LOCATION>', '<NODE>').
+                If the database/schema that an upstream storage location maps to changes, the
+                dynamic table must be re-created so it reads from the new objects.
+                Location names are collected from each source's dependencies and from the
+                ref(...) calls in its join clause, in both current and desired state.
+                Only locations that resolve in BOTH states are compared, so an unknown or
+                newly added location does not trigger a re-create on its own (a new
+                dependency already changes the join and is caught by joinTest).
+            #}
+            {% set nsUpstream = namespace(locations=[], upstreamLocationTest=true) %}
+
+            {% for state in [currentState, desiredState] %}
+                {% for src in state.sources %}
+                    {% for dep in src.dependencies | default([], true) %}
+                        {% if dep.locationName and dep.locationName not in nsUpstream.locations %}
+                            {% set nsUpstream.locations = nsUpstream.locations + [dep.locationName] %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% set joinText = (src.join | default('', true)) | string %}
+                    {% for refCall in ['ref_no_link(', 'ref_link(', 'ref('] %}
+                        {% for piece in joinText.split(refCall)[1:] %}
+                            {% set locName = piece.split(',')[0] | replace("'", '') | replace('"', '') | trim %}
+                            {% if locName != '' and locName not in nsUpstream.locations %}
+                                {% set nsUpstream.locations = nsUpstream.locations + [locName] %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+
+            {% for locName in nsUpstream.locations %}
+                {% set curLoc = currentState.storageLocations | selectattr('name', 'equalto', locName) | first %}
+                {% set desLoc = desiredState.storageLocations | selectattr('name', 'equalto', locName) | first %}
+                {% if curLoc and desLoc and (curLoc.database != desLoc.database or curLoc.schema != desLoc.schema) %}
+                    {% set nsUpstream.upstreamLocationTest = false %}
+                {% endif %}
+            {% endfor %}
+
+            {% set upstreamLocationTest = nsUpstream.upstreamLocationTest %}
+            {# nsVariables is re-assigned later (cluster key), so keep the own-location result #}
+            {% set ownLocationTest = nsVariables.storageLocationTest %}
+
             {# Config #}
             {% set insertStrategyTest = currentState.config.insertStrategy | default('UNION ALL') == desiredState.config.insertStrategy %}
             {% set groupByAllTest = currentState.config.groupByAll | default(false)  == desiredState.config.groupByAll %}
@@ -223,7 +268,8 @@ does not permit copying or modification for any other purpose.
                 sourcesTest == false or
                 nsVariables.joinTest == false or
                 columnsTransformTest == false or
-                insertStrategyTest == false or 
+                upstreamLocationTest == false or
+                insertStrategyTest == false or
                 groupByAllTest == false or 
                 selectDistinctTest == false or 
                 nodeIsMultisource == false or 
@@ -387,8 +433,23 @@ does not permit copying or modification for any other purpose.
                 {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
                 DROP {{ materialization }} {{ ref_no_link(currentState.node.location.name, currentState.node.name) }}
 
+            {% elif createTest == true and (ownLocationTest == false or nodeNameTest == false) %}
+                {#
+                    The node is being re-created AND its own location or name changed in the same deploy
+                    (for example the storage mapping of a location shared with an upstream source changed).
+                    CREATE OR REPLACE only builds the new object, so drop the old one at its CURRENT
+                    database/schema/name to avoid leaving an orphaned dynamic table behind.
+                #}
+                {% set oldDb = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='database') | first %}
+                {% set oldSchema = currentState.storageLocations | selectattr('name', 'equalto', currentState.node.location.name) | map(attribute='schema') | first %}
+                {% if oldDb and oldSchema %}
+                    {{ stage('Drop previous ' + currentState.node.materializationType + ' "' + oldDb + '"."' + oldSchema + '"."' + currentState.node.name + '"', true, "sql", "drop") }}
+                    {%- set materialization = dropMaterialization(currentState.node.materializationType) %}
+                    DROP {{ materialization }} "{{ oldDb }}"."{{ oldSchema }}"."{{ currentState.node.name }}"
+                {% endif %}
+
             {% endif %}
-            
+
             {{ stage('Create Work '+ '{{ desiredState.node.materializationType }}', true, "sql", "create") }}
             CREATE OR REPLACE {{ keyword }} DYNAMIC TABLE {{ fullyQualifiedTargetDynamicTableName }}
                 {%if desiredState.config.cpygrants%}COPY GRANTS {%endif%}
