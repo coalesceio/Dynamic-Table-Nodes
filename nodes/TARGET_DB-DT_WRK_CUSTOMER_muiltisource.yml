@@ -224,14 +224,14 @@ operation:
         name: NEW_CUST1
         noLinkRefs: []
       - aliases:
-          DT_WRK_CUSTOMER2: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+          DT_WRK_CUSTOMER21: 1bdc7ea1-b619-430a-9043-e4434a20f34e
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB_TEST
-            nodeName: DT_WRK_CUSTOMER2
+            nodeName: DT_WRK_CUSTOMER21
         join:
-          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER2') }} "DT_WRK_CUSTOMER2"
+          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER21') }} "DT_WRK_CUSTOMER21"
         name: NEW_SOURCE
         noLinkRefs: []
   name: DT_WRK_CUSTOMER_muiltisource
