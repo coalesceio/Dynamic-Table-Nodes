@@ -175,7 +175,7 @@ operation:
           - columnReferences:
               - columnCounter: ab0c44ca-fb1a-4b8f-ae2c-47eaa9a43ad2
                 stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
-            transform: ""
+            transform: UPPER(C_ACCTBAL)
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 1c1ac473-5bdd-49ac-a90d-46165a141ee4
