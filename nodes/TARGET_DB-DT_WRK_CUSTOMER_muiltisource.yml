@@ -221,7 +221,7 @@ operation:
             nodeName: DT_WRK_CUSTOMER1
         join:
           joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
-        name: NEW_SOURCE
+        name: NEW_CUST1
         noLinkRefs: []
       - aliases:
           DT_WRK_CUSTOMER2: 1bdc7ea1-b619-430a-9043-e4434a20f34e
