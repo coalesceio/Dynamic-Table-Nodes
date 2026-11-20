@@ -557,14 +557,16 @@ does not permit copying or modification for any other purpose.
                 {%endif%}    
             {% endfor %}
 
-            {# Immutability Constranit ON -> OFF #}
-            {% if desiredState.config.immutabilityConstraint == false %}
+            {# Immutability Constraint ON -> OFF (only when it was previously ON) #}
+            {% if immutabilityTest == false
+                and currentState.config.immutabilityConstraint | default(false) == true
+                and desiredState.config.immutabilityConstraint | default(false) == false %}
                 {{ stage('Alter Dynamic Table - Drop Immutability Constraint') }}
                 ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }}
                 UNSET FROZEN WHERE
             {% endif %}
 
-            {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false or  (immutabilityTest == false and desiredState.config.immutabilityConstraint == true) or refreshWarehouseTest ==  false or initializeWarehouseTest == false or advanceWarehouseTest == false %}
+            {% if  warehouseTest == false or lagSpecificationTest == false or downstreamOptionTest == false or nodeCommentTest == false or refreshWarehouseTest ==  false or initializeWarehouseTest == false or advanceWarehouseTest == false %}
                 {{ stage('Alter Dynamic Table') }}
                 ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
                 {% if warehouseTest == false or advanceWarehouseTest == false or refreshWarehouseTest ==  false or initializeWarehouseTest == false %}
@@ -581,14 +583,16 @@ does not permit copying or modification for any other purpose.
                 {%if nodeCommentTest == false %}
                     {{ dynamicTableComment }}   
                 {%endif%}
-                {% if  immutabilityTest == false %}   
-                    {% if desiredState.config.immutabilityConstraint %}
-                    {{ stage('Alter Dynamic Table') }}
-                     ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
-                        FROZEN WHERE ( {{desiredState.config.immutableExpression}} )
-                    {%endif%}
-                {%endif%}
             {%endif%}
+
+            {# Immutability Constraint added (OFF -> ON) or expression changed #}
+            {% if immutabilityTest == false
+                and desiredState.config.immutabilityConstraint | default(false) == true
+                and desiredState.config.immutableExpression | default('') != '' %}
+                {{ stage('Alter Dynamic Table - Add Immutability Constraint') }}
+                ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} SET
+                FROZEN WHERE ( {{ desiredState.config.immutableExpression }} )
+            {% endif %}
 
           {{ stage('Refresh Dynamic Table',true,"sql","create") }}
            ALTER DYNAMIC TABLE {{ desiredFullyQualifiedTargetDynamicTableName }} REFRESH
