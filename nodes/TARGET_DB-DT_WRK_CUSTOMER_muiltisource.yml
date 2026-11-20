@@ -213,14 +213,14 @@ operation:
         name: DT_WRK_CUSTOMER2
         noLinkRefs: []
       - aliases:
-          DT_WRK_CUSTOMER1: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
+          DT_WRK_CUSTOMER11: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER1
+            nodeName: DT_WRK_CUSTOMER11
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER11') }} "DT_WRK_CUSTOMER11"
         name: NEW_CUST1
         noLinkRefs: []
       - aliases:
