@@ -1,6 +1,6 @@
 fileVersion: 1
 id: c92f582b-77fa-4cb0-8bdf-c59e8a196434
-name: DT_WRK_DEPARTMENTS
+name: DT_WRK_DEPARTMENTS12
 operation:
   config:
     advanceWarehouse: false
@@ -84,9 +84,9 @@ operation:
             nodeName: DEPARTMENTS
         join:
           joinCondition: FROM {{ ref('SOURCE_DATA', 'DEPARTMENTS') }} "DEPARTMENTS"
-        name: DT_WRK_DEPARTMENTS
+        name: DT_WRK_DEPARTMENTS12
         noLinkRefs: []
-  name: DT_WRK_DEPARTMENTS
+  name: DT_WRK_DEPARTMENTS12
   overrideSQL: false
   schema: ""
   sqlType: "347"

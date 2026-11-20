@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 59b69ac4-bf53-4787-9c6b-f5fcc85de18a
-name: DT_WRK_CUSTOMER_muiltisource
+name: DT_WRK_CUSTOMER_muiltisources
 operation:
   config:
     advanceWarehouse: false
@@ -234,7 +234,7 @@ operation:
           joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER21') }} "DT_WRK_CUSTOMER21"
         name: NEW_SOURCE
         noLinkRefs: []
-  name: DT_WRK_CUSTOMER_muiltisource
+  name: DT_WRK_CUSTOMER_muiltisources
   overrideSQL: false
   schema: ""
   sqlType: "347"
