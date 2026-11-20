@@ -1,6 +1,6 @@
 fileVersion: 1
 id: 59b69ac4-bf53-4787-9c6b-f5fcc85de18a
-name: DT_WRK_CUSTOMER_muiltisource
+name: DT_WRK_CUSTOMER_muiltisources
 operation:
   config:
     advanceWarehouse: false
@@ -79,11 +79,11 @@ operation:
           - columnReferences:
               - columnCounter: 6f55245d-8e22-4667-8895-94ae5b5f652e
                 stepCounter: b181edf8-c2ca-48d4-bbf0-7223bced4972
-            transform: LOWER("DT_WRK_CUSTOMER"."C_NAME")
+            transform: LOWER("DT_WRK_CUSTOMER_NEW"."C_NAME")
           - columnReferences:
               - columnCounter: 88fb7774-6640-4289-814e-60cfbbf4c2de
                 stepCounter: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
-            transform: UPPER("DT_WRK_CUSTOMER1"."C_NAME")
+            transform: UPPER("DT_WRK_CUSTOMER11"."C_NAME")
           - columnReferences:
               - columnCounter: 7d6ceabb-9480-40e4-89ca-41a70ad43250
                 stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
@@ -175,7 +175,7 @@ operation:
           - columnReferences:
               - columnCounter: ab0c44ca-fb1a-4b8f-ae2c-47eaa9a43ad2
                 stepCounter: 1bdc7ea1-b619-430a-9043-e4434a20f34e
-            transform: ""
+            transform: UPPER(C_ACCTBAL)
       - appliedColumnTests: {}
         columnReference:
           columnCounter: 1c1ac473-5bdd-49ac-a90d-46165a141ee4
@@ -202,39 +202,39 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          DT_WRK_CUSTOMER: b181edf8-c2ca-48d4-bbf0-7223bced4972
+          DT_WRK_CUSTOMER_NEW: b181edf8-c2ca-48d4-bbf0-7223bced4972
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER
+            nodeName: DT_WRK_CUSTOMER_NEW
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER') }} "DT_WRK_CUSTOMER"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER_NEW') }} "DT_WRK_CUSTOMER_NEW"
         name: DT_WRK_CUSTOMER2
         noLinkRefs: []
       - aliases:
-          DT_WRK_CUSTOMER1: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
+          DT_WRK_CUSTOMER11: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER1
+            nodeName: DT_WRK_CUSTOMER11
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
-        name: NEW_SOURCE
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER11') }} "DT_WRK_CUSTOMER11"
+        name: NEW_CUST1
         noLinkRefs: []
       - aliases:
-          DT_WRK_CUSTOMER2: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+          DT_WRK_CUSTOMER21: 1bdc7ea1-b619-430a-9043-e4434a20f34e
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER2
+          - locationName: TARGET_DB_TEST
+            nodeName: DT_WRK_CUSTOMER21
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER2') }} "DT_WRK_CUSTOMER2"
+          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER21') }} "DT_WRK_CUSTOMER21"
         name: NEW_SOURCE
         noLinkRefs: []
-  name: DT_WRK_CUSTOMER_muiltisource
+  name: DT_WRK_CUSTOMER_muiltisources
   overrideSQL: false
   schema: ""
   sqlType: "347"
