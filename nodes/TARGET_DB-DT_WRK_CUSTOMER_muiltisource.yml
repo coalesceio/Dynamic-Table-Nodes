@@ -212,14 +212,15 @@ operation:
           joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER_NEW') }} "DT_WRK_CUSTOMER_NEW"
         name: DT_WRK_CUSTOMER2
         noLinkRefs: []
-      - aliases: {}
+      - aliases:
+          DT_WRK_CUSTOMER1: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: TARGET_DB_TEST
+          - locationName: TARGET_DB
             nodeName: DT_WRK_CUSTOMER1
         join:
-          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER1') }} "DT_WRK_CUSTOMER1"
         name: NEW_CUST1
         noLinkRefs: []
       - aliases:
@@ -227,10 +228,10 @@ operation:
         customSQL:
           customSQL: ""
         dependencies:
-          - locationName: TARGET_DB
+          - locationName: TARGET_DB_TEST
             nodeName: DT_WRK_CUSTOMER2
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER2') }} "DT_WRK_CUSTOMER2"
+          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER2') }} "DT_WRK_CUSTOMER2"
         name: NEW_SOURCE
         noLinkRefs: []
   name: DT_WRK_CUSTOMER_muiltisource
