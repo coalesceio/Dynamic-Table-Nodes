@@ -202,14 +202,14 @@ operation:
     enabledColumnTestIDs: []
     sourceMapping:
       - aliases:
-          DT_WRK_CUSTOMER_NEW: b181edf8-c2ca-48d4-bbf0-7223bced4972
+          DT_WRK_CUSTOMER_NEW_WOUT_FROZEN: b181edf8-c2ca-48d4-bbf0-7223bced4972
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER_NEW
+            nodeName: DT_WRK_CUSTOMER_NEW_WOUT_FROZEN
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER_NEW') }} "DT_WRK_CUSTOMER_NEW"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER_NEW_WOUT_FROZEN') }} "DT_WRK_CUSTOMER_NEW_WOUT_FROZEN"
         name: DT_WRK_CUSTOMER2
         noLinkRefs: []
       - aliases:
