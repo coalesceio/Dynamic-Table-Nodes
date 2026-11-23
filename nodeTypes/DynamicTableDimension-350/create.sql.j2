@@ -143,8 +143,10 @@ does not permit copying or modification for any other purpose.
         {# Initialize test #}
         {% set initializeTest = currentState.config.initialize | default('') == desiredState.config.initialize %}
 
-        {# Immutability test#}
-        {% set immutabilityTest = currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint | default(false) == desiredState.config.immutabilityConstraint %}
+        {# Immutability test - expression only matters when the constraint is enabled #}
+        {% set immutabilityTest = currentState.config.immutabilityConstraint | default(false) == desiredState.config.immutabilityConstraint | default(false)
+            and (not desiredState.config.immutabilityConstraint | default(false)
+                 or currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression | default('')) %}
 
         {# BackFill Test#}
         {% set backfilltest = currentState.config.backfill | default(false) == desiredState.config.backfill
