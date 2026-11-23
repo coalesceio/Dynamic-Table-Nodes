@@ -212,27 +212,18 @@ does not permit copying or modification for any other purpose.
             {#Initialize test#}
             {% set initializeTest = currentState.config.initialize | default('') == desiredState.config.initialize %}
 
-            {# Immutability test - expression only matters when the constraint is enabled #}
-            {% set curImmutability = currentState.config.immutabilityConstraint | default(false) %}
-            {% set desImmutability = desiredState.config.immutabilityConstraint | default(false) %}
-            {% set immutabilityTest = curImmutability == desImmutability
-                and (not desImmutability
-                     or currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression | default('')) %}
+            {# Immutability test#}
+            {% set immutabilityTest = currentState.config.immutableExpression | default('') == desiredState.config.immutableExpression and currentState.config.immutabilityConstraint | default(false)  == desiredState.config.immutabilityConstraint %}
 
-            {# BackFill Test - backfill options only matter when the immutability constraint is enabled #}
-            {% set curBackfill = curImmutability and currentState.config.backfill | default(false) %}
-            {% set desBackfill = desImmutability and desiredState.config.backfill | default(false) %}
-            {% set desTimeTravel = desiredState.config.timeTravel | default(false) %}
-            {% set backfilltest = not desImmutability
-                or (curBackfill == desBackfill
-                    and (not desBackfill
-                         or (currentState.config.backfillSource | default('') == desiredState.config.backfillSource | default('')
-                             and currentState.config.backfillSourceSchema | default('') == desiredState.config.backfillSourceSchema | default('')
-                             and currentState.config.timeTravel | default(false) == desTimeTravel
-                             and (not desTimeTravel
-                                  or (currentState.config.timeTraveltype | default('') == desiredState.config.timeTraveltype | default('')
-                                      and currentState.config.timeTravelreference | default('') == desiredState.config.timeTravelreference | default('')
-                                      and currentState.config.timeTravelvalue | default('') == desiredState.config.timeTravelvalue | default('')))))) %}
+            {# BackFill Test#}
+            {% set backfilltest =
+            currentState.config.backfill | default(false)  == desiredState.config.backfill
+            and currentState.config.backfillSource | default('') == desiredState.config.backfillSource
+            and currentState.config.backfillSourceSchema | default('') == desiredState.config.backfillSourceSchema
+            and  currentState.config.timeTravel | default(false)  == desiredState.config.timeTravel
+            and currentState.config.timeTraveltype | default('') == desiredState.config.timeTraveltype
+            and currentState.config.timeTravelreference | default('') == desiredState.config.timeTravelreference
+            and currentState.config.timeTravelvalue | default('') == desiredState.config.timeTravelvalue %}
        
             {# Column description changes and other column level changes #}
             {% for alterCurCol in currentState.columns %}        
@@ -475,9 +466,9 @@ does not permit copying or modification for any other purpose.
                     and desiredState.config.immutableExpression != '' %}
                     FROZEN WHERE ({{ desiredState.config.immutableExpression }})
                 {% endif %} 
-                {% if desiredState.config.immutabilityConstraint and desiredState.config.backfill and not desiredState.config.timeTravel %}
+                {% if desiredState.config.backfill and not desiredState.config.timeTravel %}
                     BACKFILL FROM {{ backfillTableFQN }}
-                {% elif desiredState.config.immutabilityConstraint and desiredState.config.backfill and desiredState.config.timeTravel %}
+                {% elif desiredState.config.backfill and desiredState.config.timeTravel %}
                     BACKFILL FROM {{ backfillTableFQN }}
                     {{ desiredState.config.timeTraveltype }}
                     (
@@ -787,9 +778,9 @@ does not permit copying or modification for any other purpose.
                 and desiredState.config.immutableExpression != '' %}
                 FROZEN WHERE ({{ desiredState.config.immutableExpression }})
             {% endif %} 
-            {% if desiredState.config.immutabilityConstraint and desiredState.config.backfill and not desiredState.config.timeTravel %}
+            {% if desiredState.config.backfill and not desiredState.config.timeTravel %}
                 BACKFILL FROM {{ desiredState.config.backfillSource }}
-            {% elif desiredState.config.immutabilityConstraint and desiredState.config.backfill and desiredState.config.timeTravel %}
+            {% elif desiredState.config.backfill and desiredState.config.timeTravel %}
                 BACKFILL FROM {{ desiredState.config.backfillSource }}
                 {{ desiredState.config.timeTraveltype }}
                 (
