@@ -18,8 +18,8 @@ operation:
     cpygrants: false
     downstreamOption: false
     groupByAll: false
-    immutabilityConstraint: false
-    immutableExpression: ""
+    immutabilityConstraint: true
+    immutableExpression: DEPT_ID LIKE '%a%'
     initialize: ON_CREATE
     initializeWarehouseSize: ""
     insertStrategy: UNION ALL

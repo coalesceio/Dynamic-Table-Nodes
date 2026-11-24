@@ -213,25 +213,25 @@ operation:
         name: DT_WRK_CUSTOMER2
         noLinkRefs: []
       - aliases:
-          DT_WRK_CUSTOMER11: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
+          DT_WRK_CUSTOMER111: 753f6fe0-658a-4cf9-9ca6-271e2f2357f0
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB
-            nodeName: DT_WRK_CUSTOMER11
+            nodeName: DT_WRK_CUSTOMER111
         join:
-          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER11') }} "DT_WRK_CUSTOMER11"
+          joinCondition: FROM {{ ref('TARGET_DB', 'DT_WRK_CUSTOMER111') }} "DT_WRK_CUSTOMER111"
         name: NEW_CUST1
         noLinkRefs: []
       - aliases:
-          DT_WRK_CUSTOMER21: 1bdc7ea1-b619-430a-9043-e4434a20f34e
+          DT_WRK_CUSTOMER212: 1bdc7ea1-b619-430a-9043-e4434a20f34e
         customSQL:
           customSQL: ""
         dependencies:
           - locationName: TARGET_DB_TEST
-            nodeName: DT_WRK_CUSTOMER21
+            nodeName: DT_WRK_CUSTOMER212
         join:
-          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER21') }} "DT_WRK_CUSTOMER21"
+          joinCondition: FROM {{ ref('TARGET_DB_TEST', 'DT_WRK_CUSTOMER212') }} "DT_WRK_CUSTOMER212"
         name: NEW_SOURCE
         noLinkRefs: []
   name: DT_WRK_CUSTOMER_muiltisources
