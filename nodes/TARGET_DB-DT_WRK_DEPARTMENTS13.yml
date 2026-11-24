@@ -19,7 +19,7 @@ operation:
     downstreamOption: false
     groupByAll: false
     immutabilityConstraint: true
-    immutableExpression: DEPT_ID LIKE '%a%'
+    immutableExpression: DEPT_ID > 2
     initialize: ON_CREATE
     initializeWarehouseSize: ""
     insertStrategy: UNION ALL
